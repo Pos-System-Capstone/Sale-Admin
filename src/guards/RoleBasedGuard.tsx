@@ -19,7 +19,10 @@ const useCurrentRole = (): String[] => {
 export default function RoleBasedGuard({ accessibleRoles, children }: RoleBasedGuardProp) {
   const currentRole = useCurrentRole();
 
-  if (!accessibleRoles.some((r) => currentRole.some((ur) => ur === r))) {
+  if (
+    accessibleRoles?.length !== 0 &&
+    !accessibleRoles.some((r) => currentRole.some((ur) => ur === r))
+  ) {
     return (
       <Container>
         <Alert severity="error">

@@ -86,7 +86,7 @@ export default function EcommerceShop() {
           </Typography>
           <Button
             onClick={() => {
-              navigate('/products/create');
+              navigate(PATH_DASHBOARD.products.newProduct);
             }}
             variant="contained"
             to="#"

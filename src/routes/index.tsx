@@ -5,6 +5,7 @@ import MainLayout from '../layouts/main';
 import DashboardLayout from '../layouts/dashboard';
 import LogoOnlyLayout from '../layouts/LogoOnlyLayout';
 // guards
+import AuthGuard from '../guards/AuthGuard';
 import GuestGuard from '../guards/GuestGuard';
 // import RoleBasedGuard from '../guards/RoleBasedGuard';
 // components
@@ -71,9 +72,11 @@ export default function Router() {
     {
       path: 'dashboard',
       element: (
-        <RoleBasedGuard accessibleRoles={['admin']}>
-          <DashboardLayout />
-        </RoleBasedGuard>
+        <AuthGuard>
+          <RoleBasedGuard accessibleRoles={['admin']}>
+            <DashboardLayout />
+          </RoleBasedGuard>
+        </AuthGuard>
       ),
       children: [
         { path: '/', element: <Navigate to="/dashboard/app" replace /> },
@@ -87,9 +90,9 @@ export default function Router() {
           path: 'products',
           children: [
             { path: '/', element: <Products /> },
+            { path: 'new', element: <CreateProduct /> },
             { path: '/:id', element: <UpdateProduct /> },
-            { path: 'master', element: <Products /> },
-            { path: 'create', element: <CreateProduct /> }
+            { path: 'master', element: <Products /> }
           ]
         },
         // {

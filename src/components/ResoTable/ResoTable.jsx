@@ -29,6 +29,7 @@ import Icon from '@iconify/react';
 import moreVerticalFill from '@iconify/icons-eva/more-vertical-fill';
 import trashIcon from '@iconify/icons-eva/trash-outline';
 import editIcon from '@iconify/icons-eva/edit-outline';
+import EmptyContent from 'components/EmptyContent';
 
 import { getCellValue } from './utils';
 
@@ -355,6 +356,14 @@ const ResoTable = React.forwardRef(
                 </TableRow>
               ) : (
                 tableBodyContent
+              )}
+              {!loading && !data?.list?.length && (
+                <EmptyContent
+                  title="Trống"
+                  sx={{
+                    width: '100%'
+                  }}
+                />
               )}
             </TableBody>
           </Table>

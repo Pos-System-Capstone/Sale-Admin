@@ -76,21 +76,22 @@ const sidebarConfig = [
       },
       // MANAGEMENT : PRODUCT
       {
-        title: 'product',
+        title: 'Sản Phẩm',
         path: PATH_DASHBOARD.products.root,
         icon: ICONS.cart,
         children: [
           {
             title: 'Dòng sản phẩm',
             path: PATH_DASHBOARD.products.list
-          },
-          {
-            title: 'Thực đơn',
-            path: '/menus'
           }
         ]
       },
 
+      {
+        title: 'Thực đơn',
+        path: PATH_DASHBOARD.menus.list,
+        icon: ICONS.cart
+      },
       // MANAGEMENT : BLOG
       {
         title: 'blog',

@@ -19,7 +19,7 @@ const DRAWER_WIDTH = 280;
 const COLLAPSE_WIDTH = 102;
 
 const APPBAR_MOBILE = 64;
-const APPBAR_DESKTOP = 92;
+const APPBAR_DESKTOP = 64;
 
 const RootStyle = styled(AppBar)(({ theme }) => ({
   boxShadow: 'none',

@@ -146,7 +146,7 @@ const UpdateProduct = () => {
       <Page title="Tạo sản phẩm">
         <Box px={4}>
           <Typography variant="h3" component="h2" gutterBottom>
-            Tạo dòng sản phẩm
+            Cập nhật sản phẩm
           </Typography>
         </Box>
         <Box display="flex" px={2}>

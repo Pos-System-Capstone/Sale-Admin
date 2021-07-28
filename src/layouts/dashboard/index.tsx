@@ -1,9 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { withDashboard } from 'hooks/useDashboard';
+import { useDispatch } from 'redux/store';
 
 // material
 import { styled, useTheme } from '@material-ui/core/styles';
+import LoadingPage from 'components/LoadingPage';
+import { fetchGlobalState } from 'redux/admin/thunk';
 // hooks
 import useCollapseDrawer from '../../hooks/useCollapseDrawer';
 //
@@ -25,10 +28,10 @@ const MainStyle = styled('div')(({ theme }) => ({
   flexGrow: 1,
   overflow: 'auto',
   minHeight: '100%',
-  paddingTop: APP_BAR_MOBILE + 24,
+  paddingTop: APP_BAR_MOBILE + 12,
   paddingBottom: theme.spacing(10),
   [theme.breakpoints.up('lg')]: {
-    paddingTop: APP_BAR_DESKTOP + 24,
+    paddingTop: APP_BAR_DESKTOP + 12,
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2)
   }
@@ -40,6 +43,20 @@ function DashboardLayout() {
   const theme = useTheme();
   const { collapseClick } = useCollapseDrawer();
   const [open, setOpen] = useState(false);
+
+  const [isLoadingState, setIsLoadingState] = useState(true);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    // fetch global
+    setIsLoadingState(true);
+    dispatch(fetchGlobalState()).then(() => setIsLoadingState(false));
+  }, [dispatch]);
+
+  if (isLoadingState) {
+    return <LoadingPage />;
+  }
 
   return (
     <RootStyle>

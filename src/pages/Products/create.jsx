@@ -100,7 +100,7 @@ const CreateProduct = () => {
           boxShadow: 1
         }}
       >
-        <Stack direction="row" spacing={2} mr={16}>
+        <Stack direction="row" spacing={2}>
           <Button onClick={() => navigate(-1)} variant="outlined">
             Hủy
           </Button>
@@ -110,7 +110,7 @@ const CreateProduct = () => {
         </Stack>
       </DashboardNavLayout>
       <Page title="Tạo sản phẩm">
-        <Box maxWidth="768px" px={2} mx="auto">
+        <Box px={2} mx="auto">
           <Typography px={1} variant="h3" component="h4" gutterBottom>
             Tạo dòng sản phẩm
           </Typography>

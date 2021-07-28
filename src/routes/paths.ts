@@ -77,6 +77,12 @@ export const PATH_DASHBOARD = {
     master: path(ROOTS_DASHBOARD, '/products/master'),
     newProduct: path(ROOTS_DASHBOARD, '/products/new')
   },
+  menus: {
+    root: path(ROOTS_DASHBOARD, '/menus'),
+    list: path(ROOTS_DASHBOARD, '/menus'),
+    editById: path(ROOTS_DASHBOARD, '/menus/:id'),
+    newProduct: path(ROOTS_DASHBOARD, '/menus/new')
+  },
   blog: {
     root: path(ROOTS_DASHBOARD, '/blog'),
     posts: path(ROOTS_DASHBOARD, '/blog/posts'),
