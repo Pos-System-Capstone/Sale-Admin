@@ -4,8 +4,8 @@ import { Link as RouterLink } from 'react-router-dom';
 import { styled } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
 // components
-import Logo from '../components/Logo';
-import { MHidden } from '../components/@material-extend';
+import Logo from 'components/Logo';
+import { MHidden } from 'components/@material-extend';
 
 // ----------------------------------------------------------------------
 

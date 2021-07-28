@@ -70,6 +70,13 @@ export const PATH_DASHBOARD = {
     checkout: path(ROOTS_DASHBOARD, '/e-commerce/checkout'),
     invoice: path(ROOTS_DASHBOARD, '/e-commerce/invoice')
   },
+  products: {
+    root: path(ROOTS_DASHBOARD, '/products'),
+    list: path(ROOTS_DASHBOARD, '/products'),
+    editById: path(ROOTS_DASHBOARD, '/products/:id'),
+    master: path(ROOTS_DASHBOARD, '/products/master'),
+    newProduct: path(ROOTS_DASHBOARD, '/products/new')
+  },
   blog: {
     root: path(ROOTS_DASHBOARD, '/blog'),
     posts: path(ROOTS_DASHBOARD, '/blog/posts'),

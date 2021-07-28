@@ -29,7 +29,7 @@ import { MIconButton } from '../../@material-extend';
 
 // ----------------------------------------------------------------------
 type InitialValues = {
-  email: string;
+  user_name: string;
   password: string;
   remember: boolean;
   afterSubmit?: string;
@@ -41,20 +41,20 @@ export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
 
   const LoginSchema = Yup.object().shape({
-    email: Yup.string().email('Email must be a valid email address').required('Email is required'),
+    user_name: Yup.string().required('Vui lòng nhập tên đăng nhập'),
     password: Yup.string().required('Password is required')
   });
 
   const formik = useFormik<InitialValues>({
     initialValues: {
-      email: '',
+      user_name: '',
       password: '',
       remember: true
     },
     validationSchema: LoginSchema,
     onSubmit: async (values, { setErrors, setSubmitting, resetForm }) => {
       try {
-        await login(values.email, values.password);
+        await login(values.user_name, values.password);
         enqueueSnackbar('Login success', {
           variant: 'success',
           action: (key) => (
@@ -68,7 +68,9 @@ export default function LoginForm() {
         }
       } catch (error) {
         console.error(error);
-        resetForm();
+        enqueueSnackbar('Có lỗi', {
+          variant: 'error'
+        });
         if (isMountedRef.current) {
           setSubmitting(false);
           setErrors({ afterSubmit: error.message });
@@ -92,11 +94,11 @@ export default function LoginForm() {
           <TextField
             fullWidth
             autoComplete="username"
-            type="email"
-            label="Email address"
-            {...getFieldProps('email')}
-            error={Boolean(touched.email && errors.email)}
-            helperText={touched.email && errors.email}
+            type="user_name"
+            label="Tên đăng nhập"
+            {...getFieldProps('user_name')}
+            error={Boolean(touched.user_name && errors.user_name)}
+            helperText={touched.user_name && errors.user_name}
           />
 
           <TextField
@@ -122,11 +124,11 @@ export default function LoginForm() {
         <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
           <FormControlLabel
             control={<Checkbox {...getFieldProps('remember')} checked={values.remember} />}
-            label="Remember me"
+            label="Ghi nhớ đăng nhập"
           />
 
-          <Link component={RouterLink} variant="subtitle2" to={PATH_AUTH.resetPassword}>
-            Forgot password?
+          <Link component={RouterLink} variant="subtitle2" to="#">
+            Quên mật khẩu?
           </Link>
         </Stack>
 
@@ -137,7 +139,7 @@ export default function LoginForm() {
           variant="contained"
           loading={isSubmitting}
         >
-          Login
+          Đăng nhập
         </LoadingButton>
       </Form>
     </FormikProvider>

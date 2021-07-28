@@ -17,6 +17,7 @@ import useIsMountedRef from '../../hooks/useIsMountedRef';
 import { MIconButton } from '../../components/@material-extend';
 import MyAvatar from '../../components/MyAvatar';
 import MenuPopover from '../../components/MenuPopover';
+import LoadingAsyncButton from '../../components/LoadingAsyncButton/LoadingAsyncButton';
 
 // ----------------------------------------------------------------------
 
@@ -133,9 +134,20 @@ export default function AccountPopover() {
         ))}
 
         <Box sx={{ p: 2, pt: 1.5 }}>
-          <Button fullWidth color="inherit" variant="outlined" onClick={handleLogout}>
-            Logout
-          </Button>
+          <LoadingAsyncButton
+            fullWidth
+            color="inherit"
+            variant="outlined"
+            onClick={() =>
+              new Promise((res) =>
+                setTimeout(() => {
+                  res(handleLogout());
+                }, 1000)
+              )
+            }
+          >
+            Đăng xuất
+          </LoadingAsyncButton>
         </Box>
       </MenuPopover>
     </>

@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
+import { withDashboard } from 'hooks/useDashboard';
+
 // material
 import { styled, useTheme } from '@material-ui/core/styles';
 // hooks
@@ -34,7 +36,7 @@ const MainStyle = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function DashboardLayout() {
+function DashboardLayout() {
   const theme = useTheme();
   const { collapseClick } = useCollapseDrawer();
   const [open, setOpen] = useState(false);
@@ -58,3 +60,5 @@ export default function DashboardLayout() {
     </RootStyle>
   );
 }
+
+export default withDashboard(DashboardLayout);

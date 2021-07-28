@@ -9,6 +9,8 @@ import userReducer from './slices/user';
 import productReducer from './slices/product';
 import calendarReducer from './slices/calendar';
 import kanbanReducer from './slices/kanban';
+import global from './global';
+import admin from './admin';
 
 // ----------------------------------------------------------------------
 
@@ -27,6 +29,8 @@ const productPersistConfig = {
 };
 
 const rootReducer = combineReducers({
+  admin,
+  global,
   mail: mailReducer,
   chat: chatReducer,
   blog: blogReducer,

@@ -45,6 +45,22 @@ type DashboardNavbarProps = {
   onOpenSidebar: VoidFunction;
 };
 
+export const DashboardNavLayout = ({ onOpenSidebar, children, ...props }: any) => (
+  <RootStyle {...props}>
+    <ToolbarStyle>
+      <MHidden width="lgUp">
+        <IconButton onClick={onOpenSidebar} sx={{ mr: 1, color: 'text.primary' }}>
+          <Icon icon={menu2Fill} />
+        </IconButton>
+      </MHidden>
+
+      <Box sx={{ flexGrow: 1 }} />
+
+      {children}
+    </ToolbarStyle>
+  </RootStyle>
+);
+
 export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps) {
   const { isCollapse } = useCollapseDrawer();
 
@@ -63,7 +79,6 @@ export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps)
           </IconButton>
         </MHidden>
 
-        <Searchbar />
         <Box sx={{ flexGrow: 1 }} />
 
         <Stack direction="row" alignItems="center" spacing={{ xs: 0.5, sm: 1.5 }}>

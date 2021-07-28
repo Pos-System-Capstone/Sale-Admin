@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import { Container, Alert, AlertTitle } from '@material-ui/core';
+import useAuth from 'hooks/useAuth';
 
 // ----------------------------------------------------------------------
 
@@ -8,16 +9,17 @@ type RoleBasedGuardProp = {
   children: ReactNode | string;
 };
 
-const useCurrentRole = () => {
+const useCurrentRole = (): String[] => {
+  const { user } = useAuth();
   // Logic here to get current user role
-  const role = 'admin';
+  const role = user?.roles ?? [];
   return role;
 };
 
 export default function RoleBasedGuard({ accessibleRoles, children }: RoleBasedGuardProp) {
   const currentRole = useCurrentRole();
 
-  if (!accessibleRoles.includes(currentRole)) {
+  if (!accessibleRoles.some((r) => currentRole.some((ur) => ur === r))) {
     return (
       <Container>
         <Alert severity="error">

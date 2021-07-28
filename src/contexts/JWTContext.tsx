@@ -2,6 +2,7 @@ import { createContext, ReactNode, useEffect, useReducer } from 'react';
 // utils
 import axios from '../utils/axios';
 import { isValidToken, setSession } from '../utils/jwt';
+import { getUserInfo, setUserInfo } from '../utils/utils';
 // @types
 import { ActionMap, AuthState, AuthUser, JWTContextType } from '../@types/authentication';
 
@@ -78,12 +79,15 @@ function AuthProvider({ children }: { children: ReactNode }) {
     const initialize = async () => {
       try {
         const accessToken = window.localStorage.getItem('accessToken');
-
-        if (accessToken && isValidToken(accessToken)) {
+        const userRaw = getUserInfo();
+        if (accessToken && isValidToken(accessToken) && userRaw) {
           setSession(accessToken);
 
-          const response = await axios.get('/api/account/my-account');
-          const { user } = response.data;
+          // TODO: IMPLEMENT METHOD TO GET USER INFO FROM TOKEN
+          // const response = await axios.get('/api/account/my-account');
+          // const { user } = response.data;
+
+          const user = JSON.parse(userRaw);
 
           dispatch({
             type: Types.Initial,
@@ -116,14 +120,18 @@ function AuthProvider({ children }: { children: ReactNode }) {
     initialize();
   }, []);
 
-  const login = async (email: string, password: string) => {
-    const response = await axios.post('/api/account/login', {
-      email,
+  const login = async (user_name: string, password: string) => {
+    const response = await axios.post('/admin/login', {
+      user_name,
       password
     });
-    const { accessToken, user } = response.data;
-
+    const { access_token: accessToken, apps } = response.data;
+    const user = {
+      name: 'Admin',
+      roles: apps?.find(({ name }: { name: string }) => name === 'sale').role
+    };
     setSession(accessToken);
+    setUserInfo(user);
     dispatch({
       type: Types.Login,
       payload: {

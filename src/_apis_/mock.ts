@@ -7,4 +7,7 @@ const axiosMockAdapter = new AxiosMockAdapter(axios, {
   delayResponse: 0
 });
 
+// Removing mocking behavior
+axiosMockAdapter.restore();
+
 export default axiosMockAdapter;
