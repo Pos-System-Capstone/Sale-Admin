@@ -21,7 +21,7 @@ import { useSnackbar } from 'notistack5';
 import React from 'react';
 import { useRequest } from 'ahooks';
 import { get } from 'lodash-es';
-import { deleteProductInMenu, getProductInMenus, updateProdInMenuInfo } from 'services/menu/api';
+import { deleteProductInMenu, getProductInMenus, updateProdInMenuInfo } from 'redux/menu/api';
 import DrawerProductForm from 'components/DrawerProductForm/DrawerProductForm';
 import { InputField } from 'components/form';
 import { formatCurrency } from 'utils/utils';

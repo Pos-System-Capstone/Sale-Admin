@@ -20,7 +20,8 @@ import {
   TablePagination,
   TableRow,
   TableSortLabel,
-  Typography
+  Typography,
+  Box
 } from '@material-ui/core';
 import get from 'lodash/get';
 import { useAntdTable } from 'ahooks';
@@ -342,6 +343,7 @@ const ResoTable = React.forwardRef(
         <TableContainer>
           <Table stickyHeader>
             <TableHead>{tableHeader}</TableHead>
+
             <TableBody>
               {loading ? (
                 <TableRow style={{ height: '150px' }}>
@@ -357,17 +359,19 @@ const ResoTable = React.forwardRef(
               ) : (
                 tableBodyContent
               )}
-              {!loading && !data?.list?.length && (
-                <EmptyContent
-                  title="Trống"
-                  sx={{
-                    width: '100%'
-                  }}
-                />
-              )}
             </TableBody>
           </Table>
         </TableContainer>
+        {!loading && !data?.list?.length && (
+          <Box width="100%">
+            <EmptyContent
+              title="Trống"
+              sx={{
+                width: '100%'
+              }}
+            />
+          </Box>
+        )}
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"

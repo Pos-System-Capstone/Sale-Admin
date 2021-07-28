@@ -95,19 +95,10 @@ export default function Router() {
             { path: 'master', element: <Products /> }
           ]
         },
-        // {
-        //   path: 'menus',
-        //   children: [
-        //     {
-        //       path: '/',
-        //       element: <MenusPage />
-        //     },
-        //     {
-        //       path: '/:id',
-        //       element: <UpdateMenuPage />
-        //     }
-        //   ]
-        // },
+        {
+          path: 'menus',
+          element: <MenusPage />
+        },
         {
           path: 'e-commerce',
           children: [
@@ -202,3 +193,5 @@ const NotFound = Loadable(lazy(() => import('../pages/Page404')));
 const Products = Loadable(lazy(() => import('../pages/Products/Products')));
 const UpdateProduct = Loadable(lazy(() => import('../pages/Products/UpdateProduct')));
 const CreateProduct = Loadable(lazy(() => import('../pages/Products/create')));
+const MenusPage = Loadable(lazy(() => import('../pages/Menus')));
+const UpdateMenuPage = Loadable(lazy(() => import('../pages/Menus/update')));

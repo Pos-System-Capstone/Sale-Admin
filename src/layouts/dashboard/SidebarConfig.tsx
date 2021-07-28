@@ -20,7 +20,9 @@ const ICONS = {
   ecommerce: getIcon('ic_ecommerce'),
   analytics: getIcon('ic_analytics'),
   dashboard: getIcon('ic_dashboard'),
-  kanban: getIcon('ic_kanban')
+  kanban: getIcon('ic_kanban'),
+  tag: getIcon('tag'),
+  menu: getIcon('menu')
 };
 
 const sidebarConfig = [
@@ -78,7 +80,7 @@ const sidebarConfig = [
       {
         title: 'Sản Phẩm',
         path: PATH_DASHBOARD.products.root,
-        icon: ICONS.cart,
+        icon: ICONS.tag,
         children: [
           {
             title: 'Dòng sản phẩm',
@@ -90,19 +92,19 @@ const sidebarConfig = [
       {
         title: 'Thực đơn',
         path: PATH_DASHBOARD.menus.list,
-        icon: ICONS.cart
-      },
-      // MANAGEMENT : BLOG
-      {
-        title: 'blog',
-        path: PATH_DASHBOARD.blog.root,
-        icon: ICONS.blog,
-        children: [
-          { title: 'posts', path: PATH_DASHBOARD.blog.posts },
-          { title: 'post', path: PATH_DASHBOARD.blog.postById },
-          { title: 'new post', path: PATH_DASHBOARD.blog.newPost }
-        ]
+        icon: ICONS.menu
       }
+      // MANAGEMENT : BLOG
+      // {
+      //   title: 'blog',
+      //   path: PATH_DASHBOARD.blog.root,
+      //   icon: ICONS.blog,
+      //   children: [
+      //     { title: 'posts', path: PATH_DASHBOARD.blog.posts },
+      //     { title: 'post', path: PATH_DASHBOARD.blog.postById },
+      //     { title: 'new post', path: PATH_DASHBOARD.blog.newPost }
+      //   ]
+      // }
     ]
   }
 ];
