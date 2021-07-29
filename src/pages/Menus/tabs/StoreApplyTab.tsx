@@ -66,7 +66,7 @@ const StoreApplyTab = ({ checkedStores }: { checkedStores: number[] | null }) =>
         </Alert>
         <Grid p={2} spacing={2} container>
           {stores?.map((store: any, index: number) => (
-            <Grid item xs={3} key={`stores-${store?.id}`}>
+            <Grid item xs={4} md={3} key={`stores-${store?.id}`}>
               <FormControlLabel
                 control={
                   <Checkbox

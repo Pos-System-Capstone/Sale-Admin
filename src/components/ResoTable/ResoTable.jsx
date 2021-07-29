@@ -36,13 +36,11 @@ import { getCellValue } from './utils';
 
 const StickyLeftTableCell = withStyles((theme) => ({
   head: {
-    backgroundColor: 'white',
     left: 0,
     position: 'sticky',
     zIndex: theme.zIndex.appBar + 2
   },
   body: {
-    backgroundColor: 'white',
     minWidth: '50px',
     left: '0',
     position: 'sticky',
@@ -52,14 +50,12 @@ const StickyLeftTableCell = withStyles((theme) => ({
 
 const StickyRightTableCell = withStyles((theme) => ({
   head: {
-    backgroundColor: 'white',
     // color: theme.palette.common.white,
     right: 0,
     position: 'sticky',
     zIndex: theme.zIndex.appBar + 2
   },
   body: {
-    backgroundColor: 'white',
     minWidth: '50px',
     right: '0',
     position: 'sticky',
@@ -69,7 +65,6 @@ const StickyRightTableCell = withStyles((theme) => ({
 
 const useStyles = makeStyles({
   root: {
-    background: 'rgb(244, 246, 248)',
     minWidth: '120px'
   },
   actionColumn: {

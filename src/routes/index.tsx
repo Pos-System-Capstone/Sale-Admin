@@ -100,7 +100,7 @@ export default function Router() {
           children: [
             { path: '/', element: <CollectionListPage /> },
             { path: 'new', element: <CreateProduct /> },
-            { path: '/:id', element: <UpdateProduct /> }
+            { path: '/:id', element: <UpdateCollectionPage /> }
           ]
         },
         {
@@ -208,3 +208,4 @@ const MenusPage = Loadable(lazy(() => import('../pages/Menus')));
 const UpdateMenuPage = Loadable(lazy(() => import('../pages/Menus/update')));
 
 const CollectionListPage = Loadable(lazy(() => import('../pages/collections')));
+const UpdateCollectionPage = Loadable(lazy(() => import('../pages/collections/update')));

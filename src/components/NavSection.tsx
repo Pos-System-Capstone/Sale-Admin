@@ -16,6 +16,7 @@ import {
   ListItemButton
 } from '@material-ui/core';
 // theme
+import useLocales from 'hooks/useLocales';
 import typography from '../theme/typography';
 
 // ----------------------------------------------------------------------
@@ -78,6 +79,7 @@ function NavItem({ item, isShow }: { item: NavItemProps; isShow?: boolean | unde
   const { pathname } = useLocation();
   const { title, path, icon, info, children } = item;
   const isActiveRoot = path ? !!matchPath({ path, end: false }, pathname) : false;
+  const { translate } = useLocales();
 
   const [open, setOpen] = useState(isActiveRoot);
 
@@ -111,7 +113,7 @@ function NavItem({ item, isShow }: { item: NavItemProps; isShow?: boolean | unde
 
           {isShow && (
             <>
-              <ListItemText disableTypography primary={title} />
+              <ListItemText disableTypography primary={translate(`menu.${title}`)} />
               {info && info}
               <Box
                 component={Icon}
@@ -159,7 +161,7 @@ function NavItem({ item, isShow }: { item: NavItemProps; isShow?: boolean | unde
                         }}
                       />
                     </ListItemIconStyle>
-                    <ListItemText disableTypography primary={title} />
+                    <ListItemText disableTypography primary={translate(`menu.${title}`)} />
                   </ListItemStyle>
                 );
               })}
@@ -183,7 +185,7 @@ function NavItem({ item, isShow }: { item: NavItemProps; isShow?: boolean | unde
       <ListItemIconStyle>{icon && icon}</ListItemIconStyle>
       {isShow && (
         <>
-          <ListItemText disableTypography primary={item.title} />
+          <ListItemText disableTypography primary={translate(`menu.${item.title}`)} />
           {info && info}
         </>
       )}

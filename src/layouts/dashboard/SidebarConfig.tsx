@@ -48,23 +48,23 @@ const sidebarConfig = [
     items: [
       // MANAGEMENT : PRODUCT
       {
-        title: 'Sản Phẩm',
+        title: 'product',
         path: PATH_DASHBOARD.products.root,
         icon: ICONS.tag,
         children: [
           {
-            title: 'Dòng sản phẩm',
+            title: 'master',
             path: PATH_DASHBOARD.products.list
           },
           {
-            title: 'Bộ sưu tập',
+            title: 'collection',
             path: PATH_DASHBOARD.collections.list
           }
         ]
       },
 
       {
-        title: 'Thực đơn',
+        title: 'menu',
         path: PATH_DASHBOARD.menus.list,
         icon: ICONS.menu
       },

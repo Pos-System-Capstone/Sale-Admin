@@ -26,5 +26,5 @@ export const updateMenuInfo = (menuId: number, updateInfo: any) =>
 export const updateProdInMenuInfo = (menuId: number, updateInfo: any) =>
   request.put(`/stores/1160/menus/${menuId}/products`, updateInfo);
 
-export const deleteProductInMenu = (prods: Array<any>, menuId: number) =>
+export const deleteProductInMenu = (prods: Array<any>, menuId: number[]) =>
   request.delete(`/stores/1160/menus/${menuId}/products`, { data: prods });

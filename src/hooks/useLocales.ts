@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 // material
-import { enUS, deDE, frFR } from '@material-ui/core/locale';
+import { enUS, deDE, frFR, viVN } from '@material-ui/core/locale';
 
 // ----------------------------------------------------------------------
 
@@ -12,11 +12,10 @@ const LANGS = [
     icon: '/static/icons/ic_flag_en.svg'
   },
   {
-    label: 'German',
-    value: 'de',
-    systemValue: deDE,
-
-    icon: '/static/icons/ic_flag_de.svg'
+    label: 'Tiếng Việt',
+    value: 'vi',
+    systemValue: viVN,
+    icon: '/static/icons/ic_flag_vi.svg'
   },
   {
     label: 'French',
@@ -32,7 +31,7 @@ export default function useLocales() {
   const currentLang = LANGS.find((_lang) => _lang.value === langStorage) || LANGS[1];
 
   const handleChangeLanguage = (newlang: string) => {
-    i18n.changeLanguage(newlang);
+    i18n.changeLanguage(newlang, () => console.log('Changed language'));
   };
 
   return {

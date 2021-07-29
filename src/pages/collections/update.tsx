@@ -12,14 +12,12 @@ import { useLocation, useParams } from 'react-router-dom';
 import { addProductInMenus, updateMenuInfo } from 'redux/menu/api';
 import Page from 'components/Page';
 import { convertDateToStr, convertStrToDate } from 'utils/utils';
-import MenuInfoTab from './tabs/MenuInfoTab';
-import ProductInMenuTab from './tabs/ProductInMenuTab';
-import StoreApplyTab from './tabs/StoreApplyTab';
+import CollectionInfoTab from './tabs/CollectionInfoTab';
+import ProductInCollectionTab from './tabs/ProductInCollectionTab';
 
 enum TabType {
-  MENU_INFO = 'MENUINFO',
-  STORE_APPLY = 'STORE_APPLY',
-  PRODUCT_MENU = 'PRODUCT_MENU'
+  COLLECTION_INFO = 'COLLETION_INFO',
+  PRODUCT_COLLECTION = 'PRODUCT_COLLECTION'
 }
 
 function TabPanel(props: any) {
@@ -38,10 +36,10 @@ function TabPanel(props: any) {
   );
 }
 
-const UpdateMenuPage = () => {
+const UpdateCollectionPage = () => {
   const { state } = useLocation();
   const { id } = useParams();
-  const [currentTab, setCurrentTab] = React.useState<TabType>(TabType.STORE_APPLY);
+  const [currentTab, setCurrentTab] = React.useState<TabType>(TabType.COLLECTION_INFO);
   const { enqueueSnackbar } = useSnackbar();
 
   const form = useForm({
@@ -88,22 +86,16 @@ const UpdateMenuPage = () => {
 
   const MENU_TABS = [
     {
-      value: TabType.MENU_INFO,
+      value: TabType.COLLECTION_INFO,
       label: 'Thông tin chung',
       icon: <Icon icon={roundAccountBox} width={20} height={20} />,
-      component: <MenuInfoTab onSubmit={form.handleSubmit(onUpdateMenu)} />
+      component: <CollectionInfoTab onSubmit={form.handleSubmit(onUpdateMenu)} />
     },
     {
-      value: TabType.STORE_APPLY,
-      label: 'Cửa hàng áp dụng',
-      icon: <Icon icon={roundStore} width={20} height={20} />,
-      component: <StoreApplyTab checkedStores={[]} />
-    },
-    {
-      value: TabType.PRODUCT_MENU,
+      value: TabType.PRODUCT_COLLECTION,
       label: 'Sản phẩm',
       icon: <Icon icon={roundReceipt} width={20} height={20} />,
-      component: <ProductInMenuTab id={id} onAddProduct={addProductToMenu} />
+      component: <ProductInCollectionTab onSubmit={form.handleSubmit(onUpdateMenu)} />
     }
   ];
 
@@ -113,7 +105,7 @@ const UpdateMenuPage = () => {
         <Box px={2} mx="auto">
           <Stack mb={2} direction="row" justifyContent="space-between">
             <Typography px={1} variant="h3" component="h4" gutterBottom>
-              Cập nhật thực đơn
+              Cập nhật bộ sưu tập
             </Typography>
             <Button size="small" color="error" variant="outlined">
               Xóa
@@ -146,4 +138,4 @@ const UpdateMenuPage = () => {
   );
 };
 
-export default UpdateMenuPage;
+export default UpdateCollectionPage;

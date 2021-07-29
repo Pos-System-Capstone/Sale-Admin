@@ -26,9 +26,8 @@ import { InputField } from 'components/form';
 import { formatCurrency } from 'utils/utils';
 import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
 import EmptyContent from 'components/EmptyContent';
-import EditProductDialog from '../components/EditProductDialog';
 
-const ProductCard = ({ product, onEdit, onDelete }) => {
+const ProductCard = ({ product, onEdit, onDelete }: any) => {
   const random = Math.floor(Math.random() * 12) + 1;
   return (
     <Card sx={{ width: '100%', display: 'flex', flexDirection: 'column', position: 'relative' }}>
@@ -61,7 +60,7 @@ const ProductCard = ({ product, onEdit, onDelete }) => {
   );
 };
 
-const createProduct = (name) => ({
+const createProduct = (name: String) => ({
   product_name: name,
   price1: 100000,
   price2: 100000
@@ -83,20 +82,20 @@ const DEFAULT_DATA = [
 ];
 
 // eslint-disable-next-line react/prop-types
-const ProductInMenuTab = ({ id, onAddProduct }) => {
+const ProductInCollectionTab = ({ id, onAddProduct }: any) => {
   const {
     data = DEFAULT_DATA,
     loading,
     run
-  } = useRequest(() => getProductInMenus(id), {
+  } = useRequest(() => getProductInMenus(id, {}), {
     formatResult: (res) => res.data.data
   });
 
-  const [currentDeleteItem, setCurrentDeleteItem] = React.useState(null);
+  const [currentDeleteItem, setCurrentDeleteItem] = React.useState<any>(null);
   const [currentProduct, setCurrentProduct] = React.useState(null);
   const { enqueueSnackbar } = useSnackbar();
 
-  const handleUpdateProdInMenu = (values) =>
+  const handleUpdateProdInMenu = (values: any) =>
     updateProdInMenuInfo(id, values)
       .then(() =>
         enqueueSnackbar(`Cập nhật thành công`, {
@@ -108,12 +107,12 @@ const ProductInMenuTab = ({ id, onAddProduct }) => {
       .catch((err) => {
         const errMsg = get(err.response, ['data', 'message'], `Có lỗi xảy ra. Vui lòng thử lại`);
         enqueueSnackbar(errMsg, {
-          variantF: 'error'
+          variant: 'error'
         });
       });
 
   const onDelete = () =>
-    deleteProductInMenu(id, [currentDeleteItem.product_id])
+    deleteProductInMenu(id, [Number(currentDeleteItem!.product_id)])
       .then((res) => {
         enqueueSnackbar(`Xóa thành công `, {
           variant: 'success'
@@ -129,40 +128,36 @@ const ProductInMenuTab = ({ id, onAddProduct }) => {
 
   return (
     <Box flex={1}>
-      <EditProductDialog
-        open={currentProduct}
-        onClose={() => setCurrentProduct(null)}
-        data={currentProduct}
-        onSubmit={handleUpdateProdInMenu}
-      />
-      <Dialog
-        open={currentDeleteItem}
-        onClose={() => setCurrentDeleteItem(false)}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          Xác nhận xóa <strong>{currentDeleteItem?.product_name}</strong>
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Xác nhận xóa sản phẩm?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setCurrentDeleteItem(null)} variant="text" color="secondary">
-            Hủy
-          </Button>
-          <LoadingAsyncButton onClick={onDelete} color="error" variant="contained" autoFocus>
-            Xác nhận
-          </LoadingAsyncButton>
-        </DialogActions>
-      </Dialog>
-      <Box as={Card} p={2}>
+      {currentDeleteItem && (
+        <Dialog
+          open={!!currentDeleteItem}
+          onClose={() => setCurrentDeleteItem(null)}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            Xác nhận xóa <strong>{currentDeleteItem.product_name}</strong>
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Xác nhận xóa sản phẩm?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setCurrentDeleteItem(null)} variant="text" color="secondary">
+              Hủy
+            </Button>
+            <LoadingAsyncButton onClick={onDelete} color="error" variant="contained" autoFocus>
+              Xác nhận
+            </LoadingAsyncButton>
+          </DialogActions>
+        </Dialog>
+      )}
+      <Box component={Card} p={2}>
         <Stack justifyContent="space-between" mb={2} direction="row" spacing={2}>
-          <InputField size="small" label="Tên sản phẩm" name="product-name" />
+          <InputField rules={null} size="small" label="Tên sản phẩm" name="product-name" />
           <DrawerProductForm
-            onSubmit={(ids, data) => onAddProduct(data)}
+            onSubmit={(ids: any, data: any) => onAddProduct(data)}
             trigger={<Button variant="contained">Thêm sản phẩm</Button>}
           >
             Hello Drawer
@@ -172,7 +167,7 @@ const ProductInMenuTab = ({ id, onAddProduct }) => {
           <CircularProgress />
         ) : (
           <Grid py={2} container spacing={3}>
-            {data?.map((pro) => (
+            {data?.map((pro: any) => (
               <Grid key={pro.product_id} item xs={4} md={3}>
                 <ProductCard
                   onEdit={() => setCurrentProduct(pro)}
@@ -188,4 +183,4 @@ const ProductInMenuTab = ({ id, onAddProduct }) => {
   );
 };
 
-export default ProductInMenuTab;
+export default ProductInCollectionTab;

@@ -43,10 +43,12 @@ export default function Table(theme: Theme) {
         },
         body: {
           '&:first-of-type': {
-            paddingLeft: theme.spacing(3)
+            paddingLeft: theme.spacing(3),
+            backgroundColor: theme.palette.background.paper
           },
           '&:last-of-type': {
-            paddingRight: theme.spacing(3)
+            paddingRight: theme.spacing(3),
+            backgroundColor: theme.palette.background.paper
           }
         }
       }

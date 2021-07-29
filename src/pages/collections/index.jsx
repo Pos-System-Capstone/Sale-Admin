@@ -53,9 +53,12 @@ const CollectionListPage = () => {
         <Card style={{ padding: '1em' }}>
           <Stack spacing={2}>
             <ResoTable
-              //   onEdit={(menu: any) =>
-              //     navigate(`${PATH_DASHBOARD.menus.root}/${menu.product_menu_id}`, { state: menu })
-              //   }
+              onEdit={(menu) =>
+                navigate(`${PATH_DASHBOARD.collections.root}/${menu.product_menu_id}`, {
+                  state: menu
+                })
+              }
+              rowKey="product_menu_in_store_id"
               getData={getMenus}
               columns={columns}
             />
