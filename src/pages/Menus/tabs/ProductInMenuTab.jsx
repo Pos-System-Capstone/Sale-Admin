@@ -61,9 +61,34 @@ const ProductCard = ({ product, onEdit, onDelete }) => {
   );
 };
 
+const createProduct = (name) => ({
+  product_name: name,
+  price1: 100000,
+  price2: 100000
+});
+
+const DEFAULT_DATA = [
+  createProduct('Pizza Hải sản'),
+  createProduct('Coca Cola'),
+  createProduct('Pizza Bánh xèo'),
+  createProduct('Pizza Hải sản'),
+  createProduct('Coca Cola'),
+  createProduct('Pizza Bánh xèo'),
+  createProduct('Pizza Hải sản'),
+  createProduct('Coca Cola'),
+  createProduct('Pizza Bánh xèo'),
+  createProduct('Pizza Hải sản'),
+  createProduct('Coca Cola'),
+  createProduct('Pizza Bánh xèo')
+];
+
 // eslint-disable-next-line react/prop-types
 const ProductInMenuTab = ({ id, onAddProduct }) => {
-  const { data, loading, run } = useRequest(() => getProductInMenus(id), {
+  const {
+    data = DEFAULT_DATA,
+    loading,
+    run
+  } = useRequest(() => getProductInMenus(id), {
     formatResult: (res) => res.data.data
   });
 
