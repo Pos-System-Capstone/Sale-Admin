@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
-import { withDashboard } from 'hooks/useDashboard';
+import useDashboard, { withDashboard } from 'hooks/useDashboard';
 import { useDispatch } from 'redux/store';
 
 // material
@@ -42,7 +42,7 @@ const MainStyle = styled('div')(({ theme }) => ({
 function DashboardLayout() {
   const theme = useTheme();
   const { collapseClick } = useCollapseDrawer();
-  const [open, setOpen] = useState(false);
+  const { open, setNavOpen: setOpen } = useDashboard();
 
   const [isLoadingState, setIsLoadingState] = useState(true);
 

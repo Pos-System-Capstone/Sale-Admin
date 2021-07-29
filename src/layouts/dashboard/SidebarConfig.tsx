@@ -46,6 +46,24 @@ const sidebarConfig = [
   {
     subheader: 'management',
     items: [
+      // MANAGEMENT : PRODUCT
+      {
+        title: 'Sản Phẩm',
+        path: PATH_DASHBOARD.products.root,
+        icon: ICONS.tag,
+        children: [
+          {
+            title: 'Dòng sản phẩm',
+            path: PATH_DASHBOARD.products.list
+          }
+        ]
+      },
+
+      {
+        title: 'Thực đơn',
+        path: PATH_DASHBOARD.menus.list,
+        icon: ICONS.menu
+      },
       // MANAGEMENT : USER
       {
         title: 'user',
@@ -75,25 +93,8 @@ const sidebarConfig = [
           { title: 'checkout', path: PATH_DASHBOARD.eCommerce.checkout },
           { title: 'invoice', path: PATH_DASHBOARD.eCommerce.invoice }
         ]
-      },
-      // MANAGEMENT : PRODUCT
-      {
-        title: 'Sản Phẩm',
-        path: PATH_DASHBOARD.products.root,
-        icon: ICONS.tag,
-        children: [
-          {
-            title: 'Dòng sản phẩm',
-            path: PATH_DASHBOARD.products.list
-          }
-        ]
-      },
-
-      {
-        title: 'Thực đơn',
-        path: PATH_DASHBOARD.menus.list,
-        icon: ICONS.menu
       }
+
       // MANAGEMENT : BLOG
       // {
       //   title: 'blog',

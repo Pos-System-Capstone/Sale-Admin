@@ -10,9 +10,6 @@ import './utils/highlight';
 // scroll bar
 import 'simplebar/src/simplebar.css';
 
-// map
-import 'mapbox-gl/dist/mapbox-gl.css';
-
 // lightbox
 import 'react-image-lightbox/style.css';
 
