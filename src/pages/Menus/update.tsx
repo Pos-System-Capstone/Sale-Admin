@@ -5,6 +5,7 @@ import { get } from 'lodash-es';
 import { useSnackbar } from 'notistack5';
 import roundReceipt from '@iconify/icons-ic/round-receipt';
 import roundAccountBox from '@iconify/icons-ic/round-account-box';
+import roundStore from '@iconify/icons-ic/round-store';
 
 import { FormProvider, useForm } from 'react-hook-form';
 import { useLocation, useParams } from 'react-router-dom';
@@ -13,12 +14,34 @@ import Page from 'components/Page';
 import { convertDateToStr, convertStrToDate } from 'utils/utils';
 import MenuInfoTab from './tabs/MenuInfoTab';
 import ProductInMenuTab from './tabs/ProductInMenuTab';
+import StoreApplyTab from './tabs/StoreApplyTab';
+
+enum TabType {
+  MENU_INFO = 'MENUINFO',
+  STORE_APPLY = 'STORE_APPLY',
+  PRODUCT_MENU = 'PRODUCT_MENU'
+}
+
+function TabPanel(props: any) {
+  const { children, hidden, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={hidden}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      <Box sx={{ py: 2 }}>{children}</Box>
+    </div>
+  );
+}
 
 const UpdateMenuPage = () => {
   const { state } = useLocation();
   const { id } = useParams();
-  const [currentTab, setCurrentTab] = React.useState('Thông tin chung');
-  const ref = React.useRef();
+  const [currentTab, setCurrentTab] = React.useState<TabType>(TabType.STORE_APPLY);
   const { enqueueSnackbar } = useSnackbar();
 
   const form = useForm({
@@ -29,13 +52,13 @@ const UpdateMenuPage = () => {
     }
   });
 
-  const onUpdateMenu = (updateMenu) => {
+  const onUpdateMenu = (updateMenu: { time_from_to: string[]; from: any; to: any }) => {
     updateMenu.time_from_to = [
       convertDateToStr(updateMenu.from, 'HH:mm'),
       convertDateToStr(updateMenu.to, 'HH:mm')
     ];
 
-    return updateMenuInfo(id, updateMenu)
+    return updateMenuInfo(+id, updateMenu)
       .then(() =>
         enqueueSnackbar(`Cập nhật thành công`, {
           variant: 'success'
@@ -44,19 +67,18 @@ const UpdateMenuPage = () => {
       .catch((err) => {
         const errMsg = get(err.response, ['data', 'message'], `Có lỗi xảy ra. Vui lòng thử lại`);
         enqueueSnackbar(errMsg, {
-          variantF: 'error'
+          variant: 'error'
         });
       });
   };
 
-  const addProductToMenu = (datas) =>
-    addProductInMenus(id, datas)
+  const addProductToMenu = (datas: any) =>
+    addProductInMenus(+id, datas)
       .then(() =>
         enqueueSnackbar(`Thêm thành công`, {
           variant: 'success'
         })
       )
-      .then(() => ref?.current?.reload())
       .catch((err) => {
         const errMsg = get(err.response, ['data', 'message'], `Có lỗi xảy ra. Vui lòng thử lại`);
         enqueueSnackbar(errMsg, {
@@ -66,14 +88,22 @@ const UpdateMenuPage = () => {
 
   const MENU_TABS = [
     {
-      value: 'Thông tin chung',
+      value: TabType.MENU_INFO,
+      label: 'Thông tin chung',
       icon: <Icon icon={roundAccountBox} width={20} height={20} />,
       component: <MenuInfoTab onSubmit={form.handleSubmit(onUpdateMenu)} />
     },
     {
-      value: 'Sản phẩm',
+      value: TabType.STORE_APPLY,
+      label: 'Cửa hàng áp dụng',
+      icon: <Icon icon={roundStore} width={20} height={20} />,
+      component: <StoreApplyTab checkedStores={[]} />
+    },
+    {
+      value: TabType.PRODUCT_MENU,
+      label: 'Sản phẩm',
       icon: <Icon icon={roundReceipt} width={20} height={20} />,
-      component: <ProductInMenuTab id={id} ref={ref} onAddProduct={addProductToMenu} />
+      component: <ProductInMenuTab id={id} onAddProduct={addProductToMenu} />
     }
   ];
 
@@ -97,19 +127,17 @@ const UpdateMenuPage = () => {
             onChange={(e, value) => setCurrentTab(value)}
           >
             {MENU_TABS.map((tab) => (
-              <Tab
-                disableRipple
-                key={tab.value}
-                label={tab.value}
-                icon={tab.icon}
-                value={tab.value}
-              />
+              <Tab key={tab.value} label={tab.label} icon={tab.icon} value={tab.value} />
             ))}
           </Tabs>
           <Box mt={2}>
-            {MENU_TABS.map((tab) => {
+            {MENU_TABS.map((tab, index) => {
               const isMatched = tab.value === currentTab;
-              return isMatched && <Box key={tab.value}>{tab.component}</Box>;
+              return (
+                <TabPanel key={tab.value} index={index} hidden={!isMatched}>
+                  {tab.component}
+                </TabPanel>
+              );
             })}
           </Box>
         </Box>

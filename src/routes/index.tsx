@@ -97,7 +97,10 @@ export default function Router() {
         },
         {
           path: 'menus',
-          element: <MenusPage />
+          children: [
+            { path: '/', element: <MenusPage /> },
+            { path: '/:id', element: <UpdateMenuPage /> }
+          ]
         },
         {
           path: 'e-commerce',

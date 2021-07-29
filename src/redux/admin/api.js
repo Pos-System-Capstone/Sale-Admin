@@ -29,3 +29,13 @@ export const getTags = () =>
       }
     })
     .then((res) => res.data.data);
+
+export const getStores = () =>
+  request
+    .get(`/stores`, {
+      params: {
+        page: 1,
+        size: 100
+      }
+    })
+    .then((res) => res.data.data);

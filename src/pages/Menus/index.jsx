@@ -10,6 +10,7 @@ import Page from 'components/Page';
 import ResoTable from 'components/ResoTable/ResoTable';
 import { getMenus } from 'redux/menu/api';
 import { renderDayMenu } from 'utils/utils';
+import { PATH_DASHBOARD } from 'routes/paths';
 
 const columns = [
   {
@@ -19,7 +20,7 @@ const columns = [
   },
   {
     title: 'Ngày áp dụng',
-    dataIndex: 'day_filter',
+    dataIndex: 'day_filters',
     render: (days) => renderDayMenu(days)?.map((day) => <Chip key={day} label={day} />)
   },
   {
@@ -60,7 +61,10 @@ const MenusPage = () => {
         <Card style={{ padding: '1em' }}>
           <Stack spacing={2}>
             <ResoTable
-              onEdit={(menu) => navigate(`/menus/${menu.menu_id}`, { state: menu })}
+              rowKey="product_menu_id"
+              onEdit={(menu) =>
+                navigate(`${PATH_DASHBOARD.menus.root}/${menu.product_menu_id}`, { state: menu })
+              }
               getData={getMenus}
               columns={columns}
             />

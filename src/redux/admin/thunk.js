@@ -1,5 +1,5 @@
-import { setCategories, setCollections, setTags } from '.';
-import { getCategories, getCollection, getTags } from './api';
+import { setCategories, setCollections, setStores, setTags } from '.';
+import { getCategories, getCollection, getStores, getTags } from './api';
 
 const { createAsyncThunk } = require('@reduxjs/toolkit');
 
@@ -7,12 +7,13 @@ const fetchGlobalState = createAsyncThunk(
   'admin/fetchGlobalState',
   async (_, { dispatch, rejectWithValue }) => {
     try {
-      const requestArr = [getCollection(), getCategories(), getTags()];
+      const requestArr = [getCollection(), getCategories(), getTags(), getStores()];
 
-      const [collections, categories, tags] = await Promise.all(requestArr);
+      const [collections, categories, tags, stores] = await Promise.all(requestArr);
       dispatch(setCollections(collections));
       dispatch(setCategories(categories));
       dispatch(setTags(tags));
+      dispatch(setStores(stores));
 
       return { collections, categories, tags };
     } catch (error) {
