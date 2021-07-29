@@ -55,6 +55,10 @@ const sidebarConfig = [
           {
             title: 'Dòng sản phẩm',
             path: PATH_DASHBOARD.products.list
+          },
+          {
+            title: 'Bộ sưu tập',
+            path: PATH_DASHBOARD.collections.list
           }
         ]
       },
