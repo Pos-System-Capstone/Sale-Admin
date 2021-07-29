@@ -4,7 +4,7 @@ import {
   Button,
   CircularProgress,
   Stack,
-  Card as MuiCard,
+  Card,
   CardMedia,
   CardContent,
   Typography,
@@ -14,8 +14,7 @@ import {
   DialogTitle,
   DialogContentText,
   DialogActions,
-  DialogContent,
-  Card
+  DialogContent
 } from '@material-ui/core';
 import { useSnackbar } from 'notistack5';
 import React from 'react';
@@ -26,12 +25,13 @@ import DrawerProductForm from 'components/DrawerProductForm/DrawerProductForm';
 import { InputField } from 'components/form';
 import { formatCurrency } from 'utils/utils';
 import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
+import EmptyContent from 'components/EmptyContent';
 import EditProductDialog from '../components/EditProductDialog';
 
 const ProductCard = ({ product, onEdit, onDelete }) => {
   const random = Math.floor(Math.random() * 12) + 1;
   return (
-    <MuiCard sx={{ width: '100%', display: 'flex', flexDirection: 'column', position: 'relative' }}>
+    <Card sx={{ width: '100%', display: 'flex', flexDirection: 'column', position: 'relative' }}>
       <CardMedia
         sx={{ height: '151px', width: '100%', objectFit: 'cover' }}
         image={`https://minimals.cc/static/mock-images/products/product_${
@@ -57,7 +57,7 @@ const ProductCard = ({ product, onEdit, onDelete }) => {
           Điều chỉnh
         </Button>
       </CardActions>
-    </MuiCard>
+    </Card>
   );
 };
 
@@ -103,7 +103,7 @@ const ProductInMenuTab = ({ id, onAddProduct }) => {
       .finally(() => setCurrentDeleteItem(null));
 
   return (
-    <Box px={2} flex={1}>
+    <Box flex={1}>
       <EditProductDialog
         open={currentProduct}
         onClose={() => setCurrentProduct(null)}
@@ -133,7 +133,7 @@ const ProductInMenuTab = ({ id, onAddProduct }) => {
           </LoadingAsyncButton>
         </DialogActions>
       </Dialog>
-      <Card>
+      <Box as={Card} p={2}>
         <Stack justifyContent="space-between" mb={2} direction="row" spacing={2}>
           <InputField size="small" label="Tên sản phẩm" name="product-name" />
           <DrawerProductForm
@@ -155,10 +155,10 @@ const ProductInMenuTab = ({ id, onAddProduct }) => {
                   product={pro}
                 />
               </Grid>
-            ))}
+            )) ?? <EmptyContent title="Chưa có sản phẩm nào" />}
           </Grid>
         )}
-      </Card>
+      </Box>
     </Box>
   );
 };
