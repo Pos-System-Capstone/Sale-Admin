@@ -1,4 +1,13 @@
-import { Box, Button, Drawer, IconButton, Paper, Stack, Typography } from '@material-ui/core';
+import {
+  Box,
+  Button,
+  Dialog,
+  Drawer,
+  IconButton,
+  Paper,
+  Stack,
+  Typography
+} from '@material-ui/core';
 import React from 'react';
 import Icon from '@iconify/react';
 import closeFill from '@iconify/icons-eva/close-fill';
@@ -9,11 +18,11 @@ import { getAllProduct } from 'redux/product/api';
 import ResoTable from '../ResoTable/ResoTable';
 import LoadingAsyncButton from '../LoadingAsyncButton/LoadingAsyncButton';
 
-const DrawerProductForm = ({ trigger, children, onSubmit }) => {
+const ModalProductForm = ({ trigger, onSubmit, selected = [] }) => {
   const [open, setOpen] = React.useState(false);
   const [filters, setFilters] = React.useState(null);
 
-  const [selectedProductIds, setSelectedProductIds] = React.useState([]);
+  const [selectedProductIds, setSelectedProductIds] = React.useState(selected);
   const [selectedProducts, setSelectedProduct] = React.useState([]);
 
   const handleClick = () => {
@@ -33,8 +42,8 @@ const DrawerProductForm = ({ trigger, children, onSubmit }) => {
   return (
     <>
       {React.cloneElement(trigger, { onClick: handleClick })}
-      <Drawer anchor="right" open={open} onClose={() => setOpen(false)}>
-        <Box display="flex" flexDirection="column" maxHeight="100vh">
+      <Dialog anchor="right" open={open} onClose={() => setOpen(false)}>
+        <Box display="flex" flexDirection="column" maxHeight="80vh">
           <Paper>
             <Box
               display="flex"
@@ -51,14 +60,17 @@ const DrawerProductForm = ({ trigger, children, onSubmit }) => {
               </IconButton>
             </Box>
           </Paper>
-          <Box sx={{ padding: '1em', width: '740px', flex: 1, overflowY: 'auto' }}>
+          <Box p={1}>
+            <SeachProductForm onChange={setFilters} />
+          </Box>
+          <Box p={1} sx={{ flex: 1, overflowY: 'auto' }}>
             <Stack spacing={2}>
-              <SeachProductForm onChange={setFilters} />
-
               <ResoTable
-                checkboxSelection
+                checkboxSelection={{
+                  selection: selectedProductIds
+                }}
                 showAction={false}
-                scroll={{ y: 460 }}
+                scroll={{ y: '50%', x: '100%' }}
                 rowKey="product_id"
                 getData={getAllProduct}
                 onChangeSelection={handleChangeSelection}
@@ -89,9 +101,9 @@ const DrawerProductForm = ({ trigger, children, onSubmit }) => {
             </Stack>
           </Box>
         </Box>
-      </Drawer>
+      </Dialog>
     </>
   );
 };
 
-export default DrawerProductForm;
+export default ModalProductForm;

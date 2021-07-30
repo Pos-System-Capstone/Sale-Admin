@@ -10,7 +10,7 @@ const RootStyle = styled(Box)(({ theme }) => ({
   alignItems: 'center',
   flexDirection: 'column',
   justifyContent: 'center',
-  padding: theme.spacing(8, 2),
+  padding: theme.spacing(4, 2),
   width: '100%'
 }));
 

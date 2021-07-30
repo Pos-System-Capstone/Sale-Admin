@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 
 const tagsData = ['Pizza', 'Trò chơi', 'Mát mẻ', 'Mùa hè'];
 
-const RightForm = ({ handleSubmit }) => {
+const RightForm = () => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
@@ -52,11 +52,6 @@ const RightForm = ({ handleSubmit }) => {
   };
   const handleClose = () => {
     setAnchorEl(null);
-  };
-
-  const onSubmit = () => {
-    setIsSubmitting(true);
-    handleSubmit().finally(() => setIsSubmitting(false));
   };
 
   const { categories = [], collections: collectionsData = [] } = useSelector(

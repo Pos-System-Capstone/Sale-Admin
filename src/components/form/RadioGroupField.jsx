@@ -31,7 +31,7 @@ const RadioGroupField = ({
       render={({ field, fieldState }) => (
         <FormControl
           component="fieldset"
-          error={fieldState.error}
+          error={Boolean(fieldState.error)}
           className={className}
           fullWidth={fullWidth}
           size={size}

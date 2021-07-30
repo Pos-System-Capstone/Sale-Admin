@@ -42,7 +42,7 @@ const CollectionListPage = () => {
           </Typography>
           <Button
             onClick={() => {
-              navigate('/collections/create');
+              navigate(PATH_DASHBOARD.collections.new);
             }}
             variant="contained"
             startIcon={<Icon icon={plusFill} />}

@@ -155,7 +155,7 @@ const ProductInCollectionTab = ({ id, onAddProduct }: any) => {
       )}
       <Box component={Card} p={2}>
         <Stack justifyContent="space-between" mb={2} direction="row" spacing={2}>
-          <InputField rules={null} size="small" label="Tên sản phẩm" name="product-name" />
+          <InputField size="small" label="Tên sản phẩm" name="product-name" />
           <DrawerProductForm
             onSubmit={(ids: any, data: any) => onAddProduct(data)}
             trigger={<Button variant="contained">Thêm sản phẩm</Button>}

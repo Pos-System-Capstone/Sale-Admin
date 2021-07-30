@@ -21,7 +21,11 @@ import {
   TableRow,
   TableSortLabel,
   Typography,
-  Box
+  Box,
+  useMediaQuery,
+  Stack,
+  Divider,
+  Tooltip
 } from '@material-ui/core';
 import get from 'lodash/get';
 import { useAntdTable } from 'ahooks';
@@ -70,6 +74,12 @@ const useStyles = makeStyles({
   actionColumn: {
     minWidth: '70px',
     width: '70px'
+  },
+  stickyLeft: {
+    left: (props) => props.left ?? '0'
+  },
+  stickyRight: {
+    right: (props) => props.right ?? '0'
   }
 });
 
@@ -77,7 +87,7 @@ const ResoTable = React.forwardRef(
   (
     {
       columns = [],
-      dataSource = [],
+      dataSource,
       pagination = {
         rowsPerPage: 10,
         page: 1,
@@ -86,18 +96,21 @@ const ResoTable = React.forwardRef(
       filters,
       onEdit = () => null,
       onDelete = () => null,
-      getData = () => [],
+      getData = () => [{ product_name: 'asdasd' }],
       rowKey = 'id',
       checkboxSelection,
-      onChangeSelection
+      onChangeSelection,
+      scroll,
+      showAction = true
     },
     ref
   ) => {
     const classes = useStyles();
     const [_paginaton, setPaginaton] = React.useState(pagination);
-    const [_selectedIds, setSelectedIds] = React.useState([]);
+    const [_selectedIds, setSelectedIds] = React.useState(checkboxSelection?.selection ?? []);
     const [_anchorEl, setAnchorEl] = React.useState(null);
     const [_openMenu, setOpenMenu] = React.useState(null);
+    const mdUp = useMediaQuery((theme) => theme.breakpoints.up('md'));
 
     const openEditMenu = (event) => {
       setAnchorEl(event.currentTarget);
@@ -107,16 +120,24 @@ const ResoTable = React.forwardRef(
     };
 
     const { tableProps, search, loading, data } = useAntdTable(
-      (params) =>
-        getData({ ...params, ...params.filters, page: params.current, size: params.pageSize }),
+      (params) => {
+        if (dataSource) return Promise.resolve(dataSource);
+        return getData({
+          ...params,
+          ...params.filters,
+          page: params.current,
+          size: params.pageSize
+        });
+      },
       {
         defaultPageSize: 10,
         formatResult: (res) => ({
-          total: res.data.metadata?.total,
-          list: res.data.data ?? [],
+          total: dataSource ? dataSource.length : res.data.metadata?.total,
+          list: dataSource ?? res.data.data,
           success: true
         }),
-        onError: console.log
+        onError: console.log,
+        refreshDeps: [dataSource]
       }
     );
     const { current, pageSize, total } = tableProps?.pagination ?? {};
@@ -143,7 +164,9 @@ const ResoTable = React.forwardRef(
 
     React.useEffect(() => {
       if (typeof onChangeSelection === 'function') {
+        // TH default selection chua co trong list data
         const selectionData = data?.list.filter((d) => _selectedIds.includes(d[rowKey]));
+        // data
         onChangeSelection(_selectedIds, selectionData);
       }
     }, [_selectedIds, onChangeSelection, data?.list, rowKey]);
@@ -182,14 +205,14 @@ const ResoTable = React.forwardRef(
 
       if (checkboxSelection) {
         tableHeaders.push(
-          <TableCell padding="checkbox">
+          <StickyLeftTableCell className={classes.stickyLeft} padding="checkbox">
             <Checkbox
               indeterminate={_selectedIds.length > 0 && _selectedIds.length < data?.list?.length}
               checked={data?.list?.length > 0 && _selectedIds.length === data?.list?.length}
               onChange={onSelectAllClick}
               inputProps={{ 'aria-label': 'select all desserts' }}
             />
-          </TableCell>
+          </StickyLeftTableCell>
         );
       }
 
@@ -200,33 +223,38 @@ const ResoTable = React.forwardRef(
             className={classes.root}
             key={`header_${index}`}
             align={header.alignRight ? 'right' : 'left'}
+            sx={{ left: checkboxSelection ? '64px' : 0 }}
           >
             <TableSortLabel hideSortIcon>{getCellValue(header.title, null, header)}</TableSortLabel>
           </CellComp>
         );
       });
 
-      tableHeaders.push(
-        <StickyRightTableCell
-          className={[classes.root, classes.actionColumn].join(' ')}
-          key="column-action"
-          align="center"
-        >
-          <TableSortLabel hideSortIcon>
-            <span />
-          </TableSortLabel>
-        </StickyRightTableCell>
-      );
+      if (showAction) {
+        tableHeaders.push(
+          <StickyRightTableCell
+            className={[classes.root, classes.actionColumn].join(' ')}
+            key="column-action"
+            align="center"
+          >
+            <TableSortLabel hideSortIcon>
+              <span />
+            </TableSortLabel>
+          </StickyRightTableCell>
+        );
+      }
 
       return <TableRow>{tableHeaders}</TableRow>;
     }, [
-      checkboxSelection,
-      classes.actionColumn,
-      classes.root,
       columns,
+      checkboxSelection,
+      showAction,
+      classes.stickyLeft,
+      classes.root,
+      classes.actionColumn,
+      _selectedIds.length,
       data?.list?.length,
-      onSelectAllClick,
-      _selectedIds.length
+      onSelectAllClick
     ]);
 
     const tableBodyContent = React.useMemo(() => {
@@ -237,7 +265,7 @@ const ResoTable = React.forwardRef(
       const tableBodys = [];
       data.list.forEach((data) => {
         const bodyRow = body.map((column, index) => {
-          const CellComp = index === 0 ? StickyLeftTableCell : TableCell;
+          const CellComp = TableCell;
 
           let cell;
 
@@ -251,64 +279,90 @@ const ResoTable = React.forwardRef(
             );
           }
 
-          return <CellComp key={`${column.title}-${data.product_id}`}>{cell}</CellComp>;
+          return (
+            <CellComp
+              className={classes.stickyLeft}
+              left={checkboxSelection ? '64px' : 0}
+              key={`${column.title}-${data.product_id}`}
+            >
+              {cell}
+            </CellComp>
+          );
         });
 
         if (checkboxSelection) {
           const isItemSelected = isSelected(data[rowKey]);
           bodyRow.unshift(
-            <TableCell padding="checkbox">
+            <StickyLeftTableCell className={classes.stickyLeft} padding="checkbox">
               <Checkbox checked={isItemSelected} inputProps={{ 'aria-labelledby': data[rowKey] }} />
-            </TableCell>
+            </StickyLeftTableCell>
           );
         }
 
         const handleEdit = () => onEdit(data);
         const handleDelete = () => onDelete(data);
 
-        const ActionCell = (
-          <StickyRightTableCell key={`edit-cell-${data.product_id}`}>
-            <IconButton
-              onClick={(e) => {
-                openEditMenu(e);
-                setOpenMenu(data.product_id);
-              }}
-              aria-label="more"
-              aria-controls="long-menu"
-              aria-haspopup="true"
-            >
-              <Icon icon={moreVerticalFill} />
-            </IconButton>
-            <Menu
-              anchorEl={_anchorEl}
-              MenuListProps={{
-                'aria-labelledby': 'edit-menu'
-              }}
-              onClose={(e) => {
-                closeEditMenu(e);
-                setOpenMenu(null);
-              }}
-              open={data.product_id === _openMenu}
-              key={`menu-edit-${data.product_id}`}
-              id={`menu-edit-${data.product_id}`}
-            >
-              <MenuItem onClick={handleDelete} sx={{ color: 'red' }}>
-                <ListItemIcon>
-                  <Icon icon={trashIcon} />
-                </ListItemIcon>
-                <ListItemText>Xóa</ListItemText>
-              </MenuItem>
-              <MenuItem onClick={handleEdit}>
-                <ListItemIcon>
-                  <Icon icon={editIcon} />
-                </ListItemIcon>
-                <ListItemText>Điều chỉnh</ListItemText>
-              </MenuItem>
-            </Menu>
-          </StickyRightTableCell>
-        );
+        if (showAction) {
+          const ActionCell = mdUp ? (
+            <StickyRightTableCell>
+              <Stack direction="row">
+                <Tooltip title="Xóa">
+                  <IconButton onClick={handleDelete} sx={{ color: 'red' }}>
+                    <Icon icon={trashIcon} />
+                  </IconButton>
+                </Tooltip>
+                <Divider orientation="vertical" flexItem />
+                <Tooltip title="Điều chỉnh">
+                  <IconButton onClick={handleEdit}>
+                    <Icon icon={editIcon} />
+                  </IconButton>
+                </Tooltip>
+              </Stack>
+            </StickyRightTableCell>
+          ) : (
+            <StickyRightTableCell key={`edit-cell-${data.product_id}`}>
+              <IconButton
+                onClick={(e) => {
+                  openEditMenu(e);
+                  setOpenMenu(data.product_id);
+                }}
+                aria-label="more"
+                aria-controls="long-menu"
+                aria-haspopup="true"
+              >
+                <Icon icon={moreVerticalFill} />
+              </IconButton>
+              <Menu
+                anchorEl={_anchorEl}
+                MenuListProps={{
+                  'aria-labelledby': 'edit-menu'
+                }}
+                onClose={(e) => {
+                  closeEditMenu(e);
+                  setOpenMenu(null);
+                }}
+                open={data.product_id === _openMenu}
+                key={`menu-edit-${data.product_id}`}
+                id={`menu-edit-${data.product_id}`}
+              >
+                <MenuItem onClick={handleDelete} sx={{ color: 'red' }}>
+                  <ListItemIcon>
+                    <Icon icon={trashIcon} />
+                  </ListItemIcon>
+                  <ListItemText>Xóa</ListItemText>
+                </MenuItem>
+                <MenuItem onClick={handleEdit}>
+                  <ListItemIcon>
+                    <Icon icon={editIcon} />
+                  </ListItemIcon>
+                  <ListItemText>Điều chỉnh</ListItemText>
+                </MenuItem>
+              </Menu>
+            </StickyRightTableCell>
+          );
 
-        bodyRow.push(ActionCell);
+          bodyRow.push(ActionCell);
+        }
 
         tableBodys.push(
           <TableRow
@@ -325,17 +379,20 @@ const ResoTable = React.forwardRef(
       columns,
       _selectedIds,
       checkboxSelection,
-      _anchorEl,
-      _openMenu,
+      showAction,
+      classes.stickyLeft,
       rowKey,
       onEdit,
       onDelete,
+      mdUp,
+      _anchorEl,
+      _openMenu,
       handleClick
     ]);
 
     return (
       <Container style={{ padding: 0 }}>
-        <TableContainer>
+        <TableContainer sx={{ maxHeight: scroll?.y, maxWidth: scroll?.x }}>
           <Table stickyHeader>
             <TableHead>{tableHeader}</TableHead>
 
@@ -367,18 +424,20 @@ const ResoTable = React.forwardRef(
             />
           </Box>
         )}
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={tableProps}
-          {..._paginaton}
-          onPageChange={(_, page) =>
-            tableProps.onChange({ ...tableProps.pagination, current: page })
-          }
-          onRowsPerPageChange={(e) =>
-            tableProps.onChange({ ...tableProps.pagination, pageSize: e.target.value })
-          }
-        />
+        {pagination && (
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={tableProps}
+            {..._paginaton}
+            onPageChange={(_, page) =>
+              tableProps.onChange({ ...tableProps.pagination, current: page })
+            }
+            onRowsPerPageChange={(e) =>
+              tableProps.onChange({ ...tableProps.pagination, pageSize: e.target.value })
+            }
+          />
+        )}
       </Container>
     );
   }

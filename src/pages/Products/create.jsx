@@ -44,8 +44,8 @@ const CreateProduct = () => {
       product_name: '',
       product_code: '',
       thumbnail: '',
-      category_id: null,
-      description: null,
+      category_id: '',
+      description: '',
       product_type_id: PRODUCT_MASTER,
       is_available: true,
       variants: [
@@ -57,15 +57,15 @@ const CreateProduct = () => {
       menus: [
         {
           price: 0,
-          menuId: null
+          menuId: ''
         }
       ],
       collection_id: [],
       tag_id: [],
       seo: {
-        title: null,
-        link: null,
-        description: null
+        title: '',
+        link: '',
+        description: ''
       }
     }
   });
@@ -116,7 +116,7 @@ const CreateProduct = () => {
           </Typography>
           <Box display="flex">
             <MiddleForm />
-            <RightForm handleSubmit={handleSubmit(onSubmit)} />
+            <RightForm />
           </Box>
         </Box>
       </Page>

@@ -22,7 +22,7 @@ const SelectField = ({
     <Controller
       render={({ field, fieldState }) => (
         <FormControl
-          error={fieldState.error}
+          error={Boolean(fieldState.error)}
           className={className}
           fullWidth={fullWidth}
           size={size}
@@ -36,6 +36,7 @@ const SelectField = ({
             helperText={fieldState.error ? fieldState.error.message : props.helperText}
             label={label}
             {...field}
+            error={Boolean(fieldState.error)}
             value={field.value || []}
           >
             {children ??

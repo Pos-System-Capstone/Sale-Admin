@@ -3,7 +3,7 @@ import { TextField } from '@material-ui/core';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
-const FormInput = ({ name, label, rules, defaultValue = '', ...props }) => {
+const FormInput = ({ name, label, rules = null, defaultValue = '', ...props }) => {
   const { control } = useFormContext();
 
   return (
@@ -12,7 +12,7 @@ const FormInput = ({ name, label, rules, defaultValue = '', ...props }) => {
         <TextField
           {...props}
           {...field}
-          error={fieldState.error}
+          error={Boolean(fieldState.error)}
           helperText={fieldState.error ? fieldState.error.message : props.helperText}
           label={label}
         />

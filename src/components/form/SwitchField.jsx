@@ -19,9 +19,8 @@ const SwitchField = ({
     <Controller
       render={({ field, fieldState }) => (
         <FormControlLabel
-          error={fieldState.error}
+          error={Boolean(fieldState.error)}
           className={className}
-          fullWidth={fullWidth}
           size={size}
           label={label}
           control={<Switch checked={field.value} name={name} />}

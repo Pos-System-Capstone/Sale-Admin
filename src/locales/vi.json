@@ -4,5 +4,12 @@
     "master": "Dòng Sản phẩm",
     "menu": "Thực đơn",
     "collection": "Bộ sưu tập"
+  },
+  "common": {
+    "required": "Vui lòng nhập {{name}}",
+    "create": "Tạo",
+    "update": "Cập nhật",
+    "save": "Lưu",
+    "cancel" : "Hủy"
   }
 }

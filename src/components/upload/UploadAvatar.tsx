@@ -1,5 +1,5 @@
 import { isString } from 'lodash';
-import { ReactNode } from 'react';
+import { ReactNode, useCallback } from 'react';
 import { Icon } from '@iconify/react';
 import { useDropzone, DropzoneOptions } from 'react-dropzone';
 import roundAddAPhoto from '@iconify/icons-ic/round-add-a-photo';
@@ -8,7 +8,9 @@ import { alpha, Theme, styled } from '@material-ui/core/styles';
 import { Box, Typography, Paper } from '@material-ui/core';
 import { SxProps } from '@material-ui/system';
 // utils
-import { fData } from '../../utils/formatNumber';
+import { fData } from 'utils/formatNumber';
+import { uploadfile } from 'redux/file/api';
+import { useSnackbar } from 'notistack5';
 
 // ----------------------------------------------------------------------
 
@@ -66,13 +68,49 @@ interface CustomFile extends File {
 interface UploadAvatarProps extends DropzoneOptions {
   error?: boolean;
   file: CustomFile | string | null;
+  value?: CustomFile | string | null;
   caption?: ReactNode;
   sx?: SxProps<Theme>;
+  onChange?: Function;
 }
 
-export default function UploadAvatar({ error, file, caption, sx, ...other }: UploadAvatarProps) {
+export default function UploadAvatar({
+  onChange: onFormChange,
+  error,
+  file,
+  value,
+  caption,
+  sx,
+  ...other
+}: UploadAvatarProps) {
+  const { enqueueSnackbar } = useSnackbar();
+
+  const onDrop = useCallback(
+    async (acceptedFiles) => {
+      const file = acceptedFiles[0];
+      if (file) {
+        // upload image
+        const formData = new FormData();
+        formData.append('file', file);
+        try {
+          const res = await uploadfile(formData);
+          if (onFormChange) {
+            onFormChange(res.data);
+          }
+        } catch (err) {
+          enqueueSnackbar(err.message ?? 'Có lỗi', {
+            variant: 'error'
+          });
+          console.log(`err`, err);
+        }
+      }
+    },
+    [onFormChange, enqueueSnackbar]
+  );
+
   const { getRootProps, getInputProps, isDragActive, isDragReject, fileRejections } = useDropzone({
     multiple: false,
+    onDrop,
     ...other
   });
 
@@ -121,11 +159,11 @@ export default function UploadAvatar({ error, file, caption, sx, ...other }: Upl
         >
           <input {...getInputProps()} />
 
-          {file && (
+          {value && (
             <Box
               component="img"
               alt="avatar"
-              src={isString(file) ? file : file.preview}
+              src={isString(value) ? value : ''}
               sx={{ zIndex: 8, objectFit: 'cover' }}
             />
           )}
@@ -133,7 +171,7 @@ export default function UploadAvatar({ error, file, caption, sx, ...other }: Upl
           <PlaceholderStyle
             className="placeholder"
             sx={{
-              ...(file && {
+              ...(value && {
                 opacity: 0,
                 color: 'common.white',
                 bgcolor: 'grey.900',
@@ -142,7 +180,7 @@ export default function UploadAvatar({ error, file, caption, sx, ...other }: Upl
             }}
           >
             <Box component={Icon} icon={roundAddAPhoto} sx={{ width: 24, height: 24, mb: 1 }} />
-            <Typography variant="caption">{file ? 'Update photo' : 'Upload photo'}</Typography>
+            <Typography variant="caption">{value ? 'Update photo' : 'Upload photo'}</Typography>
           </PlaceholderStyle>
         </DropZoneStyle>
       </RootStyle>

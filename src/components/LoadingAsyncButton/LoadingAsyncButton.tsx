@@ -7,7 +7,7 @@ const LoadingAsyncButton = ({ onClick, children, ...props }: any) => {
   const handleClick = () => {
     if (onClick) {
       setLoading(true);
-      return Promise.resolve(onClick).finally(() => setLoading(false));
+      return Promise.resolve(onClick()).finally(() => setLoading(false));
     }
     return null;
   };
