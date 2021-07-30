@@ -8,7 +8,7 @@ export interface Menu {
 }
 
 export const getMenus = (params: any): any =>
-  request.get<Menu>(`/menu-in-stores`, {
+  request.get<Menu>(`/menus`, {
     params
   });
 
