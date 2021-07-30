@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   CircularProgress,
+  FormHelperText,
   IconButton,
   List,
   ListItem,
@@ -13,6 +14,7 @@ import React from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { Icon } from '@iconify/react';
 import { useSnackbar } from 'notistack5';
+import { UploadAvatar } from 'components/upload';
 
 import closeFill from '@iconify/icons-eva/close-fill';
 import { ReactComponent as UploadSVG } from '../../assets/images/upload.svg';
@@ -134,5 +136,43 @@ const UploadImageField = ({ name, label, defaultValue = '' }) => {
     />
   );
 };
+
+const UploadAvatarField = ({ name, label, defaultValue = '' }) => {
+  const { control } = useFormContext();
+  return (
+    <Controller
+      defaultValue={defaultValue}
+      control={control}
+      name={name}
+      render={({ field, fieldState }) => (
+        <Box sx={{ mb: 5 }}>
+          <UploadAvatar
+            caption={
+              <Typography
+                variant="caption"
+                sx={{
+                  mt: 2,
+                  mx: 'auto',
+                  display: 'block',
+                  textAlign: 'center',
+                  color: 'text.secondary'
+                }}
+              >
+                {label}
+              </Typography>
+            }
+            error={fieldState.error}
+            value={field.value}
+            onChange={field.onChange}
+          />
+          <FormHelperText error sx={{ px: 2, textAlign: 'center' }}>
+            {fieldState.error && fieldState.error.message}
+          </FormHelperText>
+        </Box>
+      )}
+    />
+  );
+};
+UploadImageField.Avatar = UploadAvatarField;
 
 export default UploadImageField;
