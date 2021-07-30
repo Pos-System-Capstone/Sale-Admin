@@ -14,11 +14,14 @@ import {
   DialogTitle,
   DialogContentText,
   DialogActions,
-  DialogContent
+  DialogContent,
+  Avatar
 } from '@material-ui/core';
 import { useSnackbar } from 'notistack5';
 import React from 'react';
 import { useRequest } from 'ahooks';
+import Icon from '@iconify/react';
+import plusFill from '@iconify/icons-eva/plus-fill';
 import { get } from 'lodash-es';
 import { deleteProductInMenu, getProductInMenus, updateProdInMenuInfo } from 'redux/menu/api';
 import DrawerProductForm from 'components/DrawerProductForm/DrawerProductForm';
@@ -26,6 +29,8 @@ import { InputField } from 'components/form';
 import { formatCurrency } from 'utils/utils';
 import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
 import EmptyContent from 'components/EmptyContent';
+import ResoTable from 'components/ResoTable/ResoTable';
+import { getAllProduct } from 'redux/product/api';
 import EditProductDialog from '../components/EditProductDialog';
 
 const ProductCard = ({ product, onEdit, onDelete }) => {
@@ -163,25 +168,49 @@ const ProductInMenuTab = ({ id, onAddProduct }) => {
           <InputField size="small" label="Tên sản phẩm" name="product-name" />
           <DrawerProductForm
             onSubmit={(ids, data) => onAddProduct(data)}
-            trigger={<Button variant="contained">Thêm sản phẩm</Button>}
-          >
-            Hello Drawer
-          </DrawerProductForm>
+            trigger={
+              <Button startIcon={<Icon icon={plusFill} />} variant="contained">
+                Thêm sản phẩm
+              </Button>
+            }
+          />
         </Stack>
         {loading ? (
           <CircularProgress />
         ) : (
-          <Grid py={2} container spacing={3}>
-            {data?.map((pro) => (
-              <Grid key={pro.product_id} item xs={4} md={3}>
-                <ProductCard
-                  onEdit={() => setCurrentProduct(pro)}
-                  onDelete={() => setCurrentDeleteItem(pro)}
-                  product={pro}
-                />
-              </Grid>
-            )) ?? <EmptyContent title="Chưa có sản phẩm nào" />}
-          </Grid>
+          <ResoTable
+            getData={getAllProduct}
+            rowKey="product_id"
+            onEdit={setCurrentProduct}
+            onDelete={setCurrentDeleteItem}
+            columns={[
+              {
+                title: 'Mã sản phẩm',
+                dataIndex: 'code'
+              },
+              {
+                title: 'Hình ảnh',
+                dataIndex: 'pic_url',
+                render: (src, { product_name }) => (
+                  <Avatar
+                    alt={product_name}
+                    src={src}
+                    variant="square"
+                    style={{ width: '54px', height: '54px' }}
+                  />
+                )
+              },
+              {
+                title: 'Tên sản phẩm',
+                dataIndex: 'product_name'
+              },
+              {
+                title: 'Giá',
+                dataIndex: 'price1',
+                render: (value) => <Typography>{formatCurrency(value)}</Typography>
+              }
+            ]}
+          />
         )}
       </Box>
     </Box>

@@ -1,4 +1,5 @@
 /* eslint-disable camelcase */
+import { useState } from 'react';
 import plusFill from '@iconify/icons-eva/plus-fill';
 import { Icon } from '@iconify/react';
 // material
@@ -11,6 +12,8 @@ import ResoTable from 'components/ResoTable/ResoTable';
 import { getMenus } from 'redux/menu/api';
 import { renderDayMenu } from 'utils/utils';
 import { PATH_DASHBOARD } from 'routes/paths';
+import Label from 'components/Label';
+import MenuSearchForm from './components/MenuSearchForm';
 
 const columns = [
   {
@@ -21,7 +24,12 @@ const columns = [
   {
     title: 'Ngày áp dụng',
     dataIndex: 'day_filters',
-    render: (days) => renderDayMenu(days)?.map((day) => <Chip key={day} label={day} />)
+    render: (days) =>
+      days?.length === 7 ? (
+        <Label color="info">Cả tuần</Label>
+      ) : (
+        renderDayMenu(days)?.map((day) => <Label key={day}>{day}</Label>)
+      )
   },
   {
     title: 'Thời gian áp dụng',
@@ -40,6 +48,7 @@ const columns = [
 
 const MenusPage = () => {
   const navigate = useNavigate();
+  const [filters, setFilters] = useState(null);
   return (
     <Page title="Dashboard: Products | Minimal-UI">
       <Container>
@@ -60,10 +69,12 @@ const MenusPage = () => {
         </Stack>
         <Card style={{ padding: '1em' }}>
           <Stack spacing={2}>
+            <MenuSearchForm onChange={setFilters} />
             <ResoTable
-              rowKey="product_menu_id"
+              filters={filters}
+              rowKey="meunu_id"
               onEdit={(menu) =>
-                navigate(`${PATH_DASHBOARD.menus.root}/${menu.product_menu_id}`, { state: menu })
+                navigate(`${PATH_DASHBOARD.menus.root}/${menu.meunu_id}`, { state: menu })
               }
               getData={getMenus}
               columns={columns}

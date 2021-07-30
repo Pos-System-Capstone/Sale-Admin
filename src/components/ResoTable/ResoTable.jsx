@@ -76,6 +76,7 @@ const useStyles = makeStyles({
     width: '70px'
   },
   stickyLeft: {
+    position: 'sticky',
     left: (props) => props.left ?? '0'
   },
   stickyRight: {
@@ -131,11 +132,14 @@ const ResoTable = React.forwardRef(
       },
       {
         defaultPageSize: 10,
-        formatResult: (res) => ({
-          total: dataSource ? dataSource.length : res.data.metadata?.total,
-          list: dataSource ?? res.data.data,
-          success: true
-        }),
+        formatResult: (res) => {
+          console.log(`res`, res);
+          return {
+            total: dataSource ? dataSource.length : res.data.metadata?.total,
+            list: dataSource ?? res.data.data,
+            success: true
+          };
+        },
         onError: console.log,
         refreshDeps: [dataSource]
       }

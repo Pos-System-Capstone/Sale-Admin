@@ -47,7 +47,7 @@ const MenuInfoTab = ({ onSubmit }) => (
               }
             ]}
             multiple
-            name="day_filter"
+            name="day_filters"
             label="Ngày hiệu lực"
           />
         </Grid>

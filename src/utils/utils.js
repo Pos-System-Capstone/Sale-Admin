@@ -351,8 +351,12 @@ export const reorder = (list, startIndex, endIndex) => {
 export const removeColumnIndex = (columns = [], removeIndexs = []) =>
   columns.filter((col) => !removeIndexs.some((key) => key === col.dataIndex));
 
-export const formatCurrency = (amount) =>
-  new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
+export const formatCurrency = (amount) => {
+  if (!isNaN(amount)) {
+    return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
+  }
+  return '-';
+};
 
 export function arrayMove(array, from, to) {
   const newArray = array.slice();
