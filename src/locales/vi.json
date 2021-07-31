@@ -6,11 +6,30 @@
     "collection": "Bộ sưu tập",
     "store": "Cửa hàng"
   },
+  "pages": {
+    "stores": {
+      "listTitle": "Danh sách cửa hàng",
+      "addBtn": "Thêm cửa hàng",
+      "table": {
+        "name": "Tên cửa hàng",
+        "shortName": "Tên rút gọn",
+        "isAvailable": "Trạng thái",
+        "storeCode": "Mã cửa hàng",
+        "openTime": "Mở cửa",
+        "closeTime": "Đóng cửa",
+        "type": "Loại cửa hàng"
+      },
+      "storeInfoTitle": "Thông tin cửa hàng"
+    }
+  },
   "common": {
     "required": "Vui lòng nhập {{name}}",
     "create": "Tạo",
     "update": "Cập nhật",
     "save": "Lưu",
-    "cancel": "Hủy"
+    "cancel": "Hủy",
+    "all": "Tất cả",
+    "available": "Hoạt động",
+    "notAvailable": "Không Hoạt động"
   }
 }

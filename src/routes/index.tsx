@@ -111,6 +111,16 @@ export default function Router() {
           ]
         },
         {
+          path: 'stores',
+          children: [
+            { path: '/', element: <StoreListPage /> },
+            {
+              path: '/new',
+              element: <CreateStorePage />
+            }
+          ]
+        },
+        {
           path: 'e-commerce',
           children: [
             { path: '/', element: <Navigate to="/dashboard/e-commerce/shop" replace /> },
@@ -211,3 +221,7 @@ const UpdateMenuPage = Loadable(lazy(() => import('../pages/Menus/update')));
 const CollectionListPage = Loadable(lazy(() => import('../pages/collections')));
 const UpdateCollectionPage = Loadable(lazy(() => import('../pages/collections/update')));
 const CreateCollectionPage = Loadable(lazy(() => import('../pages/collections/create')));
+
+// Store
+const StoreListPage = Loadable(lazy(() => import('../pages/Stores')));
+const CreateStorePage = Loadable(lazy(() => import('../pages/Stores/create')));

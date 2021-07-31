@@ -48,7 +48,8 @@ const StickyLeftTableCell = withStyles((theme) => ({
     minWidth: '50px',
     left: '0',
     position: 'sticky',
-    zIndex: theme.zIndex.appBar + 1
+    zIndex: theme.zIndex.modal,
+    backgroundColor: theme.palette.primary.main
   }
 }))(TableCell);
 
@@ -57,17 +58,18 @@ const StickyRightTableCell = withStyles((theme) => ({
     // color: theme.palette.common.white,
     right: 0,
     position: 'sticky',
-    zIndex: theme.zIndex.appBar + 2
+    zIndex: theme.zIndex.modal
   },
   body: {
     minWidth: '50px',
     right: '0',
     position: 'sticky',
-    zIndex: theme.zIndex.appBar + 1
+    zIndex: theme.zIndex.modal
+    // borderLeft: `1px solid ${theme.palette.grey[400]}`
   }
 }))(TableCell);
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     minWidth: '120px'
   },
@@ -78,11 +80,13 @@ const useStyles = makeStyles({
   stickyLeft: {
     position: 'sticky',
     left: (props) => props.left ?? '0'
+    // borderRight: `1px solid ${theme.palette.grey[400]}`
   },
   stickyRight: {
     right: (props) => props.right ?? '0'
+    // borderLeft: `1px solid ${theme.palette.grey[400]}`
   }
-});
+}));
 
 const ResoTable = React.forwardRef(
   (
@@ -94,7 +98,7 @@ const ResoTable = React.forwardRef(
         page: 1,
         count: 1
       },
-      filters,
+      filters = {},
       onEdit = () => null,
       onDelete = () => null,
       getData = () => [{ product_name: 'asdasd' }],
@@ -285,7 +289,7 @@ const ResoTable = React.forwardRef(
 
           return (
             <CellComp
-              className={classes.stickyLeft}
+              className={index === 0 && classes.stickyLeft}
               left={checkboxSelection ? '64px' : 0}
               key={`${column.title}-${data.product_id}`}
             >
