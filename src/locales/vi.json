@@ -3,13 +3,14 @@
     "product": "Sản phẩm",
     "master": "Dòng Sản phẩm",
     "menu": "Thực đơn",
-    "collection": "Bộ sưu tập"
+    "collection": "Bộ sưu tập",
+    "store": "Cửa hàng"
   },
   "common": {
     "required": "Vui lòng nhập {{name}}",
     "create": "Tạo",
     "update": "Cập nhật",
     "save": "Lưu",
-    "cancel" : "Hủy"
+    "cancel": "Hủy"
   }
 }

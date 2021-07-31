@@ -22,7 +22,8 @@ const ICONS = {
   dashboard: getIcon('ic_dashboard'),
   kanban: getIcon('ic_kanban'),
   tag: getIcon('tag'),
-  menu: getIcon('menu')
+  menu: getIcon('menu'),
+  store: getIcon('ic_store')
 };
 
 const sidebarConfig = [
@@ -67,6 +68,11 @@ const sidebarConfig = [
         title: 'menu',
         path: PATH_DASHBOARD.menus.list,
         icon: ICONS.menu
+      },
+      {
+        title: 'store',
+        path: PATH_DASHBOARD.stores.list,
+        icon: ICONS.store
       },
       // MANAGEMENT : USER
       {

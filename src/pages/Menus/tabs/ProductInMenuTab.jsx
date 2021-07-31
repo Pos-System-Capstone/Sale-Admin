@@ -31,6 +31,7 @@ import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton
 import EmptyContent from 'components/EmptyContent';
 import ResoTable from 'components/ResoTable/ResoTable';
 import { getAllProduct } from 'redux/product/api';
+import { CardTitle } from 'pages/Products/components/Card';
 import EditProductDialog from '../components/EditProductDialog';
 
 const ProductCard = ({ product, onEdit, onDelete }) => {
@@ -164,12 +165,13 @@ const ProductInMenuTab = ({ id, onAddProduct }) => {
         </DialogActions>
       </Dialog>
       <Box as={Card} p={2}>
+        <CardTitle>Danh sách sản phẩm</CardTitle>
         <Stack justifyContent="space-between" mb={2} direction="row" spacing={2}>
           <InputField size="small" label="Tên sản phẩm" name="product-name" />
           <DrawerProductForm
             onSubmit={(ids, data) => onAddProduct(data)}
             trigger={
-              <Button startIcon={<Icon icon={plusFill} />} variant="contained">
+              <Button size="small" startIcon={<Icon icon={plusFill} />} variant="contained">
                 Thêm sản phẩm
               </Button>
             }

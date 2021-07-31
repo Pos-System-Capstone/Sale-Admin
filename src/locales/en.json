@@ -3,7 +3,8 @@
     "product": "Products",
     "master": "Master Product",
     "menu": "Menus",
-    "collection": "Collections"
+    "collection": "Collections",
+    "store": "Store"
   },
   "demo": {
     "title": "English",
@@ -14,6 +15,6 @@
     "create": "Create",
     "update": "Update",
     "save": "Save",
-    "cancel" : "Cancel"
+    "cancel": "Cancel"
   }
 }
