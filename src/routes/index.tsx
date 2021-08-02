@@ -107,6 +107,7 @@ export default function Router() {
           path: 'menus',
           children: [
             { path: '/', element: <MenusPage /> },
+            { path: '/stores', element: <MenusPage /> },
             { path: '/:id', element: <UpdateMenuPage /> }
           ]
         },

@@ -67,7 +67,11 @@ const sidebarConfig = [
       {
         title: 'menu',
         path: PATH_DASHBOARD.menus.list,
-        icon: ICONS.menu
+        icon: ICONS.menu,
+        children: [
+          { title: 'list', path: PATH_DASHBOARD.menus.list },
+          { title: 'store-menu', path: PATH_DASHBOARD.menus.storeMenu }
+        ]
       },
       {
         title: 'store',

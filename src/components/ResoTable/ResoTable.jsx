@@ -129,7 +129,6 @@ const ResoTable = React.forwardRef(
       (params) => {
         if (dataSource) return Promise.resolve(dataSource);
         return getData({
-          ...params,
           ...params.filters,
           page: params.current,
           size: params.pageSize

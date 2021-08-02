@@ -9,7 +9,13 @@ import {
   CardActions,
   CardContent,
   CardMedia,
+  Chip,
   CircularProgress,
+  Grid,
+  List,
+  ListItemButton,
+  ListItemText,
+  ListSubheader,
   Stack,
   Typography
 } from '@material-ui/core';
@@ -23,6 +29,7 @@ import { get } from 'lodash-es';
 import { useSnackbar } from 'notistack5';
 import { CardTitle } from 'pages/Products/components/Card';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { deleteProductInMenu, getProductInMenus, updateProdInMenuInfo } from 'redux/menu/api';
 import { getAllProduct } from 'redux/product/api';
 import { formatCurrency } from 'utils/utils';
@@ -82,6 +89,13 @@ const DEFAULT_DATA = [
   createProduct('Pizza Bánh xèo')
 ];
 
+function a11yProps(index) {
+  return {
+    id: `vertical-tab-${index}`,
+    'aria-controls': `vertical-tabpanel-${index}`
+  };
+}
+
 // eslint-disable-next-line react/prop-types
 const ProductInMenuTab = ({ id, onAddProduct }) => {
   const {
@@ -94,8 +108,20 @@ const ProductInMenuTab = ({ id, onAddProduct }) => {
   const { enqueueSnackbar } = useSnackbar();
   const { translate } = useLocales();
 
+  const { categories = [] } = useSelector((state) => state.admin);
+
   const [currentDeleteItem, setCurrentDeleteItem] = React.useState(null);
   const [currentProduct, setCurrentProduct] = React.useState(null);
+  const [currentCate, setCurrentCate] = React.useState(null);
+  const [filters, setFilters] = React.useState(null);
+
+  React.useEffect(() => {
+    setFilters((prev) => ({ ...prev, 'cat-id': currentCate }));
+  }, [currentCate]);
+
+  const handleChangeCurrentCate = (event, newValue) => {
+    setCurrentCate(newValue);
+  };
 
   const handleUpdateProdInMenu = (values) =>
     updateProdInMenuInfo(id, values)
@@ -149,55 +175,105 @@ const ProductInMenuTab = ({ id, onAddProduct }) => {
       />
 
       <Box as={Card} p={2}>
-        <CardTitle>Danh sách sản phẩm</CardTitle>
-        <Stack justifyContent="space-between" mb={2} direction="row" spacing={2}>
-          <InputField size="small" label="Tên sản phẩm" name="product-name" />
+        <Box display="flex" justifyContent="space-between">
+          <CardTitle>Danh sách sản phẩm</CardTitle>
           <DrawerProductForm
             onSubmit={(ids, data) => onAddProduct(data)}
             trigger={
-              <Button size="small" startIcon={<Icon icon={plusFill} />} variant="contained">
+              <Button size="small" startIcon={<Icon icon={plusFill} />}>
                 Thêm sản phẩm
               </Button>
             }
           />
-        </Stack>
-        {loading ? (
-          <CircularProgress />
-        ) : (
-          <ResoTable
-            getData={getAllProduct}
-            rowKey="product_id"
-            onEdit={setCurrentProduct}
-            onDelete={setCurrentDeleteItem}
-            columns={[
-              {
-                title: 'Mã sản phẩm',
-                dataIndex: 'code'
-              },
-              {
-                title: 'Hình ảnh',
-                dataIndex: 'pic_url',
-                render: (src, { product_name }) => (
-                  <Avatar
-                    alt={product_name}
-                    src={src}
-                    variant="square"
-                    style={{ width: '54px', height: '54px' }}
-                  />
-                )
-              },
-              {
-                title: 'Tên sản phẩm',
-                dataIndex: 'product_name'
-              },
-              {
-                title: 'Giá',
-                dataIndex: 'price1',
-                render: (value) => <Typography>{formatCurrency(value)}</Typography>
+        </Box>
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={3}>
+            <List
+              sx={{
+                width: '100%',
+                bgcolor: 'background.paper',
+                position: 'relative',
+                overflow: 'auto',
+                maxHeight: 450,
+                '& ul': { padding: 0 }
+              }}
+              component="nav"
+              aria-label="select category"
+              subheader={
+                <ListSubheader component="div" id="nested-list-subheader">
+                  Có {categories.length} Danh mục
+                </ListSubheader>
               }
-            ]}
-          />
-        )}
+            >
+              <ListItemButton
+                key="list-button-all"
+                selected={currentCate === ''}
+                onClick={() => setCurrentCate('')}
+              >
+                <ListItemText primary="Tất cả" />
+              </ListItemButton>
+              {categories?.map(({ cate_id, cate_name }) => (
+                <ListItemButton
+                  key={`list-button-${cate_id}`}
+                  selected={currentCate === cate_id}
+                  onClick={() => setCurrentCate(cate_id)}
+                >
+                  <ListItemText primary={cate_name} />
+                </ListItemButton>
+              ))}
+            </List>
+          </Grid>
+          <Grid item xs={12} sm={9}>
+            <Box mt={2}>
+              <Stack justifyContent="space-between" mb={2} direction="row" spacing={2}>
+                <InputField size="small" label="Tên sản phẩm" name="product-name" />
+              </Stack>
+              {loading ? (
+                <CircularProgress />
+              ) : (
+                <ResoTable
+                  getData={getAllProduct}
+                  rowKey="product_id"
+                  filters={filters}
+                  onEdit={setCurrentProduct}
+                  onDelete={setCurrentDeleteItem}
+                  columns={[
+                    {
+                      title: 'Mã sản phẩm',
+                      dataIndex: 'code'
+                    },
+                    {
+                      title: 'Hình ảnh',
+                      dataIndex: 'pic_url',
+                      render: (src, { product_name }) => (
+                        <Avatar
+                          alt={product_name}
+                          src={src}
+                          variant="square"
+                          style={{ width: '54px', height: '54px', zIndex: 1 }}
+                        />
+                      )
+                    },
+                    {
+                      title: 'Tên sản phẩm',
+                      dataIndex: 'product_name'
+                    },
+                    {
+                      title: 'Giá',
+                      dataIndex: 'price1',
+                      render: (value) => <Typography>{formatCurrency(value)}</Typography>
+                    },
+                    {
+                      title: 'Danh mục',
+                      dataIndex: 'cate_name',
+                      render: (cate) => <Chip label={cate} />
+                    }
+                  ]}
+                />
+              )}
+            </Box>
+          </Grid>
+        </Grid>
       </Box>
     </Box>
   );

@@ -1,10 +1,8 @@
 {
   "menu": {
-    "product": "Products",
-    "master": "Master Product",
-    "menu": "Menus",
-    "collection": "Collections",
-    "store": "Store"
+    "product": { "root": "Products", "master": "Product Master", "collection": "Collections" },
+    "menu": { "root": "Menus", "list": "Menu List", "store-menu": "Menu in Store" },
+    "store": "Stores"
   },
   "demo": {
     "title": "English",

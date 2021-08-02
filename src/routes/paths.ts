@@ -87,7 +87,8 @@ export const PATH_DASHBOARD = {
     root: path(ROOTS_DASHBOARD, '/menus'),
     list: path(ROOTS_DASHBOARD, '/menus'),
     editById: path(ROOTS_DASHBOARD, '/menus/:id'),
-    newProduct: path(ROOTS_DASHBOARD, '/menus/new')
+    newProduct: path(ROOTS_DASHBOARD, '/menus/new'),
+    storeMenu: path(ROOTS_DASHBOARD, '/menus/stores')
   },
   stores: {
     root: path(ROOTS_DASHBOARD, '/stores'),

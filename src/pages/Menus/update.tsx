@@ -86,6 +86,26 @@ const UpdateMenuPage = () => {
         });
       });
 
+  const MENU_TABS = [
+    {
+      value: TabType.MENU_INFO,
+      label: 'Thông tin chung',
+      icon: <Icon icon={roundAccountBox} width={20} height={20} />,
+      component: (
+        <Stack direction="column" mt={2} spacing={2}>
+          <MenuInfoTab onSubmit={form.handleSubmit(onUpdateMenu)} />
+          <ProductInMenuTab id={id} onAddProduct={addProductToMenu} />
+        </Stack>
+      )
+    },
+    {
+      value: TabType.STORE_APPLY,
+      label: 'Cửa hàng áp dụng',
+      icon: <Icon icon={roundStore} width={20} height={20} />,
+      component: <StoreApplyTab checkedStores={[]} />
+    }
+  ];
+
   return (
     <FormProvider {...form}>
       <Page title="Cập nhật thực đơn">
@@ -98,10 +118,27 @@ const UpdateMenuPage = () => {
               Xóa
             </Button>
           </Stack>
-          <Stack direction="column" mt={2} spacing={2}>
-            <MenuInfoTab onSubmit={form.handleSubmit(onUpdateMenu)} />
-            <ProductInMenuTab id={id} onAddProduct={addProductToMenu} />
-          </Stack>
+          <Tabs
+            value={currentTab}
+            scrollButtons="auto"
+            variant="scrollable"
+            allowScrollButtonsMobile
+            onChange={(e, value) => setCurrentTab(value)}
+          >
+            {MENU_TABS.map((tab) => (
+              <Tab key={tab.value} label={tab.label} icon={tab.icon} value={tab.value} />
+            ))}
+          </Tabs>
+          <Box mt={2}>
+            {MENU_TABS.map((tab, index) => {
+              const isMatched = tab.value === currentTab;
+              return (
+                <TabPanel key={tab.value} index={index} hidden={!isMatched}>
+                  {tab.component}
+                </TabPanel>
+              );
+            })}
+          </Box>
         </Box>
       </Page>
     </FormProvider>

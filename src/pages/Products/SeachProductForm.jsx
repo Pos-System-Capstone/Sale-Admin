@@ -1,10 +1,11 @@
 /* eslint-disable no-unused-expressions */
-import { Box, Stack } from '@material-ui/core';
+import { Grid, MenuItem } from '@material-ui/core';
 import { useDebounceFn } from 'ahooks';
 import React from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
-import { PRODUCT_MASTER } from '../../constraints';
+import { useSelector } from 'react-redux';
 import { InputField, SelectField } from '../../components/form';
+import { PRODUCT_MASTER } from '../../constraints';
 
 const SeachProductForm = ({ onChange = console.log }) => {
   const form = useForm({
@@ -15,6 +16,8 @@ const SeachProductForm = ({ onChange = console.log }) => {
       'is-available': null
     }
   });
+
+  const { categories = [] } = useSelector((state) => state.admin);
 
   const { run } = useDebounceFn(
     (values) => {
@@ -39,12 +42,29 @@ const SeachProductForm = ({ onChange = console.log }) => {
 
   return (
     <FormProvider {...form}>
-      <Stack direction="row" justifyContent="space-between" spacing={2}>
-        <Stack direction="row" spacing={2}>
+      <Grid container spacing={2}>
+        <Grid item xs={12} sm={3}>
           <InputField name="code" size="small" type="text" label="Mã sản phẩm" />
+        </Grid>
+        <Grid item xs={12} sm={3}>
           <InputField name="product-name" size="small" type="email" label="Tên sản phẩm" />
-        </Stack>
-        <Box>
+        </Grid>
+        <Grid item xs={12} sm={3}>
+          <SelectField
+            name="cat-id"
+            label="Chọn loại sản phẩm"
+            fullWidth
+            defaultValue=""
+            size="small"
+          >
+            {categories?.map(({ cate_id, cate_name }) => (
+              <MenuItem value={cate_id} key={`cate_select_${cate_id}`}>
+                {cate_name}
+              </MenuItem>
+            ))}
+          </SelectField>
+        </Grid>
+        <Grid item xs={12} sm={3}>
           <SelectField
             sx={{ minWidth: '150px' }}
             options={[
@@ -65,9 +85,8 @@ const SeachProductForm = ({ onChange = console.log }) => {
             size="small"
             label="Trạng thái"
           />
-        </Box>
-        {/* <FormControlLabel control={<Checkbox />} label="Đang bán" /> */}
-      </Stack>
+        </Grid>
+      </Grid>
     </FormProvider>
   );
 };

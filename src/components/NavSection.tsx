@@ -113,7 +113,7 @@ function NavItem({ item, isShow }: { item: NavItemProps; isShow?: boolean | unde
 
           {isShow && (
             <>
-              <ListItemText disableTypography primary={translate(`menu.${title}`)} />
+              <ListItemText disableTypography primary={translate(`menu.${item.title}.root`)} />
               {info && info}
               <Box
                 component={Icon}
@@ -127,14 +127,14 @@ function NavItem({ item, isShow }: { item: NavItemProps; isShow?: boolean | unde
         {isShow && (
           <Collapse in={open} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              {children.map((item) => {
-                const { title, path } = item;
+              {children.map((childItem) => {
+                const { title: childTitle, path } = childItem;
                 const isActiveSub = path ? !!matchPath({ path, end: false }, pathname) : false;
 
                 return (
                   <ListItemStyle
                     disableGutters
-                    key={title}
+                    key={childTitle}
                     // @ts-ignore
                     component={RouterLink}
                     to={path}
@@ -161,7 +161,10 @@ function NavItem({ item, isShow }: { item: NavItemProps; isShow?: boolean | unde
                         }}
                       />
                     </ListItemIconStyle>
-                    <ListItemText disableTypography primary={translate(`menu.${title}`)} />
+                    <ListItemText
+                      disableTypography
+                      primary={translate(`menu.${item.title}.${childTitle}`)}
+                    />
                   </ListItemStyle>
                 );
               })}

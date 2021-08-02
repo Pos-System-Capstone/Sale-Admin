@@ -1,9 +1,7 @@
 {
   "menu": {
-    "product": "Sản phẩm",
-    "master": "Dòng Sản phẩm",
-    "menu": "Thực đơn",
-    "collection": "Bộ sưu tập",
+    "product": { "root": "Sản phẩm", "master": "Dòng Sản phẩm", "collection": "Bộ sưu tập" },
+    "menu": { "root": "Thực đơn", "list": "Danh sách thực đơn", "store-menu": "Cửa hàng áp dụng" },
     "store": "Cửa hàng"
   },
   "pages": {
