@@ -3,6 +3,7 @@ import Label from 'components/Label';
 import { CardTitle } from 'pages/Products/components/Card';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
+import MenuInStoreCalendar from '../components/MenuInStoreCalendar';
 
 const StoreApplyTab = ({ checkedStores }) => {
   const [checked, setChecked] = useState(checkedStores ?? []);
@@ -58,27 +59,7 @@ const StoreApplyTab = ({ checkedStores }) => {
     <Box>
       <Card>
         <CardTitle>Danh sách các cửa hàng được áp dụng bảng giá</CardTitle>
-        <Grid container spacing={2}>
-          {appliedStores.map(({ time_range, stores }) => (
-            <>
-              <Grid item xs={12} sm={4}>
-                <Typography variant="h5">Khung giờ</Typography>
-                Từ <Label color="success">{time_range[0]}</Label> đến{' '}
-                <Label color="success">{time_range[1]}</Label>
-              </Grid>
-              <Grid item xs={12} sm={8}>
-                <Box>
-                  <Typography variant="h5">Cửa hàng áp dụng</Typography>
-                  <Stack direction="row" spacing={2}>
-                    {stores.map(({ store_name }) => (
-                      <Chip key={store_name} label={store_name} />
-                    ))}
-                  </Stack>
-                </Box>
-              </Grid>
-            </>
-          ))}
-        </Grid>
+        <MenuInStoreCalendar />
       </Card>
     </Box>
   );
