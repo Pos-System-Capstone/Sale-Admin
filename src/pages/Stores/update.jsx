@@ -2,6 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import plusFill from '@iconify/icons-eva/plus-fill';
 import Icon from '@iconify/react';
 import { Box, Button, Card, Stack, Typography } from '@material-ui/core';
+import DeleteConfirmDialog from 'components/DelectConfirmDialog';
 import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
 import Page from 'components/Page';
 import ResoTable from 'components/ResoTable/ResoTable';
@@ -13,8 +14,9 @@ import MenuSearchForm from 'pages/Menus/components/MenuSearchForm';
 import { CardTitle } from 'pages/Products/components/Card';
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { addProductInMenus, getMenus, updateMenuInfo } from 'redux/menu/api';
+import { PATH_DASHBOARD } from 'routes/paths';
 import { convertDateToStr } from 'utils/utils';
 import ModalMenuForm from './components/AddMenuModal';
 import StoreForm from './components/StoreForm';
@@ -25,7 +27,10 @@ const UpdateMenuPage = () => {
   const { id } = useParams();
   const { translate } = useLocales();
   const { enqueueSnackbar } = useSnackbar();
+  const navigate = useNavigate();
+
   const [filters, setFilters] = useState(null);
+  const [currentDeleteItem, setCurrentDeleteItem] = useState(null);
 
   const form = useForm({
     resolver: yupResolver(storeSchemaBuilder(translate)),
@@ -70,8 +75,32 @@ const UpdateMenuPage = () => {
         });
       });
 
+  const handleDelete = () =>
+    new Promise((res) =>
+      setTimeout(() => {
+        res();
+      }, 2000)
+    )
+      .then(() => setCurrentDeleteItem(null))
+      .then(() =>
+        enqueueSnackbar(translate('common.deleteSuccess'), {
+          variant: 'success'
+        })
+      );
+
   return (
     <FormProvider {...form}>
+      <DeleteConfirmDialog
+        open={Boolean(currentDeleteItem)}
+        onClose={() => setCurrentDeleteItem(null)}
+        onDelete={handleDelete}
+        title={
+          <>
+            {translate('common.confirmDeleteTitle')} <strong>{currentDeleteItem?.menu_name}</strong>
+            ?
+          </>
+        }
+      />
       <Page title={translate('pages.stores.updateTitle')}>
         <Box px={2} mx="auto">
           <Stack mb={2} direction="row" justifyContent="space-between">
@@ -115,8 +144,10 @@ const UpdateMenuPage = () => {
                     getData={getMenus}
                     rowKey="meunu_id"
                     filters={filters}
-                    // onEdit={setCurrentProduct}
-                    // onDelete={setCurrentDeleteItem}
+                    onDelete={setCurrentDeleteItem}
+                    onEdit={(menu) =>
+                      navigate(`${PATH_DASHBOARD.menus.root}/${menu.meunu_id}`, { state: menu })
+                    }
                     columns={menuColumns}
                   />
                 </Stack>

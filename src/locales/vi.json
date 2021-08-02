@@ -36,6 +36,9 @@
     "all": "Tất cả",
     "available": "Hoạt động",
     "notAvailable": "Không Hoạt động",
-    "choosedItem": "Đã chọn"
+    "choosedItem": "Đã chọn",
+    "confirm": "Xác nhận",
+    "confirmDeleteTitle": "Xác nhận xóa",
+    "deleteSuccess": "Xóa thành công"
   }
 }

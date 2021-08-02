@@ -4,10 +4,11 @@ import { Box, Button, Dialog, IconButton, Paper, Stack, Typography } from '@mate
 import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
 import ResoTable from 'components/ResoTable/ResoTable';
 import useLocales from 'hooks/useLocales';
-import { productColumns } from 'pages/Products/config';
+import { menuColumns } from 'pages/Menus';
 import SeachProductForm from 'pages/Products/SeachProductForm';
 import React from 'react';
-import { getAllProduct } from 'redux/product/api';
+import { getMenus } from 'redux/menu/api';
+import MenuSearchForm from 'pages/Menus/components/MenuSearchForm';
 
 const ModalMenuForm = ({ trigger, onSubmit, selected = [] }) => {
   const [open, setOpen] = React.useState(false);
@@ -53,21 +54,22 @@ const ModalMenuForm = ({ trigger, onSubmit, selected = [] }) => {
             </Box>
           </Paper>
           <Box p={1}>
-            <SeachProductForm onChange={setFilters} />
+            <MenuSearchForm onChange={setFilters} />
           </Box>
           <Box p={1} sx={{ flex: 1, overflowY: 'auto' }}>
             <Stack spacing={2}>
               <ResoTable
                 checkboxSelection={{
-                  selection: selectedProductIds
+                  selection: selectedProductIds,
+                  type: 'radio'
                 }}
                 showAction={false}
                 scroll={{ y: '50%', x: '100%' }}
-                rowKey="product_id"
-                getData={getAllProduct}
+                getData={getMenus}
+                rowKey="meunu_id"
                 onChangeSelection={handleChangeSelection}
                 filters={filters}
-                columns={productColumns}
+                columns={menuColumns}
               />
             </Stack>
           </Box>

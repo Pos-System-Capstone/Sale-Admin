@@ -40,6 +40,9 @@
     "all": "All",
     "available": "Available",
     "notAvailable": "Not available",
-    "choosedItem": "Choosed"
+    "choosedItem": "Choosed",
+    "confirm": "Confirm",
+    "confirmDeleteTitle": "Confirm delete",
+    "deleteSuccess": "Deleted successfully"
   }
 }

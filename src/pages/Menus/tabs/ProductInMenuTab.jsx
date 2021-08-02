@@ -1,37 +1,31 @@
 /* eslint-disable react/prop-types */
+import plusFill from '@iconify/icons-eva/plus-fill';
+import Icon from '@iconify/react';
 import {
+  Avatar,
   Box,
   Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
   CircularProgress,
   Stack,
-  Card,
-  CardMedia,
-  CardContent,
-  Typography,
-  Grid,
-  CardActions,
-  Dialog,
-  DialogTitle,
-  DialogContentText,
-  DialogActions,
-  DialogContent,
-  Avatar
+  Typography
 } from '@material-ui/core';
-import { useSnackbar } from 'notistack5';
-import React from 'react';
 import { useRequest } from 'ahooks';
-import Icon from '@iconify/react';
-import plusFill from '@iconify/icons-eva/plus-fill';
-import { get } from 'lodash-es';
-import { deleteProductInMenu, getProductInMenus, updateProdInMenuInfo } from 'redux/menu/api';
+import DeleteConfirmDialog from 'components/DelectConfirmDialog';
 import DrawerProductForm from 'components/DrawerProductForm/DrawerProductForm';
 import { InputField } from 'components/form';
-import { formatCurrency } from 'utils/utils';
-import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
-import EmptyContent from 'components/EmptyContent';
 import ResoTable from 'components/ResoTable/ResoTable';
-import { getAllProduct } from 'redux/product/api';
+import useLocales from 'hooks/useLocales';
+import { get } from 'lodash-es';
+import { useSnackbar } from 'notistack5';
 import { CardTitle } from 'pages/Products/components/Card';
+import React from 'react';
+import { deleteProductInMenu, getProductInMenus, updateProdInMenuInfo } from 'redux/menu/api';
+import { getAllProduct } from 'redux/product/api';
+import { formatCurrency } from 'utils/utils';
 import EditProductDialog from '../components/EditProductDialog';
 
 const ProductCard = ({ product, onEdit, onDelete }) => {
@@ -97,10 +91,11 @@ const ProductInMenuTab = ({ id, onAddProduct }) => {
   } = useRequest(() => getProductInMenus(id), {
     formatResult: (res) => res.data.data
   });
+  const { enqueueSnackbar } = useSnackbar();
+  const { translate } = useLocales();
 
   const [currentDeleteItem, setCurrentDeleteItem] = React.useState(null);
   const [currentProduct, setCurrentProduct] = React.useState(null);
-  const { enqueueSnackbar } = useSnackbar();
 
   const handleUpdateProdInMenu = (values) =>
     updateProdInMenuInfo(id, values)
@@ -141,29 +136,18 @@ const ProductInMenuTab = ({ id, onAddProduct }) => {
         data={currentProduct}
         onSubmit={handleUpdateProdInMenu}
       />
-      <Dialog
-        open={currentDeleteItem}
+      <DeleteConfirmDialog
+        open={Boolean(currentDeleteItem)}
         onClose={() => setCurrentDeleteItem(false)}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          Xác nhận xóa <strong>{currentDeleteItem?.product_name}</strong>
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Xác nhận xóa sản phẩm?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setCurrentDeleteItem(null)} variant="text" color="secondary">
-            Hủy
-          </Button>
-          <LoadingAsyncButton onClick={onDelete} color="error" variant="contained" autoFocus>
-            Xác nhận
-          </LoadingAsyncButton>
-        </DialogActions>
-      </Dialog>
+        onClick={onDelete}
+        title={
+          <>
+            {translate('common.confirmDeleteTitle')}{' '}
+            <strong>{currentDeleteItem?.product_name}</strong>
+          </>
+        }
+      />
+
       <Box as={Card} p={2}>
         <CardTitle>Danh sách sản phẩm</CardTitle>
         <Stack justifyContent="space-between" mb={2} direction="row" spacing={2}>

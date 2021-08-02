@@ -25,7 +25,8 @@ import {
   useMediaQuery,
   Stack,
   Divider,
-  Tooltip
+  Tooltip,
+  Radio
 } from '@material-ui/core';
 import get from 'lodash/get';
 import { useAntdTable } from 'ahooks';
@@ -98,7 +99,7 @@ const ResoTable = React.forwardRef(
         page: 1,
         count: 1
       },
-      filters = {},
+      filters = null,
       onEdit = () => null,
       onDelete = () => null,
       getData = () => [],
@@ -179,16 +180,35 @@ const ResoTable = React.forwardRef(
       }
     }, [_selectedIds, onChangeSelection, data?.list, rowKey]);
 
-    const onSelectAllClick = React.useCallback(() => {
-      setSelectedIds(data.list?.map((d) => d[rowKey]));
-    }, [rowKey, data]);
+    const onSelectAllClick = React.useCallback(
+      (e) => {
+        if (e.target.checked) {
+          const updatedIds = [..._selectedIds];
+          data?.list?.forEach((d) => {
+            if (!_selectedIds.includes(d[rowKey])) {
+              updatedIds.push(d[rowKey]);
+            }
+          });
+          setSelectedIds(updatedIds);
+        } else {
+          setSelectedIds([]);
+        }
+      },
+      [_selectedIds, data?.list, rowKey]
+    );
 
     const handleClick = React.useCallback(
       (event, name) => {
         const selectedIndex = _selectedIds.indexOf(name);
         let newSelected = [];
 
-        if (selectedIndex === -1) {
+        if (checkboxSelection?.type === 'radio') {
+          if (selectedIndex === -1) {
+            newSelected = [name];
+          } else {
+            newSelected = [];
+          }
+        } else if (selectedIndex === -1) {
           newSelected = newSelected.concat(_selectedIds, name);
         } else if (selectedIndex === 0) {
           newSelected = newSelected.concat(_selectedIds.slice(1));
@@ -203,7 +223,7 @@ const ResoTable = React.forwardRef(
 
         setSelectedIds(newSelected);
       },
-      [_selectedIds]
+      [_selectedIds, checkboxSelection?.type]
     );
 
     const tableHeader = React.useMemo(() => {
@@ -212,14 +232,22 @@ const ResoTable = React.forwardRef(
       const tableHeaders = [];
 
       if (checkboxSelection) {
+        const checkAllCurrentData = data?.list?.every((item) =>
+          _selectedIds.includes(item[rowKey])
+        );
+        const checkIndeterminateCurrentData =
+          _selectedIds.filter((id) => data.list.some((d) => d[rowKey] === id)).length > 0 &&
+          !checkAllCurrentData;
         tableHeaders.push(
           <StickyLeftTableCell className={classes.stickyLeft} padding="checkbox">
-            <Checkbox
-              indeterminate={_selectedIds.length > 0 && _selectedIds.length < data?.list?.length}
-              checked={data?.list?.length > 0 && _selectedIds.length === data?.list?.length}
-              onChange={onSelectAllClick}
-              inputProps={{ 'aria-label': 'select all desserts' }}
-            />
+            {checkboxSelection?.type === 'checkbox' && (
+              <Checkbox
+                indeterminate={checkIndeterminateCurrentData}
+                checked={data?.list?.length > 0 && checkAllCurrentData}
+                onChange={onSelectAllClick}
+                inputProps={{ 'aria-label': 'select all desserts' }}
+              />
+            )}
           </StickyLeftTableCell>
         );
       }
@@ -257,12 +285,13 @@ const ResoTable = React.forwardRef(
       columns,
       checkboxSelection,
       showAction,
+      data?.list,
       classes.stickyLeft,
       classes.root,
       classes.actionColumn,
-      _selectedIds.length,
-      data?.list?.length,
-      onSelectAllClick
+      _selectedIds,
+      onSelectAllClick,
+      rowKey
     ]);
 
     const tableBodyContent = React.useMemo(() => {
@@ -271,7 +300,7 @@ const ResoTable = React.forwardRef(
 
       const body = [...columns];
       const tableBodys = [];
-      data.list.forEach((data) => {
+      data?.list.forEach((data) => {
         const bodyRow = body.map((column, index) => {
           const CellComp = TableCell;
 
@@ -302,7 +331,14 @@ const ResoTable = React.forwardRef(
           const isItemSelected = isSelected(data[rowKey]);
           bodyRow.unshift(
             <StickyLeftTableCell className={classes.stickyLeft} padding="checkbox">
-              <Checkbox checked={isItemSelected} inputProps={{ 'aria-labelledby': data[rowKey] }} />
+              {checkboxSelection?.type === 'checkbox' ? (
+                <Checkbox
+                  checked={isItemSelected}
+                  inputProps={{ 'aria-labelledby': data[rowKey] }}
+                />
+              ) : (
+                <Radio checked={isItemSelected} inputProps={{ 'aria-labelledby': data[rowKey] }} />
+              )}
             </StickyLeftTableCell>
           );
         }

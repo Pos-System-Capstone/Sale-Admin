@@ -34,7 +34,7 @@ const DrawerProductForm = ({ trigger, children, onSubmit }) => {
     <>
       {React.cloneElement(trigger, { onClick: handleClick })}
       <Drawer anchor="right" open={open} onClose={() => setOpen(false)}>
-        <Box display="flex" flexDirection="column" maxHeight="100vh">
+        <Box display="flex" flexDirection="column" height="100vh" maxHeight="100vh">
           <Paper>
             <Box
               display="flex"
@@ -56,9 +56,11 @@ const DrawerProductForm = ({ trigger, children, onSubmit }) => {
               <SeachProductForm onChange={setFilters} />
 
               <ResoTable
-                checkboxSelection
+                checkboxSelection={{
+                  type: 'checkbox'
+                }}
                 showAction={false}
-                scroll={{ y: 460 }}
+                scroll={{ y: '100%' }}
                 rowKey="product_id"
                 getData={getAllProduct}
                 onChangeSelection={handleChangeSelection}
