@@ -3,11 +3,11 @@ import menu2Fill from '@iconify/icons-eva/menu-2-fill';
 // material
 import { alpha, styled } from '@material-ui/core/styles';
 import { Box, Stack, AppBar, Toolbar, IconButton } from '@material-ui/core';
+import Label from 'components/Label';
 // hooks
 import useCollapseDrawer from '../../hooks/useCollapseDrawer';
 // components
 import { MHidden } from '../../components/@material-extend';
-import Searchbar from './Searchbar';
 import AccountPopover from './AccountPopover';
 import LanguagePopover from './LanguagePopover';
 import ContactsPopover from './ContactsPopover';
@@ -64,6 +64,19 @@ export const DashboardNavLayout = ({ onOpenSidebar, children, ...props }: any) =
 export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps) {
   const { isCollapse } = useCollapseDrawer();
 
+  const envLabelColor = (env: any) => {
+    switch (env) {
+      case 'development':
+        return 'warning';
+      case 'qa':
+        return 'primary';
+      case 'production':
+        return 'success';
+      default:
+        return 'info';
+    }
+  };
+
   return (
     <RootStyle
       sx={{
@@ -82,6 +95,9 @@ export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps)
         <Box sx={{ flexGrow: 1 }} />
 
         <Stack direction="row" alignItems="center" spacing={{ xs: 0.5, sm: 1.5 }}>
+          <Label color={envLabelColor(process.env.REACT_APP_ENVIROMENT)}>
+            {process.env.REACT_APP_ENVIROMENT}
+          </Label>
           <LanguagePopover />
           <NotificationsPopover />
           <ContactsPopover />

@@ -26,7 +26,7 @@ const parseParams = (params: any) => {
 };
 
 const axiosInstance = axios.create({
-  baseURL: 'https://api-sale.reso.vn/api/v1',
+  baseURL: process.env.REACT_APP_BASE_URL,
   paramsSerializer: parseParams
 });
 
