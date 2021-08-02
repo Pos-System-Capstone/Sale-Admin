@@ -12,9 +12,9 @@
     "lint:fix": "eslint --fix --ext .ts,.tsx ./src",
     "start:development": "env-cmd -f .env.development npm run-script start",
     "start:qa": "env-cmd -f .env.qa npm run-script start",
-    "build:staging": "env-cmd -f .env.staging npm run-script build",
+    "build:development": "env-cmd -f .env.development npm run-script build",
     "build:qa": "env-cmd -f .env.qa npm run-script build",
-    "build:production": "env-cmd -f .env.production npm run build-css && react-scripts build"
+    "build:production": "env-cmd -f .env.production npm run-script build"
   },
   "eslintConfig": {
     "extends": [
