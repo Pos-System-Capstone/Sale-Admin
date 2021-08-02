@@ -15,7 +15,7 @@ import { PATH_DASHBOARD } from 'routes/paths';
 import Label from 'components/Label';
 import MenuSearchForm from './components/MenuSearchForm';
 
-const columns = [
+export const menuColumns = [
   {
     title: 'Tên thực đơn',
     dataIndex: 'menu_name',
@@ -77,7 +77,7 @@ const MenusPage = () => {
                 navigate(`${PATH_DASHBOARD.menus.root}/${menu.meunu_id}`, { state: menu })
               }
               getData={getMenus}
-              columns={columns}
+              columns={menuColumns}
             />
           </Stack>
         </Card>

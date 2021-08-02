@@ -101,7 +101,7 @@ const ResoTable = React.forwardRef(
       filters = {},
       onEdit = () => null,
       onDelete = () => null,
-      getData = () => [{ product_name: 'asdasd' }],
+      getData = () => [],
       rowKey = 'id',
       checkboxSelection,
       onChangeSelection,
@@ -291,7 +291,7 @@ const ResoTable = React.forwardRef(
             <CellComp
               className={index === 0 && classes.stickyLeft}
               left={checkboxSelection ? '64px' : 0}
-              key={`${column.title}-${data.product_id}`}
+              key={`${column.title}-${data[rowKey]}`}
             >
               {cell}
             </CellComp>
@@ -328,11 +328,11 @@ const ResoTable = React.forwardRef(
               </Stack>
             </StickyRightTableCell>
           ) : (
-            <StickyRightTableCell key={`edit-cell-${data.product_id}`}>
+            <StickyRightTableCell key={`edit-cell-${data[rowKey]}`}>
               <IconButton
                 onClick={(e) => {
                   openEditMenu(e);
-                  setOpenMenu(data.product_id);
+                  setOpenMenu(data[rowKey]);
                 }}
                 aria-label="more"
                 aria-controls="long-menu"
@@ -349,9 +349,9 @@ const ResoTable = React.forwardRef(
                   closeEditMenu(e);
                   setOpenMenu(null);
                 }}
-                open={data.product_id === _openMenu}
-                key={`menu-edit-${data.product_id}`}
-                id={`menu-edit-${data.product_id}`}
+                open={data[rowKey] === _openMenu}
+                key={`menu-edit-${data[rowKey]}`}
+                id={`menu-edit-${data[rowKey]}`}
               >
                 <MenuItem onClick={handleDelete} sx={{ color: 'red' }}>
                   <ListItemIcon>

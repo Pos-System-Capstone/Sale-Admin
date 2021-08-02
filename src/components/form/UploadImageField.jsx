@@ -86,8 +86,8 @@ const UploadImageField = ({ name, label, defaultValue = '' }) => {
 
           <label htmlFor="icon-button-file" style={{ position: 'relative', display: 'block' }}>
             <Box
+              bgColor="primary.main"
               sx={{
-                backgroundColor: 'rgba(0.5,0.5,0.5,0.5)',
                 position: 'absolute',
                 width: '100%',
                 height: '100%'

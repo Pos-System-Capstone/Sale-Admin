@@ -14,6 +14,7 @@
     "stores": {
       "listTitle": "Store List",
       "addBtn": "Add new store",
+      "updateTitle": "Update store",
       "table": {
         "name": "Store name",
         "shortName": "Short name",
@@ -23,17 +24,22 @@
         "closeTime": "Close time",
         "type": "Store type"
       },
-      "storeInfoTitle": "Store Information"
+      "storeInfoTitle": "Store Information",
+      "storeMenu": "Menus",
+      "applyMenuStore": "Add more menu"
     }
   },
   "common": {
     "required": "Please enter {{name}}",
     "create": "Create",
+    "addMore": "Add",
+    "delete": "Delete",
     "update": "Update",
     "save": "Save",
     "cancel": "Cancel",
     "all": "All",
     "available": "Available",
-    "notAvailable": "Not available"
+    "notAvailable": "Not available",
+    "choosedItem": "Choosed"
   }
 }

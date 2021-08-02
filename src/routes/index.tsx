@@ -117,7 +117,8 @@ export default function Router() {
             {
               path: '/new',
               element: <CreateStorePage />
-            }
+            },
+            { path: '/:id', element: <UpdateStorePage /> }
           ]
         },
         {
@@ -225,3 +226,4 @@ const CreateCollectionPage = Loadable(lazy(() => import('../pages/collections/cr
 // Store
 const StoreListPage = Loadable(lazy(() => import('../pages/Stores')));
 const CreateStorePage = Loadable(lazy(() => import('../pages/Stores/create')));
+const UpdateStorePage = Loadable(lazy(() => import('../pages/Stores/update')));

@@ -9,6 +9,7 @@
   "pages": {
     "stores": {
       "listTitle": "Danh sách cửa hàng",
+      "updateTitle": "Cập nhật cửa hàng",
       "addBtn": "Thêm cửa hàng",
       "table": {
         "name": "Tên cửa hàng",
@@ -19,17 +20,22 @@
         "closeTime": "Đóng cửa",
         "type": "Loại cửa hàng"
       },
-      "storeInfoTitle": "Thông tin cửa hàng"
+      "storeInfoTitle": "Thông tin cửa hàng",
+      "storeMenu": "Bảng giá",
+      "applyMenuStore": "Thêm bảng giá"
     }
   },
   "common": {
     "required": "Vui lòng nhập {{name}}",
+    "addMore": "Thêm",
     "create": "Tạo",
     "update": "Cập nhật",
+    "delete": "Xóa",
     "save": "Lưu",
     "cancel": "Hủy",
     "all": "Tất cả",
     "available": "Hoạt động",
-    "notAvailable": "Không Hoạt động"
+    "notAvailable": "Không Hoạt động",
+    "choosedItem": "Đã chọn"
   }
 }

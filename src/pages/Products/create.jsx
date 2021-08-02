@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-plusplus */
 /* eslint-disable react/prop-types */
-import { Box, Button, Stack, Typography } from '@material-ui/core';
+import { Box, Button, Stack, Typography, useTheme } from '@material-ui/core';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -37,6 +37,7 @@ const CreateProduct = () => {
   const { enqueueSnackbar } = useSnackbar();
   const { setNavOpen } = useDashboard();
   const navigate = useNavigate();
+  const theme = useTheme();
 
   const methods = useForm({
     resolver: yupResolver(validationSchema),
@@ -96,7 +97,7 @@ const CreateProduct = () => {
       <DashboardNavLayout
         onOpenSidebar={() => setNavOpen(true)}
         sx={{
-          backgroundColor: 'white',
+          backgroundColor: theme.palette.background.paper,
           boxShadow: 1
         }}
       >
