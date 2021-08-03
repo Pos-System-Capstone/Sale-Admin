@@ -18,6 +18,8 @@ const CheckBoxField = ({ name, label, rules, defaultValue = false, ...props }) =
               error={Boolean(fieldState.isTouched && fieldState.error)}
               checked={field.value}
               inputRef={field.ref}
+              icon={props.icon}
+              checkedIcon={props.checkedIcon}
             />
           }
           label={label}

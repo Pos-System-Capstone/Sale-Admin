@@ -16,7 +16,7 @@ import {
   DialogActions,
   FormControlLabel
 } from '@material-ui/core';
-import { LoadingButton, MobileDateTimePicker } from '@material-ui/lab';
+import { LoadingButton, MobileDateTimePicker, MobileTimePicker } from '@material-ui/lab';
 import { EventInput } from '@fullcalendar/common';
 // redux
 import { useDispatch } from '../../../redux/store';
@@ -150,18 +150,18 @@ export default function CalendarForm({ event, range, onCancel }: CalendarFormPro
             sx={{ mb: 3 }}
           />
 
-          <MobileDateTimePicker
+          <MobileTimePicker
             label="Start date"
             value={values.start}
-            inputFormat="dd/MM/yyyy hh:mm a"
+            inputFormat="hh:mm a"
             onChange={(date) => setFieldValue('start', date)}
             renderInput={(params) => <TextField {...params} fullWidth sx={{ mb: 3 }} />}
           />
 
-          <MobileDateTimePicker
+          <MobileTimePicker
             label="End date"
             value={values.end}
-            inputFormat="dd/MM/yyyy hh:mm a"
+            inputFormat="hh:mm a"
             onChange={(date) => setFieldValue('end', date)}
             renderInput={(params) => (
               <TextField

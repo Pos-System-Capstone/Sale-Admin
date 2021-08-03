@@ -32,3 +32,34 @@ export const PRODUCT_TYPE_DATA = [
     label: 'SP Extra'
   }
 ];
+
+export const DAY_OF_WEEK = [
+  {
+    label: 'Thứ hai',
+    value: 1
+  },
+  {
+    label: 'Thứ ba',
+    value: 2
+  },
+  {
+    label: 'Thứ tư',
+    value: 3
+  },
+  {
+    label: 'Thứ năm',
+    value: 4
+  },
+  {
+    label: 'Thứ sáu',
+    value: 5
+  },
+  {
+    label: 'Thứ bảy',
+    value: 6
+  },
+  {
+    label: 'Chủ nhật',
+    value: 0
+  }
+];

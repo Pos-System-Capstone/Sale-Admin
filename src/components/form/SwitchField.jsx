@@ -6,11 +6,11 @@ import { Controller, useFormContext } from 'react-hook-form';
 const SwitchField = ({
   name,
   label,
-  size,
+  size = 'small',
   fullWidth,
-  rules,
+  rules = null,
   defaultValue = false,
-  className,
+  className = null,
   ...props
 }) => {
   const { control } = useFormContext();

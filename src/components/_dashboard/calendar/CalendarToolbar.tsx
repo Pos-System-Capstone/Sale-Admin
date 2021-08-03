@@ -40,19 +40,15 @@ const RootStyle = styled('div')(({ theme }) => ({
 type CalendarToolbarProps = {
   date: Date;
   view: CalendarView;
-  onToday: VoidFunction;
-  onNextDate: VoidFunction;
-  onPrevDate: VoidFunction;
   onChangeView: (view: CalendarView) => void;
+  setOpenModel: VoidFunction;
 };
 
 export default function CalendarToolbar({
   date,
   view,
-  onNextDate,
-  onPrevDate,
-  onToday,
-  onChangeView
+  onChangeView,
+  setOpenModel
 }: CalendarToolbarProps) {
   return (
     <RootStyle>
@@ -78,17 +74,9 @@ export default function CalendarToolbar({
       </Typography>
 
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        <IconButton onClick={onPrevDate}>
-          <Icon icon={arrowIosBackFill} width={18} height={18} />
-        </IconButton>
-
-        <Button size="small" color="error" variant="contained" onClick={onToday} sx={{ mx: 0.5 }}>
-          Today
+        <Button size="small" variant="contained" onClick={setOpenModel} sx={{ mx: 0.5 }}>
+          Thêm cửa hàng
         </Button>
-
-        <IconButton onClick={onNextDate}>
-          <Icon icon={arrowIosForwardFill} width={18} height={18} />
-        </IconButton>
       </Box>
     </RootStyle>
   );

@@ -6,12 +6,12 @@ import { Controller, useFormContext } from 'react-hook-form';
 const SelectField = ({
   name,
   label,
-  size,
+  size = 'small',
   children = null,
   fullWidth = false,
   rules = null,
   disabled = false,
-  options,
+  options = null,
   className = null,
   multiple = false,
   ...props
@@ -31,11 +31,11 @@ const SelectField = ({
           <InputLabel htmlFor={name}>{label}</InputLabel>
           <Select
             multiple={multiple}
-            {...props}
             id={name}
             helperText={fieldState.error ? fieldState.error.message : props.helperText}
             label={label}
             {...field}
+            {...props}
             error={Boolean(fieldState.error)}
             value={field.value || []}
           >
