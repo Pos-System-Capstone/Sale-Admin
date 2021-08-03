@@ -27,6 +27,7 @@ import { COLOR_OPTIONS, selectRange, updateEvent } from 'redux/slices/calendar';
 // redux
 import { RootState, useDispatch, useSelector } from 'redux/store';
 import { CalendarView } from '../../../@types/calendar';
+import { MENUINSTORES } from '../fakeData';
 
 // ----------------------------------------------------------------------
 
@@ -76,44 +77,7 @@ export default function MenuInStoreCalendar() {
   const [view, setView] = useState<CalendarView>(isMobile ? 'listWeek' : 'timeGridWeek');
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [selectedStoreInMenu, setselectedStoreInMenu] = useState<StoreInMenu | null>(null);
-  const [appliedStores, setappliedStores] = useState<StoreInMenu[]>([
-    {
-      menu_id: 1,
-      time_range: ['07:00', '12:00'],
-      dayFilters: [0, 1, 2, 3],
-      store: {
-        id: 1,
-        store_name: 'Cửa hàng Q1'
-      }
-    },
-    {
-      menu_id: 2,
-      time_range: ['08:30', '14:00'],
-      dayFilters: [0, 1, 2, 3],
-      store: {
-        id: 2,
-        store_name: 'Cửa hàng Q2'
-      }
-    },
-    {
-      menu_id: 3,
-      time_range: ['17:30', '20:00'],
-      dayFilters: [2, 3, 4, 5],
-      store: {
-        id: 2,
-        store_name: 'Cửa hàng Q2'
-      }
-    },
-    {
-      menu_id: 4,
-      time_range: ['08:30', '14:00'],
-      dayFilters: [0, 1, 2, 3],
-      store: {
-        id: 3,
-        store_name: 'Cửa hàng Q3'
-      }
-    }
-  ]);
+  const [appliedStores, setappliedStores] = useState<StoreInMenu[]>(MENUINSTORES);
   const [events, setEvents] = useState(transformSIMtoEvent(appliedStores));
 
   const selectedEvent = useSelector(selectedEventSelector);

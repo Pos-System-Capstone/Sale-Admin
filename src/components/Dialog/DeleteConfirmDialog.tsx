@@ -1,24 +1,33 @@
-import React from 'react';
 import {
   Dialog,
-  DialogTitle,
-  DialogContentText,
-  DialogActions,
   DialogContent,
-  Button
+  DialogTitle,
+  DialogActions,
+  DialogContentText,
+  Button,
+  DialogProps
 } from '@material-ui/core';
 import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
 import useLocales from 'hooks/useLocales';
+import React from 'react';
+import { JsxElement } from 'typescript';
 
-interface Props {
+type Props = {
   open: boolean;
-  onClose: () => void;
-  onDelete: () => void;
-  title: String | React.ReactElement;
-  description?: String | React.ReactElement | undefined;
-}
+  title: String | JsxElement;
+  description?: String | JsxElement | null;
+  onDelete: () => Promise<any> | Function;
+  onClose: () => any;
+};
 
-const DeleteConfirmDialog: React.FC<Props> = ({ open, onClose, onDelete, title, description }) => {
+const DeleteConfirmDialog: React.FC<Props & DialogProps> = ({
+  open,
+  title,
+  description,
+  onClose,
+  onDelete,
+  ...props
+}) => {
   const { translate } = useLocales();
   return (
     <Dialog
@@ -26,6 +35,7 @@ const DeleteConfirmDialog: React.FC<Props> = ({ open, onClose, onDelete, title, 
       onClose={onClose}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
+      {...props}
     >
       <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
       <DialogContent>

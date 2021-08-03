@@ -32,7 +32,7 @@ import { useDispatch } from '../../../redux/store';
 
 const getInitialValues = (
   data: StoreInMenu | null,
-  range: {
+  range?: {
     start: Date;
     end: Date;
   } | null
@@ -62,13 +62,13 @@ type StoreInfo = {
 
 type StoreInMenuFormProps = {
   onCancel: VoidFunction;
-  range: {
+  range?: {
     start: Date;
     end: Date;
   } | null;
   storeInMenu: StoreInMenu | null;
-  onAddEvent: (data: any) => void;
-  onUpdateEvent: (data: any) => void;
+  onAddEvent?: (data: any) => void;
+  onUpdateEvent?: (data: any) => void;
 };
 
 type StoreInMenuForm = {};
@@ -106,8 +106,10 @@ export default function StoreInMenuForm({
             values.allDay ? '24:00' : convertDateToStr(values.end, 'HH:mm')
           ]
         };
-        onUpdateEvent(_storeInMenuData);
-        enqueueSnackbar('Update event success', { variant: 'success' });
+        if (onUpdateEvent) {
+          onUpdateEvent(_storeInMenuData);
+          enqueueSnackbar('Update event success', { variant: 'success' });
+        }
       } else {
         const _storeInMenuData: Partial<StoreInMenu> = {
           dayFilters: values.dayFilters,
@@ -120,8 +122,10 @@ export default function StoreInMenuForm({
             values.allDay ? '24:00' : convertDateToStr(values.end, 'HH:mm')
           ]
         };
-        onAddEvent(_storeInMenuData);
-        enqueueSnackbar('Create event success', { variant: 'success' });
+        if (onAddEvent) {
+          onAddEvent(_storeInMenuData);
+          enqueueSnackbar('Create event success', { variant: 'success' });
+        }
       }
       onCancel();
     } catch (error) {

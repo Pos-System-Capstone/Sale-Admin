@@ -21,6 +21,20 @@
       "storeInfoTitle": "Thông tin cửa hàng",
       "storeMenu": "Bảng giá",
       "applyMenuStore": "Thêm bảng giá"
+    },
+    "menus": {
+      "table": {
+        "storeName": "Cửa hàng",
+        "timeRange": "Khung giờ",
+        "dayFilter": "Ngày áp dụng",
+        "fromTime": "Từ",
+        "toTime": "Đến"
+      },
+      "storeApplyTab": {
+        "title": "Danh sách các cửa hàng được áp dụng bảng giá",
+        "addStoreInMenu": "Thêm cửa hàng áp dụng",
+        "editStoreInMenu": "Cập nhật bảng giá"
+      }
     }
   },
   "common": {
