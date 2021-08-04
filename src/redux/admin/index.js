@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = { collections: null, categories: null, stores: null };
+const initialState = { collections: [], categories: [], stores: [] };
 
 const adminSlice = createSlice({
   name: 'admin',

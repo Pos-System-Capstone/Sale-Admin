@@ -10,8 +10,8 @@ import useLocales from 'hooks/useLocales';
 import React, { useState } from 'react';
 import plusFill from '@iconify/icons-eva/plus-fill';
 import Icon from '@iconify/react';
+import { StoreInMenu } from 'types/store';
 import DeleteConfirmDialog from 'components/DelectConfirmDialog';
-import { StoreInMenu } from '../components/MenuInStoreCalendar';
 import { MENUINSTORES } from '../fakeData';
 
 const StoreApplyTab = ({ checkedStores }: any) => {
@@ -26,7 +26,9 @@ const StoreApplyTab = ({ checkedStores }: any) => {
   const handleSelect = (id: number) => {
     const sInMenuId = id;
 
-    const storeInMenuIdx = appliedStores.findIndex(({ menu_id: id }) => id === Number(sInMenuId));
+    const storeInMenuIdx = appliedStores.findIndex(
+      ({ menu_in_store_id: id }) => id === Number(sInMenuId)
+    );
 
     if (storeInMenuIdx !== -1) {
       setUpdateStoreInMenu(appliedStores[storeInMenuIdx]);
@@ -112,7 +114,7 @@ const StoreApplyTab = ({ checkedStores }: any) => {
               },
               {
                 title: translate('pages.menus.table.dayFilter'),
-                render: (_: any, { dayFilters, menu_id }: StoreInMenu) => (
+                render: (_: any, { dayFilters, menu_in_store_id: menu_id }: StoreInMenu) => (
                   <Stack direction="row" spacing={1}>
                     {dayFilters?.map((day) => (
                       <Chip
@@ -127,7 +129,7 @@ const StoreApplyTab = ({ checkedStores }: any) => {
             ]}
             rowKey="menu_id"
             onEdit={(data: StoreInMenu) => {
-              handleSelect(data.menu_id);
+              handleSelect(data.menu_in_store_id);
             }}
             onDelete={setDeleteStoreInMenu}
           />

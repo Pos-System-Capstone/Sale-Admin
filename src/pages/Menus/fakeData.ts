@@ -1,8 +1,8 @@
-import { StoreInMenu } from './components/MenuInStoreCalendar';
+import { StoreInMenu } from 'types/store';
 
 export const MENUINSTORES: StoreInMenu[] = [
   {
-    menu_id: 1,
+    menu_in_store_id: 1,
     time_range: ['07:00', '12:00'],
     dayFilters: [0, 1, 2, 3],
     store: {
@@ -11,7 +11,7 @@ export const MENUINSTORES: StoreInMenu[] = [
     }
   },
   {
-    menu_id: 2,
+    menu_in_store_id: 2,
     time_range: ['08:30', '14:00'],
     dayFilters: [0, 1, 2, 3],
     store: {
@@ -20,7 +20,7 @@ export const MENUINSTORES: StoreInMenu[] = [
     }
   },
   {
-    menu_id: 3,
+    menu_in_store_id: 3,
     time_range: ['17:30', '20:00'],
     dayFilters: [2, 3, 4, 5],
     store: {
@@ -29,7 +29,7 @@ export const MENUINSTORES: StoreInMenu[] = [
     }
   },
   {
-    menu_id: 4,
+    menu_in_store_id: 4,
     time_range: ['08:30', '14:00'],
     dayFilters: [0, 1, 2, 3],
     store: {

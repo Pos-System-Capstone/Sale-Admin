@@ -3,11 +3,11 @@ import roundViewDay from '@iconify/icons-ic/round-view-day';
 import roundViewWeek from '@iconify/icons-ic/round-view-week';
 import roundViewAgenda from '@iconify/icons-ic/round-view-agenda';
 import roundViewModule from '@iconify/icons-ic/round-view-module';
-import arrowIosBackFill from '@iconify/icons-eva/arrow-ios-back-fill';
-import arrowIosForwardFill from '@iconify/icons-eva/arrow-ios-forward-fill';
+import useLocales from 'hooks/useLocales';
 // material
 import { styled } from '@material-ui/core/styles';
 import { Box, Tooltip, Typography, IconButton, ToggleButton, Button } from '@material-ui/core';
+import plusFill from '@iconify/icons-eva/plus-fill';
 // utils
 import { fDate } from '../../../utils/formatTime';
 //
@@ -50,6 +50,8 @@ export default function CalendarToolbar({
   onChangeView,
   setOpenModel
 }: CalendarToolbarProps) {
+  const { translate } = useLocales();
+
   return (
     <RootStyle>
       <MHidden width="smDown">
@@ -74,8 +76,8 @@ export default function CalendarToolbar({
       </Typography>
 
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        <Button size="small" variant="contained" onClick={setOpenModel} sx={{ mx: 0.5 }}>
-          Thêm cửa hàng
+        <Button onClick={setOpenModel} size="small" startIcon={<Icon icon={plusFill} />}>
+          {translate('pages.menus.storeApplyTab.addStoreInMenu')}
         </Button>
       </Box>
     </RootStyle>

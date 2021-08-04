@@ -1,4 +1,3 @@
-import { EventInput } from '@fullcalendar/common';
 import trash2Fill from '@iconify/icons-eva/trash-2-fill';
 import { Icon } from '@iconify/react';
 import {
@@ -13,20 +12,18 @@ import {
   Tooltip
 } from '@material-ui/core';
 import { MobileTimePicker } from '@material-ui/lab';
-import { useRequest } from 'ahooks';
 import { InputField, SelectField, SwitchField } from 'components/form';
 import { DAY_OF_WEEK } from 'constraints';
 import useLocales from 'hooks/useLocales';
-import { get, merge } from 'lodash';
+import { get } from 'lodash';
 import moment from 'moment';
 import { useSnackbar } from 'notistack5';
-import { StoreInMenu } from 'pages/Menus/components/MenuInStoreCalendar';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
-import { getStores } from 'redux/store/api';
+import { useSelector } from 'react-redux';
 import { convertDateToStr, convertStrToDate } from 'utils/utils';
-import { deleteEvent } from '../../../redux/slices/calendar';
 // redux
-import { useDispatch } from '../../../redux/store';
+import { RootState, useDispatch } from 'redux/store';
+import { Store, StoreInMenu } from 'types/store';
 
 // ----------------------------------------------------------------------
 
@@ -55,11 +52,6 @@ const getInitialValues = (
 
 // ----------------------------------------------------------------------
 
-type StoreInfo = {
-  name: String;
-  id: number;
-};
-
 type StoreInMenuFormProps = {
   onCancel: VoidFunction;
   range?: {
@@ -71,8 +63,6 @@ type StoreInMenuFormProps = {
   onUpdateEvent?: (data: any) => void;
 };
 
-type StoreInMenuForm = {};
-
 export default function StoreInMenuForm({
   onCancel,
   onAddEvent,
@@ -83,7 +73,7 @@ export default function StoreInMenuForm({
   const { enqueueSnackbar } = useSnackbar();
   const dispatch = useDispatch();
   const { translate } = useLocales();
-  const { data: stores } = useRequest<any>(getStores, { formatResult: (res) => res.data.data });
+  const { stores }: any = useSelector((state: RootState) => state.admin);
 
   const isCreating = !storeInMenu;
 
@@ -95,7 +85,7 @@ export default function StoreInMenuForm({
     try {
       if (!isCreating) {
         const _storeInMenuData: Partial<StoreInMenu> = {
-          menu_id: storeInMenu?.menu_id,
+          menu_in_store_id: storeInMenu?.menu_in_store_id,
           dayFilters: values.dayFilters,
           store: {
             id: values.id,
@@ -136,7 +126,7 @@ export default function StoreInMenuForm({
   const { control, handleSubmit, setValue } = form;
 
   const handleDelete = async () => {
-    if (!storeInMenu?.menu_id) return;
+    if (!storeInMenu?.menu_in_store_id) return;
     try {
       onCancel();
       // dispatch(deleteEvent(storeInMenu?.id));
@@ -156,7 +146,7 @@ export default function StoreInMenuForm({
             <SelectField
               onChange={(e: any) => {
                 setValue('id', e.target.value);
-                setValue('store_name', stores.find(({ id }: any) => id === e.target.value)?.name);
+                setValue('store_name', stores.find(({ id }: Store) => id === e.target.value)?.name);
               }}
               fullWidth
               name="id"
