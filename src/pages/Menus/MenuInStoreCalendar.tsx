@@ -13,12 +13,15 @@ import {
   Autocomplete,
   Box,
   Card,
+  CardContent,
   Checkbox,
+  Chip,
   CircularProgress,
   DialogTitle,
   FormControlLabel,
   Grid,
   IconButton,
+  Popover,
   Stack,
   TextField,
   Typography,
@@ -43,10 +46,13 @@ import { useSnackbar } from 'notistack5';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { getStores } from 'redux/admin/api';
 import { COLOR_OPTIONS, selectRange, updateEvent } from 'redux/slices/calendar';
+import { convertDateToStr } from 'utils/utils';
 // redux
+import useLocales from 'hooks/useLocales';
 import { RootState, useDispatch, useSelector } from 'redux/store';
+import Label from 'components/Label';
+import { DAY_OF_WEEK } from 'constraints';
 import { CalendarView } from '../../@types/calendar';
-import { MENUINSTORES } from './fakeData';
 
 // ----------------------------------------------------------------------
 
@@ -62,19 +68,21 @@ const transformSIMtoEvent = (storeInMenus: StoreInMenu[] = []): EventInput[] =>
   storeInMenus.map((sInMenu) => ({
     id: sInMenu.menu_in_store_id.toString(),
     title: sInMenu.menu_name ?? `Thực đơn ${sInMenu.menu_id}`,
-    start: moment(sInMenu.time_range[0], 'HH:mm').toDate(),
-    end: moment(sInMenu.time_range[1], 'HH:mm').toDate(),
+    // start: moment(sInMenu.time_range[0], 'HH:mm').toDate(),
+    // end: moment(sInMenu.time_range[1], 'HH:mm').toDate(),
     startTime: moment(sInMenu.time_range[0], 'HH:mm').format('HH:mm:ss'),
     endTime: moment(sInMenu.time_range[1], 'HH:mm').format('HH:mm:ss'),
     daysOfWeek: sInMenu.dayFilters,
     allDay: sInMenu.time_range[0] === '00:00' && sInMenu.time_range[1] === '24:00',
     textColor: COLOR_OPTIONS[sInMenu.store.id % COLOR_OPTIONS.length],
-    groupId: `menu_${sInMenu.menu_in_store_id}`
+    groupId: `menu_${sInMenu.menu_in_store_id}`,
+    ...sInMenu
   }));
 
 export default function MenuInStoreCalendar() {
   const { themeStretch } = useSettings();
   const dispatch = useDispatch();
+  const { translate } = useLocales();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const calendarRef = useRef<FullCalendar>(null);
@@ -85,9 +93,20 @@ export default function MenuInStoreCalendar() {
   const [view, setView] = useState<CalendarView>(isMobile ? 'listWeek' : 'timeGridWeek');
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [selectedStoreInMenu, setselectedStoreInMenu] = useState<StoreInMenu | null>(null);
-  const [appliedStores, setappliedStores] = useState<StoreInMenu[]>([]);
+  const [popoverStoreInMenu, setPopoverStoreInMenu] = useState<StoreInMenu | null>(null);
+  const [appliedStores, setappliedStores] = useState<StoreInMenu[]>([
+    {
+      menu_id: 1,
+      menu_name: 'Thực đơn 1',
+      dayFilters: [1, 2],
+      store: { id: 1161, store_name: 'store của tuấn' },
+      time_range: ['02:30', '03:30'],
+      menu_in_store_id: 0
+    }
+  ]);
   const [events, setEvents] = useState(transformSIMtoEvent(appliedStores));
-  const [filteredStores, setFilteredStores] = useState<Store[]>([]);
+  const [filteredStores, setFilteredStores] = useState<Store[]>(stores ?? []);
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
   const selectedEvent = useSelector(selectedEventSelector);
   const { selectedRange } = useSelector((state: RootState) => state.calendar);
@@ -109,6 +128,17 @@ export default function MenuInStoreCalendar() {
   const handleAddEvent = (storeData: Omit<StoreInMenu, 'menu_in_store_id'>) => {
     setappliedStores([...appliedStores, { ...storeData, menu_in_store_id: appliedStores.length }]);
   };
+
+  const handlePopoverOpen = (event: HTMLElement) => {
+    setAnchorEl(event);
+  };
+
+  const handlePopoverClose = () => {
+    setAnchorEl(null);
+    setPopoverStoreInMenu(null);
+  };
+
+  const open = Boolean(anchorEl);
 
   const handleUpdateEvent = (updateData: StoreInMenu) => {
     const updateStores = [...appliedStores];
@@ -158,14 +188,24 @@ export default function MenuInStoreCalendar() {
   // TODO
   const handleResizeEvent = async ({ event }: EventResizeDoneArg) => {
     try {
-      dispatch(
-        updateEvent(event.id, {
-          allDay: event.allDay,
-          start: event.start,
-          end: event.end
-        })
+      const mInStoreIdx = appliedStores.findIndex(
+        ({ menu_in_store_id }) => menu_in_store_id === Number(event.id)
       );
-      enqueueSnackbar('Update event success', { variant: 'success' });
+      if (mInStoreIdx !== -1) {
+        // update startTime, endTime, allDay, dayOfWeek
+        const startTime = convertDateToStr(event.start, 'HH:mm');
+        const endTime = convertDateToStr(event.end, 'HH:mm');
+
+        const updateSInMens = [...appliedStores];
+        updateSInMens[mInStoreIdx] = {
+          ...updateSInMens[mInStoreIdx],
+          time_range: [startTime, endTime]
+        };
+        setappliedStores(updateSInMens);
+        enqueueSnackbar('Update event success', {
+          variant: 'success'
+        });
+      }
     } catch (error) {
       console.error(error);
     }
@@ -174,18 +214,31 @@ export default function MenuInStoreCalendar() {
   // TODO
   const handleDropEvent = async ({ event, ...args }: EventDropArg) => {
     try {
-      console.log(`event`, event);
-      console.table(args);
-      dispatch(
-        updateEvent(event.id, {
-          allDay: event.allDay,
-          start: event.start,
-          end: event.end
-        })
+      const mInStoreIdx = appliedStores.findIndex(
+        ({ menu_in_store_id }) => menu_in_store_id === Number(event.id)
       );
-      enqueueSnackbar('Update event success', {
-        variant: 'success'
-      });
+      if (mInStoreIdx !== -1) {
+        // update startTime, endTime, allDay, dayOfWeek
+        const startTime = convertDateToStr(event.start, 'HH:mm');
+        const endTime = convertDateToStr(event.end, 'HH:mm');
+        const daysOfWeek = [
+          ...args.relatedEvents.map((eventApi) => eventApi.start?.getDay() ?? -1)
+        ];
+        if (event?.start) {
+          daysOfWeek.push(event?.start?.getDay());
+        }
+
+        const updateSInMens = [...appliedStores];
+        updateSInMens[mInStoreIdx] = {
+          ...updateSInMens[mInStoreIdx],
+          time_range: [startTime, endTime],
+          dayFilters: daysOfWeek
+        };
+        setappliedStores(updateSInMens);
+        enqueueSnackbar('Update event success', {
+          variant: 'success'
+        });
+      }
     } catch (error) {
       console.error(error);
     }
@@ -211,8 +264,84 @@ export default function MenuInStoreCalendar() {
     return transformSIMtoEvent(viewMenuOfStores);
   }, [appliedStores, filteredStores]);
 
+  const popoverContent = popoverStoreInMenu && (
+    <>
+      <CardContent>
+        <Stack spacing={2}>
+          <Box>
+            <Typography variant="h5" component="div">
+              {popoverStoreInMenu.menu_name}
+            </Typography>
+            <Stack direction="row" spacing={1}>
+              <Box
+                component="span"
+                sx={{
+                  width: 14,
+                  height: 14,
+                  flexShrink: 0,
+                  borderRadius: '3px',
+                  mr: 1,
+                  mt: '2px'
+                }}
+                style={{
+                  backgroundColor: COLOR_OPTIONS[popoverStoreInMenu.store.id % COLOR_OPTIONS.length]
+                }}
+              />
+              <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                {popoverStoreInMenu.store.store_name}
+              </Typography>
+            </Stack>
+          </Box>
+          <Box>
+            <Typography variant="subtitle1">{translate('pages.menus.table.timeRange')}</Typography>
+            <Box>
+              {translate('pages.menus.table.fromTime')}{' '}
+              <Label color="success">{popoverStoreInMenu.time_range[0]}</Label>{' '}
+              {translate('pages.menus.table.toTime')}{' '}
+              <Label color="success">{popoverStoreInMenu.time_range[1]}</Label>
+            </Box>
+          </Box>
+          <Box>
+            <Typography variant="subtitle1">{translate('pages.menus.table.dayFilter')}</Typography>
+            <Stack direction="row" spacing={1}>
+              {popoverStoreInMenu.dayFilters?.map((day) => (
+                <Chip
+                  size="small"
+                  key={`${popoverStoreInMenu.menu_in_store_id}-${day}`}
+                  label={DAY_OF_WEEK.find(({ value }) => value === day)?.label}
+                />
+              ))}
+            </Stack>
+          </Box>
+        </Stack>
+      </CardContent>
+    </>
+  );
+
+  const isCheckedAll = filteredStores.length === stores.length;
+
   return (
     <Page title="Calendar | Minimal-UI">
+      <Popover
+        id="mouse-over-popover"
+        sx={{
+          pointerEvents: 'none'
+        }}
+        open={open}
+        anchorEl={anchorEl}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'right'
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'left'
+        }}
+        onClose={handlePopoverClose}
+        disableRestoreFocus
+      >
+        {popoverContent}
+      </Popover>
       <Card>
         <CalendarToolbar
           setOpenModel={() => setIsOpenModal(true)}
@@ -225,6 +354,16 @@ export default function MenuInStoreCalendar() {
             <Box>
               <CalendarStyle>
                 <FullCalendar
+                  eventMouseEnter={(info) => {
+                    handlePopoverOpen(info.el);
+                    const mInStoreIdx = appliedStores.findIndex(
+                      ({ menu_in_store_id }) => menu_in_store_id === Number(info.event.id)
+                    );
+                    if (mInStoreIdx !== -1) {
+                      setPopoverStoreInMenu(appliedStores[mInStoreIdx]);
+                    }
+                  }}
+                  eventMouseLeave={handlePopoverClose}
                   weekends
                   editable
                   droppable
@@ -327,7 +466,13 @@ export default function MenuInStoreCalendar() {
                   <Box sx={{ float: 'right' }}>
                     <FormControlLabel
                       sx={{ mr: 0 }}
-                      control={<Checkbox onChange={handleFilterAllStore} />}
+                      control={
+                        <Checkbox
+                          defaultChecked
+                          checked={isCheckedAll}
+                          onChange={handleFilterAllStore}
+                        />
+                      }
                       label="Xem tất cả"
                     />
                   </Box>

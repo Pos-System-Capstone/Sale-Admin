@@ -44,7 +44,8 @@ const getInitialValues = (
     end: range
       ? new Date(range.end)
       : convertStrToDate(get(data, ['time_range', 1], moment().format('HH:mm')), 'HH:mm'),
-    dayFilters: get(data, ['dayFilters'], [])
+    dayFilters: get(data, ['dayFilters'], []),
+    allDay: data?.time_range[0] === '00:00' && data?.time_range[1] === '24:00'
   };
 
   return initState;

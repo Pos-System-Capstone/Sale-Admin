@@ -180,7 +180,7 @@ export default function StoreInMenuForm({
                   >
                     {menus?.map(({ meunu_id, menu_name }: Menu) => (
                       <MenuItem value={Number(meunu_id)} key={`menu_select_${meunu_id}`}>
-                        {menu_name ?? `-${meunu_id}`}
+                        {menu_name ?? `Thực đơn ${meunu_id}`}
                       </MenuItem>
                     ))}
                   </SelectField>
