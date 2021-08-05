@@ -220,7 +220,7 @@ const CreateProduct = Loadable(lazy(() => import('../pages/Products/create')));
 // Menu
 const MenusPage = Loadable(lazy(() => import('../pages/Menus')));
 const UpdateMenuPage = Loadable(lazy(() => import('../pages/Menus/update')));
-const MenuInStorePage = Loadable(lazy(() => import('../pages/Menus/MenuInStoreCalendar')));
+const MenuInStorePage = Loadable(lazy(() => import('../pages/Menus/MenuInStore')));
 
 // Collection
 const CollectionListPage = Loadable(lazy(() => import('../pages/collections')));
