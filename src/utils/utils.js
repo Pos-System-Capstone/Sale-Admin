@@ -401,3 +401,19 @@ export const restrictToFirstScrollableAncestor = ({
 
 export const getAttributesWithLang = (attrKeys = [], lang = 'vn') =>
   attrKeys.filter((attr) => attr === 'size' || attr === (lang === 'vn' ? 'base' : 'base_en'));
+
+export const getCbn = (...args) => {
+  const r = [];
+  if (args.length === 0) return [];
+  const max = args.length - 1;
+  function helper(arr, i) {
+    for (let j = 0, l = args[i].length; j < l; j++) {
+      const a = arr.slice(0); // clone arr
+      a.push(args[i][j]);
+      if (i === max) r.push(a);
+      else helper(a, i + 1);
+    }
+  }
+  helper([], 0);
+  return r;
+};

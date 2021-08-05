@@ -81,19 +81,19 @@ const MiddleForm = () => {
         </Box>
       </Card>
 
-      <Card id="product-image">
+      <Card id="pic_url">
         <Box textAlign="left">
           <CardTitle variant="subtitle1">Hình ảnh</CardTitle>
-          <UploadImageField name="thumbnail" />
+          <UploadImageField name="pic_url" label="Hình ảnh" />
         </Box>
       </Card>
 
-      <Card id="price">
+      {/* <Card id="price">
         <Box textAlign="left">
           <CardTitle variant="subtitle1">Bảng giá</CardTitle>
           <ProductPriceForm name="menus" />
         </Box>
-      </Card>
+      </Card> */}
       <Card id="variants">
         <Box textAlign="left">
           <CardTitle variant="subtitle1">Biến thể</CardTitle>
@@ -121,7 +121,7 @@ const MiddleForm = () => {
           <Stack spacing={2}>
             <Stack direction="row" spacing={2}>
               <InputField
-                name="seo.link"
+                name="seo_name"
                 size="small"
                 type="text"
                 label="Đường dẫn SEO"
@@ -130,7 +130,7 @@ const MiddleForm = () => {
                 }}
               />
               <InputField
-                name="seo.title"
+                name="seo_key_words"
                 size="small"
                 type="text"
                 label="Từ khóa SEO"
@@ -140,7 +140,7 @@ const MiddleForm = () => {
               />
             </Stack>
             <InputField
-              name="seo.description"
+              name="seo_description"
               fullWidth
               id="outlined-multiline-static"
               multiline

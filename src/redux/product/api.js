@@ -2,12 +2,7 @@ import request from '../../utils/axios';
 
 export const createMasterProd = (data) => request.post(`/products`, data);
 
-export const getProdById = (id) =>
-  request.get(`/products`, {
-    params: {
-      'product-id': id
-    }
-  });
+export const getProdById = (id) => request.get(`/products/${id}`);
 
 export const updateProdById = (id, data) => request.put(`/products/${id}`, data);
 

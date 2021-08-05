@@ -105,6 +105,7 @@ export default function EcommerceShop() {
               onDelete={setCurrentDeleteItem}
               filters={filters}
               columns={productColumns}
+              rowKey="product_id"
             />
           </Stack>
         </Card>

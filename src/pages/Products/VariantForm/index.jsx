@@ -20,24 +20,9 @@ import {
 
 import { Field } from 'formik';
 import DeleteIcon from '@material-ui/icons/Delete';
+import { getCbn } from 'utils/utils';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 import { InputField, AutoCompleteField } from '../../../components/form';
-
-const getCombn = (arr) => {
-  if (arr.length === 1) {
-    return arr[0];
-  }
-  const ans = [];
-
-  // recur with the rest of the array.
-  const otherCases = getCombn(arr.slice(1));
-  for (let i = 0; i < otherCases.length; i++) {
-    for (let j = 0; j < arr[0].length; j++) {
-      ans.push([arr[0][j], otherCases[i]]);
-    }
-  }
-  return ans;
-};
 
 const VariantForm = ({ name }) => {
   const { control } = useFormContext();
@@ -51,15 +36,18 @@ const VariantForm = ({ name }) => {
     // keyName: "id", default to "id", you can change the key name
   });
 
-  const variantData = useWatch({
-    control,
-    name: 'variants'
-  });
-  const variantArr = variantData.reduce((acc, { values }) => acc?.concat([values]), []);
+  const variantData =
+    useWatch({
+      control,
+      name: 'variants'
+    }) ?? [];
+
+  // => [['a','b']]
+  const variantArr = variantData?.reduce((acc, { values = [] }) => [...acc, values], []);
 
   console.log(`variantData`, variantData);
 
-  const combinationVariants = getCombn(variantArr) ?? [];
+  const combinationVariants = getCbn(...variantArr) ?? [];
 
   const buildVariantTable = () => (
     <TableContainer>
@@ -67,7 +55,7 @@ const VariantForm = ({ name }) => {
         <TableHead>
           <TableRow>
             <TableCell align="left">Sản phẩm</TableCell>
-            <TableCell align="center">Giá sản phẩm</TableCell>
+            {/* <TableCell align="center">Giá sản phẩm</TableCell> */}
             <TableCell align="center">Hành động</TableCell>
           </TableRow>
         </TableHead>
@@ -77,7 +65,7 @@ const VariantForm = ({ name }) => {
               <TableCell align="left">
                 {(Array.isArray(variant) ? variant : [variant]).join('-')}
               </TableCell>
-              <TableCell>
+              {/* <TableCell>
                 <TextField
                   fullWidth
                   defaultValue={0}
@@ -88,7 +76,7 @@ const VariantForm = ({ name }) => {
                     startAdornment: <InputAdornment position="start">VND</InputAdornment>
                   }}
                 />
-              </TableCell>
+              </TableCell> */}
               <TableCell align="center">
                 <Button variant="outlined">Edit</Button>
               </TableCell>

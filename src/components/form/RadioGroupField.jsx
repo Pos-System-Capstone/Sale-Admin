@@ -11,19 +11,20 @@ import {
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
-const RadioGroupField = ({
-  name,
-  label,
-  size,
-  children,
-  fullWidth,
-  rules,
-  disabled,
-  defaultValue = '',
-  options,
-  className,
-  ...props
-}) => {
+const RadioGroupField = (props) => {
+  const {
+    name,
+    label,
+    size,
+    children,
+    fullWidth,
+    rules,
+    disabled,
+    defaultValue = '',
+    options,
+    className,
+    ...others
+  } = props;
   const { control } = useFormContext();
 
   return (
@@ -38,7 +39,7 @@ const RadioGroupField = ({
           disabled={disabled}
         >
           <FormLabel component="legend">{label}</FormLabel>
-          <RadioGroup name={name} {...field} {...props}>
+          <RadioGroup name={name} {...field} {...others}>
             {children ??
               options?.map(({ label, value, id }) => (
                 <FormControlLabel

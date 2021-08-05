@@ -3,12 +3,13 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import { Box, Button, CircularProgress, Stack, Typography } from '@material-ui/core';
-import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useRequest } from 'ahooks';
 import { useSnackbar } from 'notistack5';
+import { ProductTypeEnum, TProductMaster } from 'types/product';
+import { getCbn } from 'utils/utils';
 
 import Page from '../../components/Page';
 import MiddleForm from './components/MiddleForm';
@@ -18,50 +19,8 @@ import { PRODUCT_MASTER } from '../../constraints';
 import { DashboardNavLayout } from '../../layouts/dashboard/DashboardNavbar';
 import useDashboard from '../../hooks/useDashboard';
 import LoadingAsyncButton from '../../components/LoadingAsyncButton/LoadingAsyncButton';
-
-const validationSchema = yup.object({
-  product_code: yup.string('Nhập mã sản phẩm').required('Vui lòng nhập mã sản phẩm'),
-  product_name: yup.string('Nhập tên sản phẩm').required('Vui lòng nhập tên sản phẩm')
-  // menus: yup
-  //   .array()
-  //   .of(
-  //     yup.object().shape({
-  //       price: yup.number('Nhập giá').required('Nhập giá'), // these constraints take precedence
-  //       menuId: yup.number('Chọn menu').required('Chọn menu').typeError('Vui lòng chọn menu') // these constraints take precedence
-  //     })
-  //   )
-  //   .required('Vui lòng chọn 1 bảng giá') // these constraints are shown if and only if inner constraints are satisfied
-  //   .min(1, 'Ít nhất 1 bảng giá')
-});
-
-const DEFAULT_VALUES = {
-  product_name: '',
-  product_code: '',
-  thumbnail: '',
-  category_id: null,
-  description: null,
-  product_type_id: PRODUCT_MASTER,
-  is_available: true,
-  variants: [
-    {
-      optName: 'size',
-      values: []
-    }
-  ],
-  menus: [
-    {
-      price: 0,
-      menuId: null
-    }
-  ],
-  collection_id: [],
-  tag_id: [],
-  seo: {
-    title: null,
-    link: null,
-    description: null
-  }
-};
+import { DEFAULT_VALUES, UpdateProductForm, validationSchema } from './type';
+import { transformProductForm } from './utils';
 
 const UpdateProduct = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -70,12 +29,21 @@ const UpdateProduct = () => {
   const navigate = useNavigate();
 
   const { data, loading } = useRequest(() => getProdById(id), {
-    formatResult: (res) => res.data?.data[0]
+    formatResult: (res) => res.data
   });
 
-  const form = useForm({
+  const form = useForm<UpdateProductForm>({
     resolver: yupResolver(validationSchema),
-    defaultValues: { ...DEFAULT_VALUES, ...data }
+    defaultValues: {
+      ...DEFAULT_VALUES,
+      ...data,
+      variants: [
+        {
+          optName: 'size',
+          values: []
+        }
+      ]
+    }
   });
   const { handleSubmit, reset } = form;
 
@@ -85,14 +53,8 @@ const UpdateProduct = () => {
     }
   }, [data, reset]);
 
-  const onSubmit = (values) => {
-    console.log(`values`, values);
-
-    const transformData = { ...values };
-
-    // transformData.attributes = values.variants?.reduce((acc, { values }) => acc.concat(values), []);
-
-    return updateProdById(id, transformData)
+  const onSubmit = (values: UpdateProductForm) =>
+    updateProdById(id, transformProductForm(values))
       .then((res) => {
         enqueueSnackbar(`Cập nhật thành công ${values.product_name}`, {
           variant: 'success'
@@ -103,7 +65,6 @@ const UpdateProduct = () => {
           variant: 'error'
         });
       });
-  };
 
   if (loading) {
     return (
@@ -126,7 +87,7 @@ const UpdateProduct = () => {
   }
 
   return (
-    <FormProvider {...form}>
+    <FormProvider<UpdateProductForm> {...form}>
       <DashboardNavLayout
         onOpenSidebar={() => setNavOpen(true)}
         sx={{
@@ -151,7 +112,7 @@ const UpdateProduct = () => {
         </Box>
         <Box display="flex" px={2}>
           <MiddleForm />
-          <RightForm handleSubmit={handleSubmit(onSubmit)} />
+          <RightForm />
         </Box>
       </Page>
     </FormProvider>

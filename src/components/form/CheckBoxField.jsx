@@ -3,7 +3,7 @@ import { Checkbox, FormControlLabel } from '@material-ui/core';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
-const CheckBoxField = ({ name, label, rules, defaultValue = false, ...props }) => {
+const CheckBoxField = ({ name, label, rules = null, defaultValue = false, ...props }) => {
   const { control } = useFormContext();
 
   return (

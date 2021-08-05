@@ -96,7 +96,7 @@ const RightForm = () => {
         <Box textAlign="left">
           <CardTitle>Phân mục sản phẩm</CardTitle>
           <SelectField
-            name="category_id"
+            name="cat_id"
             label="Chọn loại sản phẩm"
             defaultValue=""
             size="small"
@@ -112,47 +112,14 @@ const RightForm = () => {
         <Box my={2}>
           <Divider />
         </Box>
-        <Box textAlign="left">
-          <CardTitle>Bộ sưu tập</CardTitle>
-          <SelectField
-            name="collection_id"
-            label="Chọn bộ sưu tập"
-            defaultValue=""
-            multiple
-            id="select-collection"
-            size="small"
-            className={classes.formControl}
-            variant="outlined"
-          >
-            {collectionsData?.map(({ id, name }) => (
-              <MenuItem value={id} key={`collection_select_${id}`}>
-                {name}
-              </MenuItem>
-            ))}
-          </SelectField>
-          <Box pt={2}>
-            {colletions?.map((value) => (
-              <Chip
-                size="small"
-                key={value}
-                label={collectionsData.find(({ id }) => id === value).name}
-                onDelete={() =>
-                  setValue(
-                    'tags',
-                    tags?.filter((t) => t !== value)
-                  )
-                }
-              />
-            ))}
-          </Box>
-        </Box>
+
         <Box my={2}>
           <Divider />
         </Box>
         <Box textAlign="left">
           <CardTitle>Thẻ </CardTitle>
           <SelectField
-            name="tag_id"
+            name="tags"
             labelId="tags-select"
             label="Tag"
             multiple
