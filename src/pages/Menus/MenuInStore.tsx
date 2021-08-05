@@ -185,6 +185,12 @@ export default function MenuInStorePage() {
     return transformSIMtoEvent(viewMenuOfStores);
   }, [appliedStores, filteredStores]);
 
+  const handleDelete = (data: StoreInMenu) => {
+    setappliedStores((prev) =>
+      prev.filter(({ menu_in_store_id }: StoreInMenu) => menu_in_store_id !== data.menu_in_store_id)
+    );
+  };
+
   const popoverContent = popoverStoreInMenu && (
     <>
       <CardContent>
@@ -274,6 +280,7 @@ export default function MenuInStorePage() {
                   onCancel={handleCloseModal}
                   onAddEvent={handleAddEvent}
                   onUpdateEvent={handleUpdateEvent}
+                  onDelete={handleDelete}
                 />
               </DialogAnimate>
             </Box>

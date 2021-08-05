@@ -1,5 +1,5 @@
 export type Menu = {
-  meunu_id: number;
+  menu_id: number;
   store_id: number;
   time_from?: any;
   time_to?: any;

@@ -27,6 +27,7 @@ const SelectField = ({
           fullWidth={fullWidth}
           size={size}
           disabled={disabled}
+          required={props.required}
         >
           <InputLabel htmlFor={name}>{label}</InputLabel>
           <Select

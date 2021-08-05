@@ -51,6 +51,7 @@
     "choosedItem": "Đã chọn",
     "confirm": "Xác nhận",
     "confirmDeleteTitle": "Xác nhận xóa",
-    "deleteSuccess": "Xóa thành công"
+    "deleteSuccess": "Xóa thành công",
+    "atLeast" : "Ít nhất {{number}} giá trị"
   }
 }

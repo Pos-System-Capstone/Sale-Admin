@@ -55,6 +55,7 @@
     "choosedItem": "Choosed",
     "confirm": "Confirm",
     "confirmDeleteTitle": "Confirm delete",
-    "deleteSuccess": "Deleted successfully"
+    "deleteSuccess": "Deleted successfully",
+    "atLeast" : "At least {{number}} value(s)"
   }
 }

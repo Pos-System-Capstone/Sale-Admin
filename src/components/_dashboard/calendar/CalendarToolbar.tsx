@@ -1,25 +1,19 @@
-import { Icon } from '@iconify/react';
-import roundViewDay from '@iconify/icons-ic/round-view-day';
-import roundViewWeek from '@iconify/icons-ic/round-view-week';
+import plusFill from '@iconify/icons-eva/plus-fill';
 import roundViewAgenda from '@iconify/icons-ic/round-view-agenda';
-import roundViewModule from '@iconify/icons-ic/round-view-module';
-import useLocales from 'hooks/useLocales';
+import roundViewWeek from '@iconify/icons-ic/round-view-week';
+import { Icon } from '@iconify/react';
+import { Box, Button, ToggleButton, Tooltip, Typography } from '@material-ui/core';
 // material
 import { styled } from '@material-ui/core/styles';
-import { Box, Tooltip, Typography, IconButton, ToggleButton, Button } from '@material-ui/core';
-import plusFill from '@iconify/icons-eva/plus-fill';
+import useLocales from 'hooks/useLocales';
+import { CalendarView } from '../../../@types/calendar';
 // utils
 import { fDate } from '../../../utils/formatTime';
 //
 import { MHidden } from '../../@material-extend';
-import { CalendarView } from '../../../@types/calendar';
-
-// ----------------------------------------------------------------------
 
 const VIEW_OPTIONS = [
-  { value: 'dayGridMonth', label: 'Month', icon: roundViewModule },
   { value: 'timeGridWeek', label: 'Week', icon: roundViewWeek },
-  { value: 'timeGridDay', label: 'Day', icon: roundViewDay },
   { value: 'listWeek', label: 'Agenda', icon: roundViewAgenda }
 ] as const;
 

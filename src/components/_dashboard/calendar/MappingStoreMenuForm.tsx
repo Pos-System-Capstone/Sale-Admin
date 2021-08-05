@@ -19,7 +19,7 @@ import { useRequest } from 'ahooks';
 import { InputField, SelectField, SwitchField } from 'components/form';
 import { DAY_OF_WEEK } from 'constraints';
 import useLocales from 'hooks/useLocales';
-import { get } from 'lodash';
+import { get, union } from 'lodash';
 import moment from 'moment';
 import { useSnackbar } from 'notistack5';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
@@ -28,7 +28,9 @@ import { getMenus } from 'redux/menu/api';
 import { convertDateToStr, convertStrToDate } from 'utils/utils';
 // redux
 import { RootState, useDispatch } from 'redux/store';
+import * as yup from 'yup';
 import { Menu } from 'types/menu';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 // ----------------------------------------------------------------------
 
@@ -50,7 +52,10 @@ const getInitialValues = (
     end: range
       ? new Date(range.end)
       : convertStrToDate(get(data, ['time_range', 1], moment().format('HH:mm')), 'HH:mm').toDate(),
-    dayFilters: get(data, ['dayFilters'], [])
+    dayFilters: union(
+      get(data, ['dayFilters'], []),
+      range?.start.getDay() ? [range?.start.getDay()] : []
+    )
   };
 
   return initState;
@@ -67,14 +72,37 @@ type StoreInMenuFormProps = {
   storeInMenu: StoreInMenu | null;
   onAddEvent?: (data: any) => void;
   onUpdateEvent?: (data: any) => void;
+  onDelete?: (data: StoreInMenu) => void;
 };
+
+const schema = (translate: any) =>
+  yup.object({
+    menu_id: yup
+      .number()
+      .typeError(translate('common.required', { name: translate('pages.stores.storeMenu') }))
+      .required(translate('common.required', { name: translate('pages.stores.storeMenu') })),
+    store: yup.object({
+      id: yup
+        .number()
+        .typeError(translate('common.required', { name: translate('pages.stores.storeInfoTitle') }))
+        .required(translate('common.required', { name: translate('pages.stores.storeInfoTitle') }))
+    }),
+    dayFilters: yup.array().min(1, translate('common.atLeast', { number: 1 })),
+    start: yup
+      .date()
+      .required(translate('common.required', { name: translate('pages.menus.table.timeRange') })),
+    end: yup
+      .date()
+      .required(translate('common.required', { name: translate('pages.menus.table.timeRange') }))
+  });
 
 export default function StoreInMenuForm({
   onCancel,
   onAddEvent,
   onUpdateEvent,
   storeInMenu,
-  range
+  range,
+  onDelete
 }: StoreInMenuFormProps) {
   const { enqueueSnackbar } = useSnackbar();
   const dispatch = useDispatch();
@@ -87,7 +115,8 @@ export default function StoreInMenuForm({
   const form = useForm<StoreInMenuForm>({
     defaultValues: {
       ...getInitialValues(storeInMenu, range)
-    }
+    },
+    resolver: yupResolver(schema(translate))
   });
 
   useEffect(() => () => console.log('Unmount'), []);
@@ -141,11 +170,14 @@ export default function StoreInMenuForm({
   const { control, handleSubmit, setValue } = form;
 
   const handleDelete = async () => {
-    if (!storeInMenu?.menu_in_store_id) return;
     try {
-      onCancel();
+      if (!storeInMenu) return;
       // dispatch(deleteEvent(storeInMenu?.id));
-      enqueueSnackbar('Delete event success', { variant: 'success' });
+      if (onDelete) {
+        onDelete(storeInMenu);
+        enqueueSnackbar('Delete event success', { variant: 'success' });
+        onCancel();
+      }
     } catch (error) {
       console.error(error);
     }
@@ -162,6 +194,7 @@ export default function StoreInMenuForm({
               <Grid container spacing={2}>
                 <Grid item xs={6}>
                   <SelectField
+                    required
                     onChange={(e: any) => {
                       const selectedMenu = menus.find(
                         ({ meunu_id }: any) => meunu_id === e.target.value
@@ -178,15 +211,16 @@ export default function StoreInMenuForm({
                     defaultValue=""
                     size="small"
                   >
-                    {menus?.map(({ meunu_id, menu_name }: Menu) => (
-                      <MenuItem value={Number(meunu_id)} key={`menu_select_${meunu_id}`}>
-                        {menu_name ?? `Thực đơn ${meunu_id}`}
+                    {menus?.map(({ menu_id, menu_name }: Menu) => (
+                      <MenuItem value={Number(menu_id)} key={`menu_select_${menu_id}`}>
+                        {menu_name ?? `Thực đơn ${menu_id}`}
                       </MenuItem>
                     ))}
                   </SelectField>
                 </Grid>
                 <Grid item xs={6}>
                   <SelectField
+                    required
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                       const selectStore: any = stores?.find(({ id }) => id === e.target.value);
                       setValue('store.id', Number(e.target.value));
@@ -209,7 +243,7 @@ export default function StoreInMenuForm({
 
               <InputField hidden name="menu_name" sx={{ display: 'none' }} />
               <InputField hidden name="store.store_name" sx={{ display: 'none' }} />
-              <SwitchField name="allDay" label="Cả ngày" fullWidth />
+              <SwitchField required name="allDay" label="Cả ngày" fullWidth />
 
               <Box>
                 <Grid container spacing={2}>
@@ -225,7 +259,9 @@ export default function StoreInMenuForm({
                         <MobileTimePicker
                           label="Bắt đầu"
                           inputFormat="hh:mm a"
-                          renderInput={(params) => <TextField size="small" {...params} fullWidth />}
+                          renderInput={(params) => (
+                            <TextField size="small" required {...params} fullWidth />
+                          )}
                           onChange={onChange}
                           value={value}
                         />
@@ -244,7 +280,9 @@ export default function StoreInMenuForm({
                         <MobileTimePicker
                           label="Kết thúc"
                           inputFormat="hh:mm a"
-                          renderInput={(params) => <TextField size="small" {...params} fullWidth />}
+                          renderInput={(params) => (
+                            <TextField required size="small" {...params} fullWidth />
+                          )}
                           onChange={onChange}
                           value={value}
                         />
@@ -260,6 +298,7 @@ export default function StoreInMenuForm({
                 name="dayFilters"
                 multiple
                 label="Ngày hiệu lực"
+                required
               />
             </Stack>
           </Box>
