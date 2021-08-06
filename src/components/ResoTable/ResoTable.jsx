@@ -72,46 +72,50 @@ const StickyRightTableCell = withStyles((theme) => ({
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    minWidth: '120px'
+    textAlign: 'left'
   },
   actionColumn: {
     minWidth: '70px',
-    width: '70px'
+    width: '70px',
+    justifyContent: 'flex-end'
   },
   stickyLeft: {
+    width: '60px',
     position: 'sticky',
     left: (props) => props.left ?? '0'
     // borderRight: `1px solid ${theme.palette.grey[400]}`
   },
   stickyRight: {
+    textAlign: 'right',
     right: (props) => props.right ?? '0'
     // borderLeft: `1px solid ${theme.palette.grey[400]}`
-  }
+  },
+  body: {}
 }));
 
-const ResoTable = ({
-  columns = [],
-  dataSource = null,
-  pagination = false,
-  filters = null,
-  onEdit = null,
-  onDelete = null,
-  getData = () => [],
-  rowKey = 'id',
-  checkboxSelection = false,
-  onChangeSelection = () => null,
-  scroll = null,
-  showAction = true,
+const ResoTable = (
+  {
+    columns = [],
+    dataSource = null,
+    pagination = false,
+    filters = null,
+    onEdit = null,
+    onDelete = null,
+    getData = () => [],
+    rowKey = 'id',
+    checkboxSelection = false,
+    onChangeSelection = () => null,
+    scroll = null,
+    showAction = true
+  },
   ref = null
-}) => {
+) => {
   const classes = useStyles();
-  const [_paginaton, setPaginaton] = React.useState(
-    pagination ?? {
-      rowsPerPage: 10,
-      page: 1,
-      count: 1
-    }
-  );
+  const [_paginaton, setPaginaton] = React.useState({
+    rowsPerPage: 10,
+    page: 1,
+    count: 1
+  });
   const [_selectedIds, setSelectedIds] = React.useState(checkboxSelection?.selection ?? []);
   const [_anchorEl, setAnchorEl] = React.useState(null);
   const [_openMenu, setOpenMenu] = React.useState(null);
@@ -139,7 +143,7 @@ const ResoTable = ({
         console.log(`res`, res);
         return {
           total: dataSource ? dataSource.length : res.data.metadata?.total,
-          list: dataSource ?? res.data.data,
+          list: dataSource ?? res.data?.data ?? [],
           success: true
         };
       },
@@ -249,7 +253,7 @@ const ResoTable = ({
     }
 
     headers.forEach((header, index) => {
-      const CellComp = index === 0 ? StickyLeftTableCell : TableCell;
+      const CellComp = TableCell;
       tableHeaders.push(
         <CellComp
           className={classes.root}
@@ -257,7 +261,11 @@ const ResoTable = ({
           align={header.alignRight ? 'right' : 'left'}
           sx={{ left: checkboxSelection ? '64px' : 0 }}
         >
-          <TableSortLabel hideSortIcon>{getCellValue(header.title, null, header)}</TableSortLabel>
+          <TableSortLabel hideSortIcon>
+            <Typography variant="body1" noWrap>
+              {getCellValue(header.title, null, header)}
+            </Typography>
+          </TableSortLabel>
         </CellComp>
       );
     });
@@ -267,7 +275,6 @@ const ResoTable = ({
         <StickyRightTableCell
           className={[classes.root, classes.actionColumn].join(' ')}
           key="column-action"
-          align="center"
         >
           <TableSortLabel hideSortIcon>
             <span />
@@ -314,7 +321,7 @@ const ResoTable = ({
 
         return (
           <CellComp
-            className={index === 0 && classes.stickyLeft}
+            className={index === 0 ? classes.stickyLeft : classes.body}
             left={checkboxSelection ? '64px' : 0}
             key={`${column.title}-${data[rowKey]}`}
           >
@@ -342,7 +349,7 @@ const ResoTable = ({
       if (showAction) {
         const ActionCell = mdUp ? (
           <StickyRightTableCell>
-            <Stack direction="row">
+            <Stack direction="row" justifyContent="flex-end">
               <Tooltip title="Xóa">
                 <IconButton onClick={handleDelete} sx={{ color: 'red' }}>
                   <Icon icon={trashIcon} />
@@ -418,6 +425,7 @@ const ResoTable = ({
     checkboxSelection,
     showAction,
     classes.stickyLeft,
+    classes.body,
     rowKey,
     onEdit,
     onDelete,
@@ -479,4 +487,4 @@ const ResoTable = ({
   );
 };
 
-export default ResoTable;
+export default React.forwardRef(ResoTable);

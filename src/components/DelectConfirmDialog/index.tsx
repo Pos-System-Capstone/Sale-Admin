@@ -13,7 +13,7 @@ import useLocales from 'hooks/useLocales';
 interface Props {
   open: boolean;
   onClose: () => void;
-  onDelete: () => void;
+  onDelete: () => any;
   title: String | React.ReactElement;
   description?: String | React.ReactElement | undefined;
 }

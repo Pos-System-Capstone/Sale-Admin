@@ -102,7 +102,7 @@ const UpdateMenuPage = () => {
       value: TabType.STORE_APPLY,
       label: 'Cửa hàng áp dụng',
       icon: <Icon icon={roundStore} width={20} height={20} />,
-      component: <StoreApplyTab checkedStores={[]} />
+      component: <StoreApplyTab />
     }
   ];
 

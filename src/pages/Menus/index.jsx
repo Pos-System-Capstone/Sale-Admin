@@ -20,29 +20,6 @@ export const menuColumns = [
     title: 'Tên thực đơn',
     dataIndex: 'menu_name',
     fixed: 'left'
-  },
-  {
-    title: 'Ngày áp dụng',
-    dataIndex: 'day_filters',
-    render: (days) =>
-      days?.length === 7 ? (
-        <Label color="info">Cả tuần</Label>
-      ) : (
-        renderDayMenu(days)?.map((day) => <Label key={day}>{day}</Label>)
-      )
-  },
-  {
-    title: 'Thời gian áp dụng',
-    dataIndex: 'time_from_to',
-    render: (time_from_to = []) => {
-      if (!time_from_to) return <span>-</span>;
-      const [from, to] = time_from_to;
-      return (
-        <span>
-          {from}-{to}
-        </span>
-      );
-    }
   }
 ];
 
@@ -72,9 +49,9 @@ const MenusPage = () => {
             <MenuSearchForm onChange={setFilters} />
             <ResoTable
               filters={filters}
-              rowKey="meunu_id"
+              rowKey="menu_id"
               onEdit={(menu) =>
-                navigate(`${PATH_DASHBOARD.menus.root}/${menu.meunu_id}`, { state: menu })
+                navigate(`${PATH_DASHBOARD.menus.root}/${menu.menu_id}`, { state: menu })
               }
               getData={getMenus}
               columns={menuColumns}

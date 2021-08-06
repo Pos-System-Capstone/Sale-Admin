@@ -1,3 +1,4 @@
+import { TStoreApplyMenu } from 'types/menu';
 import request from '../../utils/axios';
 
 export interface Menu {
@@ -12,8 +13,22 @@ export const getMenus = (params: any): any =>
     params
   });
 
+export const getStoreApplyMenus = (menuId: number, params?: any): any =>
+  request.get<TStoreApplyMenu>(`/menus/${menuId}/stores`, {
+    params
+  });
+
+export const addStoreApplyMenus = (menuId: number, data: any): any =>
+  request.post(`/menus/${menuId}/stores`, data);
+
+export const updateStoreApplyMenus = (menuId: number, storeId: number, data: any): any =>
+  request.put(`/menus/${menuId}/stores/${storeId}`, data);
+
+export const deleteStoreApplyMenus = (menuId: number, storeId: number): any =>
+  request.delete(`/menus/${menuId}/stores/${storeId}`);
+
 export const getProductInMenus = (menuId: number, params: any) =>
-  request.get(`/stores/1160/menus/${menuId}/products`, {
+  request.get(`/menus/${menuId}/products`, {
     params
   });
 

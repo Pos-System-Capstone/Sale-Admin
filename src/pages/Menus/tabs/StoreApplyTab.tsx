@@ -1,33 +1,46 @@
-import { Box, Card, Chip, DialogTitle, Stack, Button } from '@material-ui/core';
+import plusFill from '@iconify/icons-eva/plus-fill';
+import Icon from '@iconify/react';
+import { Box, Button, Card, Chip, DialogTitle, Stack } from '@material-ui/core';
+import { useRequest } from 'ahooks';
 import { DialogAnimate } from 'components/animate';
-import { useSnackbar } from 'notistack5';
+import DeleteConfirmDialog from 'components/DelectConfirmDialog';
 import Label from 'components/Label';
 import ResoTable from 'components/ResoTable/ResoTable';
 import StoreInMenuForm from 'components/_dashboard/calendar/StoreInMenuForm';
 import { DAY_OF_WEEK } from 'constraints';
-import { CardTitle } from 'pages/Products/components/Card';
 import useLocales from 'hooks/useLocales';
+import { useSnackbar } from 'notistack5';
+import { CardTitle } from 'pages/Products/components/Card';
 import React, { useState } from 'react';
-import plusFill from '@iconify/icons-eva/plus-fill';
-import Icon from '@iconify/react';
-import { StoreInMenu } from 'types/store';
-import DeleteConfirmDialog from 'components/DelectConfirmDialog';
-import { MENUINSTORES } from '../fakeData';
+import { useParams } from 'react-router';
+import {
+  addStoreApplyMenus,
+  deleteStoreApplyMenus,
+  getStoreApplyMenus,
+  updateStoreApplyMenus
+} from 'redux/menu/api';
+import { TStoreApplyMenu } from 'types/menu';
 
-const StoreApplyTab = ({ checkedStores }: any) => {
+const StoreApplyTab = () => {
+  const { id }: any = useParams();
   const { translate } = useLocales();
   const { enqueueSnackbar } = useSnackbar();
 
-  const [appliedStores, setappliedStores] = useState<StoreInMenu[]>(MENUINSTORES);
+  const { data: appliedStores, run }: { data: TStoreApplyMenu[] } & any = useRequest(
+    () => getStoreApplyMenus(Number(id)),
+    {
+      formatResult: (res: any) => res.data.data
+    }
+  );
   const [isOpenModal, setIsOpenModal] = useState(false);
-  const [updateStoreInMenu, setUpdateStoreInMenu] = useState<StoreInMenu | null>(null);
-  const [deleteStoreInMenu, setDeleteStoreInMenu] = useState(null);
+  const [updateStoreInMenu, setUpdateStoreInMenu] = useState<TStoreApplyMenu | null>(null);
+  const [deleteStoreInMenu, setDeleteStoreInMenu] = useState<TStoreApplyMenu | null>(null);
 
   const handleSelect = (id: number) => {
     const sInMenuId = id;
 
     const storeInMenuIdx = appliedStores.findIndex(
-      ({ menu_in_store_id: id }) => id === Number(sInMenuId)
+      ({ menu_in_store_id: id }: { menu_in_store_id: number }) => id === Number(sInMenuId)
     );
 
     if (storeInMenuIdx !== -1) {
@@ -41,24 +54,26 @@ const StoreApplyTab = ({ checkedStores }: any) => {
     setUpdateStoreInMenu(null);
   };
 
-  const handleUpdate = (values: StoreInMenu) => {};
-  const handleDelete = () =>
-    new Promise((res) => {
-      setTimeout(() => {
-        setDeleteStoreInMenu(null);
-        return res(true);
-      }, 2000);
-    }).then(() =>
-      enqueueSnackbar(translate('common.deleteSuccess'), {
-        variant: 'success'
-      })
-    );
+  const handleAddStoreApply = (values: any) => addStoreApplyMenus(+id, values).then(run);
+
+  const handleUpdate = (values: TStoreApplyMenu) =>
+    updateStoreApplyMenus(+id, values.store.id, values).then(run);
+
+  const handleDelete = (data: TStoreApplyMenu) =>
+    deleteStoreApplyMenus(+id, data?.store.id)
+      .then(() => setDeleteStoreInMenu(null))
+      .then(run)
+      .then(() =>
+        enqueueSnackbar(translate('common.deleteSuccess'), {
+          variant: 'success'
+        })
+      );
 
   return (
     <Box>
       <DeleteConfirmDialog
         open={Boolean(deleteStoreInMenu)}
-        onDelete={handleDelete}
+        onDelete={() => handleDelete(deleteStoreInMenu!)}
         onClose={() => setDeleteStoreInMenu(null)}
         title={translate('common.confirmDeleteTitle')}
       />
@@ -87,6 +102,8 @@ const StoreApplyTab = ({ checkedStores }: any) => {
               storeInMenu={updateStoreInMenu}
               onCancel={handleClose}
               onUpdateEvent={handleUpdate}
+              onAddStoreApply={handleAddStoreApply}
+              onDelete={handleDelete}
             />
           </DialogAnimate>
           <ResoTable
@@ -103,7 +120,7 @@ const StoreApplyTab = ({ checkedStores }: any) => {
               },
               {
                 title: translate('pages.menus.table.timeRange'),
-                render: (_: any, { time_range }: StoreInMenu) => (
+                render: (_: any, { time_range }: TStoreApplyMenu) => (
                   <>
                     {translate('pages.menus.table.fromTime')}{' '}
                     <Label color="success">{time_range[0]}</Label>{' '}
@@ -114,9 +131,9 @@ const StoreApplyTab = ({ checkedStores }: any) => {
               },
               {
                 title: translate('pages.menus.table.dayFilter'),
-                render: (_: any, { dayFilters, menu_in_store_id: menu_id }: StoreInMenu) => (
+                render: (_: any, { day_filters, menu_in_store_id: menu_id }: TStoreApplyMenu) => (
                   <Stack direction="row" spacing={1}>
-                    {dayFilters?.map((day) => (
+                    {day_filters?.map((day) => (
                       <Chip
                         size="small"
                         key={`${menu_id}-${day}`}
@@ -128,8 +145,8 @@ const StoreApplyTab = ({ checkedStores }: any) => {
               }
             ]}
             rowKey="menu_id"
-            onEdit={(data: StoreInMenu) => {
-              handleSelect(data.menu_in_store_id);
+            onEdit={(data: TStoreApplyMenu) => {
+              handleSelect(data.menu_in_store_id!);
             }}
             onDelete={setDeleteStoreInMenu}
           />

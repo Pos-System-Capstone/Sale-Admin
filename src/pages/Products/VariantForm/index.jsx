@@ -1,31 +1,37 @@
 /* eslint-disable no-plusplus */
 import {
-  TableContainer,
-  TextField,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
-  InputAdornment,
-  Button,
-  Stack,
   Box,
-  Autocomplete,
-  Chip,
+  Button,
   Divider,
   IconButton,
+  Stack,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
   Typography
 } from '@material-ui/core';
-
-import { Field } from 'formik';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { getCbn } from 'utils/utils';
+import { isEqual } from 'lodash';
+import { useEffect } from 'react';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
-import { InputField, AutoCompleteField } from '../../../components/form';
+import { getCbn } from 'utils/utils';
+import { AutoCompleteField, InputField } from '../../../components/form';
 
 const VariantForm = ({ name }) => {
   const { control } = useFormContext();
+  const {
+    fields: childProducts,
+    remove: removeChildProd,
+    update: updateChildProd,
+    append: appendChildProd
+  } = useFieldArray({
+    control,
+    name: 'child_products'
+  });
+
   const {
     fields: variants,
     append: push,
@@ -36,18 +42,25 @@ const VariantForm = ({ name }) => {
     // keyName: "id", default to "id", you can change the key name
   });
 
-  const variantData =
-    useWatch({
-      control,
-      name: 'variants'
-    }) ?? [];
-
   // => [['a','b']]
-  const variantArr = variantData?.reduce((acc, { values = [] }) => [...acc, values], []);
 
-  console.log(`variantData`, variantData);
+  useEffect(() => {
+    const variantArr = variants?.reduce((acc, { values = [] }) => [...acc, values], []);
+    const prodComb = getCbn(...(variantArr ?? []));
+    // [[a,c][b,c]]
+    const generateDefaultProductChilds = prodComb.map((atts = []) => ({
+      atts,
+      is_available: true,
+      code: `${atts.join('')}`,
+      product_name: `${atts.join('-')}`
+    }));
 
-  const combinationVariants = getCbn(...variantArr) ?? [];
+    generateDefaultProductChilds.forEach((child) => {
+      appendChildProd(child);
+    });
+
+    // set new value for child_products
+  }, [variants, appendChildProd]);
 
   const buildVariantTable = () => (
     <TableContainer>
@@ -55,30 +68,23 @@ const VariantForm = ({ name }) => {
         <TableHead>
           <TableRow>
             <TableCell align="left">Sản phẩm</TableCell>
-            {/* <TableCell align="center">Giá sản phẩm</TableCell> */}
+            <TableCell align="center">Mã sản phẩm</TableCell>
             <TableCell align="center">Hành động</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {combinationVariants.map((variant) => (
-            <TableRow key={(Array.isArray(variant) ? variant : [variant]).join('-')}>
+          {childProducts.map(({ atts, product_name, id }, index) => (
+            <TableRow key={id}>
               <TableCell align="left">
-                {(Array.isArray(variant) ? variant : [variant]).join('-')}
+                <InputField name={`child_products.${index}.product_name`} fullWidth size="small" />
               </TableCell>
-              {/* <TableCell>
-                <TextField
-                  fullWidth
-                  defaultValue={0}
-                  type="number"
-                  // InputProps={{ inputProps: { min: 0, max: 10 } }}
-                  size="small"
-                  InputProps={{
-                    startAdornment: <InputAdornment position="start">VND</InputAdornment>
-                  }}
-                />
-              </TableCell> */}
+              <TableCell>
+                <InputField name={`child_products.${index}.code`} fullWidth size="small" />
+              </TableCell>
               <TableCell align="center">
-                <Button variant="outlined">Edit</Button>
+                <Button variant="outlined" color="error" onClick={() => removeChildProd(index)}>
+                  Xóa
+                </Button>
               </TableCell>
             </TableRow>
           ))}
@@ -86,6 +92,8 @@ const VariantForm = ({ name }) => {
       </Table>
     </TableContainer>
   );
+
+  console.log(childProducts);
 
   return (
     <Stack spacing={2}>

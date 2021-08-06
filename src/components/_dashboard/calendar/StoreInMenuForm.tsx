@@ -23,12 +23,13 @@ import { useSelector } from 'react-redux';
 import { convertDateToStr, convertStrToDate } from 'utils/utils';
 // redux
 import { RootState, useDispatch } from 'redux/store';
-import { Store, StoreInMenu } from 'types/store';
+import { Store } from 'types/store';
+import { TStoreApplyMenu, TStoreApplyMenuRequest } from 'types/menu';
 
 // ----------------------------------------------------------------------
 
 const getInitialValues = (
-  data: StoreInMenu | null,
+  data: TStoreApplyMenu | null,
   range?: {
     start: Date;
     end: Date;
@@ -37,14 +38,13 @@ const getInitialValues = (
   // eslint-disable-next-line no-underscore-dangle
   const initState = {
     id: get(data, ['store', 'id'], ''),
-    store_name: get(data, ['store', 'store_name'], ''),
     start: range
       ? new Date(range.start)
       : convertStrToDate(get(data, ['time_range', 0], moment().format('HH:mm')), 'HH:mm'),
     end: range
       ? new Date(range.end)
       : convertStrToDate(get(data, ['time_range', 1], moment().format('HH:mm')), 'HH:mm'),
-    dayFilters: get(data, ['dayFilters'], []),
+    day_filters: get(data, ['day_filters'], []),
     allDay: data?.time_range[0] === '00:00' && data?.time_range[1] === '24:00'
   };
 
@@ -59,15 +59,17 @@ type StoreInMenuFormProps = {
     start: Date;
     end: Date;
   } | null;
-  storeInMenu: StoreInMenu | null;
-  onAddEvent?: (data: any) => void;
-  onUpdateEvent?: (data: any) => void;
+  storeInMenu: TStoreApplyMenu | null;
+  onAddStoreApply?: (data: any) => Promise<any>;
+  onUpdateEvent?: (data: any) => Promise<any>;
+  onDelete?: (data: any) => Promise<any>;
 };
 
 export default function StoreInMenuForm({
   onCancel,
-  onAddEvent,
+  onAddStoreApply,
   onUpdateEvent,
+  onDelete,
   storeInMenu,
   range
 }: StoreInMenuFormProps) {
@@ -82,45 +84,41 @@ export default function StoreInMenuForm({
     defaultValues: getInitialValues(storeInMenu, range)
   });
 
-  const onSubmit = (values: any) => {
+  const onSubmit = async (values: any) => {
     try {
       if (!isCreating) {
-        const _storeInMenuData: Partial<StoreInMenu> = {
-          menu_in_store_id: storeInMenu?.menu_in_store_id,
-          dayFilters: values.dayFilters,
-          store: {
-            id: values.id,
-            store_name: values.store_name
-          },
+        const _storeInMenuData: Partial<TStoreApplyMenuRequest> = {
+          day_filters: values.day_filters,
+          store_id: values.id,
           time_range: [
             values.allDay ? '00:00' : convertDateToStr(values.start, 'HH:mm'),
             values.allDay ? '24:00' : convertDateToStr(values.end, 'HH:mm')
           ]
         };
         if (onUpdateEvent) {
-          onUpdateEvent(_storeInMenuData);
-          enqueueSnackbar('Update event success', { variant: 'success' });
+          await onUpdateEvent(_storeInMenuData);
+          enqueueSnackbar('Updated menu success', { variant: 'success' });
         }
       } else {
-        const _storeInMenuData: Partial<StoreInMenu> = {
-          dayFilters: values.dayFilters,
-          store: {
-            id: values.id,
-            store_name: values.store_name
-          },
+        const _storeInMenuData: Partial<TStoreApplyMenuRequest> = {
+          day_filters: values.day_filters,
+          store_id: values.id,
           time_range: [
             values.allDay ? '00:00' : convertDateToStr(values.start, 'HH:mm'),
             values.allDay ? '24:00' : convertDateToStr(values.end, 'HH:mm')
           ]
         };
-        if (onAddEvent) {
-          onAddEvent(_storeInMenuData);
-          enqueueSnackbar('Create event success', { variant: 'success' });
+        if (onAddStoreApply) {
+          await onAddStoreApply(_storeInMenuData);
+          enqueueSnackbar('Applied store to menu', { variant: 'success' });
         }
       }
       onCancel();
     } catch (error) {
-      console.error(error);
+      console.log(error);
+      enqueueSnackbar(get(error, 'message', 'Some thing wrong'), {
+        variant: 'error'
+      });
     }
   };
 
@@ -129,8 +127,9 @@ export default function StoreInMenuForm({
   const handleDelete = async () => {
     if (!storeInMenu?.menu_in_store_id) return;
     try {
+      if (!onDelete) return;
+      await onDelete(storeInMenu);
       onCancel();
-      // dispatch(deleteEvent(storeInMenu?.id));
       enqueueSnackbar('Delete event success', { variant: 'success' });
     } catch (error) {
       console.error(error);
@@ -147,7 +146,6 @@ export default function StoreInMenuForm({
             <SelectField
               onChange={(e: any) => {
                 setValue('id', e.target.value);
-                setValue('store_name', stores.find(({ id }: Store) => id === e.target.value)?.name);
               }}
               fullWidth
               name="id"
@@ -202,7 +200,7 @@ export default function StoreInMenuForm({
             <SelectField
               options={DAY_OF_WEEK}
               fullWidth
-              name="dayFilters"
+              name="day_filters"
               multiple
               label="Ngày hiệu lực"
             />

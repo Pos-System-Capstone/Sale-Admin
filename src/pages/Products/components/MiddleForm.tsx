@@ -103,13 +103,11 @@ const MiddleForm = () => {
               color="primary"
               label="Sản phẩm này có các tùy chọn như màu sắc, kích cỡ."
             />
-            {hasVariant && (
-              <Stack direction="column" justifyContent="start" spacing={2}>
-                <Divider />
-                <Typography variant="subtitle2">Tùy chọn</Typography>
-                <VariantForm name="variants" />
-              </Stack>
-            )}
+            <Stack direction="column" justifyContent="start" spacing={2}>
+              <Divider />
+              <Typography variant="subtitle2">Tùy chọn</Typography>
+              <VariantForm name="variants" />
+            </Stack>
           </Stack>
         </Box>
       </Card>

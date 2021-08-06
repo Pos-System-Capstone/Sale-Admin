@@ -100,6 +100,7 @@ export default function EcommerceShop() {
             <SeachProductForm onChange={setFilters} />
 
             <ResoTable
+              pagination
               getData={getAllProduct}
               onEdit={editProuct}
               onDelete={setCurrentDeleteItem}

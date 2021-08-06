@@ -1,13 +1,14 @@
 import React from 'react';
 
 /* eslint-disable camelcase */
-import { Chip, Avatar } from '@material-ui/core';
-import { PRODUCT_TYPE_DATA } from '../../constraints';
+import { formatCurrency } from 'utils/utils';
+import { Chip, Avatar, Typography } from '@material-ui/core';
+import { PRODUCT_TYPE_DATA } from 'constraints';
 
 export const productColumns = [
   {
-    title: 'Mã sản phẩm',
-    dataIndex: 'code'
+    title: 'STT',
+    dataIndex: 'index'
   },
   {
     title: 'Hình ảnh',
@@ -26,14 +27,19 @@ export const productColumns = [
     dataIndex: 'product_name'
   },
   {
+    title: 'Nhóm Sản Phẩm',
+    dataIndex: 'cate_name',
+    valueType: 'select'
+  },
+  {
     title: 'Loại Sản Phẩm',
     dataIndex: 'product_type',
     render: (type) => <Chip label={PRODUCT_TYPE_DATA.find(({ value }) => value === type).label} />
   },
   {
-    title: 'Nhóm Sản Phẩm',
-    dataIndex: 'cate_name',
-    valueType: 'select'
+    title: 'Giá',
+    dataIndex: 'price',
+    render: (price) => <Typography>{formatCurrency(price)}</Typography>
   },
   {
     title: 'Trạng thái',

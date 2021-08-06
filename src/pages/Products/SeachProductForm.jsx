@@ -10,10 +10,10 @@ import { PRODUCT_MASTER } from '../../constraints';
 const SeachProductForm = ({ onChange = console.log }) => {
   const form = useForm({
     defaultValues: {
-      code: null,
       'product-name': null,
-      'product-type-id': PRODUCT_MASTER,
-      'is-available': null
+      'product-type': PRODUCT_MASTER,
+      'is-available': null,
+      'cat-id': null
     }
   });
 
@@ -44,9 +44,6 @@ const SeachProductForm = ({ onChange = console.log }) => {
     <FormProvider {...form}>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={3}>
-          <InputField name="code" size="small" type="text" label="Mã sản phẩm" />
-        </Grid>
-        <Grid item xs={12} sm={3}>
           <InputField name="product-name" size="small" type="email" label="Tên sản phẩm" />
         </Grid>
         <Grid item xs={12} sm={3}>
@@ -63,28 +60,6 @@ const SeachProductForm = ({ onChange = console.log }) => {
               </MenuItem>
             ))}
           </SelectField>
-        </Grid>
-        <Grid item xs={12} sm={3}>
-          <SelectField
-            sx={{ minWidth: '150px' }}
-            options={[
-              {
-                label: 'Tất cả',
-                value: ''
-              },
-              {
-                label: 'Đang bán',
-                value: 'true'
-              },
-              {
-                label: 'Ngừng bán',
-                value: 'false'
-              }
-            ]}
-            name="is-available"
-            size="small"
-            label="Trạng thái"
-          />
         </Grid>
       </Grid>
     </FormProvider>

@@ -98,13 +98,12 @@ function a11yProps(index) {
 
 // eslint-disable-next-line react/prop-types
 const ProductInMenuTab = ({ id, onAddProduct }) => {
-  const {
-    data = DEFAULT_DATA,
-    loading,
-    run
-  } = useRequest(() => getProductInMenus(id), {
-    formatResult: (res) => res.data.data
-  });
+  const [currentCate, setCurrentCate] = React.useState(null);
+  const [filters, setFilters] = React.useState(null);
+  const ref = React.useRef();
+
+  const run = ref.current?.reload();
+
   const { enqueueSnackbar } = useSnackbar();
   const { translate } = useLocales();
 
@@ -112,8 +111,6 @@ const ProductInMenuTab = ({ id, onAddProduct }) => {
 
   const [currentDeleteItem, setCurrentDeleteItem] = React.useState(null);
   const [currentProduct, setCurrentProduct] = React.useState(null);
-  const [currentCate, setCurrentCate] = React.useState(null);
-  const [filters, setFilters] = React.useState(null);
 
   React.useEffect(() => {
     setFilters((prev) => ({ ...prev, 'cat-id': currentCate }));
@@ -228,49 +225,46 @@ const ProductInMenuTab = ({ id, onAddProduct }) => {
               <Stack justifyContent="space-between" mb={2} direction="row" spacing={2}>
                 <InputField size="small" label="Tên sản phẩm" name="product-name" />
               </Stack>
-              {loading ? (
-                <CircularProgress />
-              ) : (
-                <ResoTable
-                  getData={getAllProduct}
-                  rowKey="product_id"
-                  filters={filters}
-                  onEdit={setCurrentProduct}
-                  onDelete={setCurrentDeleteItem}
-                  columns={[
-                    {
-                      title: 'Mã sản phẩm',
-                      dataIndex: 'code'
-                    },
-                    {
-                      title: 'Hình ảnh',
-                      dataIndex: 'pic_url',
-                      render: (src, { product_name }) => (
-                        <Avatar
-                          alt={product_name}
-                          src={src}
-                          variant="square"
-                          style={{ width: '54px', height: '54px', zIndex: 1 }}
-                        />
-                      )
-                    },
-                    {
-                      title: 'Tên sản phẩm',
-                      dataIndex: 'product_name'
-                    },
-                    {
-                      title: 'Giá',
-                      dataIndex: 'price1',
-                      render: (value) => <Typography>{formatCurrency(value)}</Typography>
-                    },
-                    {
-                      title: 'Danh mục',
-                      dataIndex: 'cate_name',
-                      render: (cate) => <Chip label={cate} />
-                    }
-                  ]}
-                />
-              )}
+
+              <ResoTable
+                ref={ref}
+                getData={(params) => getProductInMenus(id, params)}
+                rowKey="product_id"
+                onEdit={setCurrentProduct}
+                onDelete={setCurrentDeleteItem}
+                columns={[
+                  {
+                    title: 'Mã sản phẩm',
+                    dataIndex: 'code'
+                  },
+                  {
+                    title: 'Hình ảnh',
+                    dataIndex: 'pic_url',
+                    render: (src, { product_name }) => (
+                      <Avatar
+                        alt={product_name}
+                        src={src}
+                        variant="square"
+                        style={{ width: '54px', height: '54px', zIndex: 1 }}
+                      />
+                    )
+                  },
+                  {
+                    title: 'Tên sản phẩm',
+                    dataIndex: 'product_name'
+                  },
+                  {
+                    title: 'Giá',
+                    dataIndex: 'price1',
+                    render: (value) => <Typography>{formatCurrency(value)}</Typography>
+                  },
+                  {
+                    title: 'Danh mục',
+                    dataIndex: 'cate_name',
+                    render: (cate) => <Chip label={cate} />
+                  }
+                ]}
+              />
             </Box>
           </Grid>
         </Grid>

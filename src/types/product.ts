@@ -39,6 +39,7 @@ export type TGroupProduct = {
 };
 
 export type TProductBase = {
+  product_id?: number;
   product_type?: ProductTypeEnum;
   is_available: boolean;
   code?: string;

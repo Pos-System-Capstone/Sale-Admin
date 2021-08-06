@@ -1,26 +1,22 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-plusplus */
 /* eslint-disable react/prop-types */
-import React from 'react';
-import { Box, Button, CircularProgress, Stack, Typography } from '@material-ui/core';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { FormProvider, useForm } from 'react-hook-form';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Box, Button, CircularProgress, Stack, Typography } from '@material-ui/core';
 import { useRequest } from 'ahooks';
 import { useSnackbar } from 'notistack5';
-import { ProductTypeEnum, TProductMaster } from 'types/product';
-import { getCbn } from 'utils/utils';
-
+import React from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
+import { useNavigate, useParams } from 'react-router-dom';
+import LoadingAsyncButton from '../../components/LoadingAsyncButton/LoadingAsyncButton';
 import Page from '../../components/Page';
+import useDashboard from '../../hooks/useDashboard';
+import { DashboardNavLayout } from '../../layouts/dashboard/DashboardNavbar';
+import { getProdById, updateProdById } from '../../redux/product/api';
 import MiddleForm from './components/MiddleForm';
 import RightForm from './components/RightForm';
-import { getProdById, updateProdById } from '../../redux/product/api';
-import { PRODUCT_MASTER } from '../../constraints';
-import { DashboardNavLayout } from '../../layouts/dashboard/DashboardNavbar';
-import useDashboard from '../../hooks/useDashboard';
-import LoadingAsyncButton from '../../components/LoadingAsyncButton/LoadingAsyncButton';
 import { DEFAULT_VALUES, UpdateProductForm, validationSchema } from './type';
-import { transformProductForm } from './utils';
+import { transformProductData, transformProductForm } from './utils';
 
 const UpdateProduct = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -32,24 +28,20 @@ const UpdateProduct = () => {
     formatResult: (res) => res.data
   });
 
+  const defaultValues = {
+    ...DEFAULT_VALUES,
+    ...transformProductData(data)
+  };
+
   const form = useForm<UpdateProductForm>({
     resolver: yupResolver(validationSchema),
-    defaultValues: {
-      ...DEFAULT_VALUES,
-      ...data,
-      variants: [
-        {
-          optName: 'size',
-          values: []
-        }
-      ]
-    }
+    defaultValues
   });
   const { handleSubmit, reset } = form;
 
   React.useEffect(() => {
     if (data) {
-      reset({ ...data });
+      reset({ ...transformProductData(data) });
     }
   }, [data, reset]);
 
@@ -85,6 +77,8 @@ const UpdateProduct = () => {
       </Box>
     );
   }
+
+  console.log(form.getValues());
 
   return (
     <FormProvider<UpdateProductForm> {...form}>
