@@ -52,30 +52,10 @@ const UpdateMenuPage = () => {
     }
   });
 
-  const onUpdateMenu = (updateMenu: { time_from_to: string[]; from: any; to: any }) => {
-    updateMenu.time_from_to = [
-      convertDateToStr(updateMenu.from, 'HH:mm'),
-      convertDateToStr(updateMenu.to, 'HH:mm')
-    ];
-
-    return updateMenuInfo(+id, updateMenu)
+  const onUpdateMenu = (updateMenu: any) =>
+    updateMenuInfo(+id, updateMenu)
       .then(() =>
         enqueueSnackbar(`Cập nhật thành công`, {
-          variant: 'success'
-        })
-      )
-      .catch((err) => {
-        const errMsg = get(err.response, ['data', 'message'], `Có lỗi xảy ra. Vui lòng thử lại`);
-        enqueueSnackbar(errMsg, {
-          variant: 'error'
-        });
-      });
-  };
-
-  const addProductToMenu = (datas: any) =>
-    addProductInMenus(+id, datas)
-      .then(() =>
-        enqueueSnackbar(`Thêm thành công`, {
           variant: 'success'
         })
       )
@@ -94,7 +74,7 @@ const UpdateMenuPage = () => {
       component: (
         <Stack direction="column" mt={2} spacing={2}>
           <MenuInfoTab onSubmit={form.handleSubmit(onUpdateMenu)} />
-          <ProductInMenuTab id={id} onAddProduct={addProductToMenu} />
+          <ProductInMenuTab id={id} />
         </Stack>
       )
     },

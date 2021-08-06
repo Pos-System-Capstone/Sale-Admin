@@ -17,9 +17,10 @@ import {
   ListItemText,
   ListSubheader,
   Stack,
+  TextField,
   Typography
 } from '@material-ui/core';
-import { useRequest } from 'ahooks';
+import { useDebounceFn, useRequest } from 'ahooks';
 import DeleteConfirmDialog from 'components/DelectConfirmDialog';
 import DrawerProductForm from 'components/DrawerProductForm/DrawerProductForm';
 import { InputField } from 'components/form';
@@ -30,7 +31,12 @@ import { useSnackbar } from 'notistack5';
 import { CardTitle } from 'pages/Products/components/Card';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { deleteProductInMenu, getProductInMenus, updateProdInMenuInfo } from 'redux/menu/api';
+import {
+  addProductInMenus,
+  deleteProductInMenu,
+  getProductInMenus,
+  updateProdInMenuInfo
+} from 'redux/menu/api';
 import { getAllProduct } from 'redux/product/api';
 import { formatCurrency } from 'utils/utils';
 import EditProductDialog from '../components/EditProductDialog';
@@ -97,7 +103,7 @@ function a11yProps(index) {
 }
 
 // eslint-disable-next-line react/prop-types
-const ProductInMenuTab = ({ id, onAddProduct }) => {
+const ProductInMenuTab = ({ id }) => {
   const [currentCate, setCurrentCate] = React.useState(null);
   const [filters, setFilters] = React.useState(null);
   const ref = React.useRef();
@@ -112,6 +118,15 @@ const ProductInMenuTab = ({ id, onAddProduct }) => {
   const [currentDeleteItem, setCurrentDeleteItem] = React.useState(null);
   const [currentProduct, setCurrentProduct] = React.useState(null);
 
+  const { run: changeProductNameFilter } = useDebounceFn(
+    (value) => {
+      setFilters((prev) => ({ ...prev, 'product-name': value }));
+    },
+    {
+      wait: 500
+    }
+  );
+
   React.useEffect(() => {
     setFilters((prev) => ({ ...prev, 'cat-id': currentCate }));
   }, [currentCate]);
@@ -120,6 +135,19 @@ const ProductInMenuTab = ({ id, onAddProduct }) => {
     setCurrentCate(newValue);
   };
 
+  const addProductToMenu = (datas) =>
+    addProductInMenus(+id, datas)
+      .then(() =>
+        enqueueSnackbar(`Thêm thành công`, {
+          variant: 'success'
+        })
+      )
+      .catch((err) => {
+        const errMsg = get(err.response, ['data', 'message'], `Có lỗi xảy ra. Vui lòng thử lại`);
+        enqueueSnackbar(errMsg, {
+          variant: 'error'
+        });
+      });
   const handleUpdateProdInMenu = (values) =>
     updateProdInMenuInfo(id, values)
       .then(() =>
@@ -175,7 +203,7 @@ const ProductInMenuTab = ({ id, onAddProduct }) => {
         <Box display="flex" justifyContent="space-between">
           <CardTitle>Danh sách sản phẩm</CardTitle>
           <DrawerProductForm
-            onSubmit={(ids, data) => onAddProduct(data)}
+            onSubmit={(ids, data) => addProductToMenu(data)}
             trigger={
               <Button size="small" startIcon={<Icon icon={plusFill} />}>
                 Thêm sản phẩm
@@ -223,11 +251,17 @@ const ProductInMenuTab = ({ id, onAddProduct }) => {
           <Grid item xs={12} sm={9}>
             <Box mt={2}>
               <Stack justifyContent="space-between" mb={2} direction="row" spacing={2}>
-                <InputField size="small" label="Tên sản phẩm" name="product-name" />
+                <TextField
+                  onChange={(e) => changeProductNameFilter(e.target.value)}
+                  size="small"
+                  label="Tên sản phẩm"
+                  name="product-name"
+                />
               </Stack>
 
               <ResoTable
                 ref={ref}
+                filters={filters}
                 getData={(params) => getProductInMenus(id, params)}
                 rowKey="product_id"
                 onEdit={setCurrentProduct}

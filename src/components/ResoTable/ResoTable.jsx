@@ -133,6 +133,7 @@ const ResoTable = (
       if (dataSource) return Promise.resolve(dataSource);
       return getData({
         ...params.filters,
+        ...filters,
         page: params.current,
         size: params.pageSize
       });
@@ -148,7 +149,7 @@ const ResoTable = (
         };
       },
       onError: console.log,
-      refreshDeps: [dataSource]
+      refreshDeps: [dataSource, filters]
     }
   );
   const { current, pageSize, total } = tableProps?.pagination ?? {};
@@ -163,15 +164,6 @@ const ResoTable = (
 
     setPaginaton({ rowsPerPage: pageSize, count: total, page: current });
   }, [current, pageSize, total]);
-
-  React.useEffect(() => {
-    const { current, pageSize, total } = tableProps.pagination;
-    const { onChange: onChangeTable } = tableProps;
-    if (filters) {
-      onChangeTable({ current, pageSize, total }, filters);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters]);
 
   React.useEffect(() => {
     if (typeof onChangeSelection === 'function') {

@@ -28,7 +28,7 @@ const EditProductDialog = ({ open, onClose, onSubmit, data = {} }) => {
     const inputs = [];
 
     // eslint-disable-next-line no-plusplus
-    for (let index = 0; index < 4; index++) {
+    for (let index = 0; index < 10; index++) {
       inputs.push(
         <Grid key={`price_${index}`} item xs={6}>
           <InputField
@@ -38,6 +38,7 @@ const EditProductDialog = ({ open, onClose, onSubmit, data = {} }) => {
             label={`Giá ${index + 1}`}
             fullWidth
             variant="outlined"
+            size="small"
           />
         </Grid>
       );
