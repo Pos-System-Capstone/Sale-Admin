@@ -1,17 +1,19 @@
-import { Icon } from '@iconify/react';
 import menu2Fill from '@iconify/icons-eva/menu-2-fill';
+import navigation2Outline from '@iconify/icons-eva/navigation-2-outline';
+import { Icon } from '@iconify/react';
+import { AppBar, Box, Button, IconButton, Stack, Toolbar } from '@material-ui/core';
 // material
 import { alpha, styled } from '@material-ui/core/styles';
-import { Box, Stack, AppBar, Toolbar, IconButton } from '@material-ui/core';
 import Label from 'components/Label';
-// hooks
-import useCollapseDrawer from '../../hooks/useCollapseDrawer';
+import StoreNavigationDialog from 'components/StoreNavigationDialog';
+import { useState } from 'react';
 // components
 import { MHidden } from '../../components/@material-extend';
+// hooks
+import useCollapseDrawer from '../../hooks/useCollapseDrawer';
 import AccountPopover from './AccountPopover';
-import LanguagePopover from './LanguagePopover';
 import ContactsPopover from './ContactsPopover';
-import NotificationsPopover from './NotificationsPopover';
+import LanguagePopover from './LanguagePopover';
 
 // ----------------------------------------------------------------------
 
@@ -64,6 +66,16 @@ export const DashboardNavLayout = ({ onOpenSidebar, children, ...props }: any) =
 export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps) {
   const { isCollapse } = useCollapseDrawer();
 
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const envLabelColor = (env: any) => {
     switch (env) {
       case 'development':
@@ -85,6 +97,13 @@ export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps)
         })
       }}
     >
+      <StoreNavigationDialog
+        open={open}
+        onClose={handleClose}
+        onSelectStore={(store) => {
+          console.log(store);
+        }}
+      />
       <ToolbarStyle>
         <MHidden width="lgUp">
           <IconButton onClick={onOpenSidebar} sx={{ mr: 1, color: 'text.primary' }}>
@@ -99,8 +118,13 @@ export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps)
             {process.env.REACT_APP_ENVIROMENT}
           </Label>
           <LanguagePopover />
-          <NotificationsPopover />
-          <ContactsPopover />
+          <Button
+            onClick={handleClickOpen}
+            variant="outlined"
+            startIcon={<Icon icon={navigation2Outline} />}
+          >
+            Điều hướng
+          </Button>
           <AccountPopover />
         </Stack>
       </ToolbarStyle>

@@ -148,7 +148,8 @@ const ProductInMenuTab = ({ id }) => {
           variant: 'error'
         });
       });
-  const handleUpdateProdInMenu = (values) =>
+
+  const updateProdInMenu = (values) =>
     updateProdInMenuInfo(id, values)
       .then(() =>
         enqueueSnackbar(`Cập nhật thành công`, {
@@ -185,7 +186,7 @@ const ProductInMenuTab = ({ id }) => {
         open={currentProduct}
         onClose={() => setCurrentProduct(null)}
         data={currentProduct}
-        onSubmit={handleUpdateProdInMenu}
+        onSubmit={updateProdInMenu}
       />
       <DeleteConfirmDialog
         open={Boolean(currentDeleteItem)}
