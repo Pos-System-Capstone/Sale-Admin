@@ -1,37 +1,19 @@
+import { Box, Divider, Stack, Typography } from '@material-ui/core';
 import React from 'react';
-import {
-  Box,
-  Divider,
-  TextField,
-  Stack,
-  Button,
-  FormControlLabel,
-  Checkbox,
-  Typography
-} from '@material-ui/core';
-import { FieldArray } from 'formik';
-import { useFormContext, useWatch } from 'react-hook-form';
-
-import VariantForm from '../VariantForm';
-import { CardTitle, Card } from './Card';
-import { ReactComponent as UploadSVG } from '../../../assets/images/upload.svg';
-import ProductPriceForm from '../ProductPriceForm';
-import {
-  RadioGroupField,
-  InputField,
-  CheckBoxField,
-  UploadImageField
-} from '../../../components/form';
+import { useFormContext } from 'react-hook-form';
+import { InputField, RadioGroupField, UploadImageField } from '../../../components/form';
 import { PRODUCT_TYPE_DATA } from '../../../constraints';
+import VariantForm from '../VariantForm';
+import { Card, CardTitle } from './Card';
+
+type Props = {
+  updateMode?: boolean;
+};
 
 // eslint-disable-next-line arrow-body-style
-const MiddleForm = () => {
+const MiddleForm: React.FC<Props> = ({ updateMode }) => {
   const { control, setValue, handleSubmit } = useFormContext();
 
-  const hasVariant = useWatch({
-    control,
-    name: 'hasVariant'
-  });
   return (
     <Box p={1} flex={1}>
       <Card id="product-detail">
@@ -88,25 +70,14 @@ const MiddleForm = () => {
         </Box>
       </Card>
 
-      {/* <Card id="price">
-        <Box textAlign="left">
-          <CardTitle variant="subtitle1">Bảng giá</CardTitle>
-          <ProductPriceForm name="menus" />
-        </Box>
-      </Card> */}
       <Card id="variants">
         <Box textAlign="left">
           <CardTitle variant="subtitle1">Biến thể</CardTitle>
           <Stack direction="column">
-            <CheckBoxField
-              name="hasVariant"
-              color="primary"
-              label="Sản phẩm này có các tùy chọn như màu sắc, kích cỡ."
-            />
             <Stack direction="column" justifyContent="start" spacing={2}>
               <Divider />
               <Typography variant="subtitle2">Tùy chọn</Typography>
-              <VariantForm name="variants" />
+              <VariantForm name="variants" updateMode={updateMode} />
             </Stack>
           </Stack>
         </Box>

@@ -1,11 +1,12 @@
 import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  DialogActions,
-  DialogContentText,
   Button,
-  DialogProps
+  ButtonProps,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogProps,
+  DialogTitle
 } from '@material-ui/core';
 import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
 import useLocales from 'hooks/useLocales';
@@ -18,14 +19,18 @@ type Props = {
   description?: String | JsxElement | null;
   onDelete: () => Promise<any> | Function;
   onClose: () => any;
+  confirmProps?: ButtonProps;
+  cancelProps?: ButtonProps;
 };
 
-const DeleteConfirmDialog: React.FC<Props & DialogProps> = ({
+const ConfirmDialog: React.FC<Props & DialogProps> = ({
   open,
   title,
   description,
   onClose,
   onDelete,
+  cancelProps,
+  confirmProps,
   ...props
 }) => {
   const { translate } = useLocales();
@@ -42,10 +47,16 @@ const DeleteConfirmDialog: React.FC<Props & DialogProps> = ({
         <DialogContentText id="alert-dialog-description">{description}</DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose} variant="text" color="secondary">
+        <Button {...cancelProps} onClick={onClose} variant="text" color="secondary">
           {translate('common.cancel')}
         </Button>
-        <LoadingAsyncButton onClick={onDelete} color="error" variant="contained" autoFocus>
+        <LoadingAsyncButton
+          {...confirmProps}
+          onClick={onDelete}
+          color="error"
+          variant="contained"
+          autoFocus
+        >
           {translate('common.confirm')}
         </LoadingAsyncButton>
       </DialogActions>
@@ -53,4 +64,4 @@ const DeleteConfirmDialog: React.FC<Props & DialogProps> = ({
   );
 };
 
-export default DeleteConfirmDialog;
+export default ConfirmDialog;

@@ -4,6 +4,7 @@ import React from 'react';
 import { formatCurrency } from 'utils/utils';
 import { Chip, Avatar, Typography } from '@material-ui/core';
 import { PRODUCT_TYPE_DATA } from 'constraints';
+import Label from 'components/Label';
 
 export const productColumns = [
   {
@@ -46,10 +47,9 @@ export const productColumns = [
     dataIndex: 'is_available',
     width: 150,
     render: (available) => (
-      <Chip
-        label={available ? 'Đang bán' : 'Ngừng bán'}
-        color={available ? 'primary' : 'secondary'}
-      />
+      <Label color={available ? 'primary' : 'default'}>
+        {available ? 'Đang bán' : 'Ngừng bán'}
+      </Label>
     )
   }
 ];

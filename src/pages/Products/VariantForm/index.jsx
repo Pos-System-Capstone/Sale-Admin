@@ -2,6 +2,7 @@
 import {
   Box,
   Button,
+  Chip,
   Divider,
   IconButton,
   Stack,
@@ -14,23 +15,22 @@ import {
   Typography
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { isEqual } from 'lodash';
-import { useEffect } from 'react';
+import ConfirmDialog from 'components/Dialog/ConfirmDialog';
+import Label from 'components/Label';
+import faker from 'faker';
+import { useEffect, useState } from 'react';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 import { getCbn } from 'utils/utils';
 import { AutoCompleteField, InputField } from '../../../components/form';
 
-const VariantForm = ({ name }) => {
-  const { control } = useFormContext();
-  const {
-    fields: childProducts,
-    remove: removeChildProd,
-    update: updateChildProd,
-    append: appendChildProd
-  } = useFieldArray({
+const VariantForm = ({ name, updateMode: defaultMode = true }) => {
+  const { control, setValue, getValues, reset } = useFormContext();
+  const { fields: childProducts, remove: removeChildProd } = useFieldArray({
     control,
     name: 'child_products'
   });
+  const [_updateMode, setUpdateMode] = useState(defaultMode);
+  const [openConfirm, setOpenConfirm] = useState(false);
 
   const {
     fields: variants,
@@ -42,25 +42,34 @@ const VariantForm = ({ name }) => {
     // keyName: "id", default to "id", you can change the key name
   });
 
-  // => [['a','b']]
+  const variantsWatch = useWatch({
+    name: 'variants'
+  });
+
+  const arrStr = variantsWatch
+    ?.filter(({ values }) => values && values?.length !== 0)
+    .map(({ values = [] }) => values.join('-'))
+    .join('-');
 
   useEffect(() => {
-    const variantArr = variants?.reduce((acc, { values = [] }) => [...acc, values], []);
+    const variantArr = variantsWatch?.reduce((acc, { values = [] }) => [...acc, values], []);
     const prodComb = getCbn(...(variantArr ?? []));
     // [[a,c][b,c]]
     const generateDefaultProductChilds = prodComb.map((atts = []) => ({
+      id: faker.datatype.uuid(),
       atts,
       is_available: true,
       code: `${atts.join('')}`,
       product_name: `${atts.join('-')}`
     }));
 
-    generateDefaultProductChilds.forEach((child) => {
-      appendChildProd(child);
-    });
+    if (_updateMode) {
+      setValue('child_products', generateDefaultProductChilds);
+    }
 
-    // set new value for child_products
-  }, [variants, appendChildProd]);
+    // HACKS set new value for child_products
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [arrStr, _updateMode]);
 
   const buildVariantTable = () => (
     <TableContainer>
@@ -69,6 +78,7 @@ const VariantForm = ({ name }) => {
           <TableRow>
             <TableCell align="left">Sản phẩm</TableCell>
             <TableCell align="center">Mã sản phẩm</TableCell>
+            <TableCell align="center">Thuộc tính</TableCell>
             <TableCell align="center">Hành động</TableCell>
           </TableRow>
         </TableHead>
@@ -80,6 +90,11 @@ const VariantForm = ({ name }) => {
               </TableCell>
               <TableCell>
                 <InputField name={`child_products.${index}.code`} fullWidth size="small" />
+              </TableCell>
+              <TableCell>
+                <Stack spacing={1}>
+                  {atts?.map((att) => <Label key={`${id}-${atts?.join('-')}`}>{att}</Label>) ?? '-'}
+                </Stack>
               </TableCell>
               <TableCell align="center">
                 <Button variant="outlined" color="error" onClick={() => removeChildProd(index)}>
@@ -93,16 +108,31 @@ const VariantForm = ({ name }) => {
     </TableContainer>
   );
 
-  console.log(childProducts);
-
   return (
     <Stack spacing={2}>
+      <ConfirmDialog
+        open={openConfirm}
+        title="Thay đổi tùy chọn sẽ phải xóa các tùy chọn cũ"
+        onClose={() => {
+          setOpenConfirm(false);
+        }}
+        onDelete={() => {
+          setOpenConfirm(false);
+          setUpdateMode(true);
+        }}
+      />
       {variants.map(({ optName, values }, optIndex) => (
         <Box key={`variant-${optIndex}`}>
           <Stack direction="row" spacing={2}>
-            <InputField name={`variants.${optIndex}.optName`} size="small" label="Tên tùy chọn" />
+            <InputField
+              name={`variants.${optIndex}.optName`}
+              size="small"
+              disabled={!_updateMode}
+              label="Tên tùy chọn"
+            />
 
             <AutoCompleteField
+              disabled={!_updateMode}
               name={`variants.${optIndex}.values`}
               multiple
               size="small"
@@ -110,23 +140,23 @@ const VariantForm = ({ name }) => {
               fullWidth
               freeSolo
               label="Tùy chọn"
-              placeholder="Nhấn Enter để thêm giá trị"
+              placeholder={_updateMode && 'Nhấn Enter để thêm giá trị'}
               getOptionLabel={(option) => option}
-              // renderTags={(value, getTagProps) =>
-              //   value.map((option, index) => (
-              //     <Chip
-              //       size="small"
-              //       key={option}
-              //       variant="outlined"
-              //       label={option}
-              //       {...getTagProps({ index })}
-              //     />
-              //   ))
-              // }
+              renderTags={(value, getTagProps) =>
+                value.map((option, index) => (
+                  <Chip
+                    size="small"
+                    key={option}
+                    variant="outlined"
+                    label={option}
+                    {...(!_updateMode ? {} : getTagProps({ index }))}
+                  />
+                ))
+              }
             />
 
             <IconButton
-              disabled={optIndex === 0}
+              disabled={optIndex === 0 || !_updateMode}
               onClick={() => remove(optIndex)}
               size="small"
               aria-label="delete"
@@ -139,17 +169,24 @@ const VariantForm = ({ name }) => {
       ))}
       <Divider />
       <span>
-        <Button
-          onClick={() =>
-            push({
-              optName: '',
-              values: []
-            })
-          }
-          variant="outlined"
-        >
-          Thêm tùy chọn
-        </Button>
+        {!_updateMode && (
+          <Button onClick={() => setOpenConfirm(true)} variant="outlined" disabled={_updateMode}>
+            Điều chỉnh
+          </Button>
+        )}
+        {_updateMode && (
+          <Button
+            onClick={() =>
+              push({
+                optName: '',
+                values: []
+              })
+            }
+            variant="outlined"
+          >
+            Thêm tùy chọn
+          </Button>
+        )}
       </span>
       <Box>
         <Typography variant="subtitle2">Danh sách</Typography>

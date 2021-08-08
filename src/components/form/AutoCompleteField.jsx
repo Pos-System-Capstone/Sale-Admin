@@ -24,6 +24,7 @@ const AutoCompleteField = ({ name, label, rules, defaultValue = '', placeholder,
               helperText={fieldState.error?.message}
               label={label}
               placeholder={placeholder}
+              disabled={props.disabled}
             />
           )}
         />

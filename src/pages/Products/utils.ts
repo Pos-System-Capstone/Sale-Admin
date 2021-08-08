@@ -4,7 +4,7 @@ import { UpdateProductForm } from './type';
 
 export const transformProductForm = (values: UpdateProductForm) => {
   const transformData = { ...values };
-  transformData.atts = values.variants.map(({ optName }) => optName);
+  transformData.atts = values.variants?.map(({ optName }) => optName);
   if (transformData.product_type) {
     const variantArr = values.variants?.reduce<any>((acc, { values = [] }) => [...acc, values], []);
     // transformData.child_products = getCbn(...variantArr)?.map((arr) => ({

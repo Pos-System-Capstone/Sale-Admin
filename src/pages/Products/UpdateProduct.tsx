@@ -78,8 +78,6 @@ const UpdateProduct = () => {
     );
   }
 
-  console.log(form.getValues());
-
   return (
     <FormProvider<UpdateProductForm> {...form}>
       <DashboardNavLayout
@@ -105,7 +103,7 @@ const UpdateProduct = () => {
           </Typography>
         </Box>
         <Box display="flex" px={2}>
-          <MiddleForm />
+          <MiddleForm updateMode={false} />
           <RightForm />
         </Box>
       </Page>

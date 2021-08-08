@@ -44,7 +44,7 @@ const RightForm = () => {
 
   const [tags = [], colletions = []] = useWatch({
     control,
-    name: ['tag_id', 'collection_id']
+    name: ['tags', 'collection_id']
   });
 
   const handleClick = (event) => {
@@ -128,15 +128,15 @@ const RightForm = () => {
             variant="outlined"
             renderValue={(selected) => selected.join(',')}
           >
-            {tagsData.map((name) => (
+            {tagsData?.map((name) => (
               <MenuItem key={name} value={name}>
-                <Checkbox checked={tags.indexOf(name) > -1} />
+                <Checkbox checked={tags?.indexOf(name) > -1} />
                 <ListItemText primary={name} />
               </MenuItem>
             ))}
           </SelectField>
           <Box pt={2}>
-            {tags.map((value) => (
+            {tags?.map((value) => (
               <Chip
                 size="small"
                 key={value}
