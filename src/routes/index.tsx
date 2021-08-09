@@ -121,40 +121,6 @@ export default function Router() {
             },
             { path: '/:id', element: <UpdateStorePage /> }
           ]
-        },
-        {
-          path: 'e-commerce',
-          children: [
-            { path: '/', element: <Navigate to="/dashboard/e-commerce/shop" replace /> },
-            { path: 'shop', element: <EcommerceShop /> },
-            { path: 'product/:name', element: <EcommerceProductDetails /> },
-            { path: 'list', element: <EcommerceProductList /> },
-            { path: 'product/new', element: <EcommerceProductCreate /> },
-            { path: 'product/:name/edit', element: <EcommerceProductCreate /> },
-            { path: 'checkout', element: <EcommerceCheckout /> },
-            { path: 'invoice', element: <EcommerceInvoice /> }
-          ]
-        },
-        {
-          path: 'user',
-          children: [
-            { path: '/', element: <Navigate to="/dashboard/user/profile" replace /> },
-            { path: 'profile', element: <UserProfile /> },
-            { path: 'cards', element: <UserCards /> },
-            { path: 'list', element: <UserList /> },
-            { path: 'new', element: <UserCreate /> },
-            { path: '/:name/edit', element: <UserCreate /> },
-            { path: 'account', element: <UserAccount /> }
-          ]
-        },
-        {
-          path: 'blog',
-          children: [
-            { path: '/', element: <Navigate to="/dashboard/blog/posts" replace /> },
-            { path: 'posts', element: <BlogPosts /> },
-            { path: 'post/:title', element: <BlogPost /> },
-            { path: 'new-post', element: <BlogNewPost /> }
-          ]
         }
       ]
     },

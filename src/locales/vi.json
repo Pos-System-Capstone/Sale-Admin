@@ -43,13 +43,19 @@
       "table": {
         "invoice": "Mã đơn",
         "quantity": "Số lượng",
+        "totalAmount": "Tổng cộng",
         "finalAmount": "Thanh toán",
         "paymentType": "Hình thức thanh toán",
         "orderTime": "Thời gian",
         "orderType": "Loại hóa đơn",
         "status": "Trạng thái",
         "cashier": "Thu ngân",
-        "detail": "Chi tiết"
+        "detail": "Chi tiết",
+        "address": "Địa chỉ giao",
+        "custPhone": "Số điện thoại",
+        "discount": "Giảm giá",
+        "store": "Cửa hàng",
+        "note": "Ghi chú"
       }
     }
   },

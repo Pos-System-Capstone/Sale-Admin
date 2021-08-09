@@ -11,12 +11,16 @@ import { useState } from 'react';
 // components
 import { useNavigate } from 'react-router-dom';
 import { getMenus } from 'redux/menu/api';
+import { TOrder } from 'types/order';
+import OrderDetailDialog from './components/OrderDetailDialog';
 import OrderSearchForm from './SearchOrderForm';
 
 const OrderListPage = () => {
   const navigate = useNavigate();
   const { translate } = useLocales();
   const [filters, setFilters] = useState(null);
+
+  const [detailOrder, setDetailOrder] = useState<number | null>(null);
 
   const orderColumns = [
     {
@@ -58,9 +62,9 @@ const OrderListPage = () => {
     {
       title: translate('pages.orders.table.detail'),
       fixed: 'right',
-      render: (_: any, order: any) => (
+      render: (_: any, order: TOrder) => (
         <Tooltip title="Chi tiết">
-          <IconButton>
+          <IconButton onClick={() => setDetailOrder(1)}>
             <Visibility />
           </IconButton>
         </Tooltip>
@@ -70,6 +74,13 @@ const OrderListPage = () => {
 
   return (
     <Page title="Dashboard: Products | Minimal-UI">
+      {detailOrder && (
+        <OrderDetailDialog
+          orderId={detailOrder}
+          open={Boolean(detailOrder)}
+          onClose={() => setDetailOrder(null)}
+        />
+      )}
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={2}>
           <Typography variant="h4" gutterBottom>

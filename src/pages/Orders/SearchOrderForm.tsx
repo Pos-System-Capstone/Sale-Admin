@@ -50,7 +50,7 @@ const OrderSearchForm = ({ onChange }: OrderSearchFormProps) => {
     <FormProvider {...form}>
       <Stack direction="row" justifyContent="space-between" spacing={2}>
         <Grid container direction="row" spacing={2}>
-          <Grid item xs={12} md={3}>
+          <Grid item xs={12} sm={3}>
             <InputField
               name="invoiceId"
               size="small"
@@ -58,11 +58,11 @@ const OrderSearchForm = ({ onChange }: OrderSearchFormProps) => {
               label={translate('pages.orders.table.invoice')}
             />
           </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} sm={4}>
             <DateRangePickerField name="fromTime" />
           </Grid>
           <Box flex={1} />
-          <Grid item xs={12} md={3} textAlign="right">
+          <Grid item xs={12} sm={3} textAlign="right">
             <OrderFilterDrawer
               isOpenFilter={isOpenFilter}
               onCloseFilter={() => setIsOpenFilter(false)}
