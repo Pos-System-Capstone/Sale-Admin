@@ -1,20 +1,21 @@
 {
-  "name": "@minimal/material-kit-react",
-  "author": "minimals.cc",
-  "version": "2.3.0",
+  "name": "reso-sale-admin",
+  "author": "Hung-Bui-ResoTeam",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "react-scripts start",
+    "start": "PORT=6170 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint --ext .ts,.tsx ./src",
     "lint:fix": "eslint --fix --ext .ts,.tsx ./src",
-    "start:development": "env-cmd -f .env.development npm run-script start",
+    "start:development": "env-cmd -f .env.development npm run start",
+    "start:production": "env-cmd -f .env.production npm run start",
     "start:qa": "env-cmd -f .env.qa npm run-script start",
-    "build:development": "env-cmd -f .env.development npm run-script build",
+    "build:development": "env-cmd -f .env.development npm run- build",
     "build:qa": "env-cmd -f .env.qa npm run-script build",
-    "build:production": "env-cmd -f .env.production npm run-script build"
+    "build:production": "env-cmd -f .env.production npm run build"
   },
   "eslintConfig": {
     "extends": [
@@ -58,7 +59,7 @@
     "@iconify/react": "^1.1.4",
     "@material-ui/core": "^5.0.0-beta.1",
     "@material-ui/data-grid": "^4.0.0-alpha.33",
-    "@material-ui/icons": "^4.11.2",
+    "@material-ui/icons": "^5.0.0-beta.1",
     "@material-ui/lab": "^5.0.0-alpha.40",
     "@material-ui/styles": "^5.0.0-beta.1",
     "@material-ui/system": "^5.0.0-beta.1",
