@@ -2,7 +2,9 @@
   "menu": {
     "product": { "root": "Products", "master": "Product Master", "collection": "Collections" },
     "menu": { "root": "Menus", "list": "Menu List", "store-menu": "Menu in Store" },
-    "store": "Stores"
+    "store": "Stores",
+    "order": "Orders",
+    "store-menu": "Menu"
   },
   "demo": {
     "title": "English",
@@ -24,7 +26,8 @@
       },
       "storeInfoTitle": "Store Information",
       "storeMenu": "Menus",
-      "applyMenuStore": "Add more menu"
+      "applyMenuStore": "Add more menu",
+      "editMenuStore": "Edit menu"
     },
     "menus": {
       "table": {
@@ -38,6 +41,19 @@
         "title": "List store applied this menu",
         "addStoreInMenu": "Add store for this menu",
         "editStoreInMenu": "Update store for this menu"
+      }
+    },
+    "orders": {
+      "table": {
+        "invoice": "Invoice",
+        "quantity": "Quantity",
+        "finalAmount": "Final amount",
+        "paymentType": "Payment type",
+        "orderTime": "Order time",
+        "orderType": "Order Type",
+        "status": "Status",
+        "cashier": "Cashier",
+        "detail": "Detail"
       }
     }
   },
@@ -56,6 +72,10 @@
     "confirm": "Confirm",
     "confirmDeleteTitle": "Confirm delete",
     "deleteSuccess": "Deleted successfully",
-    "atLeast" : "At least {{number}} value(s)"
+    "atLeast": "At least {{number}} value(s)",
+    "filter": "Filters",
+    "clearFilter": "CLear filters",
+    "fromTime": "From",
+    "toTime": "To"
   }
 }

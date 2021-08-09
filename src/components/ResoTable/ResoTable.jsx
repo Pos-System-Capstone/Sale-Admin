@@ -87,6 +87,8 @@ const useStyles = makeStyles((theme) => ({
   },
   stickyRight: {
     textAlign: 'right',
+    width: '60px',
+    position: 'sticky',
     right: (props) => props.right ?? '0'
     // borderLeft: `1px solid ${theme.palette.grey[400]}`
   },
@@ -101,15 +103,16 @@ const ResoTable = (
     filters = null,
     onEdit = null,
     onDelete = null,
-    getData = () => [],
     rowKey = 'id',
     checkboxSelection = false,
     onChangeSelection = () => null,
     scroll = null,
-    showAction = true
+    showAction = true,
+    ...props
   },
   ref = null
 ) => {
+  const { getData } = props || {};
   const classes = useStyles();
   const [_paginaton, setPaginaton] = React.useState({
     rowsPerPage: 10,
@@ -228,7 +231,7 @@ const ResoTable = (
     if (checkboxSelection) {
       const checkAllCurrentData = data?.list?.every((item) => _selectedIds.includes(item[rowKey]));
       const checkIndeterminateCurrentData =
-        _selectedIds.filter((id) => data.list.some((d) => d[rowKey] === id)).length > 0 &&
+        _selectedIds.filter((id) => data?.list.some((d) => d[rowKey] === id)).length > 0 &&
         !checkAllCurrentData;
       tableHeaders.push(
         <StickyLeftTableCell className={classes.stickyLeft} padding="checkbox">
@@ -248,7 +251,7 @@ const ResoTable = (
       const CellComp = TableCell;
       tableHeaders.push(
         <CellComp
-          className={classes.root}
+          className={[classes.root, header.fixed === 'right' ? classes.stickyRight : ''].join(' ')}
           key={`header_${index}`}
           align={header.alignRight ? 'right' : 'left'}
           sx={{ left: checkboxSelection ? '64px' : 0 }}
@@ -281,10 +284,11 @@ const ResoTable = (
     checkboxSelection,
     showAction,
     data?.list,
+    _selectedIds,
     classes.stickyLeft,
     classes.root,
+    classes.stickyRight,
     classes.actionColumn,
-    _selectedIds,
     onSelectAllClick,
     rowKey
   ]);
@@ -313,7 +317,10 @@ const ResoTable = (
 
         return (
           <CellComp
-            className={index === 0 ? classes.stickyLeft : classes.body}
+            className={[
+              index === 0 ? classes.stickyLeft : classes.body,
+              column.fixed === 'right' && classes.stickyRight
+            ].join(' ')}
             left={checkboxSelection ? '64px' : 0}
             key={`${column.title}-${data[rowKey]}`}
           >
@@ -325,13 +332,13 @@ const ResoTable = (
       if (checkboxSelection) {
         const isItemSelected = isSelected(data[rowKey]);
         bodyRow.unshift(
-          <StickyLeftTableCell className={classes.stickyLeft} padding="checkbox">
+          <TableCell className={classes.stickyLeft} padding="checkbox">
             {checkboxSelection?.type === 'checkbox' ? (
               <Checkbox checked={isItemSelected} inputProps={{ 'aria-labelledby': data[rowKey] }} />
             ) : (
               <Radio checked={isItemSelected} inputProps={{ 'aria-labelledby': data[rowKey] }} />
             )}
-          </StickyLeftTableCell>
+          </TableCell>
         );
       }
 
@@ -418,6 +425,7 @@ const ResoTable = (
     showAction,
     classes.stickyLeft,
     classes.body,
+    classes.stickyRight,
     rowKey,
     onEdit,
     onDelete,

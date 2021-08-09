@@ -14,7 +14,7 @@ const LeftNavigation = () => (
       </ListItem>
       <Divider />
       <ListItem component="a" button href="#variants">
-        <ListItemText primary="Biến thể" />
+        <ListItemText primary="Mẫu mã" />
       </ListItem>
       <Divider />
       <ListItem component="a" button href="#seo">

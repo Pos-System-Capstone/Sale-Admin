@@ -23,6 +23,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'redux/store';
 import { chunk } from 'lodash';
 import { useDebounceFn } from 'ahooks';
+import useAuth from 'hooks/useAuth';
 
 const Transition = forwardRef(
   (
@@ -110,9 +111,11 @@ const StoreNavigationDialog: React.FC<Props> = ({ open, onClose, onSelectStore }
                     <Grid key={`item ${index}`} item xs={12} sm={6} md={4} lg={3}>
                       <Card>
                         <Stack direction="row" justifyContent="space-between" alignItems="center">
-                          <Box>
+                          <Box width="60%">
                             <Typography variant="caption">{store.store_code ?? '-'}</Typography>
-                            <Typography variant="subtitle1">{store.name}</Typography>
+                            <Typography variant="subtitle1" noWrap>
+                              {store.name}
+                            </Typography>
                           </Box>
                           <Fab
                             onClick={() => {

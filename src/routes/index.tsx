@@ -158,6 +158,38 @@ export default function Router() {
         }
       ]
     },
+    // FOR STORE ADMIN
+    {
+      path: 'store-admin',
+      element: (
+        <AuthGuard>
+          <RoleBasedGuard accessibleRoles={['store-admin']}>
+            <DashboardLayout />
+          </RoleBasedGuard>
+        </AuthGuard>
+      ),
+      children: [
+        { path: '/', element: <Navigate to="/store-admin/orders" replace /> },
+        { path: 'app', element: <GeneralApp /> },
+
+        {
+          path: 'orders',
+          children: [
+            { path: '/', element: <OrderListPage /> },
+            {
+              path: '/new',
+              element: <CreateStorePage />
+            },
+            { path: '/:id', element: <UpdateStorePage /> }
+          ]
+        },
+        {
+          path: 'menus',
+          element: <MenuStoreManagementPage />
+        }
+      ]
+    },
+
     {
       path: '/',
       element: <Navigate to="/auth/login" replace />
@@ -231,3 +263,7 @@ const CreateCollectionPage = Loadable(lazy(() => import('../pages/collections/cr
 const StoreListPage = Loadable(lazy(() => import('../pages/Stores')));
 const CreateStorePage = Loadable(lazy(() => import('../pages/Stores/create')));
 const UpdateStorePage = Loadable(lazy(() => import('../pages/Stores/update')));
+
+// Store-Order
+const OrderListPage = Loadable(lazy(() => import('../pages/Orders/OrderList')));
+const MenuStoreManagementPage = Loadable(lazy(() => import('../pages/Orders/MenuOfStore')));

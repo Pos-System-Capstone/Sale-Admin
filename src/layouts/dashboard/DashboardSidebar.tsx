@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 // material
 import { alpha, styled } from '@material-ui/core/styles';
@@ -24,7 +24,7 @@ import Scrollbar from '../../components/Scrollbar';
 import NavSection from '../../components/NavSection';
 import { MHidden } from '../../components/@material-extend';
 //
-import sidebarConfig from './SidebarConfig';
+import adminSidebarConfig, { storeAppSidebarConfig } from './SidebarConfig';
 import { DocIcon } from '../../assets';
 
 // ----------------------------------------------------------------------
@@ -112,6 +112,16 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }: Dash
   const { pathname } = useLocation();
   const { user } = useAuth();
 
+  const sidebarConfig = useMemo(() => {
+    if (user?.roles.includes('admin')) {
+      return adminSidebarConfig;
+      // eslint-disable-next-line no-else-return
+    } else if (user?.roles.includes('store-admin')) {
+      return storeAppSidebarConfig;
+    }
+    return storeAppSidebarConfig;
+  }, [user?.roles]);
+
   const { isCollapse, collapseClick, collapseHover, onToggleCollapse, onHoverEnter, onHoverLeave } =
     useCollapseDrawer();
 
@@ -164,7 +174,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }: Dash
               <MyAvatar />
               <Box sx={{ ml: 2 }}>
                 <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                  {user?.name}
+                  {user?.displayName}
                 </Typography>
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                   {user?.roles[0]}
@@ -178,24 +188,6 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }: Dash
       <NavSection navConfig={sidebarConfig} isShow={!isCollapse} />
 
       <Box sx={{ flexGrow: 1 }} />
-
-      {!isCollapse && (
-        <Box sx={{ px: 2.5, pb: 3, mt: 10, width: 1 }}>
-          <DocStyle>
-            <DocIcon sx={{ width: 36, height: 36, mb: 2 }} />
-            <Typography gutterBottom variant="subtitle1" sx={{ color: 'grey.800' }}>
-              Hi, {user?.displayName}
-            </Typography>
-            <Typography variant="body2" sx={{ mb: 2, color: 'grey.600' }}>
-              Need help?
-              <br /> Please check our docs
-            </Typography>
-            <Button fullWidth href={PATH_DOCS} target="_blank" variant="contained">
-              Documentation
-            </Button>
-          </DocStyle>
-        </Box>
-      )}
     </Scrollbar>
   );
 

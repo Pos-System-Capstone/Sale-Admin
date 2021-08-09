@@ -1,4 +1,4 @@
-import { TStoreApplyMenu } from 'types/menu';
+import { StoreInMenu } from 'types/store';
 import request from '../../utils/axios';
 
 export interface Menu {
@@ -8,13 +8,13 @@ export interface Menu {
   active: boolean;
 }
 
-export const getMenus = (params: any): any =>
+export const getMenus = (params: any) =>
   request.get<Menu>(`/menus`, {
     params
   });
 
 export const getStoreApplyMenus = (menuId: number, params?: any): any =>
-  request.get<TStoreApplyMenu>(`/menus/${menuId}/stores`, {
+  request.get<StoreInMenu>(`/menus/${menuId}/stores`, {
     params
   });
 

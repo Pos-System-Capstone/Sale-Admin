@@ -1,8 +1,10 @@
 {
   "menu": {
     "product": { "root": "Sản phẩm", "master": "Dòng Sản phẩm", "collection": "Bộ sưu tập" },
-    "menu": { "root": "Thực đơn", "list": "Danh sách thực đơn", "store-menu": "Cửa hàng áp dụng" },
-    "store": "Cửa hàng"
+    "menu": { "root": "Bảng giá", "list": "Danh sách bảng giá", "store-menu": "Cửa hàng áp dụng" },
+    "store": "Cửa hàng",
+    "order": "Đơn hàng",
+    "store-menu": "Bảng giá"
   },
   "pages": {
     "stores": {
@@ -20,7 +22,8 @@
       },
       "storeInfoTitle": "Thông tin cửa hàng",
       "storeMenu": "Bảng giá",
-      "applyMenuStore": "Thêm bảng giá"
+      "applyMenuStore": "Thêm bảng giá",
+      "editMenuStore": "Điều chỉnh bảng giá"
     },
     "menus": {
       "table": {
@@ -34,6 +37,19 @@
         "title": "Danh sách các cửa hàng được áp dụng bảng giá",
         "addStoreInMenu": "Thêm cửa hàng áp dụng",
         "editStoreInMenu": "Cập nhật bảng giá"
+      }
+    },
+    "orders": {
+      "table": {
+        "invoice": "Mã đơn",
+        "quantity": "Số lượng",
+        "finalAmount": "Thanh toán",
+        "paymentType": "Hình thức thanh toán",
+        "orderTime": "Thời gian",
+        "orderType": "Loại hóa đơn",
+        "status": "Trạng thái",
+        "cashier": "Thu ngân",
+        "detail": "Chi tiết"
       }
     }
   },
@@ -52,6 +68,10 @@
     "confirm": "Xác nhận",
     "confirmDeleteTitle": "Xác nhận xóa",
     "deleteSuccess": "Xóa thành công",
-    "atLeast" : "Ít nhất {{number}} giá trị"
+    "atLeast": "Ít nhất {{number}} giá trị",
+    "filter": "Bộ lọc",
+    "clearFilter": "Xóa bộ lọc",
+    "fromTime": "Từ",
+    "toTime": "Đến"
   }
 }

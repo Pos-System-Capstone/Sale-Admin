@@ -6,8 +6,13 @@ import { AppBar, Box, Button, IconButton, Stack, Toolbar } from '@material-ui/co
 import { alpha, styled } from '@material-ui/core/styles';
 import Label from 'components/Label';
 import StoreNavigationDialog from 'components/StoreNavigationDialog';
+import useAuth from 'hooks/useAuth';
 import { useState } from 'react';
+import { useNavigate } from 'react-router';
+import { PATH_STORE_APP } from 'routes/storeAppPaths';
+import { Store } from 'types/store';
 // components
+import { AuthUser } from '../../@types/authentication';
 import { MHidden } from '../../components/@material-extend';
 // hooks
 import useCollapseDrawer from '../../hooks/useCollapseDrawer';
@@ -65,6 +70,8 @@ export const DashboardNavLayout = ({ onOpenSidebar, children, ...props }: any) =
 
 export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps) {
   const { isCollapse } = useCollapseDrawer();
+  const { changeUser } = useAuth();
+  const navigate = useNavigate();
 
   const [open, setOpen] = useState(false);
 
@@ -74,6 +81,21 @@ export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps)
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleSelectStore = (store: Store) => {
+    const user: AuthUser = {
+      name: 'Store Manager',
+      displayName: `${store.name} Manager`,
+      roles: ['store-admin']
+    };
+    if (changeUser) {
+      changeUser(user);
+      navigate(PATH_STORE_APP.root);
+      setTimeout(() => {
+        handleClose();
+      }, 300);
+    }
   };
 
   const envLabelColor = (env: any) => {
@@ -97,13 +119,7 @@ export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps)
         })
       }}
     >
-      <StoreNavigationDialog
-        open={open}
-        onClose={handleClose}
-        onSelectStore={(store) => {
-          console.log(store);
-        }}
-      />
+      <StoreNavigationDialog open={open} onClose={handleClose} onSelectStore={handleSelectStore} />
       <ToolbarStyle>
         <MHidden width="lgUp">
           <IconButton onClick={onOpenSidebar} sx={{ mr: 1, color: 'text.primary' }}>

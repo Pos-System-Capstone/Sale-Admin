@@ -73,19 +73,50 @@ type StoreInMenuFormProps = {
   onAddEvent?: (data: any) => void;
   onUpdateEvent?: (data: any) => void;
   onDelete?: (data: StoreInMenu) => void;
+  hideStoreField?: boolean;
+  hideMenuField?: boolean;
 };
 
-const schema = (translate: any) =>
-  yup.object({
-    menu_id: yup
-      .number()
-      .typeError(translate('common.required', { name: translate('pages.stores.storeMenu') }))
-      .required(translate('common.required', { name: translate('pages.stores.storeMenu') })),
+export default function StoreInMenuForm({
+  onCancel,
+  onAddEvent,
+  onUpdateEvent,
+  storeInMenu,
+  range,
+  onDelete,
+  hideStoreField,
+  hideMenuField
+}: StoreInMenuFormProps) {
+  const { enqueueSnackbar } = useSnackbar();
+  const dispatch = useDispatch();
+  const { translate } = useLocales();
+  const { stores } = useSelector((state: RootState) => state.admin);
+  const { data: menus } = useRequest<any>(getMenus, { formatResult: (res) => res.data.data });
+
+  const schema = yup.object({
+    menu_id: (() => {
+      let validation = yup.number();
+      if (!hideMenuField) {
+        validation = validation
+          .typeError(translate('common.required', { name: translate('pages.stores.storeMenu') }))
+          .required(translate('common.required', { name: translate('pages.stores.storeMenu') }));
+      }
+      return validation;
+    })(),
     store: yup.object({
-      id: yup
-        .number()
-        .typeError(translate('common.required', { name: translate('pages.stores.storeInfoTitle') }))
-        .required(translate('common.required', { name: translate('pages.stores.storeInfoTitle') }))
+      id: (() => {
+        let validation = yup.number();
+        if (!hideStoreField) {
+          validation = validation
+            .typeError(
+              translate('common.required', { name: translate('pages.stores.storeInfoTitle') })
+            )
+            .required(
+              translate('common.required', { name: translate('pages.stores.storeInfoTitle') })
+            );
+        }
+        return validation;
+      })()
     }),
     dayFilters: yup.array().min(1, translate('common.atLeast', { number: 1 })),
     start: yup
@@ -96,27 +127,13 @@ const schema = (translate: any) =>
       .required(translate('common.required', { name: translate('pages.menus.table.timeRange') }))
   });
 
-export default function StoreInMenuForm({
-  onCancel,
-  onAddEvent,
-  onUpdateEvent,
-  storeInMenu,
-  range,
-  onDelete
-}: StoreInMenuFormProps) {
-  const { enqueueSnackbar } = useSnackbar();
-  const dispatch = useDispatch();
-  const { translate } = useLocales();
-  const { stores } = useSelector((state: RootState) => state.admin);
-  const { data: menus } = useRequest<any>(getMenus, { formatResult: (res) => res.data.data });
-
   const isCreating = !storeInMenu;
 
   const form = useForm<StoreInMenuForm>({
     defaultValues: {
       ...getInitialValues(storeInMenu, range)
     },
-    resolver: yupResolver(schema(translate))
+    resolver: yupResolver(schema)
   });
 
   useEffect(() => () => console.log('Unmount'), []);
@@ -193,51 +210,55 @@ export default function StoreInMenuForm({
             <Stack spacing={2}>
               <Grid container spacing={2}>
                 <Grid item xs={6}>
-                  <SelectField
-                    required
-                    onChange={(e: any) => {
-                      const selectedMenu = menus.find(
-                        ({ meunu_id }: any) => meunu_id === e.target.value
-                      );
-                      setValue('menu_id', e.target.value);
-                      setValue(
-                        'menu_name',
-                        selectedMenu?.menu_name ?? `Thực đơn ${selectedMenu?.meunu_id}`
-                      );
-                    }}
-                    fullWidth
-                    name="menu_id"
-                    label="Chọn thực đơn"
-                    defaultValue=""
-                    size="small"
-                  >
-                    {menus?.map(({ menu_id, menu_name }: Menu) => (
-                      <MenuItem value={Number(menu_id)} key={`menu_select_${menu_id}`}>
-                        {menu_name ?? `Thực đơn ${menu_id}`}
-                      </MenuItem>
-                    ))}
-                  </SelectField>
+                  {!hideMenuField && (
+                    <SelectField
+                      required
+                      onChange={(e: any) => {
+                        const selectedMenu = menus.find(
+                          ({ meunu_id }: any) => meunu_id === e.target.value
+                        );
+                        setValue('menu_id', e.target.value);
+                        setValue(
+                          'menu_name',
+                          selectedMenu?.menu_name ?? `Thực đơn ${selectedMenu?.meunu_id}`
+                        );
+                      }}
+                      fullWidth
+                      name="menu_id"
+                      label="Chọn thực đơn"
+                      defaultValue=""
+                      size="small"
+                    >
+                      {menus?.map(({ menu_id, menu_name }: Menu) => (
+                        <MenuItem value={Number(menu_id)} key={`menu_select_${menu_id}`}>
+                          {menu_name ?? `Thực đơn ${menu_id}`}
+                        </MenuItem>
+                      ))}
+                    </SelectField>
+                  )}
                 </Grid>
                 <Grid item xs={6}>
-                  <SelectField
-                    required
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      const selectStore: any = stores?.find(({ id }) => id === e.target.value);
-                      setValue('store.id', Number(e.target.value));
-                      setValue('store.store_name', selectStore?.name);
-                    }}
-                    fullWidth
-                    name="store.id"
-                    label="Chọn cửa hàng"
-                    defaultValue=""
-                    size="small"
-                  >
-                    {stores?.map(({ id, name }: any) => (
-                      <MenuItem value={Number(id)} key={`cate_select_${id}`}>
-                        {name}
-                      </MenuItem>
-                    ))}
-                  </SelectField>
+                  {!hideStoreField && (
+                    <SelectField
+                      required
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        const selectStore: any = stores?.find(({ id }) => id === e.target.value);
+                        setValue('store.id', Number(e.target.value));
+                        setValue('store.store_name', selectStore?.name);
+                      }}
+                      fullWidth
+                      name="store.id"
+                      label="Chọn cửa hàng"
+                      defaultValue=""
+                      size="small"
+                    >
+                      {stores?.map(({ id, name }: any) => (
+                        <MenuItem value={Number(id)} key={`cate_select_${id}`}>
+                          {name}
+                        </MenuItem>
+                      ))}
+                    </SelectField>
+                  )}
                 </Grid>
               </Grid>
 

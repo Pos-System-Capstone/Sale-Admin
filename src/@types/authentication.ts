@@ -11,7 +11,27 @@ export type ActionMap<M extends { [index: string]: any }> = {
       };
 };
 
-export type AuthUser = null | Record<string, any>;
+export type UserRole = 'admin' | 'store-admin' | any;
+
+export type AuthUser =
+  | {
+      name: string;
+      roles?: UserRole[];
+      displayName: string;
+      email?: string;
+      photoURL?: string;
+      phoneNumber?: string;
+      country?: string;
+      address?: string;
+      state?: string;
+      city?: string;
+      zipCode?: number;
+      about?: string;
+      isPublic?: boolean;
+      [key: string]: any;
+    }
+  | null
+  | Record<string, any>;
 
 export type AuthState = {
   isAuthenticated: boolean;
@@ -29,6 +49,7 @@ export type JWTContextType = {
   logout: () => Promise<void>;
   resetPassword: (email: string) => void;
   updateProfile: VoidFunction;
+  changeUser?: (user: AuthUser) => void;
 };
 
 export type FirebaseContextType = {

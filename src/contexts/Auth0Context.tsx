@@ -81,7 +81,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
 
           dispatch({
             type: Types.init,
-            payload: { isAuthenticated, user: user || null }
+            payload: { isAuthenticated, user: (user as AuthUser) || null }
           });
         } else {
           dispatch({
@@ -107,7 +107,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
 
     if (isAuthenticated) {
       const user = await auth0Client?.getUser();
-      dispatch({ type: Types.login, payload: { user: user || null } });
+      dispatch({ type: Types.login, payload: { user: (user as AuthUser) || null } });
     }
   };
 
@@ -126,6 +126,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
         ...state,
         method: 'auth0',
         user: {
+          name: 'username',
           id: state?.user?.sub,
           photoURL: state?.user?.picture,
           email: state?.user?.email,

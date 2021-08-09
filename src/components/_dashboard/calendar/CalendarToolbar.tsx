@@ -71,7 +71,7 @@ export default function CalendarToolbar({
 
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <Button onClick={setOpenModel} size="small" startIcon={<Icon icon={plusFill} />}>
-          {translate('pages.menus.storeApplyTab.addStoreInMenu')}
+          {translate('pages.stores.applyMenuStore')}
         </Button>
       </Box>
     </RootStyle>

@@ -1,4 +1,5 @@
 // routes
+import { PATH_STORE_APP } from 'routes/storeAppPaths';
 import { PATH_DASHBOARD } from '../../routes/paths';
 // components
 import Label from '../../components/Label';
@@ -23,7 +24,8 @@ const ICONS = {
   kanban: getIcon('ic_kanban'),
   tag: getIcon('tag'),
   menu: getIcon('menu'),
-  store: getIcon('ic_store')
+  store: getIcon('ic_store'),
+  order: getIcon('ic_order')
 };
 
 const sidebarConfig = [
@@ -120,6 +122,41 @@ const sidebarConfig = [
       //     { title: 'new post', path: PATH_DASHBOARD.blog.newPost }
       //   ]
       // }
+    ]
+  }
+];
+
+export const storeAppSidebarConfig = [
+  // GENERAL
+  // ----------------------------------------------------------------------
+  {
+    subheader: 'general',
+    items: [
+      {
+        title: 'app',
+        path: PATH_STORE_APP.general.app,
+        icon: ICONS.dashboard
+      }
+    ]
+  },
+
+  // MANAGEMENT
+  // ----------------------------------------------------------------------
+  {
+    subheader: 'management',
+    items: [
+      // MANAGEMENT : PRODUCT
+
+      {
+        title: 'order',
+        path: PATH_STORE_APP.orders.list,
+        icon: ICONS.order
+      },
+      {
+        title: 'store-menu',
+        path: PATH_STORE_APP.menus.list,
+        icon: ICONS.menu
+      }
     ]
   }
 ];

@@ -128,7 +128,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
     await firebase.auth().sendPasswordResetEmail(email);
   };
 
-  const auth = { ...state.user };
+  const auth: Partial<AuthUser> = { ...state.user };
 
   return (
     <AuthContext.Provider
