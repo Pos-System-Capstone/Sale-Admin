@@ -11,6 +11,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { PATH_STORE_APP } from 'routes/storeAppPaths';
 import { Store } from 'types/store';
+import { getAppToken } from 'utils/utils';
 // components
 import { AuthUser } from '../../@types/authentication';
 import { MHidden } from '../../components/@material-extend';
@@ -84,18 +85,12 @@ export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps)
   };
 
   const handleSelectStore = (store: Store) => {
-    const user: AuthUser = {
-      name: 'Store Manager',
-      displayName: `${store.name} Manager`,
-      roles: ['store-admin']
-    };
-    if (changeUser) {
-      changeUser(user);
-      navigate(PATH_STORE_APP.root);
-      setTimeout(() => {
-        handleClose();
-      }, 300);
-    }
+    const token = getAppToken();
+
+    window.open(
+      `${process.env.REACT_APP_STORE_MANAGEMENT_APP_URL}/auth/login?accessToken=${token}`,
+      '_blank'
+    );
   };
 
   const envLabelColor = (env: any) => {

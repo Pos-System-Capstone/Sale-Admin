@@ -37,7 +37,7 @@ import {
   updateProdInMenuInfo
 } from 'redux/menu/api';
 import { formatCurrency } from 'utils/utils';
-import EditProductDialog from '../components/EditProductDialog';
+import ProductInMenuDialog from '../components/EditProductDialog';
 
 const ProductInMenuTab = ({ id }) => {
   const [currentCate, setCurrentCate] = React.useState(null);
@@ -53,6 +53,7 @@ const ProductInMenuTab = ({ id }) => {
 
   const [currentDeleteItem, setCurrentDeleteItem] = React.useState(null);
   const [currentProduct, setCurrentProduct] = React.useState(null);
+  const [isAddProduct, setIsAddProduct] = React.useState(false);
 
   const { run: changeProductNameFilter } = useDebounceFn(
     (value) => {
@@ -67,13 +68,18 @@ const ProductInMenuTab = ({ id }) => {
     setFilters((prev) => ({ ...prev, 'cat-id': currentCate }));
   }, [currentCate]);
 
-  const addProductToMenu = (datas) =>
+  const addProductToMenuHandler = (datas) =>
     addProductInMenus(+id, datas)
       .then(() =>
         enqueueSnackbar(`Thêm thành công`, {
           variant: 'success'
         })
       )
+      .then(() => {
+        setIsAddProduct(false);
+        setCurrentProduct(null);
+      })
+      .then(run)
       .catch((err) => {
         const errMsg = get(err.response, ['data', 'message'], `Có lỗi xảy ra. Vui lòng thử lại`);
         enqueueSnackbar(errMsg, {
@@ -114,11 +120,12 @@ const ProductInMenuTab = ({ id }) => {
 
   return (
     <Box flex={1}>
-      <EditProductDialog
+      <ProductInMenuDialog
+        updateMode={!isAddProduct}
         open={currentProduct}
         onClose={() => setCurrentProduct(null)}
         data={currentProduct}
-        onSubmit={updateProdInMenu}
+        onSubmit={isAddProduct ? addProductToMenuHandler : updateProdInMenu}
       />
       <DeleteConfirmDialog
         open={Boolean(currentDeleteItem)}
@@ -136,7 +143,10 @@ const ProductInMenuTab = ({ id }) => {
         <Box display="flex" justifyContent="space-between">
           <CardTitle>Danh sách sản phẩm</CardTitle>
           <DrawerProductForm
-            onSubmit={(ids, data) => addProductToMenu(data)}
+            onSubmit={(ids, data) => {
+              setIsAddProduct(true);
+              setCurrentProduct(data[0]);
+            }}
             trigger={
               <Button size="small" startIcon={<Icon icon={plusFill} />}>
                 Thêm sản phẩm

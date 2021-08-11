@@ -1,10 +1,13 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid } from '@material-ui/core';
 import { CheckBoxField, InputField } from 'components/form';
 import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
+import useLocales from 'hooks/useLocales';
 import { useMemo, useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
-const EditProductDialog = ({ open, onClose, onSubmit, data = {} }) => {
+const ProductInMenuDialog = ({ open, onClose, onSubmit, data = {}, updateMode = false }) => {
+  const { translate } = useLocales();
+
   const form = useForm({
     defaultValues: data
   });
@@ -39,21 +42,27 @@ const EditProductDialog = ({ open, onClose, onSubmit, data = {} }) => {
   return (
     <FormProvider {...form}>
       <Dialog open={open} onClose={onClose}>
-        <DialogTitle>Điều chỉnh sản phẩm {data?.product_name}</DialogTitle>
+        <DialogTitle>
+          {updateMode ? translate('common.update') : translate('common.create')}{' '}
+          {data?.product_name} {translate('menu.store-menu')}
+        </DialogTitle>
         <DialogContent>
+          <InputField name="product_id" sx={{ display: 'none' }} />
           <CheckBoxField name="is_fixed_price" label="Giá cố định" />
           <Grid container py={2} spacing={2}>
             {priceInputs}
           </Grid>
         </DialogContent>
         <DialogActions>
-          <Button onClick={onClose}>Hủy</Button>
+          <Button onClick={onClose} variant="outlined" color="inherit">
+            {translate('common.cancel')}
+          </Button>
           <LoadingAsyncButton onClick={form.handleSubmit(onSubmit)} variant="contained">
-            Cập nhật
+            {updateMode ? translate('common.update') : translate('common.create')}
           </LoadingAsyncButton>
         </DialogActions>
       </Dialog>
     </FormProvider>
   );
 };
-export default EditProductDialog;
+export default ProductInMenuDialog;

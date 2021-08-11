@@ -57,7 +57,7 @@ const DrawerProductForm = ({ trigger, children, onSubmit }) => {
 
               <ResoTable
                 checkboxSelection={{
-                  type: 'checkbox'
+                  type: 'radio'
                 }}
                 showAction={false}
                 scroll={{ y: '100%' }}
