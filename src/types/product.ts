@@ -58,3 +58,18 @@ export type TProductBase = {
 export type TProductMaster = TProductBase & {
   child_products: TProductBase[];
 };
+
+export type TProductInMenu = {
+  product_id: number;
+  price1: number;
+  price2: number;
+  price3: number;
+  price4: number;
+  price5: number;
+  price6: number;
+  price7: number;
+  price8: number;
+  price9: number;
+  price10: number;
+  is_fixed_price: boolean;
+};

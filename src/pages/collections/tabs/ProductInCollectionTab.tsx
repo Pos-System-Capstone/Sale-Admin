@@ -26,6 +26,7 @@ import { InputField } from 'components/form';
 import { formatCurrency } from 'utils/utils';
 import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
 import EmptyContent from 'components/EmptyContent';
+import { TProductBase } from 'types/product';
 
 const ProductCard = ({ product, onEdit, onDelete }: any) => {
   const random = Math.floor(Math.random() * 12) + 1;
@@ -92,11 +93,11 @@ const ProductInCollectionTab = ({ id, onAddProduct }: any) => {
   });
 
   const [currentDeleteItem, setCurrentDeleteItem] = React.useState<any>(null);
-  const [currentProduct, setCurrentProduct] = React.useState(null);
+  const [currentProduct, setCurrentProduct] = React.useState<TProductBase | null>(null);
   const { enqueueSnackbar } = useSnackbar();
 
   const handleUpdateProdInMenu = (values: any) =>
-    updateProdInMenuInfo(id, values)
+    updateProdInMenuInfo(id, currentProduct?.product_id!, values)
       .then(() =>
         enqueueSnackbar(`Cập nhật thành công`, {
           variant: 'success'
@@ -112,7 +113,7 @@ const ProductInCollectionTab = ({ id, onAddProduct }: any) => {
       });
 
   const onDelete = () =>
-    deleteProductInMenu(id, [Number(currentDeleteItem!.product_id)])
+    deleteProductInMenu(id, Number(currentDeleteItem!.product_id))
       .then((res) => {
         enqueueSnackbar(`Xóa thành công `, {
           variant: 'success'

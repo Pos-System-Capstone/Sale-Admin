@@ -1,30 +1,20 @@
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  Grid,
-  Stack
-} from '@material-ui/core';
-import React from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid } from '@material-ui/core';
+import { CheckBoxField, InputField } from 'components/form';
 import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
-import { InputField } from 'components/form';
+import { useMemo, useEffect } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 
-// eslint-disable-next-line react/prop-types
 const EditProductDialog = ({ open, onClose, onSubmit, data = {} }) => {
   const form = useForm({
     defaultValues: data
   });
 
   const { reset } = form;
-  React.useEffect(() => {
+  useEffect(() => {
     reset(data);
   }, [reset, data]);
 
-  const priceInputs = React.useMemo(() => {
+  const priceInputs = useMemo(() => {
     const inputs = [];
 
     // eslint-disable-next-line no-plusplus
@@ -51,6 +41,7 @@ const EditProductDialog = ({ open, onClose, onSubmit, data = {} }) => {
       <Dialog open={open} onClose={onClose}>
         <DialogTitle>Điều chỉnh sản phẩm {data?.product_name}</DialogTitle>
         <DialogContent>
+          <CheckBoxField name="is_fixed_price" label="Giá cố định" />
           <Grid container py={2} spacing={2}>
             {priceInputs}
           </Grid>

@@ -33,13 +33,13 @@ export const getProductInMenus = (menuId: number, params: any) =>
   });
 
 export const addProductInMenus = (menuId: number, data: any) =>
-  request.post(`/stores/1160/menus/${menuId}/products`, data);
+  request.post(`/menus/${menuId}/products`, data);
 
 export const updateMenuInfo = (menuId: number, updateInfo: any) =>
-  request.put(`/stores/1160/menus/${menuId}`, updateInfo);
+  request.put(`/menus/${menuId}`, updateInfo);
 
-export const updateProdInMenuInfo = (menuId: number, updateInfo: any) =>
-  request.put(`/menus/${menuId}/products`, updateInfo);
+export const updateProdInMenuInfo = (menuId: number, productId: number, updateInfo: any) =>
+  request.put(`/menus/${menuId}/products/${productId}`, updateInfo);
 
-export const deleteProductInMenu = (prods: Array<any>, menuId: number[]) =>
-  request.delete(`/stores/1160/menus/${menuId}/products`, { data: prods });
+export const deleteProductInMenu = (menuId: number, prodId: number) =>
+  request.delete(`/menus/${menuId}/products/${prodId}`);

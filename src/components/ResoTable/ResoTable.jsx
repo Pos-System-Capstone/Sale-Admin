@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable consistent-return */
-import React from 'react';
+import React, { useCallback } from 'react';
 
 import {
   Checkbox,
@@ -177,6 +177,24 @@ const ResoTable = (
     }
   }, [_selectedIds, onChangeSelection, data?.list, rowKey]);
 
+  const handleEdit = useCallback(
+    (data) => {
+      if (typeof onEdit === 'function') {
+        onEdit(data);
+      }
+    },
+    [onEdit]
+  );
+
+  const handleDelete = useCallback(
+    (data) => {
+      if (typeof onDelete === 'function') {
+        onDelete(data);
+      }
+    },
+    [onDelete]
+  );
+
   const onSelectAllClick = React.useCallback(
     (e) => {
       if (e.target.checked) {
@@ -342,21 +360,18 @@ const ResoTable = (
         );
       }
 
-      const handleEdit = () => onEdit && onEdit(data);
-      const handleDelete = () => onDelete && onDelete(data);
-
       if (showAction) {
         const ActionCell = mdUp ? (
           <StickyRightTableCell>
             <Stack direction="row" justifyContent="flex-end">
               <Tooltip title="Xóa">
-                <IconButton onClick={handleDelete} sx={{ color: 'red' }}>
+                <IconButton onClick={() => handleDelete(data)} sx={{ color: 'red' }}>
                   <Icon icon={trashIcon} />
                 </IconButton>
               </Tooltip>
               <Divider orientation="vertical" flexItem />
               <Tooltip title="Điều chỉnh">
-                <IconButton onClick={handleEdit}>
+                <IconButton onClick={() => handleEdit(data)}>
                   <Icon icon={editIcon} />
                 </IconButton>
               </Tooltip>
@@ -388,13 +403,13 @@ const ResoTable = (
               key={`menu-edit-${data[rowKey]}`}
               id={`menu-edit-${data[rowKey]}`}
             >
-              <MenuItem onClick={handleDelete} sx={{ color: 'red' }}>
+              <MenuItem onClick={() => handleDelete(data)} sx={{ color: 'red' }}>
                 <ListItemIcon>
                   <Icon icon={trashIcon} />
                 </ListItemIcon>
                 <ListItemText>Xóa</ListItemText>
               </MenuItem>
-              <MenuItem onClick={handleEdit}>
+              <MenuItem onClick={() => handleEdit(data)}>
                 <ListItemIcon>
                   <Icon icon={editIcon} />
                 </ListItemIcon>
@@ -427,11 +442,11 @@ const ResoTable = (
     classes.body,
     classes.stickyRight,
     rowKey,
-    onEdit,
-    onDelete,
     mdUp,
     _anchorEl,
     _openMenu,
+    handleDelete,
+    handleEdit,
     handleClick
   ]);
 
