@@ -36,6 +36,7 @@ import moreVerticalFill from '@iconify/icons-eva/more-vertical-fill';
 import trashIcon from '@iconify/icons-eva/trash-outline';
 import editIcon from '@iconify/icons-eva/edit-outline';
 import EmptyContent from 'components/EmptyContent';
+import { useSnackbar } from 'notistack5';
 
 import { getCellValue } from './utils';
 
@@ -99,7 +100,7 @@ const ResoTable = (
   {
     columns = [],
     dataSource = null,
-    pagination = false,
+    pagination = true,
     filters = null,
     onEdit = null,
     onDelete = null,
@@ -114,11 +115,8 @@ const ResoTable = (
 ) => {
   const { getData } = props || {};
   const classes = useStyles();
-  const [_paginaton, setPaginaton] = React.useState({
-    rowsPerPage: 10,
-    page: 1,
-    count: 1
-  });
+  const { enqueueSnackbar } = useSnackbar();
+
   const [_selectedIds, setSelectedIds] = React.useState(checkboxSelection?.selection ?? []);
   const [_anchorEl, setAnchorEl] = React.useState(null);
   const [_openMenu, setOpenMenu] = React.useState(null);
@@ -131,7 +129,13 @@ const ResoTable = (
     setAnchorEl(null);
   };
 
-  const { tableProps, search, loading, data } = useAntdTable(
+  const {
+    tableProps,
+    search,
+    loading,
+    data,
+    pagination: { changeCurrent, changePageSize }
+  } = useAntdTable(
     (params) => {
       if (dataSource) return Promise.resolve(dataSource);
       return getData({
@@ -143,30 +147,26 @@ const ResoTable = (
     },
     {
       defaultPageSize: 10,
-      formatResult: (res) => {
-        console.log(`res`, res);
-        return {
-          total: dataSource ? dataSource.length : res.data.metadata?.total,
-          list: dataSource ?? res.data?.data ?? [],
-          success: true
-        };
-      },
-      onError: console.log,
+      defaultParams: [{ current: 1, pageSize: 10 }],
+      formatResult: (res) => ({
+        total: dataSource ? dataSource.length : res.data.metadata?.total,
+        list: dataSource ?? res.data?.data ?? [],
+        success: true
+      }),
+      onError: (error) =>
+        enqueueSnackbar(get(error, 'message', 'Some thing wrong'), {
+          variant: 'error'
+        }),
       refreshDeps: [dataSource, filters]
     }
   );
   const { current, pageSize, total } = tableProps?.pagination ?? {};
 
+  console.log(tableProps?.pagination);
+
   React.useImperativeHandle(ref, () => ({
     reload: () => search?.submit()
   }));
-
-  // for table pagination
-  React.useEffect(() => {
-    if (!current || !pageSize || !total) return;
-
-    setPaginaton({ rowsPerPage: pageSize, count: total, page: current });
-  }, [current, pageSize, total]);
 
   React.useEffect(() => {
     if (typeof onChangeSelection === 'function') {
@@ -488,14 +488,9 @@ const ResoTable = (
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={tableProps}
-          {..._paginaton}
-          onPageChange={(_, page) =>
-            tableProps.onChange({ ...tableProps.pagination, current: page })
-          }
-          onRowsPerPageChange={(e) =>
-            tableProps.onChange({ ...tableProps.pagination, pageSize: e.target.value })
-          }
+          {...{ rowsPerPage: pageSize, count: total, page: current - 1 }}
+          onPageChange={(_, page) => changeCurrent(page + 1)}
+          onRowsPerPageChange={(e) => changePageSize(e.target.value)}
         />
       )}
     </Container>
