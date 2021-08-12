@@ -4,8 +4,9 @@ import { initReactI18next } from 'react-i18next';
 //
 import viLocales from './vi.json';
 import enLocales from './en.json';
-import deLocales from './de.json';
-import frLocales from './fr.json';
+
+import vi from './vi/index';
+import en from './en/index';
 
 // ----------------------------------------------------------------------
 
@@ -14,10 +15,8 @@ i18n
   .use(initReactI18next)
   .init({
     resources: {
-      en: { translations: enLocales },
-      de: { translations: deLocales },
-      fr: { translations: frLocales },
-      vi: { translations: viLocales }
+      en: { translations: { ...enLocales, ...en } },
+      vi: { translations: { ...viLocales, ...vi } }
     },
     lng: localStorage.getItem('i18nextLng') || 'vi',
     fallbackLng: 'vi',

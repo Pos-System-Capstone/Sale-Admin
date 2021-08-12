@@ -102,6 +102,12 @@ export const PATH_DASHBOARD = {
     post: path(ROOTS_DASHBOARD, '/blog/post/:title'),
     postById: path(ROOTS_DASHBOARD, '/blog/post/portfolio-review-is-this-portfolio-too-creative'),
     newPost: path(ROOTS_DASHBOARD, '/blog/new-post')
+  },
+  categories: {
+    root: path(ROOTS_DASHBOARD, '/categories'),
+    list: path(ROOTS_DASHBOARD, '/categories'),
+    editById: path(ROOTS_DASHBOARD, '/categories/:id'),
+    new: path(ROOTS_DASHBOARD, '/categories/new')
   }
 };
 

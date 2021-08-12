@@ -25,12 +25,12 @@ const parseParams = (params: any) => {
   return options ? options.slice(0, -1) : options;
 };
 
-const axiosInstance = axios.create({
+const request = axios.create({
   baseURL: process.env.REACT_APP_BASE_URL,
   paramsSerializer: parseParams
 });
 
-axiosInstance.interceptors.request.use((options) => {
+request.interceptors.request.use((options) => {
   const { method } = options;
 
   if (method === 'put' || method === 'post') {
@@ -42,9 +42,9 @@ axiosInstance.interceptors.request.use((options) => {
   return options;
 });
 
-axiosInstance.interceptors.response.use(
+request.interceptors.response.use(
   (response) => response,
   (error) => Promise.reject((error.response && error.response.data) || 'Có lỗi xảy ra')
 );
 
-export default axiosInstance;
+export default request;

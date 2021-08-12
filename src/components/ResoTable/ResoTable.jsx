@@ -182,6 +182,7 @@ const ResoTable = (
       if (typeof onEdit === 'function') {
         onEdit(data);
       }
+      closeEditMenu();
     },
     [onEdit]
   );
@@ -191,6 +192,7 @@ const ResoTable = (
       if (typeof onDelete === 'function') {
         onDelete(data);
       }
+      closeEditMenu();
     },
     [onDelete]
   );

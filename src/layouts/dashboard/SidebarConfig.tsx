@@ -60,6 +60,10 @@ const sidebarConfig = [
           {
             title: 'collection',
             path: PATH_DASHBOARD.collections.list
+          },
+          {
+            title: 'categories',
+            path: PATH_DASHBOARD.categories.list
           }
         ]
       },
@@ -78,18 +82,6 @@ const sidebarConfig = [
         path: PATH_DASHBOARD.stores.list,
         icon: ICONS.store
       }
-
-      // MANAGEMENT : BLOG
-      // {
-      //   title: 'blog',
-      //   path: PATH_DASHBOARD.blog.root,
-      //   icon: ICONS.blog,
-      //   children: [
-      //     { title: 'posts', path: PATH_DASHBOARD.blog.posts },
-      //     { title: 'post', path: PATH_DASHBOARD.blog.postById },
-      //     { title: 'new post', path: PATH_DASHBOARD.blog.newPost }
-      //   ]
-      // }
     ]
   }
 ];

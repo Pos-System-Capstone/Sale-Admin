@@ -1,6 +1,11 @@
 {
   "menu": {
-    "product": { "root": "Products", "master": "Product Master", "collection": "Collections" },
+    "product": {
+      "root": "Products",
+      "master": "Product Master",
+      "collection": "Collections",
+      "categories": "Categories"
+    },
     "menu": { "root": "Menus", "list": "Menu List", "store-menu": "Menu in Store" },
     "store": "Stores",
     "order": "Orders",
