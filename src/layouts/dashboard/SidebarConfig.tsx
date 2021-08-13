@@ -31,16 +31,6 @@ const ICONS = {
 const sidebarConfig = [
   // GENERAL
   // ----------------------------------------------------------------------
-  {
-    subheader: 'general',
-    items: [
-      {
-        title: 'app',
-        path: PATH_DASHBOARD.general.app,
-        icon: ICONS.dashboard
-      }
-    ]
-  },
 
   // MANAGEMENT
   // ----------------------------------------------------------------------

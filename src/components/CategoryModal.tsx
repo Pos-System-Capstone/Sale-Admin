@@ -69,7 +69,7 @@ const CategoryModal: React.FC<Props> = ({ open, cate_id, onClose, onAdd, onEdit 
     });
 
   return (
-    <Dialog fullWidth maxWidth="lg" open={open} onClose={onClose}>
+    <Dialog fullWidth maxWidth="sm" open={open} onClose={onClose}>
       <DialogTitle>
         {isUpdate ? translate('categories.editTitle') : translate('categories.addTitle')}
       </DialogTitle>

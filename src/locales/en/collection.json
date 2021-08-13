@@ -1,0 +1,16 @@
+{
+  "list": "List collection",
+  "table": {
+    "collectionName": "Name",
+    "collectionNameEn": "English name",
+    "position": "Position",
+    "banner_url": "Thumbnail",
+    "store": "Store",
+    "description": "Description"
+  },
+  "createInfo": "Collection information",
+  "productInCollection": "Products",
+  "addBtn": "Add collection",
+  "addTitle": "Add collection",
+  "editTitle": "Edit collection"
+}
