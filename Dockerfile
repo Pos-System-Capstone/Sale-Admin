@@ -9,7 +9,7 @@ COPY . .
 # Building app
 RUN npm install --only=production && \
     npm i -g env-cmd && \
-    env-cmd -f .env.production npm run build && \
+    env-cmd -f .env.production npm run-script build && \
     npm cache clean --force 
 
 FROM node:14.17.3-alpine
