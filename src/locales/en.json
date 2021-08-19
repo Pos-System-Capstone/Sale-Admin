@@ -81,6 +81,10 @@
     "filter": "Filters",
     "clearFilter": "CLear filters",
     "fromTime": "From",
-    "toTime": "To"
+    "toTime": "To",
+    "201": "Perform successfully",
+    "200": "Success",
+    "400": "Error",
+    "error": "There has an error. Please try again!"
   }
 }

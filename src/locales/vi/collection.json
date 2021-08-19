@@ -12,5 +12,8 @@
   "productInCollection": "Sản phẩm",
   "addBtn": "Thêm bộ sưu tập",
   "addTitle": "Thêm bộ sưu tập",
-  "editTitle": "Cập nhật bộ sưu tập"
+  "editTitle": "Cập nhật bộ sưu tập",
+  "collectionInfoTab": "Thông tin chung",
+  "productTab": "Sản phẩm",
+  "updateTitle": "Cập nhật bộ sưu tập"
 }

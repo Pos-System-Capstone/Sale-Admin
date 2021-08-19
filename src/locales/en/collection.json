@@ -12,5 +12,8 @@
   "productInCollection": "Products",
   "addBtn": "Add collection",
   "addTitle": "Add collection",
-  "editTitle": "Edit collection"
+  "editTitle": "Edit collection",
+  "collectionInfoTab": "Collection information",
+  "productTab": "Products",
+  "updateTitle": "Update collection"
 }

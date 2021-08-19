@@ -26,7 +26,7 @@ const CollectionInfoTab = ({ onSubmit }: { onSubmit: Function }) => {
   return (
     <Box>
       <Card>
-        <CardTitle>Thông tin Bộ sưu tập</CardTitle>
+        <CardTitle>{translate('collections.collectionInfoTab')}</CardTitle>
         <Grid spacing={2} container>
           <Grid item xs={4}>
             <UploadImageField.Avatar

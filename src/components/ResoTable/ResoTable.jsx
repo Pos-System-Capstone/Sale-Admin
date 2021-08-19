@@ -109,6 +109,7 @@ const ResoTable = (
     onChangeSelection = () => null,
     scroll = null,
     showAction = true,
+    disabledSelections = [],
     ...props
   },
   ref = null
@@ -316,6 +317,7 @@ const ResoTable = (
   const tableBodyContent = React.useMemo(() => {
     if (!data) return;
     const isSelected = (key) => _selectedIds.indexOf(key) !== -1;
+    const isDisabled = (key) => disabledSelections.findIndex((value) => value == key) !== -1;
 
     const body = [...columns];
     const tableBodys = [];
@@ -351,12 +353,21 @@ const ResoTable = (
 
       if (checkboxSelection) {
         const isItemSelected = isSelected(data[rowKey]);
+        const disabled = isDisabled(data[rowKey]);
         bodyRow.unshift(
           <TableCell className={classes.stickyLeft} padding="checkbox">
             {checkboxSelection?.type === 'checkbox' ? (
-              <Checkbox checked={isItemSelected} inputProps={{ 'aria-labelledby': data[rowKey] }} />
+              <Checkbox
+                disabled={disabled}
+                checked={isItemSelected}
+                inputProps={{ 'aria-labelledby': data[rowKey] }}
+              />
             ) : (
-              <Radio checked={isItemSelected} inputProps={{ 'aria-labelledby': data[rowKey] }} />
+              <Radio
+                disabled={disabled}
+                checked={isItemSelected}
+                inputProps={{ 'aria-labelledby': data[rowKey] }}
+              />
             )}
           </TableCell>
         );
@@ -438,6 +449,7 @@ const ResoTable = (
     data,
     columns,
     _selectedIds,
+    disabledSelections,
     checkboxSelection,
     showAction,
     classes.stickyLeft,
