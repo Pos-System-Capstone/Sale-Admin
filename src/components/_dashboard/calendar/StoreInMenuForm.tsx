@@ -25,7 +25,7 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 // redux
 import { RootState, useDispatch } from 'redux/store';
-import { Store, StoreInMenu } from 'types/store';
+import { TStore, StoreInMenu } from 'types/store';
 import { TStoreApplyMenuRequest } from 'types/menu';
 
 // ----------------------------------------------------------------------

@@ -3,22 +3,31 @@ import { Autocomplete, TextField } from '@material-ui/core';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
-const AutoCompleteField = ({ name, label, rules, defaultValue = '', placeholder, ...props }) => {
+const AutoCompleteField = ({
+  name,
+  label,
+  rules = {},
+  defaultValue = '',
+  placeholder = '',
+  ...props
+}) => {
   const { control } = useFormContext();
+  const { transformValue } = props;
 
   return (
     <Controller
       render={({ field, fieldState }) => (
         <Autocomplete
-          {...props}
           {...field}
           label={label}
           onChange={(event, newValue) => {
-            field.onChange(newValue);
+            const updateValue = transformValue ? transformValue(newValue) : newValue;
+            field.onChange(updateValue);
           }}
           renderInput={(params) => (
             <TextField
               {...params}
+              {...props}
               variant="outlined"
               error={Boolean(fieldState.error)}
               helperText={fieldState.error?.message}
@@ -27,6 +36,7 @@ const AutoCompleteField = ({ name, label, rules, defaultValue = '', placeholder,
               disabled={props.disabled}
             />
           )}
+          {...props}
         />
       )}
       name={name}

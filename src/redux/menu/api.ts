@@ -1,4 +1,5 @@
-import { StoreInMenu } from 'types/store';
+import { generateAPI } from 'redux/utils';
+import { MenuInStoreAdmin, StoreInMenu } from 'types/store';
 import request from '../../utils/axios';
 
 export interface Menu {
@@ -43,3 +44,5 @@ export const updateProdInMenuInfo = (menuId: number, productId: number, updateIn
 
 export const deleteProductInMenu = (menuId: number, prodId: number) =>
   request.delete(`/menus/${menuId}/products/${prodId}`);
+
+export const menuInStoreApi = generateAPI<MenuInStoreAdmin>('menu-in-stores');

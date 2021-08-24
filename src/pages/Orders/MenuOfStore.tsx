@@ -27,7 +27,7 @@ import { DAY_OF_WEEK } from 'constraints';
 // @types
 import MenuInStoreCalendar from 'components/MenuInStoreCalendar';
 import StoreInMenuForm from 'components/_dashboard/calendar/StoreInMenuForm';
-import { Store, StoreInMenu } from 'types/store';
+import { TStore, StoreInMenu } from 'types/store';
 import { convertDateToStr } from 'utils/utils';
 import { CalendarView } from '../../@types/calendar';
 
@@ -69,7 +69,7 @@ export default function MenuOfStorePage() {
   ]);
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [selectedStoreInMenu, setselectedStoreInMenu] = useState<StoreInMenu | null>(null);
-  const [filteredStores, setFilteredStores] = useState<Store[]>(stores ?? []);
+  const [filteredStores, setFilteredStores] = useState<TStore[]>(stores ?? []);
   const [selectedRange, setSelectedRange] = useState<any>(null);
   const [popoverStoreInMenu, setPopoverStoreInMenu] = useState<StoreInMenu | null>(null);
 

@@ -205,13 +205,15 @@ interface NavSectionProps extends BoxProps {
 }
 
 export default function NavSection({ navConfig, isShow = true, ...other }: NavSectionProps) {
+  const { translate } = useLocales();
+
   return (
     <Box {...other}>
       {navConfig.map((list) => {
         const { subheader, items } = list;
         return (
           <List key={subheader} disablePadding>
-            {isShow && <ListSubheaderStyle>{subheader}</ListSubheaderStyle>}
+            {isShow && <ListSubheaderStyle>{translate(`menu.${subheader}`)}</ListSubheaderStyle>}
             {items.map((item: NavItemProps) => (
               <NavItem key={item.title} item={item} isShow={isShow} />
             ))}

@@ -1,5 +1,9 @@
 # Sale admin
 
+## Update
+- [ ] time slot API
+
+
 ## Product module
 
 - [ ] Tạo **dòng sản phẩm**

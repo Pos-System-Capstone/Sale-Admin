@@ -1,5 +1,5 @@
 import trash2Fill from '@iconify/icons-eva/trash-2-fill';
-import { Store, StoreInMenu } from 'types/store';
+import { TStore, StoreInMenu } from 'types/store';
 import { Icon } from '@iconify/react';
 import { useEffect } from 'react';
 import {
@@ -16,7 +16,7 @@ import {
 } from '@material-ui/core';
 import { MobileTimePicker } from '@material-ui/lab';
 import { useRequest } from 'ahooks';
-import { InputField, SelectField, SwitchField } from 'components/form';
+import { AutoCompleteField, InputField, SelectField, SwitchField } from 'components/form';
 import { DAY_OF_WEEK } from 'constraints';
 import useLocales from 'hooks/useLocales';
 import { get, union } from 'lodash';
@@ -31,6 +31,7 @@ import { RootState, useDispatch } from 'redux/store';
 import * as yup from 'yup';
 import { Menu } from 'types/menu';
 import { yupResolver } from '@hookform/resolvers/yup';
+import SelectTimeSlot from 'components/form/common/SelectTimeSlot';
 
 // ----------------------------------------------------------------------
 
@@ -205,7 +206,7 @@ export default function StoreInMenuForm({
   return (
     <FormProvider {...form}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <DialogContent sx={{ pb: 0, mt: 2, overflowY: 'unset' }}>
+        <DialogContent sx={{ pb: 0, overflowY: 'unset' }}>
           <Box>
             <Stack spacing={2}>
               <Grid container spacing={2}>
@@ -215,12 +216,12 @@ export default function StoreInMenuForm({
                       required
                       onChange={(e: any) => {
                         const selectedMenu = menus.find(
-                          ({ meunu_id }: any) => meunu_id === e.target.value
+                          ({ menu_id }: any) => menu_id === e.target.value
                         );
                         setValue('menu_id', e.target.value);
                         setValue(
                           'menu_name',
-                          selectedMenu?.menu_name ?? `Thực đơn ${selectedMenu?.meunu_id}`
+                          selectedMenu?.menu_name ?? `Thực đơn ${selectedMenu?.menu_id}`
                         );
                       }}
                       fullWidth
@@ -249,7 +250,6 @@ export default function StoreInMenuForm({
                       fullWidth
                       name="store.id"
                       label="Chọn cửa hàng"
-                      defaultValue=""
                       size="small"
                     >
                       {stores?.map(({ id, name }: any) => (
@@ -279,6 +279,7 @@ export default function StoreInMenuForm({
                       }) => (
                         <MobileTimePicker
                           label="Bắt đầu"
+                          minutesStep={30}
                           inputFormat="hh:mm a"
                           renderInput={(params) => (
                             <TextField size="small" required {...params} fullWidth />
@@ -301,6 +302,7 @@ export default function StoreInMenuForm({
                         <MobileTimePicker
                           label="Kết thúc"
                           inputFormat="hh:mm a"
+                          minutesStep={30}
                           renderInput={(params) => (
                             <TextField required size="small" {...params} fullWidth />
                           )}
@@ -310,6 +312,9 @@ export default function StoreInMenuForm({
                       )}
                     />
                   </Grid>
+                  {/* <Grid item xs={12}>
+                    <SelectTimeSlot multiple fullWidth name="time_slots" label="Time slot" />
+                  </Grid> */}
                 </Grid>
               </Box>
 

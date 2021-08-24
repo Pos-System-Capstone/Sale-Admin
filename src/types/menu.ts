@@ -8,7 +8,7 @@ export type Menu = {
   menu_name?: any;
   store_name: string;
   day_filters: number[];
-  time_from_to: string[];
+  time_range: string[];
 };
 
 export type TStoreApplyMenuRequest = {

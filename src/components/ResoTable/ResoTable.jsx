@@ -163,8 +163,6 @@ const ResoTable = (
   );
   const { current, pageSize, total } = tableProps?.pagination ?? {};
 
-  console.log(tableProps?.pagination);
-
   React.useImperativeHandle(ref, () => ({
     reload: () => search?.submit()
   }));

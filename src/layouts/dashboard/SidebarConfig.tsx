@@ -35,7 +35,7 @@ const sidebarConfig = [
   // MANAGEMENT
   // ----------------------------------------------------------------------
   {
-    subheader: 'management',
+    subheader: 'product-subheader',
     items: [
       // MANAGEMENT : PRODUCT
       {
@@ -56,8 +56,12 @@ const sidebarConfig = [
             path: PATH_DASHBOARD.categories.list
           }
         ]
-      },
-
+      }
+    ]
+  },
+  {
+    subheader: 'menu-subheader',
+    items: [
       {
         title: 'menu',
         path: PATH_DASHBOARD.menus.list,
@@ -66,7 +70,12 @@ const sidebarConfig = [
           { title: 'list', path: PATH_DASHBOARD.menus.list },
           { title: 'store-menu', path: PATH_DASHBOARD.menus.storeMenu }
         ]
-      },
+      }
+    ]
+  },
+  {
+    subheader: 'store-subheader',
+    items: [
       {
         title: 'store',
         path: PATH_DASHBOARD.stores.list,

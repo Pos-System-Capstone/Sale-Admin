@@ -15,11 +15,11 @@ import closeIcon from '@iconify/icons-eva/close-fill';
 import { Icon } from '@iconify/react';
 import React from 'react';
 import { COLOR_OPTIONS } from 'redux/slices/calendar';
-import { Store } from 'types/store';
+import { TStore } from 'types/store';
 
 type Props = {
-  filteredStores: Store[];
-  stores: Store[];
+  filteredStores: TStore[];
+  stores: TStore[];
   onChangeFilter: (stores: any) => void;
 };
 
@@ -47,7 +47,7 @@ const FilterStore: React.FC<Props> = ({ filteredStores, stores, onChangeFilter }
             options={stores ?? []}
             getOptionLabel={(option: any) => option?.name}
             renderTags={() => null}
-            renderOption={(props, option: Store, { selected }) => (
+            renderOption={(props, option: TStore, { selected }) => (
               <li {...props}>
                 <Checkbox checked={filteredStores.findIndex(({ id }) => id === option.id) !== -1} />
                 <Box
@@ -64,7 +64,7 @@ const FilterStore: React.FC<Props> = ({ filteredStores, stores, onChangeFilter }
                 </Box>
               </li>
             )}
-            onChange={(e, newValue: Store[]) => {
+            onChange={(e, newValue: TStore[]) => {
               onChangeFilter(newValue);
             }}
             renderInput={(params) => (

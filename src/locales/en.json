@@ -9,7 +9,10 @@
     "menu": { "root": "Menus", "list": "Menu List", "store-menu": "Menu in Store" },
     "store": "Stores",
     "order": "Orders",
-    "store-menu": "Menu"
+    "store-menu": "Menu",
+    "product-subheader": "Product",
+    "menu-subheader": "Menu",
+    "store-subheader": "Store"
   },
   "demo": {
     "title": "English",
@@ -64,6 +67,7 @@
   },
   "common": {
     "required": "Please enter {{name}}",
+    "navigation": "Navigation",
     "create": "Create",
     "addMore": "Add",
     "delete": "Delete",

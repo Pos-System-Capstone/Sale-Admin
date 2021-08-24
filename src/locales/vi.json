@@ -9,7 +9,10 @@
     "menu": { "root": "Bảng giá", "list": "Danh sách bảng giá", "store-menu": "Cửa hàng áp dụng" },
     "store": "Cửa hàng",
     "order": "Đơn hàng",
-    "store-menu": "Bảng giá"
+    "store-menu": "Bảng giá",
+    "product-subheader": "Sản phẩm",
+    "menu-subheader": "Bảng giá",
+    "store-subheader": "Cửa hàng"
   },
   "pages": {
     "stores": {
@@ -66,6 +69,7 @@
   },
   "common": {
     "required": "Vui lòng nhập {{name}}",
+    "navigation": "Điều hướng",
     "addMore": "Thêm",
     "create": "Tạo",
     "update": "Cập nhật",
