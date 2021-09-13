@@ -26,7 +26,8 @@ import {
   Stack,
   Divider,
   Tooltip,
-  Radio
+  Radio,
+  LinearProgress
 } from '@material-ui/core';
 import get from 'lodash/get';
 import { useAntdTable } from 'ahooks';
@@ -37,8 +38,10 @@ import trashIcon from '@iconify/icons-eva/trash-outline';
 import editIcon from '@iconify/icons-eva/edit-outline';
 import EmptyContent from 'components/EmptyContent';
 import { useSnackbar } from 'notistack5';
+import TableFilterForm from 'components/ResoTable/TableFilterForm';
+import { FormProvider, useForm, useWatch } from 'react-hook-form';
 
-import { getCellValue } from './utils';
+import { getCellValue, transformParamToHyphen } from './utils';
 
 const StickyLeftTableCell = withStyles((theme) => ({
   head: {
@@ -114,21 +117,18 @@ const ResoTable = (
   },
   ref = null
 ) => {
-  const { getData } = props || {};
+  const { getData, defaultFilters = {} } = props || {};
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
 
-  const [_selectedIds, setSelectedIds] = React.useState(checkboxSelection?.selection ?? []);
-  const [_anchorEl, setAnchorEl] = React.useState(null);
-  const [_openMenu, setOpenMenu] = React.useState(null);
-  const mdUp = useMediaQuery((theme) => theme.breakpoints.up('md'));
+  const form = useForm({
+    defaultValues: defaultFilters
+  });
+  const { control } = form;
 
-  const openEditMenu = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const closeEditMenu = () => {
-    setAnchorEl(null);
-  };
+  const _filters = useWatch({
+    control
+  });
 
   const {
     tableProps,
@@ -140,8 +140,7 @@ const ResoTable = (
     (params) => {
       if (dataSource) return Promise.resolve(dataSource);
       return getData({
-        ...params.filters,
-        ...filters,
+        ...transformParamToHyphen({ ...params.filters, ..._filters }),
         page: params.current,
         size: params.pageSize
       });
@@ -158,10 +157,24 @@ const ResoTable = (
         enqueueSnackbar(get(error, 'message', 'Some thing wrong'), {
           variant: 'error'
         }),
-      refreshDeps: [dataSource, filters]
+      refreshDeps: [dataSource, _filters],
+      debounceInterval: 300,
+      defaultLoading: true
     }
   );
   const { current, pageSize, total } = tableProps?.pagination ?? {};
+
+  const [_selectedIds, setSelectedIds] = React.useState(checkboxSelection?.selection ?? []);
+  const [_anchorEl, setAnchorEl] = React.useState(null);
+  const [_openMenu, setOpenMenu] = React.useState(null);
+  const mdUp = useMediaQuery((theme) => theme.breakpoints.up('md'));
+
+  const openEditMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const closeEditMenu = () => {
+    setAnchorEl(null);
+  };
 
   React.useImperativeHandle(ref, () => ({
     reload: () => search?.submit()
@@ -463,49 +476,48 @@ const ResoTable = (
   ]);
 
   return (
-    <Container style={{ padding: 0 }}>
-      <TableContainer sx={{ maxHeight: scroll?.y, maxWidth: scroll?.x }}>
-        <Table stickyHeader>
-          <TableHead>{tableHeader}</TableHead>
-
-          <TableBody>
-            {loading ? (
-              <TableRow style={{ height: '150px' }}>
-                <CircularProgress
-                  style={{
-                    position: 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%,-50%)'
-                  }}
-                />
-              </TableRow>
-            ) : (
-              tableBodyContent
-            )}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      {!loading && !data?.list?.length && (
-        <Box width="100%">
-          <EmptyContent
-            title="Trống"
-            sx={{
-              width: '100%'
-            }}
-          />
+    <FormProvider {...form}>
+      <Container style={{ padding: 0 }}>
+        <Box p={2}>
+          <TableFilterForm controls={columns} />
         </Box>
-      )}
-      {pagination && (
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          {...{ rowsPerPage: pageSize, count: total, page: current - 1 }}
-          onPageChange={(_, page) => changeCurrent(page + 1)}
-          onRowsPerPageChange={(e) => changePageSize(e.target.value)}
-        />
-      )}
-    </Container>
+        <TableContainer sx={{ maxHeight: scroll?.y, maxWidth: scroll?.x }}>
+          <Table stickyHeader>
+            <TableHead>{tableHeader}</TableHead>
+
+            <TableBody>
+              {loading && (
+                <TableRow style={{ height: 1 }}>
+                  <TableCell colSpan={20} style={{ paddingBottom: '0px', paddingTop: '0px' }}>
+                    <LinearProgress color="primary" />
+                  </TableCell>
+                </TableRow>
+              )}
+              {tableBodyContent}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        {!loading && !data?.list?.length && (
+          <Box width="100%">
+            <EmptyContent
+              title="Trống"
+              sx={{
+                width: '100%'
+              }}
+            />
+          </Box>
+        )}
+        {pagination && (
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            {...{ rowsPerPage: pageSize, count: total, page: current - 1 }}
+            onPageChange={(_, page) => changeCurrent(page + 1)}
+            onRowsPerPageChange={(e) => changePageSize(e.target.value)}
+          />
+        )}
+      </Container>
+    </FormProvider>
   );
 };
 

@@ -43,6 +43,7 @@ export type TProductBase = {
   product_type?: ProductTypeEnum;
   is_available: boolean;
   code?: string;
+  cate_name?: string;
   product_name?: string;
   pic_url?: string;
   cat_id?: number;

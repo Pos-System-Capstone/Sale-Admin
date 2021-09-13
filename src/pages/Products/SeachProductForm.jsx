@@ -37,9 +37,11 @@ const SeachProductForm = ({ onChange = console.log }) => {
   });
 
   React.useEffect(() => {
+    console.log('Effect', watchValues);
     run(watchValues);
   }, [watchValues, run]);
 
+  console.log('Render ', watchValues);
   return (
     <FormProvider {...form}>
       <Grid container spacing={2}>
