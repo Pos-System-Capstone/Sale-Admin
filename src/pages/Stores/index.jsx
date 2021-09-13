@@ -1,24 +1,21 @@
 /* eslint-disable camelcase */
-import { useState } from 'react';
 import plusFill from '@iconify/icons-eva/plus-fill';
 import { Icon } from '@iconify/react';
 // material
-import { Button, Card, Chip, Container, Stack, Typography } from '@material-ui/core';
-// components
-import { useNavigate } from 'react-router-dom';
-
+import { Button, Card, Container, Stack, Typography } from '@material-ui/core';
+import { SelectField } from 'components/form';
+import Label from 'components/Label';
 import Page from 'components/Page';
 import ResoTable from 'components/ResoTable/ResoTable';
-import { PATH_DASHBOARD } from 'routes/paths';
-import Label from 'components/Label';
 import useLocales from 'hooks/useLocales';
+// components
+import { useNavigate } from 'react-router-dom';
 import { getStores } from 'redux/store/api';
-import StoreSearchForm from './components/StoreSearchForm';
+import { PATH_DASHBOARD } from 'routes/paths';
 
 const StoreListPage = () => {
   const navigate = useNavigate();
   const { translate } = useLocales();
-  const [filters, setFilters] = useState(null);
 
   const columns = [
     {
@@ -31,15 +28,18 @@ const StoreListPage = () => {
     },
     {
       title: translate('pages.stores.table.shortName'),
-      dataIndex: 'short_name'
+      dataIndex: 'short_name',
+      hideInSearch: true
     },
     {
       title: translate('pages.stores.table.openTime'),
-      dataIndex: 'open_time'
+      dataIndex: 'open_time',
+      hideInSearch: true
     },
     {
       title: translate('pages.stores.table.closeTime'),
-      dataIndex: 'close_time'
+      dataIndex: 'close_time',
+      hideInSearch: true
     },
     {
       title: translate('pages.stores.table.isAvailable'),
@@ -48,6 +48,29 @@ const StoreListPage = () => {
         <Label color={isAvai ? 'success' : 'default'}>
           {isAvai ? translate('common.available') : translate('common.notAvailable')}
         </Label>
+      ),
+      renderFormItem: () => (
+        <SelectField
+          fullWidth
+          sx={{ minWidth: '150px' }}
+          options={[
+            {
+              label: translate('common.all'),
+              value: ''
+            },
+            {
+              label: translate('common.available'),
+              value: 'true'
+            },
+            {
+              label: translate('common.notAvailable'),
+              value: 'false'
+            }
+          ]}
+          name="is-available"
+          size="small"
+          label={translate('pages.stores.table.isAvailable')}
+        />
       )
     }
   ];
@@ -71,9 +94,7 @@ const StoreListPage = () => {
         </Stack>
         <Card style={{ padding: '1em' }}>
           <Stack spacing={2}>
-            <StoreSearchForm onChange={setFilters} />
             <ResoTable
-              filters={filters}
               rowKey="id"
               onEdit={(stores) =>
                 navigate(`${PATH_DASHBOARD.stores.root}/${stores.id}`, { state: stores })

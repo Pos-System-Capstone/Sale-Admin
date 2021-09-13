@@ -67,6 +67,10 @@
       }
     }
   },
+  "resoTable": {
+    "settingColumn": "Hiển thị cột",
+    "clearFilters": "Xóa bộ lọc"
+  },
   "common": {
     "required": "Vui lòng nhập {{name}}",
     "navigation": "Điều hướng",

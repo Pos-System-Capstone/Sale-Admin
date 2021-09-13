@@ -90,5 +90,10 @@
     "200": "Success",
     "400": "Error",
     "error": "There has an error. Please try again!"
+  },
+
+  "resoTable": {
+    "settingColumn": "Show/Hide column",
+    "clearFilters": "Clear filters"
   }
 }

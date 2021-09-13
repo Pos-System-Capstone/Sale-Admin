@@ -5,8 +5,10 @@ export type TTableColumn<T extends any> = {
   dataIndex: keyof T | 'index' | undefined;
   fixed?: 'left' | 'right' | undefined;
   render?: (value: any, data: T) => string | JSX.Element | undefined;
+  renderFormItem?: (columnSetting: TTableColumn<T>, formProps: any) => JSX.Element;
   width?: number | string;
   hideInSearch?: boolean;
+  hideInTable?: boolean;
 } & (
   | {
       valueEnum?: TableValueEnum[];

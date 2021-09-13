@@ -1,31 +1,25 @@
 /* eslint-disable camelcase */
 import plusFill from '@iconify/icons-eva/plus-fill';
 import { Icon } from '@iconify/react';
+import { Button, Card, Container, Stack, Typography } from '@material-ui/core';
+import DeleteConfirmDialog from 'components/DelectConfirmDialog';
+// components
+import Page from 'components/Page';
+import ResoTable from 'components/ResoTable/ResoTable';
+import useLocales from 'hooks/useLocales';
+import { get } from 'lodash';
 import { useSnackbar } from 'notistack5';
 // material
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import useLocales from 'hooks/useLocales';
-import { Avatar, Button, Card, Chip, Container, Stack, Typography } from '@material-ui/core';
-// components
-
-import Page from 'components/Page';
-import ResoTable from 'components/ResoTable/ResoTable';
-import { getMenus } from 'redux/menu/api';
-import { renderDayMenu } from 'utils/utils';
+import { deleteCollection, getCollections } from 'redux/collections/api';
 import { PATH_DASHBOARD } from 'routes/paths';
-
 import { TCollection } from 'types/collection';
 import { TTableColumn } from 'types/table';
-import { deleteCollection, getCollections } from 'redux/collections/api';
-import DeleteConfirmDialog from 'components/DelectConfirmDialog';
-import { get } from 'lodash';
-import CollectionSearchForm from './CollectionSearchForm';
 
 const CollectionListPage = () => {
   const navigate = useNavigate();
   const { translate } = useLocales();
-  const [filters, setFilters] = useState(null);
   const { enqueueSnackbar } = useSnackbar();
   const tableRef = useRef<any>();
 
@@ -40,16 +34,19 @@ const CollectionListPage = () => {
     {
       title: translate('collections.table.collectionNameEn'),
       dataIndex: 'name_eng',
-      fixed: 'left'
+      fixed: 'left',
+      hideInSearch: true
     },
     {
       title: translate('collections.table.store'),
       dataIndex: 'store_id',
-      fixed: 'left'
+      fixed: 'left',
+      hideInSearch: true
     },
     {
       title: translate('collections.table.position'),
-      dataIndex: 'position'
+      dataIndex: 'position',
+      hideInSearch: true
     }
   ];
 
@@ -98,9 +95,7 @@ const CollectionListPage = () => {
         </Stack>
         <Card style={{ padding: '1em' }}>
           <Stack spacing={2}>
-            <CollectionSearchForm onChange={setFilters} />
             <ResoTable
-              filters={filters}
               ref={tableRef}
               onEdit={(collecton: TCollection) =>
                 navigate(`${PATH_DASHBOARD.collections.root}/${collecton.id}`, {

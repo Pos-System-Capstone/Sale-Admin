@@ -19,6 +19,9 @@ const buildFormItem = (tableConfig: TableType) => {
     fullWidth: true,
     ...formProps
   };
+  if (tableConfig.renderFormItem) {
+    return tableConfig.renderFormItem(tableConfig, props);
+  }
   switch (valueType) {
     case 'text':
       C = InputField;

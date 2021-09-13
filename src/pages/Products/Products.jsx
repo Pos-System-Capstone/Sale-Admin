@@ -33,7 +33,6 @@ import LoadingAsyncButton from '../../components/LoadingAsyncButton/LoadingAsync
 // ----------------------------------------------------------------------
 
 export default function EcommerceShop() {
-  const [filters, setFilters] = useState(null);
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
   const { t } = useLocales();
@@ -99,14 +98,11 @@ export default function EcommerceShop() {
         </Stack>
         <Card style={{ padding: '1em' }}>
           <Stack spacing={2}>
-            {/* <SeachProductForm onChange={setFilters} /> */}
-
             <ResoTable
               pagination
               getData={getAllProduct}
               onEdit={editProuct}
               onDelete={setCurrentDeleteItem}
-              // filters={filters}
               columns={productColumns}
               rowKey="product_id"
             />

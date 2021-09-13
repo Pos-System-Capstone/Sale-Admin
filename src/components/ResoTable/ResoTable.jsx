@@ -1,17 +1,29 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable consistent-return */
-import React, { useCallback } from 'react';
-
+import editIcon from '@iconify/icons-eva/edit-outline';
+import moreVerticalFill from '@iconify/icons-eva/more-vertical-fill';
+import trashIcon from '@iconify/icons-eva/trash-outline';
+import Icon from '@iconify/react';
 import {
+  Box,
+  Button,
   Checkbox,
   CircularProgress,
   Container,
+  Divider,
   IconButton,
+  LinearProgress,
+  List,
+  ListItem,
+  ListItemButton,
   ListItemIcon,
   ListItemText,
   Menu,
   MenuItem,
+  Popover,
+  Radio,
+  Stack,
   Table,
   TableBody,
   TableCell,
@@ -20,27 +32,20 @@ import {
   TablePagination,
   TableRow,
   TableSortLabel,
-  Typography,
-  Box,
-  useMediaQuery,
-  Stack,
-  Divider,
   Tooltip,
-  Radio,
-  LinearProgress
+  Typography,
+  useMediaQuery
 } from '@material-ui/core';
-import get from 'lodash/get';
-import { useAntdTable } from 'ahooks';
+import { Replay, SettingsOutlined } from '@material-ui/icons';
 import { makeStyles, withStyles } from '@material-ui/styles';
-import Icon from '@iconify/react';
-import moreVerticalFill from '@iconify/icons-eva/more-vertical-fill';
-import trashIcon from '@iconify/icons-eva/trash-outline';
-import editIcon from '@iconify/icons-eva/edit-outline';
+import { useAntdTable } from 'ahooks';
 import EmptyContent from 'components/EmptyContent';
-import { useSnackbar } from 'notistack5';
 import TableFilterForm from 'components/ResoTable/TableFilterForm';
+import useLocales from 'hooks/useLocales';
+import get from 'lodash/get';
+import { useSnackbar } from 'notistack5';
+import React, { useCallback } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
-
 import { getCellValue, transformParamToHyphen } from './utils';
 
 const StickyLeftTableCell = withStyles((theme) => ({
@@ -120,6 +125,7 @@ const ResoTable = (
   const { getData, defaultFilters = {} } = props || {};
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
+  const { t } = useLocales();
 
   const form = useForm({
     defaultValues: defaultFilters
@@ -164,8 +170,10 @@ const ResoTable = (
   );
   const { current, pageSize, total } = tableProps?.pagination ?? {};
 
+  const [_columns, setColumns] = React.useState(columns ?? []);
   const [_selectedIds, setSelectedIds] = React.useState(checkboxSelection?.selection ?? []);
   const [_anchorEl, setAnchorEl] = React.useState(null);
+  const [_settingColEl, setSettingColEl] = React.useState(null);
   const [_openMenu, setOpenMenu] = React.useState(null);
   const mdUp = useMediaQuery((theme) => theme.breakpoints.up('md'));
 
@@ -256,7 +264,7 @@ const ResoTable = (
   );
 
   const tableHeader = React.useMemo(() => {
-    const headers = [...columns];
+    const headers = [..._columns].filter(({ hideInTable }) => !hideInTable);
 
     const tableHeaders = [];
 
@@ -312,7 +320,7 @@ const ResoTable = (
 
     return <TableRow>{tableHeaders}</TableRow>;
   }, [
-    columns,
+    _columns,
     checkboxSelection,
     showAction,
     data?.list,
@@ -330,7 +338,7 @@ const ResoTable = (
     const isSelected = (key) => _selectedIds.indexOf(key) !== -1;
     const isDisabled = (key) => disabledSelections.findIndex((value) => value == key) !== -1;
 
-    const body = [...columns];
+    const body = [..._columns].filter(({ hideInTable }) => !hideInTable);
     const tableBodys = [];
     data?.list.forEach((data, idx) => {
       const bodyRow = body.map((column, index) => {
@@ -458,7 +466,7 @@ const ResoTable = (
     return tableBodys;
   }, [
     data,
-    columns,
+    _columns,
     _selectedIds,
     disabledSelections,
     checkboxSelection,
@@ -475,11 +483,113 @@ const ResoTable = (
     handleClick
   ]);
 
+  const settingColumns = () => {
+    const handleToggle = (col, idx) => {
+      const updateColumns = [..._columns];
+      updateColumns[idx].hideInTable = !updateColumns[idx].hideInTable;
+      setColumns(updateColumns);
+    };
+
+    const showQuantity = _columns.reduce(
+      (acc, { hideInTable }) => (!hideInTable ? acc + 1 : acc),
+      0
+    );
+
+    const intermediate = showQuantity > 0 && showQuantity < _columns.length;
+
+    const onToggleAll = () => {
+      setColumns(
+        _columns.map((col) => ({ ...col, hideInTable: !(showQuantity < _columns.length) }))
+      );
+    };
+
+    return (
+      <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+        <ListItem disablePadding>
+          <ListItemButton role={undefined} onClick={onToggleAll} dense>
+            <ListItemIcon>
+              <Checkbox
+                edge="start"
+                indeterminate={intermediate}
+                checked={showQuantity === _columns.length}
+                tabIndex={-1}
+                disableRipple
+              />
+            </ListItemIcon>
+            <ListItemText
+              primaryTypographyProps={{
+                noWrap: true
+              }}
+              primary={t('resoTable.settingColumn')}
+            />
+          </ListItemButton>
+        </ListItem>
+        <Divider />
+        {_columns.map((col, idx) => {
+          const labelId = `checkbox-list-label-${col.dataIndex}`;
+
+          return (
+            <ListItem key={col.dataIndex}>
+              <ListItemButton role={undefined} onClick={() => handleToggle(col, idx)} dense>
+                <ListItemIcon>
+                  <Checkbox
+                    edge="start"
+                    checked={!col.hideInTable}
+                    tabIndex={-1}
+                    disableRipple
+                    inputProps={{ 'aria-labelledby': labelId }}
+                  />
+                </ListItemIcon>
+                <ListItemText
+                  primaryTypographyProps={{
+                    noWrap: true
+                  }}
+                  id={labelId}
+                  primary={col.title}
+                />
+              </ListItemButton>
+            </ListItem>
+          );
+        })}
+      </List>
+    );
+  };
+
   return (
     <FormProvider {...form}>
       <Container style={{ padding: 0 }}>
-        <Box p={2}>
+        <Box py={2}>
           <TableFilterForm controls={columns} />
+        </Box>
+        <Box py={1}>
+          <Stack direction="row">
+            <Box ml="auto">
+              <Stack spacing={1} direction="row">
+                {form.formState.isDirty && (
+                  <Button onClick={() => form.reset({})} disableRipple>
+                    {t('resoTable.clearFilters')}
+                  </Button>
+                )}
+                <IconButton size="small" onClick={search?.submit}>
+                  {loading ? <CircularProgress style={{ width: 24, height: 24 }} /> : <Replay />}
+                </IconButton>
+                <IconButton size="small" onClick={(e) => setSettingColEl(e.currentTarget)}>
+                  <SettingsOutlined />
+                </IconButton>
+                <Popover
+                  open={Boolean(_settingColEl)}
+                  anchorEl={_settingColEl}
+                  onClose={() => setSettingColEl(null)}
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left'
+                  }}
+                >
+                  {settingColumns()}
+                </Popover>
+              </Stack>
+            </Box>
+          </Stack>
         </Box>
         <TableContainer sx={{ maxHeight: scroll?.y, maxWidth: scroll?.x }}>
           <Table stickyHeader>
