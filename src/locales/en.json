@@ -2,7 +2,12 @@
   "menu": {
     "product": { "root": "Products", "master": "Product Master", "collection": "Collections" },
     "menu": { "root": "Menus", "list": "Menu List", "store-menu": "Menu in Store" },
-    "store": "Stores"
+    "store": "Stores",
+    "customer": {
+      "root": "Customer",
+      "customerList": "Customer list",
+      "addNewCustomer": "Add customer"
+    }
   },
   "demo": {
     "title": "English",
@@ -39,6 +44,25 @@
         "addStoreInMenu": "Add store for this menu",
         "editStoreInMenu": "Update store for this menu"
       }
+    },
+    "customers": {
+      "listTitle": "Danh sách khách hàng",
+      "updateTitle": "Cập nhật khách hàng",
+      "addBtn": "Thêm khách hàng",
+      "table": {
+        "no": "STT",
+        "name": "Tên khách hàng",
+        "homePhone": "Số điện thoại cá nhân",
+        "companyName": "Tên công ty",
+        "homeAddress": "Địa chỉ nhà riêng",
+        "companyAddress": "Địa chỉ công ty",
+        "homeEmail": "Email cá nhân",
+        "companyEmail": "Email công ty",
+        "companyPhone": "Số điện thoại công ty",
+        "city": "Tỉnh/Thành phố",
+        "province": "Quận/Huyện",
+        "tags": "Thẻ"
+      }
     }
   },
   "common": {
@@ -56,6 +80,7 @@
     "confirm": "Confirm",
     "confirmDeleteTitle": "Confirm delete",
     "deleteSuccess": "Deleted successfully",
-    "atLeast" : "At least {{number}} value(s)"
+    "atLeast": "At least {{number}} value(s)",
+    "status": "Status"
   }
 }

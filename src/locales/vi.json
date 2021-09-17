@@ -2,7 +2,12 @@
   "menu": {
     "product": { "root": "Sản phẩm", "master": "Dòng Sản phẩm", "collection": "Bộ sưu tập" },
     "menu": { "root": "Thực đơn", "list": "Danh sách thực đơn", "store-menu": "Cửa hàng áp dụng" },
-    "store": "Cửa hàng"
+    "store": "Cửa hàng",
+    "customer": {
+      "root": "Khách hàng",
+      "customerList": "Danh sách khách hàng",
+      "addNewCustomer": "Thêm mới khách hàng"
+    }
   },
   "pages": {
     "stores": {
@@ -35,6 +40,25 @@
         "addStoreInMenu": "Thêm cửa hàng áp dụng",
         "editStoreInMenu": "Cập nhật bảng giá"
       }
+    },
+    "customers": {
+      "listTitle": "Danh sách khách hàng",
+      "updateTitle": "Cập nhật khách hàng",
+      "addBtn": "Thêm khách hàng",
+      "table": {
+        "no": "STT",
+        "name": "Tên khách hàng",
+        "homePhone": "Số điện thoại cá nhân",
+        "companyName": "Tên công ty",
+        "homeAddress": "Địa chỉ nhà riêng",
+        "companyAddress": "Địa chỉ công ty",
+        "homeEmail": "Email cá nhân",
+        "companyEmail": "Email công ty",
+        "companyPhone": "Số điện thoại công ty",
+        "city": "Tỉnh/Thành phố",
+        "province": "Quận/Huyện",
+        "tags": "Thẻ"
+      }
     }
   },
   "common": {
@@ -52,6 +76,7 @@
     "confirm": "Xác nhận",
     "confirmDeleteTitle": "Xác nhận xóa",
     "deleteSuccess": "Xóa thành công",
-    "atLeast" : "Ít nhất {{number}} giá trị"
+    "atLeast": "Ít nhất {{number}} giá trị",
+    "status": "Trạng thái"
   }
 }

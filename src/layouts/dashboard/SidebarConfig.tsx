@@ -63,7 +63,21 @@ const sidebarConfig = [
           }
         ]
       },
-
+      {
+        title: 'customer',
+        path: PATH_DASHBOARD.customers.root,
+        icon: ICONS.user,
+        children: [
+          {
+            title: 'customerList',
+            path: PATH_DASHBOARD.customers.list
+          },
+          {
+            title: 'addNewCustomer',
+            path: PATH_DASHBOARD.customers.new
+          }
+        ]
+      },
       {
         title: 'menu',
         path: PATH_DASHBOARD.menus.list,
