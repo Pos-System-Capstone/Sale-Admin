@@ -1,4 +1,4 @@
-import { TableCell } from '@material-ui/core';
+import { TableCell } from '@mui/material';
 
 export const getCellValue = (cell: any, ...args: any[]) => {
   switch (typeof cell) {

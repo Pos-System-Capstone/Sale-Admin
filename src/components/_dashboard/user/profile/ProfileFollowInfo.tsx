@@ -1,5 +1,5 @@
 // material
-import { Card, Stack, Typography, Divider } from '@material-ui/core';
+import { Card, Stack, Typography, Divider } from '@mui/material';
 // utils
 import { fNumber } from '../../../../utils/formatNumber';
 // @types

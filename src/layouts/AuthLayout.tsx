@@ -1,8 +1,8 @@
 import { ReactNode } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 // material
-import { styled } from '@material-ui/core/styles';
-import { Typography } from '@material-ui/core';
+import { styled } from '@mui/material/styles';
+import { Typography } from '@mui/material';
 // components
 import Logo from 'components/Logo';
 import { MHidden } from 'components/@material-extend';

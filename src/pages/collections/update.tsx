@@ -1,11 +1,11 @@
 import roundAccountBox from '@iconify/icons-ic/round-account-box';
 import roundReceipt from '@iconify/icons-ic/round-receipt';
 import { Icon } from '@iconify/react';
-import { Box, Button, Stack, Tab, Tabs, Typography } from '@material-ui/core';
+import { Box, Button, Stack, Tab, Tabs, Typography } from '@mui/material';
 import Page from 'components/Page';
 import useLocales from 'hooks/useLocales';
 import { get } from 'lodash-es';
-import { useSnackbar } from 'notistack5';
+import { useSnackbar } from 'notistack';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useLocation, useParams } from 'react-router-dom';

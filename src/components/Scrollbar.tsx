@@ -1,7 +1,7 @@
 import SimpleBarReact, { Props } from 'simplebar-react';
 // material
-import { alpha, styled } from '@material-ui/core/styles';
-import { Box, BoxProps } from '@material-ui/core';
+import { alpha, styled } from '@mui/material/styles';
+import { Box, BoxProps } from '@mui/material';
 
 // ----------------------------------------------------------------------
 

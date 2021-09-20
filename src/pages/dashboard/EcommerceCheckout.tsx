@@ -2,8 +2,8 @@ import { Icon } from '@iconify/react';
 import { useEffect } from 'react';
 import checkmarkFill from '@iconify/icons-eva/checkmark-fill';
 // material
-import { Box, Grid, Step, Stepper, Container, StepLabel, StepConnector } from '@material-ui/core';
-import { withStyles } from '@material-ui/styles';
+import { Box, Grid, Step, Stepper, Container, StepLabel, StepConnector } from '@mui/material';
+import { withStyles } from '@mui/styles';
 // redux
 import { useDispatch, useSelector } from '../../redux/store';
 import { getCart, createBilling } from '../../redux/slices/product';

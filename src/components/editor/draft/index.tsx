@@ -1,5 +1,5 @@
 import { Editor, EditorProps } from 'react-draft-wysiwyg';
-import { BoxProps } from '@material-ui/core';
+import { BoxProps } from '@mui/material';
 import { editorToolbar } from './DraftEditorToolbar';
 import DraftEditorStyle from './DraftEditorStyle';
 

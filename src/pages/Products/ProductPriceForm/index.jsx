@@ -16,11 +16,11 @@ import {
   ListItemText,
   CircularProgress,
   FormHelperText
-} from '@material-ui/core';
+} from '@mui/material';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import { Field, getIn } from 'formik';
-import DeleteIcon from '@material-ui/icons/Delete';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { useRequest } from 'ahooks';
 import { getMenus } from '../../../redux/menu/api';
 import { InputField, SelectField } from '../../../components/form';

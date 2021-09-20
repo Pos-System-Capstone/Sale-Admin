@@ -17,7 +17,7 @@ import {
   Typography,
   RadioGroup,
   FormControlLabel
-} from '@material-ui/core';
+} from '@mui/material';
 // @types
 import { FormikPropsShopView } from '../../../../@types/products';
 //

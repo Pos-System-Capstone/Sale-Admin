@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 // material
-import { IconButton, IconButtonProps } from '@material-ui/core';
+import { IconButton, IconButtonProps } from '@mui/material';
 //
 import { ButtonAnimate } from '../animate';
 
@@ -9,7 +9,7 @@ import { ButtonAnimate } from '../animate';
 const MIconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
   ({ children, ...other }, ref) => (
     <ButtonAnimate>
-      <IconButton ref={ref} {...other}>
+      <IconButton ref={ref} {...other} size="large">
         {children}
       </IconButton>
     </ButtonAnimate>

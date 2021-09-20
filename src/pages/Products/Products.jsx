@@ -16,8 +16,8 @@ import {
   InputAdornment,
   Stack,
   Typography
-} from '@material-ui/core';
-import { useSnackbar } from 'notistack5';
+} from '@mui/material';
+import { useSnackbar } from 'notistack';
 import { PATH_DASHBOARD } from 'routes/paths';
 import Page from 'components/Page';
 // components

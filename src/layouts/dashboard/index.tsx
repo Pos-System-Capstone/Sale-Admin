@@ -4,7 +4,7 @@ import useDashboard, { withDashboard } from 'hooks/useDashboard';
 import { useDispatch } from 'redux/store';
 
 // material
-import { styled, useTheme } from '@material-ui/core/styles';
+import { styled, useTheme } from '@mui/material/styles';
 import LoadingPage from 'components/LoadingPage';
 import { fetchGlobalState } from 'redux/admin/thunk';
 // hooks

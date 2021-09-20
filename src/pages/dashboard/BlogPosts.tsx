@@ -5,7 +5,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useEffect, useCallback, useState } from 'react';
 // material
-import { Box, Grid, Button, Skeleton, Container, Stack } from '@material-ui/core';
+import { Box, Grid, Button, Skeleton, Container, Stack } from '@mui/material';
 // redux
 import { useDispatch, useSelector } from '../../redux/store';
 import { getPostsInitial, getMorePosts } from '../../redux/slices/blog';

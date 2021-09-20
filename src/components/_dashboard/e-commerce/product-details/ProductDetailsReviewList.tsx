@@ -4,16 +4,7 @@ import roundThumbUp from '@iconify/icons-ic/round-thumb-up';
 import roundVerified from '@iconify/icons-ic/round-verified';
 import checkmarkFill from '@iconify/icons-eva/checkmark-fill';
 // material
-import {
-  Box,
-  List,
-  Button,
-  Rating,
-  Avatar,
-  ListItem,
-  Pagination,
-  Typography
-} from '@material-ui/core';
+import { Box, List, Button, Rating, Avatar, ListItem, Pagination, Typography } from '@mui/material';
 // utils
 import { fDate } from '../../../../utils/formatTime';
 import { fShortenNumber } from '../../../../utils/formatNumber';

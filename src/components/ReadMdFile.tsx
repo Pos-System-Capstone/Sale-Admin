@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 // material
-import { styled } from '@material-ui/core/styles';
+import { styled } from '@mui/material/styles';
 //
 import Markdown from './Markdown';
 

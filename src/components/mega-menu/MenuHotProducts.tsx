@@ -1,6 +1,6 @@
 import { Link as RouterLink } from 'react-router-dom';
 // material
-import { Link, Typography, Box } from '@material-ui/core';
+import { Link, Typography, Box } from '@mui/material';
 // @types
 import { MenuHotProductsProps } from '../../@types/mega-menu';
 

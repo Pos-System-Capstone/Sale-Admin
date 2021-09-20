@@ -2,14 +2,14 @@
 import plusFill from '@iconify/icons-eva/plus-fill';
 import { Icon } from '@iconify/react';
 // material
-import { Button, Card, Container, Stack, Typography } from '@material-ui/core';
+import { Button, Card, Container, Stack, Typography } from '@mui/material';
 import CategoryModal from 'components/CategoryModal';
 import DeleteConfirmDialog from 'components/DelectConfirmDialog';
 import Page from 'components/Page';
 import ResoTable from 'components/ResoTable/ResoTable';
 import useLocales from 'hooks/useLocales';
 import { get } from 'lodash';
-import { useSnackbar } from 'notistack5';
+import { useSnackbar } from 'notistack';
 import { useRef, useState } from 'react';
 // components
 import { useNavigate } from 'react-router-dom';

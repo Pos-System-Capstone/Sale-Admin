@@ -5,15 +5,8 @@ import linkedinFill from '@iconify/icons-eva/linkedin-fill';
 import facebookFill from '@iconify/icons-eva/facebook-fill';
 import instagramFilled from '@iconify/icons-ant-design/instagram-filled';
 // material
-import { alpha, useTheme, styled } from '@material-ui/core/styles';
-import {
-  Box,
-  Avatar,
-  SpeedDial,
-  Typography,
-  useMediaQuery,
-  SpeedDialAction
-} from '@material-ui/core';
+import { alpha, useTheme, styled } from '@mui/material/styles';
+import { Box, Avatar, SpeedDial, Typography, useMediaQuery, SpeedDialAction } from '@mui/material';
 // utils
 import { fDate } from '../../../utils/formatTime';
 // @types
@@ -111,7 +104,7 @@ type BlogPostHeroProps = {
 export default function BlogPostHero({ post }: BlogPostHeroProps) {
   const { cover, title, author, createdAt } = post;
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMobile = useMediaQuery(theme.breakpoints.down('lg'));
 
   return (
     <RootStyle>

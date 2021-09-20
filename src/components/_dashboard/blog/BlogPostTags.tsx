@@ -9,7 +9,7 @@ import {
   Checkbox,
   AvatarGroup,
   FormControlLabel
-} from '@material-ui/core';
+} from '@mui/material';
 // utils
 import { fShortenNumber } from '../../../utils/formatNumber';
 // @types

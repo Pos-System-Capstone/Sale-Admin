@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { sentenceCase } from 'change-case';
 import { useParams } from 'react-router-dom';
 // material
-import { Box, Card, Divider, Skeleton, Container, Typography, Pagination } from '@material-ui/core';
+import { Box, Card, Divider, Skeleton, Container, Typography, Pagination } from '@mui/material';
 // redux
 import { useDispatch, useSelector } from '../../redux/store';
 import { getPost, getRecentPosts } from '../../redux/slices/blog';

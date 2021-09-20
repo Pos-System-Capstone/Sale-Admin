@@ -1,12 +1,13 @@
 import { useMemo, ReactNode } from 'react';
 // material
-import { CssBaseline } from '@material-ui/core';
+import { CssBaseline, adaptV4Theme } from '@mui/material';
 import {
   createTheme,
-  ThemeOptions,
+  DeprecatedThemeOptions,
   ThemeProvider,
+  Theme,
   StyledEngineProvider
-} from '@material-ui/core/styles';
+} from '@mui/material/styles';
 // hooks
 import useSettings from '../hooks/useSettings';
 //
@@ -18,6 +19,11 @@ import GlobalStyles from './globalStyles';
 import componentsOverride from './overrides';
 import shadows, { customShadows } from './shadows';
 
+declare module '@mui/styles/defaultTheme' {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  interface DefaultTheme extends Theme {}
+}
+
 // ----------------------------------------------------------------------
 
 type ThemeConfigProps = {
@@ -28,7 +34,7 @@ export default function ThemeConfig({ children }: ThemeConfigProps) {
   const { themeMode, themeDirection } = useSettings();
   const isLight = themeMode === 'light';
 
-  const themeOptions: ThemeOptions = useMemo(
+  const themeOptions: DeprecatedThemeOptions = useMemo(
     () => ({
       palette: isLight ? { ...palette.light, mode: 'light' } : { ...palette.dark, mode: 'dark' },
       shape,
@@ -41,7 +47,7 @@ export default function ThemeConfig({ children }: ThemeConfigProps) {
     [isLight, themeDirection]
   );
 
-  const theme = createTheme(themeOptions);
+  const theme = createTheme(adaptV4Theme(themeOptions));
   theme.components = componentsOverride(theme);
 
   return (

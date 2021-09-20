@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import filePdfFilled from '@iconify/icons-ant-design/file-pdf-filled';
 import arrowIosBackFill from '@iconify/icons-eva/arrow-ios-back-fill';
 // material
-import { styled } from '@material-ui/core/styles';
-import { Box, Link, Button, Divider, Typography, Stack, DialogProps } from '@material-ui/core';
+import { styled } from '@mui/material/styles';
+import { Box, Link, Button, Divider, Typography, Stack, DialogProps } from '@mui/material';
 // redux
 import { useDispatch } from '../../../../redux/store';
 import { resetCart } from '../../../../redux/slices/product';

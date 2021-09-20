@@ -1,14 +1,14 @@
 /* eslint-disable camelcase */
 import plusFill from '@iconify/icons-eva/plus-fill';
 import { Icon } from '@iconify/react';
-import { Button, Card, Container, Stack, Typography } from '@material-ui/core';
+import { Button, Card, Container, Stack, Typography } from '@mui/material';
 import DeleteConfirmDialog from 'components/DelectConfirmDialog';
 // components
 import Page from 'components/Page';
 import ResoTable from 'components/ResoTable/ResoTable';
 import useLocales from 'hooks/useLocales';
 import { get } from 'lodash';
-import { useSnackbar } from 'notistack5';
+import { useSnackbar } from 'notistack';
 // material
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';

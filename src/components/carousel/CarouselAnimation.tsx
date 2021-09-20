@@ -3,8 +3,8 @@ import Slider from 'react-slick';
 import { motion } from 'framer-motion';
 import { useState, useRef } from 'react';
 // material
-import { alpha, useTheme, styled } from '@material-ui/core/styles';
-import { Box, Card, Paper, Button, Typography, CardContent } from '@material-ui/core';
+import { alpha, useTheme, styled } from '@mui/material/styles';
+import { Box, Card, Paper, Button, Typography, CardContent } from '@mui/material';
 // utils
 import { mockImgFeed } from '../../utils/mockImages';
 //

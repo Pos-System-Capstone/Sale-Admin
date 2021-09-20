@@ -1,11 +1,11 @@
 import * as Yup from 'yup';
-import { useSnackbar } from 'notistack5';
+import { useSnackbar } from 'notistack';
 import { useNavigate } from 'react-router-dom';
 import { useCallback } from 'react';
 import { Form, FormikProvider, useFormik } from 'formik';
 // material
-import { styled } from '@material-ui/core/styles';
-import { LoadingButton } from '@material-ui/lab';
+import { styled } from '@mui/material/styles';
+import { LoadingButton } from '@mui/lab';
 import {
   Card,
   Chip,
@@ -23,7 +23,7 @@ import {
   InputAdornment,
   FormHelperText,
   FormControlLabel
-} from '@material-ui/core';
+} from '@mui/material';
 // utils
 import fakeRequest from '../../../utils/fakeRequest';
 // routes

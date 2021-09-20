@@ -4,7 +4,7 @@ import { useState } from 'react';
 import plusFill from '@iconify/icons-eva/plus-fill';
 import arrowIosBackFill from '@iconify/icons-eva/arrow-ios-back-fill';
 // material
-import { Box, Grid, Card, Button, Typography } from '@material-ui/core';
+import { Box, Grid, Card, Button, Typography } from '@mui/material';
 // @types
 import {
   BillingAddress as Address,

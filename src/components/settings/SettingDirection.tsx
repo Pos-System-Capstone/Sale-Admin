@@ -6,7 +6,7 @@ import {
   RadioGroup,
   CardActionArea,
   FormControlLabel
-} from '@material-ui/core';
+} from '@mui/material';
 // hooks
 import useSettings from '../../hooks/useSettings';
 

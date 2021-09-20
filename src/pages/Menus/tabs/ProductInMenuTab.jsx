@@ -18,7 +18,7 @@ import {
   Stack,
   TextField,
   Typography
-} from '@material-ui/core';
+} from '@mui/material';
 import { useDebounceFn } from 'ahooks';
 import DeleteConfirmDialog from 'components/DelectConfirmDialog';
 import DrawerProductForm from 'components/DrawerProductForm/DrawerProductForm';
@@ -26,7 +26,7 @@ import Label from 'components/Label';
 import ResoTable from 'components/ResoTable/ResoTable';
 import useLocales from 'hooks/useLocales';
 import { get } from 'lodash-es';
-import { useSnackbar } from 'notistack5';
+import { useSnackbar } from 'notistack';
 import { CardTitle } from 'pages/Products/components/Card';
 import React from 'react';
 import { useSelector } from 'react-redux';

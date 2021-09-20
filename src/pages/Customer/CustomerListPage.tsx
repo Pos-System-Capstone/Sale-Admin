@@ -2,8 +2,8 @@
 import plusFill from '@iconify/icons-eva/plus-fill';
 import { Icon } from '@iconify/react';
 // material
-import { Button, Card, Container, Stack, TableCell, Typography } from '@material-ui/core';
-import { withStyles } from '@material-ui/styles';
+import { Button, Card, Container, Stack, TableCell, Typography } from '@mui/material';
+import { withStyles } from '@mui/styles';
 import Label from 'components/Label';
 import Page from 'components/Page';
 import ResoTable from 'components/ResoTable/ResoTable';

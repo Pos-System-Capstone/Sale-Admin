@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { paramCase } from 'change-case';
 import { useParams, useLocation } from 'react-router-dom';
 // material
-import { Container } from '@material-ui/core';
+import { Container } from '@mui/material';
 // redux
 import { useDispatch, useSelector } from '../../redux/store';
 import { getProducts } from '../../redux/slices/product';

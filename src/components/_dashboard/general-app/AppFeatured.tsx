@@ -4,8 +4,8 @@ import { motion } from 'framer-motion';
 import { useState, useRef } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 // material
-import { alpha, useTheme, styled } from '@material-ui/core/styles';
-import { CardContent, Box, Card, Typography } from '@material-ui/core';
+import { alpha, useTheme, styled } from '@mui/material/styles';
+import { CardContent, Box, Card, Typography } from '@mui/material';
 // utils
 import { mockImgFeed } from '../../../utils/mockImages';
 //

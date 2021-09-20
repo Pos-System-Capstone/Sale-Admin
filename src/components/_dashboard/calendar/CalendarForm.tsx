@@ -2,7 +2,7 @@ import * as Yup from 'yup';
 import { merge } from 'lodash';
 import { isBefore } from 'date-fns';
 import { Icon } from '@iconify/react';
-import { useSnackbar } from 'notistack5';
+import { useSnackbar } from 'notistack';
 import trash2Fill from '@iconify/icons-eva/trash-2-fill';
 import { useFormik, Form, FormikProvider } from 'formik';
 import {
@@ -15,8 +15,8 @@ import {
   DialogContent,
   DialogActions,
   FormControlLabel
-} from '@material-ui/core';
-import { LoadingButton, MobileDateTimePicker, MobileTimePicker } from '@material-ui/lab';
+} from '@mui/material';
+import { LoadingButton, MobileDateTimePicker, MobileTimePicker } from '@mui/lab';
 import { EventInput } from '@fullcalendar/common';
 // redux
 import { useDispatch } from '../../../redux/store';
@@ -180,7 +180,7 @@ export default function CalendarForm({ event, range, onCancel }: CalendarFormPro
         <DialogActions>
           {!isCreating && (
             <Tooltip title="Delete Event">
-              <IconButton onClick={handleDelete}>
+              <IconButton onClick={handleDelete} size="large">
                 <Icon icon={trash2Fill} width={20} height={20} />
               </IconButton>
             </Tooltip>

@@ -2,7 +2,7 @@
 import plusFill from '@iconify/icons-eva/plus-fill';
 import { Icon } from '@iconify/react';
 // material
-import { Button, Card, Container, Stack, Typography } from '@material-ui/core';
+import { Button, Card, Container, Stack, Typography } from '@mui/material';
 import { SelectField } from 'components/form';
 import Label from 'components/Label';
 import Page from 'components/Page';

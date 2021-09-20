@@ -1,14 +1,14 @@
 import { ReactNode } from 'react';
 import { Icon } from '@iconify/react';
-import { SnackbarProvider } from 'notistack5';
 import infoFill from '@iconify/icons-eva/info-fill';
 import alertCircleFill from '@iconify/icons-eva/alert-circle-fill';
 import alertTriangleFill from '@iconify/icons-eva/alert-triangle-fill';
 import checkmarkCircle2Fill from '@iconify/icons-eva/checkmark-circle-2-fill';
+import { SnackbarProvider } from 'notistack';
 // material
-import { makeStyles, createStyles } from '@material-ui/styles';
-import { alpha, Theme } from '@material-ui/core/styles';
-import { Box } from '@material-ui/core';
+import { makeStyles, createStyles } from '@mui/styles';
+import { alpha, Theme } from '@mui/material/styles';
+import { Box } from '@mui/material';
 // @types
 import { ColorSchema } from '../@types/theme';
 

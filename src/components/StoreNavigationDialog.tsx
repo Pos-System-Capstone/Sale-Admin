@@ -12,13 +12,13 @@ import {
   Stack,
   TextField,
   Typography
-} from '@material-ui/core';
-import Slide from '@material-ui/core/Slide';
+} from '@mui/material';
+import Slide from '@mui/material/Slide';
 import React, { forwardRef, useMemo, useState } from 'react';
 import { TStore } from 'types/store';
-import { TransitionProps } from '@material-ui/core/transitions';
-import ArrowForward from '@material-ui/icons/ArrowForward';
-import CloseIcon from '@material-ui/icons/Close';
+import { TransitionProps } from '@mui/material/transitions';
+import ArrowForward from '@mui/icons-material/ArrowForward';
+import CloseIcon from '@mui/icons-material/Close';
 import { useSelector } from 'react-redux';
 import { RootState } from 'redux/store';
 import { chunk } from 'lodash';
@@ -86,6 +86,7 @@ const StoreNavigationDialog: React.FC<Props> = ({ open, onClose, onSelectStore }
             top: 8,
             color: (theme) => theme.palette.grey[500]
           }}
+          size="large"
         >
           <CloseIcon />
         </IconButton>

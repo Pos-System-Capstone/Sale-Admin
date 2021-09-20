@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import Lightbox from 'react-image-lightbox';
 // material
-import { makeStyles, createStyles } from '@material-ui/styles';
-import { alpha, Theme } from '@material-ui/core/styles';
-import { Typography } from '@material-ui/core';
+import { makeStyles, createStyles } from '@mui/styles';
+import { alpha, Theme } from '@mui/material/styles';
+import { Typography } from '@mui/material';
 
 // ----------------------------------------------------------------------
 

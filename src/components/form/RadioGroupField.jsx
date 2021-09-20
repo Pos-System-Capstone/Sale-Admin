@@ -7,7 +7,7 @@ import {
   InputLabel,
   Radio,
   RadioGroup
-} from '@material-ui/core';
+} from '@mui/material';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 

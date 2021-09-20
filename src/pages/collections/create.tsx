@@ -8,7 +8,7 @@ import {
   Slider,
   Stack,
   Typography
-} from '@material-ui/core';
+} from '@mui/material';
 import { InputField, SelectField, UploadImageField } from 'components/form';
 import * as yup from 'yup';
 import { CardTitle } from 'pages/Products/components/Card';
@@ -32,7 +32,7 @@ import { TCollection } from 'types/collection';
 import { useSelector } from 'react-redux';
 import { RootState } from 'redux/store';
 import { createCollection } from 'redux/collections/api';
-import { useSnackbar } from 'notistack5';
+import { useSnackbar } from 'notistack';
 
 import AddProductTable from './AddProductTable';
 

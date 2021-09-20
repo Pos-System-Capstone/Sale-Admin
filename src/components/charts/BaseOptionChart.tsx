@@ -1,7 +1,7 @@
 import { ApexOptions } from 'apexcharts';
 // material
-import { createStyles, makeStyles } from '@material-ui/styles';
-import { useTheme, Theme } from '@material-ui/core/styles';
+import { createStyles, makeStyles } from '@mui/styles';
+import { useTheme, Theme } from '@mui/material/styles';
 import typography from '../../theme/typography';
 
 // ----------------------------------------------------------------------

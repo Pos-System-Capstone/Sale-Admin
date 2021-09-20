@@ -1,7 +1,7 @@
 import ReactQuill, { ReactQuillProps } from 'react-quill';
 // material
-import { styled } from '@material-ui/core/styles';
-import { Box, BoxProps } from '@material-ui/core';
+import { styled } from '@mui/material/styles';
+import { Box, BoxProps } from '@mui/material';
 // theme
 import typography from '../../../theme/typography';
 //

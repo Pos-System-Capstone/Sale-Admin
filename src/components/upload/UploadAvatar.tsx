@@ -4,13 +4,13 @@ import { Icon } from '@iconify/react';
 import { useDropzone, DropzoneOptions } from 'react-dropzone';
 import roundAddAPhoto from '@iconify/icons-ic/round-add-a-photo';
 // material
-import { alpha, Theme, styled } from '@material-ui/core/styles';
-import { Box, Typography, Paper } from '@material-ui/core';
-import { SxProps } from '@material-ui/system';
+import { alpha, Theme, styled } from '@mui/material/styles';
+import { Box, Typography, Paper } from '@mui/material';
+import { SxProps } from '@mui/system';
 // utils
 import { fData } from 'utils/formatNumber';
 import { uploadfile } from 'redux/file/api';
-import { useSnackbar } from 'notistack5';
+import { useSnackbar } from 'notistack';
 
 // ----------------------------------------------------------------------
 

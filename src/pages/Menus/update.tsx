@@ -1,8 +1,8 @@
-import { Box, Button, Stack, Tab, Tabs, Typography } from '@material-ui/core';
+import { Box, Button, Stack, Tab, Tabs, Typography } from '@mui/material';
 import React from 'react';
 import { Icon } from '@iconify/react';
 import { get } from 'lodash-es';
-import { useSnackbar } from 'notistack5';
+import { useSnackbar } from 'notistack';
 import roundReceipt from '@iconify/icons-ic/round-receipt';
 import roundAccountBox from '@iconify/icons-ic/round-account-box';
 import roundStore from '@iconify/icons-ic/round-store';

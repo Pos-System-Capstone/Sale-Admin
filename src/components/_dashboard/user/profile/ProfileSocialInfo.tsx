@@ -4,8 +4,8 @@ import facebookFill from '@iconify/icons-eva/facebook-fill';
 import linkedinFill from '@iconify/icons-eva/linkedin-fill';
 import instagramFilled from '@iconify/icons-ant-design/instagram-filled';
 // material
-import { styled } from '@material-ui/core/styles';
-import { Link, Card, CardHeader, Stack } from '@material-ui/core'; // @types
+import { styled } from '@mui/material/styles';
+import { Link, Card, CardHeader, Stack } from '@mui/material'; // @types
 // @types
 import { Profile } from '../../../../@types/user';
 // ----------------------------------------------------------------------

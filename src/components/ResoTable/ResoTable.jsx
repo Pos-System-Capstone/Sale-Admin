@@ -35,15 +35,15 @@ import {
   Tooltip,
   Typography,
   useMediaQuery
-} from '@material-ui/core';
-import { Replay, SettingsOutlined } from '@material-ui/icons';
-import { makeStyles, withStyles } from '@material-ui/styles';
+} from '@mui/material';
+import { Replay, SettingsOutlined } from '@mui/icons-material';
+import { makeStyles, withStyles } from '@mui/styles';
 import { useAntdTable } from 'ahooks';
 import EmptyContent from 'components/EmptyContent';
 import TableFilterForm from 'components/ResoTable/TableFilterForm';
 import useLocales from 'hooks/useLocales';
 import get from 'lodash/get';
-import { useSnackbar } from 'notistack5';
+import { useSnackbar } from 'notistack';
 import React, { useCallback } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { getCellValue, transformParamToHyphen } from './utils';
@@ -397,13 +397,13 @@ const ResoTable = (
           <StickyRightTableCell>
             <Stack direction="row" justifyContent="flex-end">
               <Tooltip title="Xóa">
-                <IconButton onClick={() => handleDelete(data)} sx={{ color: 'red' }}>
+                <IconButton onClick={() => handleDelete(data)} sx={{ color: 'red' }} size="large">
                   <Icon icon={trashIcon} />
                 </IconButton>
               </Tooltip>
               <Divider orientation="vertical" flexItem />
               <Tooltip title="Điều chỉnh">
-                <IconButton onClick={() => handleEdit(data)}>
+                <IconButton onClick={() => handleEdit(data)} size="large">
                   <Icon icon={editIcon} />
                 </IconButton>
               </Tooltip>
@@ -419,6 +419,7 @@ const ResoTable = (
               aria-label="more"
               aria-controls="long-menu"
               aria-haspopup="true"
+              size="large"
             >
               <Icon icon={moreVerticalFill} />
             </IconButton>

@@ -2,9 +2,9 @@
 /* eslint-disable no-plusplus */
 /* eslint-disable react/prop-types */
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Box, Button, CircularProgress, Stack, Typography } from '@material-ui/core';
+import { Box, Button, CircularProgress, Stack, Typography } from '@mui/material';
 import { useRequest } from 'ahooks';
-import { useSnackbar } from 'notistack5';
+import { useSnackbar } from 'notistack';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -66,7 +66,7 @@ const UpdateProduct = () => {
           height: '100%'
         }}
         minHeight="40vh"
-        borderRadius={1}
+        borderRadius="1px"
         flexDirection="column"
         zIndex={999}
         justifyContent="center"

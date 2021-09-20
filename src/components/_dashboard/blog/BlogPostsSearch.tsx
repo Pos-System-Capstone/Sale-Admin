@@ -6,7 +6,7 @@ import match from 'autosuggest-highlight/match';
 import { Link as RouterLink } from 'react-router-dom';
 import searchFill from '@iconify/icons-eva/search-fill';
 // material
-import { styled } from '@material-ui/core/styles';
+import { styled } from '@mui/material/styles';
 import {
   Box,
   Link,
@@ -15,7 +15,7 @@ import {
   Autocomplete,
   InputAdornment,
   BoxProps
-} from '@material-ui/core';
+} from '@mui/material';
 // utils
 import axios from '../../../utils/axios';
 // routes

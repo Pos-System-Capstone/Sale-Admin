@@ -1,8 +1,8 @@
 import { isString } from 'lodash';
 // material
-import { LoadingButton } from '@material-ui/lab';
-import { alpha, styled } from '@material-ui/core/styles';
-import { Box, Button, Container, Typography, DialogActions } from '@material-ui/core';
+import { LoadingButton } from '@mui/lab';
+import { alpha, styled } from '@mui/material/styles';
+import { Box, Button, Container, Typography, DialogActions } from '@mui/material';
 // @types
 import { NewPostViewFormikInstance } from '../../../@types/blog';
 //

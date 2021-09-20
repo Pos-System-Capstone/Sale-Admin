@@ -1,5 +1,5 @@
-import { Card as MuiCard, Typography } from '@material-ui/core';
-import { styled } from '@material-ui/styles';
+import { Card as MuiCard, Typography } from '@mui/material';
+import { styled } from '@mui/styles';
 
 export const StickyCard = styled(MuiCard)({
   textAlign: 'left',

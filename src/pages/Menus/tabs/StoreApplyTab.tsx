@@ -1,6 +1,6 @@
 import plusFill from '@iconify/icons-eva/plus-fill';
 import Icon from '@iconify/react';
-import { Box, Button, Card, Chip, DialogTitle, Stack } from '@material-ui/core';
+import { Box, Button, Card, Chip, DialogTitle, Stack } from '@mui/material';
 import { useRequest } from 'ahooks';
 import { DialogAnimate } from 'components/animate';
 import DeleteConfirmDialog from 'components/DelectConfirmDialog';
@@ -9,7 +9,7 @@ import ResoTable from 'components/ResoTable/ResoTable';
 import StoreInMenuForm from 'components/_dashboard/calendar/StoreInMenuForm';
 import { DAY_OF_WEEK } from 'constraints';
 import useLocales from 'hooks/useLocales';
-import { useSnackbar } from 'notistack5';
+import { useSnackbar } from 'notistack';
 import { CardTitle } from 'pages/Products/components/Card';
 import React, { useState } from 'react';
 import { useParams } from 'react-router';

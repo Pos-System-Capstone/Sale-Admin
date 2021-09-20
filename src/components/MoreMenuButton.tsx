@@ -6,7 +6,7 @@ import downloadFill from '@iconify/icons-eva/download-fill';
 import moreVerticalFill from '@iconify/icons-eva/more-vertical-fill';
 import filePdfFilled from '@iconify/icons-ant-design/file-pdf-filled';
 // material
-import { Menu, MenuItem, IconButton, ListItemIcon, ListItemText } from '@material-ui/core';
+import { Menu, MenuItem, IconButton, ListItemIcon, ListItemText } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
@@ -43,7 +43,7 @@ export default function MoreMenuButton() {
 
   return (
     <>
-      <IconButton ref={ref} onClick={() => setIsOpen(true)}>
+      <IconButton ref={ref} onClick={() => setIsOpen(true)} size="large">
         <Icon icon={moreVerticalFill} width={20} height={20} />
       </IconButton>
 

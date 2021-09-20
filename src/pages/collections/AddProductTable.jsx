@@ -1,5 +1,5 @@
 import Icon from '@iconify/react';
-import { Stack, Box, Avatar, IconButton, Typography } from '@material-ui/core';
+import { Stack, Box, Avatar, IconButton, Typography } from '@mui/material';
 import ResoTable from 'components/ResoTable/ResoTable';
 import React from 'react';
 import closeIcon from '@iconify/icons-eva/close-outline';
@@ -28,6 +28,7 @@ const AddProductTable = ({ data = [], onRemove }) => {
                     e.stopPropagation();
                     onRemove(Number(prod.product_id));
                   }}
+                  size="large"
                 >
                   <Icon icon={closeIcon} />
                 </IconButton>

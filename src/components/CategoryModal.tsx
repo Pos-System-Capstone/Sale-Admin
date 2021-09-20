@@ -8,8 +8,8 @@ import {
   DialogTitle,
   Grid,
   Slider
-} from '@material-ui/core';
-import { Box } from '@material-ui/system';
+} from '@mui/material';
+import { Box } from '@mui/system';
 import { useRequest } from 'ahooks';
 import useLocales from 'hooks/useLocales';
 import React, { useEffect } from 'react';

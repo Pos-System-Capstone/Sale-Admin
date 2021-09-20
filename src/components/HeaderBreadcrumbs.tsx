@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { isString } from 'lodash';
 // material
-import { Box, Typography, Link } from '@material-ui/core';
+import { Box, Typography, Link } from '@mui/material';
 //
 import { MBreadcrumbs } from './@material-extend';
 import { MBreadcrumbsProps } from './@material-extend/MBreadcrumbs';

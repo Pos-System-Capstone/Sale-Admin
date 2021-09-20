@@ -1,4 +1,4 @@
-import { SelectProps } from '@material-ui/core';
+import { SelectProps } from '@mui/material';
 import { useRequest } from 'ahooks';
 import { AxiosResponse } from 'axios';
 import axiosInstance from 'utils/axios';

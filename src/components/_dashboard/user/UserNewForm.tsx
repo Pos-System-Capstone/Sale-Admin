@@ -1,10 +1,10 @@
 import * as Yup from 'yup';
 import { useCallback } from 'react';
-import { useSnackbar } from 'notistack5';
+import { useSnackbar } from 'notistack';
 import { useNavigate } from 'react-router-dom';
 import { Form, FormikProvider, useFormik } from 'formik';
 // material
-import { LoadingButton } from '@material-ui/lab';
+import { LoadingButton } from '@mui/lab';
 import {
   Box,
   Card,
@@ -15,7 +15,7 @@ import {
   Typography,
   FormHelperText,
   FormControlLabel
-} from '@material-ui/core';
+} from '@mui/material';
 // utils
 import { fData } from '../../../utils/formatNumber';
 import fakeRequest from '../../../utils/fakeRequest';

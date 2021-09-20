@@ -6,7 +6,7 @@ import {
   DialogActions,
   DialogContent,
   Button
-} from '@material-ui/core';
+} from '@mui/material';
 import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
 import useLocales from 'hooks/useLocales';
 

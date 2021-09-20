@@ -6,9 +6,9 @@ import clockFill from '@iconify/icons-eva/clock-fill';
 import roundVerified from '@iconify/icons-ic/round-verified';
 import roundVerifiedUser from '@iconify/icons-ic/round-verified-user';
 // material
-import { alpha, styled } from '@material-ui/core/styles';
-import { Box, Tab, Card, Grid, Divider, Skeleton, Container, Typography } from '@material-ui/core';
-import { TabContext, TabList, TabPanel } from '@material-ui/lab';
+import { alpha, styled } from '@mui/material/styles';
+import { Box, Tab, Card, Grid, Divider, Skeleton, Container, Typography } from '@mui/material';
+import { TabContext, TabList, TabPanel } from '@mui/lab';
 // redux
 import { useDispatch, useSelector } from '../../redux/store';
 import { getProduct, addCart, onGotoStep } from '../../redux/slices/product';

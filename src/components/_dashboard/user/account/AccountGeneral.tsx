@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { useSnackbar } from 'notistack5';
+import { useSnackbar } from 'notistack';
 import { useCallback } from 'react';
 import { Form, FormikProvider, useFormik } from 'formik';
 // material
@@ -13,8 +13,8 @@ import {
   FormControlLabel,
   Typography,
   FormHelperText
-} from '@material-ui/core';
-import { LoadingButton } from '@material-ui/lab';
+} from '@mui/material';
+import { LoadingButton } from '@mui/lab';
 // hooks
 import useAuth from '../../../../hooks/useAuth';
 import useIsMountedRef from '../../../../hooks/useIsMountedRef';

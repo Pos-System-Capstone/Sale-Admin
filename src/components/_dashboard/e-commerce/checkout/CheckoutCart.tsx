@@ -4,7 +4,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { useFormik, Form, FormikProvider } from 'formik';
 import arrowIosBackFill from '@iconify/icons-eva/arrow-ios-back-fill';
 // material
-import { Grid, Card, Button, CardHeader, Typography } from '@material-ui/core';
+import { Grid, Card, Button, CardHeader, Typography } from '@mui/material';
 // @types
 import { ProductState } from '../../../../@types/products';
 // redux

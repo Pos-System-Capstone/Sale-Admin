@@ -17,14 +17,14 @@ import {
   Stack,
   TextField,
   Typography
-} from '@material-ui/core';
+} from '@mui/material';
 import { useRequest } from 'ahooks';
 import DrawerProductForm from 'components/DrawerProductForm/DrawerProductForm';
 import EmptyContent from 'components/EmptyContent';
 import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
 import useLocales from 'hooks/useLocales';
 import { get } from 'lodash';
-import { useSnackbar } from 'notistack5';
+import { useSnackbar } from 'notistack';
 import React, { useState } from 'react';
 import { productCollectionApi } from 'redux/collections/api';
 import { TProductBase } from 'types/product';

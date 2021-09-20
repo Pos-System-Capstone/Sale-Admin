@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
-import { Box, Input, TextField, TextFieldProps } from '@material-ui/core';
-import { DatePickerProps, DateRangePicker } from '@material-ui/lab';
+import { Box, Input, TextField, TextFieldProps } from '@mui/material';
+import { DatePickerProps, DateRangePicker } from '@mui/lab';
 import useLocales from 'hooks/useLocales';
 import moment from 'moment';
 import React from 'react';

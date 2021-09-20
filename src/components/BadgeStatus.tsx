@@ -1,6 +1,6 @@
 // material
-import { Theme, useTheme, styled } from '@material-ui/core/styles';
-import { BoxProps } from '@material-ui/core';
+import { Theme, useTheme, styled } from '@mui/material/styles';
+import { BoxProps } from '@mui/material';
 
 // ----------------------------------------------------------------------
 

@@ -1,31 +1,21 @@
+import { Box, CardActionArea, Drawer, Link, Stack, Tooltip, Typography } from '@mui/material';
+// material
+import { alpha, styled } from '@mui/material/styles';
 import { useEffect, useMemo } from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
-// material
-import { alpha, styled } from '@material-ui/core/styles';
-import {
-  Box,
-  Link,
-  Stack,
-  Button,
-  Drawer,
-  Tooltip,
-  Typography,
-  CardActionArea
-} from '@material-ui/core';
+import { MHidden } from '../../components/@material-extend';
+// components
+import Logo from '../../components/Logo';
+import MyAvatar from '../../components/MyAvatar';
+import NavSection from '../../components/NavSection';
+import Scrollbar from '../../components/Scrollbar';
 // hooks
 import useAuth from '../../hooks/useAuth';
 import useCollapseDrawer from '../../hooks/useCollapseDrawer';
 // routes
-import { PATH_DASHBOARD, PATH_DOCS } from '../../routes/paths';
-// components
-import Logo from '../../components/Logo';
-import MyAvatar from '../../components/MyAvatar';
-import Scrollbar from '../../components/Scrollbar';
-import NavSection from '../../components/NavSection';
-import { MHidden } from '../../components/@material-extend';
+import { PATH_DASHBOARD } from '../../routes/paths';
 //
 import adminSidebarConfig, { storeAppSidebarConfig } from './SidebarConfig';
-import { DocIcon } from '../../assets';
 
 // ----------------------------------------------------------------------
 

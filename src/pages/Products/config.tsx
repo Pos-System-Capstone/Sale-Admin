@@ -1,4 +1,4 @@
-import { Avatar, Chip } from '@material-ui/core';
+import { Avatar, Chip } from '@mui/material';
 import Label from 'components/Label';
 import { PRODUCT_TYPE_DATA } from 'constraints';
 import React from 'react';

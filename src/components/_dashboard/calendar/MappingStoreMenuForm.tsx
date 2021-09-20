@@ -13,15 +13,15 @@ import {
   Stack,
   TextField,
   Tooltip
-} from '@material-ui/core';
-import { MobileTimePicker } from '@material-ui/lab';
+} from '@mui/material';
+import { MobileTimePicker } from '@mui/lab';
 import { useRequest } from 'ahooks';
 import { AutoCompleteField, InputField, SelectField, SwitchField } from 'components/form';
 import { DAY_OF_WEEK } from 'constraints';
 import useLocales from 'hooks/useLocales';
 import { get, union } from 'lodash';
 import moment from 'moment';
-import { useSnackbar } from 'notistack5';
+import { useSnackbar } from 'notistack';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { getMenus } from 'redux/menu/api';
@@ -333,7 +333,7 @@ export default function StoreInMenuForm({
         <DialogActions>
           {!isCreating && (
             <Tooltip title="Delete Event">
-              <IconButton onClick={handleDelete}>
+              <IconButton onClick={handleDelete} size="large">
                 <Icon icon={trash2Fill} width={20} height={20} />
               </IconButton>
             </Tooltip>

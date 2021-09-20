@@ -3,8 +3,8 @@ import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 import rehypeHighlight from 'rehype-highlight';
 // material
-import { styled } from '@material-ui/core/styles';
-import { Link, Typography, Divider } from '@material-ui/core';
+import { styled } from '@mui/material/styles';
+import { Link, Typography, Divider } from '@mui/material';
 // theme
 import typography from '../theme/typography';
 

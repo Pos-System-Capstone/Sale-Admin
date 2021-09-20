@@ -3,8 +3,8 @@ import { Icon } from '@iconify/react';
 import { sentenceCase } from 'change-case';
 import roundClearAll from '@iconify/icons-ic/round-clear-all';
 // material
-import { useTheme, styled } from '@material-ui/core/styles';
-import { Chip, Typography, Stack, Button } from '@material-ui/core';
+import { useTheme, styled } from '@mui/material/styles';
+import { Chip, Typography, Stack, Button } from '@mui/material';
 // utils
 import getColorName from '../../../../utils/getColorName';
 //

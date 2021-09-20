@@ -1,7 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import plusFill from '@iconify/icons-eva/plus-fill';
 import Icon from '@iconify/react';
-import { Box, Button, Card, Chip, Stack, Typography } from '@material-ui/core';
+import { Box, Button, Card, Chip, Stack, Typography } from '@mui/material';
 import { useRequest } from 'ahooks';
 import DeleteConfirmDialog from 'components/DelectConfirmDialog';
 import Label from 'components/Label';
@@ -11,7 +11,7 @@ import ResoTable from 'components/ResoTable/ResoTable';
 import { DAY_OF_WEEK } from 'constraints';
 import useLocales from 'hooks/useLocales';
 import { get } from 'lodash-es';
-import { useSnackbar } from 'notistack5';
+import { useSnackbar } from 'notistack';
 import { CardTitle } from 'pages/Products/components/Card';
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';

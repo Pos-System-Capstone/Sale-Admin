@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 import { useState } from 'react';
-import { useSnackbar } from 'notistack5';
+import { useSnackbar } from 'notistack';
 import { Link as RouterLink } from 'react-router-dom';
 import { useFormik, Form, FormikProvider } from 'formik';
 import { Icon } from '@iconify/react';
@@ -17,8 +17,8 @@ import {
   IconButton,
   InputAdornment,
   FormControlLabel
-} from '@material-ui/core';
-import { LoadingButton } from '@material-ui/lab';
+} from '@mui/material';
+import { LoadingButton } from '@mui/lab';
 // routes
 import { PATH_AUTH } from '../../../routes/paths';
 // hooks
@@ -110,7 +110,7 @@ export default function LoginForm() {
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
-                  <IconButton onClick={handleShowPassword} edge="end">
+                  <IconButton onClick={handleShowPassword} edge="end" size="large">
                     <Icon icon={showPassword ? eyeFill : eyeOffFill} />
                   </IconButton>
                 </InputAdornment>

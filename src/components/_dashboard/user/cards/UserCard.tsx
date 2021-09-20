@@ -4,17 +4,8 @@ import linkedinFill from '@iconify/icons-eva/linkedin-fill';
 import facebookFill from '@iconify/icons-eva/facebook-fill';
 import instagramFilled from '@iconify/icons-ant-design/instagram-filled';
 // material
-import { alpha, styled } from '@material-ui/core/styles';
-import {
-  Box,
-  Card,
-  Grid,
-  Avatar,
-  Tooltip,
-  Divider,
-  Typography,
-  IconButton
-} from '@material-ui/core';
+import { alpha, styled } from '@mui/material/styles';
+import { Box, Card, Grid, Avatar, Tooltip, Divider, Typography, IconButton } from '@mui/material';
 // utils
 import { fShortenNumber } from '../../../../utils/formatNumber';
 // @types
@@ -130,7 +121,7 @@ export default function UserCard({ user }: UserCardProps) {
       <Box sx={{ textAlign: 'center', mt: 2, mb: 2.5 }}>
         {SOCIALS.map((social) => (
           <Tooltip key={social.name} title={social.name}>
-            <IconButton>{social.icon}</IconButton>
+            <IconButton size="large">{social.icon}</IconButton>
           </Tooltip>
         ))}
       </Box>

@@ -3,8 +3,8 @@ import { Icon } from '@iconify/react';
 import { Link as ScrollLink } from 'react-scroll';
 import edit2Fill from '@iconify/icons-eva/edit-2-fill';
 // material
-import { styled } from '@material-ui/core/styles';
-import { Box, Grid, Rating, Button, Typography, LinearProgress } from '@material-ui/core';
+import { styled } from '@mui/material/styles';
+import { Box, Grid, Rating, Button, Typography, LinearProgress } from '@mui/material';
 // utils
 import { fShortenNumber } from '../../../../utils/formatNumber';
 // @types

@@ -1,9 +1,9 @@
 import { isString } from 'lodash';
 import { useDropzone, DropzoneOptions } from 'react-dropzone';
 // material
-import { alpha, styled } from '@material-ui/core/styles';
-import { Box, Theme, Typography, Paper } from '@material-ui/core';
-import { SxProps } from '@material-ui/system';
+import { alpha, styled } from '@mui/material/styles';
+import { Box, Theme, Typography, Paper } from '@mui/material';
+import { SxProps } from '@mui/system';
 // utils
 import { fData } from '../../utils/formatNumber';
 //

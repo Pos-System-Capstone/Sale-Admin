@@ -24,7 +24,7 @@ import {
   AvatarGroup,
   InputAdornment,
   FormControlLabel
-} from '@material-ui/core';
+} from '@mui/material';
 // @types
 import { UserPost } from '../../../../@types/user';
 // hooks
@@ -89,7 +89,7 @@ export default function ProfilePostCard({ post }: ProfilePostCardProps) {
           </Typography>
         }
         action={
-          <IconButton>
+          <IconButton size="large">
             <Icon icon={moreVerticalFill} width={20} height={20} />
           </IconButton>
         }
@@ -134,10 +134,10 @@ export default function ProfilePostCard({ post }: ProfilePostCardProps) {
             ))}
           </AvatarGroup>
           <Box sx={{ flexGrow: 1 }} />
-          <IconButton onClick={handleClickComment}>
+          <IconButton onClick={handleClickComment} size="large">
             <Icon icon={messageSquareFill} width={20} height={20} />
           </IconButton>
-          <IconButton>
+          <IconButton size="large">
             <Icon icon={shareFill} width={20} height={20} />
           </IconButton>
         </Stack>
@@ -196,7 +196,7 @@ export default function ProfilePostCard({ post }: ProfilePostCardProps) {
               }
             }}
           />
-          <IconButton>
+          <IconButton size="large">
             <Icon icon={roundSend} width={24} height={24} />
           </IconButton>
           <input type="file" ref={fileInputRef} style={{ display: 'none' }} />

@@ -6,8 +6,8 @@ import peopleFill from '@iconify/icons-eva/people-fill';
 import roundPermMedia from '@iconify/icons-ic/round-perm-media';
 import roundAccountBox from '@iconify/icons-ic/round-account-box';
 // material
-import { styled } from '@material-ui/core/styles';
-import { Tab, Box, Card, Tabs, Container } from '@material-ui/core';
+import { styled } from '@mui/material/styles';
+import { Tab, Box, Card, Tabs, Container } from '@mui/material';
 // redux
 import { RootState, useDispatch, useSelector } from '../../redux/store';
 import {

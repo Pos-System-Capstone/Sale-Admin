@@ -1,4 +1,4 @@
-import { Paper, PaperProps, Typography } from '@material-ui/core';
+import { Paper, PaperProps, Typography } from '@mui/material';
 
 // ----------------------------------------------------------------------
 

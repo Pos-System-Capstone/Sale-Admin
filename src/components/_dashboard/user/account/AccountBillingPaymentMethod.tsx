@@ -3,7 +3,7 @@ import { Form, FormikProvider } from 'formik';
 import plusFill from '@iconify/icons-eva/plus-fill';
 import moreVerticalFill from '@iconify/icons-eva/more-vertical-fill';
 // material
-import { Theme } from '@material-ui/core/styles';
+import { Theme } from '@mui/material/styles';
 import {
   Box,
   Card,
@@ -14,9 +14,9 @@ import {
   TextField,
   Typography,
   IconButton
-} from '@material-ui/core';
-import { LoadingButton } from '@material-ui/lab';
-import { SxProps } from '@material-ui/system';
+} from '@mui/material';
+import { LoadingButton } from '@mui/lab';
+import { SxProps } from '@mui/system';
 // @types
 import { CreditCard, AccountBillingFormikProps } from '../../../../@types/user';
 //
@@ -76,6 +76,7 @@ export default function AccountBillingPaymentMethod({
                 right: 8,
                 position: 'absolute'
               }}
+              size="large"
             >
               <Icon icon={moreVerticalFill} width={20} height={20} />
             </IconButton>

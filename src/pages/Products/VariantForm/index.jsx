@@ -13,8 +13,8 @@ import {
   TableHead,
   TableRow,
   Typography
-} from '@material-ui/core';
-import DeleteIcon from '@material-ui/icons/Delete';
+} from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 import ConfirmDialog from 'components/Dialog/ConfirmDialog';
 import Label from 'components/Label';
 import faker from 'faker';

@@ -4,7 +4,7 @@ import { sentenceCase } from 'change-case';
 import { useState, useEffect } from 'react';
 import moreVerticalFill from '@iconify/icons-eva/more-vertical-fill';
 // material
-import { useTheme, styled } from '@material-ui/core/styles';
+import { useTheme, styled } from '@mui/material/styles';
 import {
   Box,
   Card,
@@ -18,7 +18,7 @@ import {
   Typography,
   TableContainer,
   TablePagination
-} from '@material-ui/core';
+} from '@mui/material';
 // redux
 import { useDispatch, useSelector } from '../../redux/store';
 import { getProducts } from '../../redux/slices/product';
@@ -249,7 +249,7 @@ export default function EcommerceProductList() {
                           </TableCell>
                           <TableCell align="right">{fCurrency(price)}</TableCell>
                           <TableCell align="right">
-                            <IconButton>
+                            <IconButton size="large">
                               <Icon icon={moreVerticalFill} width={20} height={20} />
                             </IconButton>
                           </TableCell>

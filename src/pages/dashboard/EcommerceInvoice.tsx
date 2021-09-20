@@ -1,7 +1,7 @@
 import faker from 'faker';
 import { sum } from 'lodash';
 // material
-import { styled } from '@material-ui/core/styles';
+import { styled } from '@mui/material/styles';
 import {
   Box,
   Grid,
@@ -15,7 +15,7 @@ import {
   TableCell,
   Typography,
   TableContainer
-} from '@material-ui/core';
+} from '@mui/material';
 // routes
 import { PATH_DASHBOARD } from '../../routes/paths';
 // utils

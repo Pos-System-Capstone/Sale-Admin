@@ -33,8 +33,8 @@ import { HelmetProvider } from 'react-helmet-async';
 import { Provider as ReduxProvider } from 'react-redux';
 import { PersistGate } from 'redux-persist/lib/integration/react';
 // material
-import AdapterDateFns from '@material-ui/lab/AdapterDateFns';
-import LocalizationProvider from '@material-ui/lab/LocalizationProvider';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
 // redux
 import { store, persistor } from './redux/store';
 // contexts

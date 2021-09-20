@@ -1,6 +1,6 @@
 // material
-import { alpha, styled } from '@material-ui/core/styles';
-import { Popover, PopoverProps } from '@material-ui/core';
+import { alpha, styled } from '@mui/material/styles';
+import { Popover, PopoverProps } from '@mui/material';
 
 // ----------------------------------------------------------------------
 

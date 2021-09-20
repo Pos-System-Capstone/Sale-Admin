@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 // material
-import { Container, Grid, Skeleton } from '@material-ui/core';
+import { Container, Grid, Skeleton } from '@mui/material';
 // redux
 import { RootState, useDispatch, useSelector } from '../../redux/store';
 import { getUsers } from '../../redux/slices/user';

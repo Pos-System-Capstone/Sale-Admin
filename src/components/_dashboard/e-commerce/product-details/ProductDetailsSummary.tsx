@@ -10,7 +10,7 @@ import { useFormik, Form, FormikProvider, useField } from 'formik';
 import instagramFilled from '@iconify/icons-ant-design/instagram-filled';
 import roundAddShoppingCart from '@iconify/icons-ic/round-add-shopping-cart';
 // material
-import { useTheme, styled } from '@material-ui/core/styles';
+import { useTheme, styled } from '@mui/material/styles';
 import {
   Box,
   Grid,
@@ -22,7 +22,7 @@ import {
   TextField,
   Typography,
   FormHelperText
-} from '@material-ui/core';
+} from '@mui/material';
 // routes
 import { PATH_DASHBOARD } from '../../../../routes/paths';
 // utils

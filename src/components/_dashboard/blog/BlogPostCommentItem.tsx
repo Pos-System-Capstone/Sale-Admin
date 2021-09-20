@@ -11,7 +11,7 @@ import {
   ListItemText,
   ListItemAvatar,
   ListItemProps
-} from '@material-ui/core';
+} from '@mui/material';
 // utils
 import { fDate } from '../../../utils/formatTime';
 

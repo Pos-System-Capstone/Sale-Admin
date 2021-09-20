@@ -1,10 +1,10 @@
 import * as Yup from 'yup';
 import { useCallback, useState } from 'react';
-import { useSnackbar } from 'notistack5';
+import { useSnackbar } from 'notistack';
 import { useFormik, Form, FormikProvider } from 'formik';
 // material
-import { LoadingButton } from '@material-ui/lab';
-import { styled } from '@material-ui/core/styles';
+import { LoadingButton } from '@mui/lab';
+import { styled } from '@mui/material/styles';
 import {
   Grid,
   Card,
@@ -17,7 +17,7 @@ import {
   Autocomplete,
   FormHelperText,
   FormControlLabel
-} from '@material-ui/core';
+} from '@mui/material';
 // theme
 import typography from '../../../theme/typography';
 // utils

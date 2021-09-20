@@ -1,8 +1,8 @@
 import { capitalCase } from 'change-case';
 import { Link as RouterLink } from 'react-router-dom';
 // material
-import { styled } from '@material-ui/core/styles';
-import { Box, Card, Link, Container, Typography, Tooltip } from '@material-ui/core';
+import { styled } from '@mui/material/styles';
+import { Box, Card, Link, Container, Typography, Tooltip } from '@mui/material';
 // hooks
 import useAuth from '../../hooks/useAuth';
 // routes

@@ -8,8 +8,8 @@ import {
   Grid,
   IconButton,
   TextField
-} from '@material-ui/core';
-import { useTheme } from '@material-ui/core/styles';
+} from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 
 import closeIcon from '@iconify/icons-eva/close-fill';
 import { Icon } from '@iconify/react';
@@ -120,6 +120,7 @@ const FilterStore: React.FC<Props> = ({ filteredStores, stores, onChangeFilter }
                     onClick={() => {
                       onChangeFilter(filteredStores.filter(({ id }) => id !== store.id));
                     }}
+                    size="large"
                   >
                     <Icon icon={closeIcon} width={20} height={20} />
                   </IconButton>

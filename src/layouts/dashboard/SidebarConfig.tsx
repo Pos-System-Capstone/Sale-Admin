@@ -1,9 +1,7 @@
 // routes
 import { PATH_STORE_APP } from 'routes/storeAppPaths';
-import { PATH_DASHBOARD } from '../../routes/paths';
-// components
-import Label from '../../components/Label';
 import SvgIconStyle from '../../components/SvgIconStyle';
+import { PATH_DASHBOARD } from '../../routes/paths';
 
 // ----------------------------------------------------------------------
 

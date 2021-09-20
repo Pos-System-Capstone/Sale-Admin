@@ -1,4 +1,4 @@
-import { Box, Divider, ListItem, ListItemText } from '@material-ui/core';
+import { Box, Divider, ListItem, ListItemText } from '@mui/material';
 import React from 'react';
 import { StickyCard } from './Card';
 

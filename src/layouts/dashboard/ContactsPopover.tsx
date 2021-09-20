@@ -2,14 +2,8 @@ import { Icon } from '@iconify/react';
 import { useRef, useState, useCallback, useEffect } from 'react';
 import peopleFill from '@iconify/icons-eva/people-fill';
 // material
-import { alpha } from '@material-ui/core/styles';
-import {
-  Avatar,
-  Typography,
-  ListItemText,
-  ListItemButton,
-  ListItemAvatar
-} from '@material-ui/core';
+import { alpha } from '@mui/material/styles';
+import { Avatar, Typography, ListItemText, ListItemButton, ListItemAvatar } from '@mui/material';
 // hooks
 import useIsMountedRef from '../../hooks/useIsMountedRef';
 // utils

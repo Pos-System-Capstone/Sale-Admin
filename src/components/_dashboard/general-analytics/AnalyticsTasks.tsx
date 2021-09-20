@@ -9,7 +9,7 @@ import {
   Typography,
   CheckboxProps,
   FormControlLabel
-} from '@material-ui/core';
+} from '@mui/material';
 //
 import MoreMenuButton from '../../MoreMenuButton';
 
