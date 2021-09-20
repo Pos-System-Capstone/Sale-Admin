@@ -1,17 +1,17 @@
-import { Box, Button, Stack, Tab, Tabs, Typography } from '@material-ui/core';
-import React from 'react';
+import roundAccountBox from '@iconify/icons-ic/round-account-box';
+import roundReceipt from '@iconify/icons-ic/round-receipt';
 import { Icon } from '@iconify/react';
+import { Box, Button, Stack, Tab, Tabs, Typography } from '@material-ui/core';
+import Page from 'components/Page';
+import useLocales from 'hooks/useLocales';
 import { get } from 'lodash-es';
 import { useSnackbar } from 'notistack5';
-import roundReceipt from '@iconify/icons-ic/round-receipt';
-import roundAccountBox from '@iconify/icons-ic/round-account-box';
-import roundStore from '@iconify/icons-ic/round-store';
-
+import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useLocation, useParams } from 'react-router-dom';
-import { addProductInMenus, updateMenuInfo } from 'redux/menu/api';
-import Page from 'components/Page';
-import { convertDateToStr, convertStrToDate } from 'utils/utils';
+import { updateCollection } from 'redux/collections/api';
+import { addProductInMenus } from 'redux/menu/api';
+import { TCollection } from 'types/collection';
 import CollectionInfoTab from './tabs/CollectionInfoTab';
 import ProductInCollectionTab from './tabs/ProductInCollectionTab';
 
@@ -37,43 +37,22 @@ function TabPanel(props: any) {
 }
 
 const UpdateCollectionPage = () => {
+  const { translate } = useLocales();
   const { state } = useLocation();
   const { id } = useParams();
   const [currentTab, setCurrentTab] = React.useState<TabType>(TabType.COLLECTION_INFO);
   const { enqueueSnackbar } = useSnackbar();
 
-  const form = useForm({
+  const form = useForm<Partial<TCollection>>({
     defaultValues: {
-      ...state,
-      from: convertStrToDate(get(state, ['time_from_to', '0'], null), 'HH:mm').toDate(),
-      to: convertStrToDate(get(state, ['time_from_to', '1'], null), 'HH:mm').toDate()
+      ...state
     }
   });
 
-  const onUpdateMenu = (updateMenu: { time_from_to: string[]; from: any; to: any }) => {
-    updateMenu.time_from_to = [
-      convertDateToStr(updateMenu.from, 'HH:mm'),
-      convertDateToStr(updateMenu.to, 'HH:mm')
-    ];
-
-    return updateMenuInfo(+id, updateMenu)
+  const onUpdateCollection = (values: TCollection) =>
+    updateCollection(+id, values)
       .then(() =>
-        enqueueSnackbar(`Cập nhật thành công`, {
-          variant: 'success'
-        })
-      )
-      .catch((err) => {
-        const errMsg = get(err.response, ['data', 'message'], `Có lỗi xảy ra. Vui lòng thử lại`);
-        enqueueSnackbar(errMsg, {
-          variant: 'error'
-        });
-      });
-  };
-
-  const addProductToMenu = (datas: any) =>
-    addProductInMenus(+id, datas)
-      .then(() =>
-        enqueueSnackbar(`Thêm thành công`, {
+        enqueueSnackbar(translate('common.201'), {
           variant: 'success'
         })
       )
@@ -87,28 +66,28 @@ const UpdateCollectionPage = () => {
   const MENU_TABS = [
     {
       value: TabType.COLLECTION_INFO,
-      label: 'Thông tin chung',
+      label: translate('collections.createInfo'),
       icon: <Icon icon={roundAccountBox} width={20} height={20} />,
-      component: <CollectionInfoTab onSubmit={form.handleSubmit(onUpdateMenu)} />
+      component: <CollectionInfoTab onSubmit={form.handleSubmit(onUpdateCollection)} />
     },
     {
       value: TabType.PRODUCT_COLLECTION,
-      label: 'Sản phẩm',
+      label: translate('collections.productTab'),
       icon: <Icon icon={roundReceipt} width={20} height={20} />,
-      component: <ProductInCollectionTab onSubmit={form.handleSubmit(onUpdateMenu)} />
+      component: <ProductInCollectionTab id={id} onSubmit={form.handleSubmit(onUpdateCollection)} />
     }
   ];
 
   return (
     <FormProvider {...form}>
-      <Page title="Cập nhật thực đơn">
+      <Page title={translate('collections.editTitle')}>
         <Box px={2} mx="auto">
           <Stack mb={2} direction="row" justifyContent="space-between">
             <Typography px={1} variant="h3" component="h4" gutterBottom>
-              Cập nhật bộ sưu tập
+              {translate('collections.updateTitle')}
             </Typography>
             <Button size="small" color="error" variant="outlined">
-              Xóa
+              {translate('common.delete')}
             </Button>
           </Stack>
           <Tabs

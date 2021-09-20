@@ -1,5 +1,5 @@
-import { EventClickArg, EventDropArg, EventHoveringArg, EventInput } from '@fullcalendar/react'; // => request placed at the top
 import { EventResizeDoneArg } from '@fullcalendar/interaction';
+import { EventClickArg, EventDropArg, EventHoveringArg, EventInput } from '@fullcalendar/react'; // => request placed at the top
 import {
   Box,
   Card,
@@ -11,21 +11,24 @@ import {
   Typography,
   useMediaQuery
 } from '@material-ui/core';
+// @types
+import { useRequest } from 'ahooks';
 import { DialogAnimate } from 'components/animate';
+import Label from 'components/Label';
 // components
 import Page from 'components/Page';
 import { CalendarToolbar } from 'components/_dashboard/calendar';
 import MappingStoreMenuForm from 'components/_dashboard/calendar/MappingStoreMenuForm';
-import moment from 'moment';
+import { DAY_OF_WEEK } from 'constraints';
 import useLocales from 'hooks/useLocales';
+import moment from 'moment';
 import { useSnackbar } from 'notistack5';
 import { useMemo, useState } from 'react';
+import { addStoreApplyMenus, menuInStoreApi } from 'redux/menu/api';
 import { COLOR_OPTIONS } from 'redux/slices/calendar';
 import { RootState, useSelector } from 'redux/store';
-import Label from 'components/Label';
-import { DAY_OF_WEEK } from 'constraints';
-// @types
-import { Store, StoreInMenu } from 'types/store';
+import { TStoreApplyMenuRequest } from 'types/menu';
+import { MenuInStoreAdmin, TStore, StoreInMenu } from 'types/store';
 import { convertDateToStr } from 'utils/utils';
 import { CalendarView } from '../../@types/calendar';
 import FilterStore from './components/FilterStore';
@@ -48,6 +51,27 @@ const transformSIMtoEvent = (storeInMenus: StoreInMenu[] = []): EventInput[] =>
     ...sInMenu
   }));
 
+const tranform = (input: MenuInStoreAdmin[]): StoreInMenu[] => {
+  const output: StoreInMenu[] = [];
+
+  input.forEach((mInStore) => {
+    if (mInStore.menus && mInStore.menus.length !== 0) {
+      output.push(
+        ...mInStore.menus.map<StoreInMenu>((menu, idx) => ({
+          menu_in_store_id: output.length + idx + 1,
+          store: { id: mInStore.id, store_name: mInStore.name },
+          dayFilters: menu.day_filters,
+          time_range: menu.time_range,
+          menu_id: menu.menu_id,
+          menu_name: menu.menu_name
+        }))
+      );
+    }
+  });
+
+  return output;
+};
+
 export default function MenuInStorePage() {
   const isMobile = useMediaQuery((theme: any) => theme.breakpoints.down('sm'));
   const { enqueueSnackbar } = useSnackbar();
@@ -56,25 +80,48 @@ export default function MenuInStorePage() {
 
   const [view, setView] = useState<CalendarView>(isMobile ? 'listWeek' : 'timeGridWeek');
   const [date, setDate] = useState(new Date());
+  const [filteredStores, setFilteredStores] = useState<TStore[]>(stores ?? []);
 
-  const [appliedStores, setappliedStores] = useState<StoreInMenu[]>([
-    {
-      menu_id: 1,
-      menu_name: 'Thực đơn 1',
-      dayFilters: [1, 2],
-      store: { id: 1161, store_name: 'store của tuấn' },
-      time_range: ['02:30', '03:30'],
-      menu_in_store_id: 0
-    }
-  ]);
+  const {
+    data,
+    mutate: setappliedStores,
+    run
+  } = useRequest(() => menuInStoreApi.get({ 'store-id': filteredStores.map((s) => s.id) }), {
+    formatResult: (res) => {
+      console.log(`tranform(res.data)`, tranform(res.data));
+      return tranform(res.data);
+    },
+    refreshDeps: [filteredStores]
+    // debounceInterval: 500
+  });
+
+  const appliedStores = data ?? [];
+
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [selectedStoreInMenu, setselectedStoreInMenu] = useState<StoreInMenu | null>(null);
-  const [filteredStores, setFilteredStores] = useState<Store[]>(stores ?? []);
   const [selectedRange, setSelectedRange] = useState<any>(null);
   const [popoverStoreInMenu, setPopoverStoreInMenu] = useState<StoreInMenu | null>(null);
 
-  const handleAddEvent = (storeData: Omit<StoreInMenu, 'menu_in_store_id'>) => {
-    setappliedStores([...appliedStores, { ...storeData, menu_in_store_id: appliedStores.length }]);
+  const handleAddEvent = async (storeData: Omit<StoreInMenu, 'menu_in_store_id'>) => {
+    console.log(`storeData`, storeData);
+    const _storeInMenuData: Partial<TStoreApplyMenuRequest> = {
+      day_filters: storeData.dayFilters,
+      store_id: storeData.store.id,
+      time_range: [
+        storeData.allDay ? '00:00' : storeData.time_range[0],
+        storeData.allDay ? '24:00' : storeData.time_range[1]
+      ]
+    };
+    try {
+      const res = await addStoreApplyMenus(storeData.menu_id!, _storeInMenuData);
+      console.log('res', res);
+      if (res) run();
+    } catch (error) {
+      enqueueSnackbar('Error', {
+        variant: 'error'
+      });
+    }
+    // setappliedStores([...appliedStores, { ...storeData, menu_in_store_id: appliedStores.length }]);
   };
 
   const handleUpdateEvent = (updateData: StoreInMenu) => {
@@ -179,11 +226,11 @@ export default function MenuInStorePage() {
   };
 
   const filteredEvents = useMemo(() => {
-    const viewMenuOfStores = appliedStores.filter(({ store }) =>
-      filteredStores.some(({ id }) => id === store.id)
-    );
+    const viewMenuOfStores = appliedStores;
     return transformSIMtoEvent(viewMenuOfStores);
-  }, [appliedStores, filteredStores]);
+  }, [appliedStores]);
+
+  console.log(`filteredEvents`, filteredEvents);
 
   const handleDelete = (data: StoreInMenu) => {
     setappliedStores((prev) =>
@@ -244,6 +291,7 @@ export default function MenuInStorePage() {
       </CardContent>
     </>
   );
+
   return (
     <Page title="Calendar | Minimal-UI">
       <Card>

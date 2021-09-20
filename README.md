@@ -1,13 +1,17 @@
-# Sale admin 
+# Sale admin
+
+## Update
+- [ ] time slot API
+
 
 ## Product module
 
 - [ ] Tạo **dòng sản phẩm**
 - [ ] Tạo biến thể cho **dòng sản phẩm**
-- [ ] Điều chỉnh **biến thể** 
+- [ ] Điều chỉnh **biến thể**
 
 ```
-variants 
+variants
 {
     optName: '',
     values: []
@@ -25,5 +29,18 @@ child_products [
 ]
 
 -> remove [b,c]
+
+```
+
+## Typescript
+
+`Type` cho phép client có thể bỏ thêm các addtional prop
+
+```ts
+type TypeSupportAdditionProp {
+    requireProp: string;
+    optionalProp?: number;
+    [k: string]: any; // support addition
+}
 
 ```

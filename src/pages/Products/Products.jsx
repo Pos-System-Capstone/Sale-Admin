@@ -23,6 +23,7 @@ import Page from 'components/Page';
 // components
 import { useNavigate } from 'react-router-dom';
 import ResoTable from 'components/ResoTable/ResoTable';
+import useLocales from 'hooks/useLocales';
 //
 import { productColumns } from './config';
 import SeachProductForm from './SeachProductForm';
@@ -32,9 +33,9 @@ import LoadingAsyncButton from '../../components/LoadingAsyncButton/LoadingAsync
 // ----------------------------------------------------------------------
 
 export default function EcommerceShop() {
-  const [filters, setFilters] = useState(null);
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
+  const { t } = useLocales();
 
   const [currentDeleteItem, setCurrentDeleteItem] = useState(null);
 
@@ -43,12 +44,12 @@ export default function EcommerceShop() {
   const onDelete = () =>
     deleteProdById(currentDeleteItem.product_id)
       .then((res) => {
-        enqueueSnackbar('Xóa thành công', {
+        enqueueSnackbar(t('common.deleteSuccess'), {
           variant: 'success'
         });
       })
       .catch((err) => {
-        enqueueSnackbar('Có lỗi xảy ra. Vui lòng thử lại', {
+        enqueueSnackbar(t('common.error'), {
           variant: 'error'
         });
       })
@@ -97,14 +98,11 @@ export default function EcommerceShop() {
         </Stack>
         <Card style={{ padding: '1em' }}>
           <Stack spacing={2}>
-            <SeachProductForm onChange={setFilters} />
-
             <ResoTable
               pagination
               getData={getAllProduct}
               onEdit={editProuct}
               onDelete={setCurrentDeleteItem}
-              filters={filters}
               columns={productColumns}
               rowKey="product_id"
             />

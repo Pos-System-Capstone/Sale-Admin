@@ -1,4 +1,5 @@
-import { TStoreApplyMenu } from 'types/menu';
+import { generateAPI } from 'redux/utils';
+import { MenuInStoreAdmin, StoreInMenu } from 'types/store';
 import request from '../../utils/axios';
 
 export interface Menu {
@@ -8,13 +9,13 @@ export interface Menu {
   active: boolean;
 }
 
-export const getMenus = (params: any): any =>
+export const getMenus = (params: any) =>
   request.get<Menu>(`/menus`, {
     params
   });
 
 export const getStoreApplyMenus = (menuId: number, params?: any): any =>
-  request.get<TStoreApplyMenu>(`/menus/${menuId}/stores`, {
+  request.get<StoreInMenu>(`/menus/${menuId}/stores`, {
     params
   });
 
@@ -33,13 +34,15 @@ export const getProductInMenus = (menuId: number, params: any) =>
   });
 
 export const addProductInMenus = (menuId: number, data: any) =>
-  request.post(`/stores/1160/menus/${menuId}/products`, data);
+  request.post(`/menus/${menuId}/products`, data);
 
 export const updateMenuInfo = (menuId: number, updateInfo: any) =>
-  request.put(`/stores/1160/menus/${menuId}`, updateInfo);
+  request.put(`/menus/${menuId}`, updateInfo);
 
-export const updateProdInMenuInfo = (menuId: number, updateInfo: any) =>
-  request.put(`/menus/${menuId}/products`, updateInfo);
+export const updateProdInMenuInfo = (menuId: number, productId: number, updateInfo: any) =>
+  request.put(`/menus/${menuId}/products/${productId}`, updateInfo);
 
-export const deleteProductInMenu = (prods: Array<any>, menuId: number[]) =>
-  request.delete(`/stores/1160/menus/${menuId}/products`, { data: prods });
+export const deleteProductInMenu = (menuId: number, prodId: number) =>
+  request.delete(`/menus/${menuId}/products/${prodId}`);
+
+export const menuInStoreApi = generateAPI<MenuInStoreAdmin>('menu-in-stores');

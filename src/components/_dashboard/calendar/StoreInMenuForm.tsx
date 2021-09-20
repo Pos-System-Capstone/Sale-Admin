@@ -21,15 +21,17 @@ import { useSnackbar } from 'notistack5';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { convertDateToStr, convertStrToDate } from 'utils/utils';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 // redux
 import { RootState, useDispatch } from 'redux/store';
-import { Store } from 'types/store';
-import { TStoreApplyMenu, TStoreApplyMenuRequest } from 'types/menu';
+import { TStore, StoreInMenu } from 'types/store';
+import { TStoreApplyMenuRequest } from 'types/menu';
 
 // ----------------------------------------------------------------------
 
 const getInitialValues = (
-  data: TStoreApplyMenu | null,
+  data: StoreInMenu | null,
   range?: {
     start: Date;
     end: Date;
@@ -59,15 +61,30 @@ type StoreInMenuFormProps = {
     start: Date;
     end: Date;
   } | null;
-  storeInMenu: TStoreApplyMenu | null;
-  onAddStoreApply?: (data: any) => Promise<any>;
+  storeInMenu: StoreInMenu | null;
+  onAddEvent?: (data: any) => Promise<any>;
   onUpdateEvent?: (data: any) => Promise<any>;
   onDelete?: (data: any) => Promise<any>;
 };
 
+const schema = (translate: any) =>
+  yup.object({
+    menu_id: yup
+      .number()
+      .typeError(translate('common.required', { name: translate('pages.stores.storeMenu') }))
+      .required(translate('common.required', { name: translate('pages.stores.storeMenu') })),
+    dayFilters: yup.array().min(1, translate('common.atLeast', { number: 1 })),
+    start: yup
+      .date()
+      .required(translate('common.required', { name: translate('pages.menus.table.timeRange') })),
+    end: yup
+      .date()
+      .required(translate('common.required', { name: translate('pages.menus.table.timeRange') }))
+  });
+
 export default function StoreInMenuForm({
   onCancel,
-  onAddStoreApply,
+  onAddEvent,
   onUpdateEvent,
   onDelete,
   storeInMenu,
@@ -81,7 +98,8 @@ export default function StoreInMenuForm({
   const isCreating = !storeInMenu;
 
   const form = useForm({
-    defaultValues: getInitialValues(storeInMenu, range)
+    defaultValues: getInitialValues(storeInMenu, range),
+    resolver: yupResolver(schema(translate))
   });
 
   const onSubmit = async (values: any) => {
@@ -108,8 +126,8 @@ export default function StoreInMenuForm({
             values.allDay ? '24:00' : convertDateToStr(values.end, 'HH:mm')
           ]
         };
-        if (onAddStoreApply) {
-          await onAddStoreApply(_storeInMenuData);
+        if (onAddEvent) {
+          await onAddEvent(_storeInMenuData);
           enqueueSnackbar('Applied store to menu', { variant: 'success' });
         }
       }

@@ -15,7 +15,7 @@ export default function Dialog(theme: Theme) {
             borderRadius: 0
           },
           '&.MuiDialog-paper .MuiDialogActions-root': {
-            padding: theme.spacing(3)
+            padding: theme.spacing(2)
           },
           '@media (max-width: 600px)': {
             margin: theme.spacing(2)
@@ -34,15 +34,15 @@ export default function Dialog(theme: Theme) {
     MuiDialogTitle: {
       styleOverrides: {
         root: {
-          padding: theme.spacing(3, 3, 0)
+          padding: theme.spacing(2)
         }
       }
     },
     MuiDialogContent: {
       styleOverrides: {
         root: {
-          borderTop: 0,
-          borderBottom: 0,
+          // borderTop: 0,
+          // borderBottom: 0,
           padding: theme.spacing(3)
         }
       }

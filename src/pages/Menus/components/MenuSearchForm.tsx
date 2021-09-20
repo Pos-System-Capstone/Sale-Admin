@@ -41,10 +41,10 @@ const MenuSearchForm = ({ onChange }: MenuSearchFormProps) => {
     <FormProvider {...form}>
       <Stack direction="row" justifyContent="space-between" spacing={2}>
         <Grid container direction="row" spacing={2}>
-          <Grid item xs={12} md={3}>
+          <Grid item xs={12} sm={3}>
             <InputField name="menu-name" size="small" type="email" label="Tên thực đơn" />
           </Grid>
-          <Grid item xs={12} md={3}>
+          <Grid item xs={12} sm={3}>
             <SelectField
               options={[
                 ...daysInWeek.map((label, index) => ({

@@ -72,7 +72,7 @@ const MiddleForm: React.FC<Props> = ({ updateMode }) => {
 
       <Card id="variants">
         <Box textAlign="left">
-          <CardTitle variant="subtitle1">Biến thể</CardTitle>
+          <CardTitle variant="subtitle1">Mẫu mã</CardTitle>
           <Stack direction="column">
             <Stack direction="column" justifyContent="start" spacing={2}>
               <Divider />

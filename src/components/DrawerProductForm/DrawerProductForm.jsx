@@ -9,7 +9,7 @@ import { getAllProduct } from 'redux/product/api';
 import ResoTable from '../ResoTable/ResoTable';
 import LoadingAsyncButton from '../LoadingAsyncButton/LoadingAsyncButton';
 
-const DrawerProductForm = ({ trigger, children, onSubmit }) => {
+const DrawerProductForm = ({ trigger, onSubmit, disabledSelections = [] }) => {
   const [open, setOpen] = React.useState(false);
   const [filters, setFilters] = React.useState(null);
 
@@ -59,6 +59,7 @@ const DrawerProductForm = ({ trigger, children, onSubmit }) => {
                 checkboxSelection={{
                   type: 'checkbox'
                 }}
+                disabledSelections={disabledSelections}
                 showAction={false}
                 scroll={{ y: '100%' }}
                 rowKey="product_id"

@@ -15,7 +15,7 @@ import {
 } from '@material-ui/core';
 import Slide from '@material-ui/core/Slide';
 import React, { forwardRef, useMemo, useState } from 'react';
-import { Store } from 'types/store';
+import { TStore } from 'types/store';
 import { TransitionProps } from '@material-ui/core/transitions';
 import ArrowForward from '@material-ui/icons/ArrowForward';
 import CloseIcon from '@material-ui/icons/Close';
@@ -23,6 +23,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'redux/store';
 import { chunk } from 'lodash';
 import { useDebounceFn } from 'ahooks';
+import useAuth from 'hooks/useAuth';
 
 const Transition = forwardRef(
   (
@@ -36,7 +37,7 @@ const Transition = forwardRef(
 type Props = {
   open: boolean;
   onClose: () => void;
-  onSelectStore: (store: Store) => void;
+  onSelectStore: (store: TStore) => void;
 };
 
 const StoreNavigationDialog: React.FC<Props> = ({ open, onClose, onSelectStore }) => {
@@ -57,7 +58,7 @@ const StoreNavigationDialog: React.FC<Props> = ({ open, onClose, onSelectStore }
 
     if (!filterName) return groupStores;
 
-    groupStores.forEach((groupStore: Store[], index) => {
+    groupStores.forEach((groupStore: TStore[], index) => {
       groupStores[index] = groupStore.filter(({ name }) =>
         name.toLowerCase().includes(filterName.toLowerCase())
       );
@@ -101,18 +102,20 @@ const StoreNavigationDialog: React.FC<Props> = ({ open, onClose, onSelectStore }
       </Box>
       <DialogContent dividers>
         {filteredStores.map(
-          (groupStore: Store[], index) =>
+          (groupStore: TStore[], index) =>
             !!groupStore.length && (
               <Box key={`group${index}`} mb={2}>
                 <Typography variant="h6">Nhóm {index + 1}</Typography>
                 <Grid mt={1} container spacing={2} sx={{ width: '100%' }}>
-                  {groupStore.map((store: Store, index) => (
+                  {groupStore.map((store: TStore, index) => (
                     <Grid key={`item ${index}`} item xs={12} sm={6} md={4} lg={3}>
                       <Card>
                         <Stack direction="row" justifyContent="space-between" alignItems="center">
-                          <Box>
+                          <Box width="60%">
                             <Typography variant="caption">{store.store_code ?? '-'}</Typography>
-                            <Typography variant="subtitle1">{store.name}</Typography>
+                            <Typography variant="subtitle1" noWrap>
+                              {store.name}
+                            </Typography>
                           </Box>
                           <Fab
                             onClick={() => {

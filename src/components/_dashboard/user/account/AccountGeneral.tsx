@@ -45,16 +45,16 @@ export default function AccountGeneral() {
     enableReinitialize: true,
     initialValues: {
       displayName: user?.displayName || '',
-      email: user?.email,
-      photoURL: user?.photoURL,
-      phoneNumber: user?.phoneNumber,
-      country: user?.country,
-      address: user?.address,
-      state: user?.state,
-      city: user?.city,
-      zipCode: user?.zipCode,
-      about: user?.about,
-      isPublic: user?.isPublic
+      email: user?.email || '',
+      photoURL: user?.photoURL || '',
+      phoneNumber: user?.phoneNumber || '',
+      country: user?.country || '',
+      address: user?.address || '',
+      state: user?.state || '',
+      city: user?.city || '',
+      zipCode: user?.zipCode?.toString() || null,
+      about: user?.about || '',
+      isPublic: Boolean(user?.isPublic)
     },
 
     validationSchema: UpdateUserSchema,

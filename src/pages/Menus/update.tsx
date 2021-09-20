@@ -41,7 +41,7 @@ function TabPanel(props: any) {
 const UpdateMenuPage = () => {
   const { state } = useLocation();
   const { id } = useParams();
-  const [currentTab, setCurrentTab] = React.useState<TabType>(TabType.STORE_APPLY);
+  const [currentTab, setCurrentTab] = React.useState<TabType>(TabType.MENU_INFO);
   const { enqueueSnackbar } = useSnackbar();
 
   const form = useForm({

@@ -1,5 +1,3 @@
-import { PaginationRequest, Response } from './common';
-
 export interface Customer {
   id: number;
   firstName: string;
@@ -25,10 +23,9 @@ export interface Customer {
 export interface CustomerState {
   isLoading: boolean;
   error: boolean;
-  customers: Response<Customer>;
+  customers: Customer[];
   customer: Customer | null;
   sortBy: string | null;
-  filter: PaginationRequest;
 }
 export const customersListData: Customer[] = [
   {

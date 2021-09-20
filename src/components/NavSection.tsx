@@ -78,7 +78,7 @@ function NavItem({ item, isShow }: { item: NavItemProps; isShow?: boolean | unde
   const theme = useTheme();
   const { pathname } = useLocation();
   const { title, path, icon, info, children } = item;
-  const isActiveRoot = path ? !!matchPath({ path, end: false }, pathname) : false;
+  const isActiveRoot = path ? !!matchPath({ path, end: true }, pathname) : false;
   const { translate } = useLocales();
 
   const [open, setOpen] = useState(isActiveRoot);
@@ -205,13 +205,15 @@ interface NavSectionProps extends BoxProps {
 }
 
 export default function NavSection({ navConfig, isShow = true, ...other }: NavSectionProps) {
+  const { translate } = useLocales();
+
   return (
     <Box {...other}>
       {navConfig.map((list) => {
         const { subheader, items } = list;
         return (
           <List key={subheader} disablePadding>
-            {isShow && <ListSubheaderStyle>{subheader}</ListSubheaderStyle>}
+            {isShow && <ListSubheaderStyle>{translate(`menu.${subheader}`)}</ListSubheaderStyle>}
             {items.map((item: NavItemProps) => (
               <NavItem key={item.title} item={item} isShow={isShow} />
             ))}

@@ -1,17 +1,29 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable consistent-return */
-import React from 'react';
-
+import editIcon from '@iconify/icons-eva/edit-outline';
+import moreVerticalFill from '@iconify/icons-eva/more-vertical-fill';
+import trashIcon from '@iconify/icons-eva/trash-outline';
+import Icon from '@iconify/react';
 import {
+  Box,
+  Button,
   Checkbox,
   CircularProgress,
   Container,
+  Divider,
   IconButton,
+  LinearProgress,
+  List,
+  ListItem,
+  ListItemButton,
   ListItemIcon,
   ListItemText,
   Menu,
   MenuItem,
+  Popover,
+  Radio,
+  Stack,
   Table,
   TableBody,
   TableCell,
@@ -20,24 +32,21 @@ import {
   TablePagination,
   TableRow,
   TableSortLabel,
-  Typography,
-  Box,
-  useMediaQuery,
-  Stack,
-  Divider,
   Tooltip,
-  Radio
+  Typography,
+  useMediaQuery
 } from '@material-ui/core';
-import get from 'lodash/get';
-import { useAntdTable } from 'ahooks';
+import { Replay, SettingsOutlined } from '@material-ui/icons';
 import { makeStyles, withStyles } from '@material-ui/styles';
-import Icon from '@iconify/react';
-import moreVerticalFill from '@iconify/icons-eva/more-vertical-fill';
-import trashIcon from '@iconify/icons-eva/trash-outline';
-import editIcon from '@iconify/icons-eva/edit-outline';
+import { useAntdTable } from 'ahooks';
 import EmptyContent from 'components/EmptyContent';
-
-import { getCellValue } from './utils';
+import TableFilterForm from 'components/ResoTable/TableFilterForm';
+import useLocales from 'hooks/useLocales';
+import get from 'lodash/get';
+import { useSnackbar } from 'notistack5';
+import React, { useCallback } from 'react';
+import { FormProvider, useForm, useWatch } from 'react-hook-form';
+import { getCellValue, transformParamToHyphen } from './utils';
 
 const StickyLeftTableCell = withStyles((theme) => ({
   head: {
@@ -87,6 +96,8 @@ const useStyles = makeStyles((theme) => ({
   },
   stickyRight: {
     textAlign: 'right',
+    width: '60px',
+    position: 'sticky',
     right: (props) => props.right ?? '0'
     // borderLeft: `1px solid ${theme.palette.grey[400]}`
   },
@@ -97,27 +108,72 @@ const ResoTable = (
   {
     columns = [],
     dataSource = null,
-    pagination = false,
+    pagination = true,
     filters = null,
     onEdit = null,
     onDelete = null,
-    getData = () => [],
     rowKey = 'id',
     checkboxSelection = false,
     onChangeSelection = () => null,
     scroll = null,
-    showAction = true
+    showAction = true,
+    disabledSelections = [],
+    ...props
   },
   ref = null
 ) => {
+  const { getData, defaultFilters = {} } = props || {};
   const classes = useStyles();
-  const [_paginaton, setPaginaton] = React.useState({
-    rowsPerPage: 10,
-    page: 1,
-    count: 1
+  const { enqueueSnackbar } = useSnackbar();
+  const { t } = useLocales();
+
+  const form = useForm({
+    defaultValues: defaultFilters
   });
+  const { control } = form;
+
+  const _filters = useWatch({
+    control
+  });
+
+  const {
+    tableProps,
+    search,
+    loading,
+    data,
+    pagination: { changeCurrent, changePageSize }
+  } = useAntdTable(
+    (params) => {
+      if (dataSource) return Promise.resolve(dataSource);
+      return getData({
+        ...transformParamToHyphen({ ...params.filters, ..._filters }),
+        page: params.current,
+        size: params.pageSize
+      });
+    },
+    {
+      defaultPageSize: 10,
+      defaultParams: [{ current: 1, pageSize: 10 }],
+      formatResult: (res) => ({
+        total: dataSource ? dataSource.length : res.data.metadata?.total,
+        list: dataSource ?? res.data?.data ?? [],
+        success: true
+      }),
+      onError: (error) =>
+        enqueueSnackbar(get(error, 'message', 'Some thing wrong'), {
+          variant: 'error'
+        }),
+      refreshDeps: [dataSource, _filters],
+      debounceInterval: 300,
+      defaultLoading: true
+    }
+  );
+  const { current, pageSize, total } = tableProps?.pagination ?? {};
+
+  const [_columns, setColumns] = React.useState(columns ?? []);
   const [_selectedIds, setSelectedIds] = React.useState(checkboxSelection?.selection ?? []);
   const [_anchorEl, setAnchorEl] = React.useState(null);
+  const [_settingColEl, setSettingColEl] = React.useState(null);
   const [_openMenu, setOpenMenu] = React.useState(null);
   const mdUp = useMediaQuery((theme) => theme.breakpoints.up('md'));
 
@@ -128,42 +184,9 @@ const ResoTable = (
     setAnchorEl(null);
   };
 
-  const { tableProps, search, loading, data } = useAntdTable(
-    (params) => {
-      if (dataSource) return Promise.resolve(dataSource);
-      return getData({
-        ...params.filters,
-        ...filters,
-        page: params.current,
-        size: params.pageSize
-      });
-    },
-    {
-      defaultPageSize: 10,
-      formatResult: (res) => {
-        console.log(`res`, res);
-        return {
-          total: dataSource ? dataSource.length : res.data.metadata?.total,
-          list: dataSource ?? res.data?.data ?? [],
-          success: true
-        };
-      },
-      onError: console.log,
-      refreshDeps: [dataSource, filters]
-    }
-  );
-  const { current, pageSize, total } = tableProps?.pagination ?? {};
-
   React.useImperativeHandle(ref, () => ({
     reload: () => search?.submit()
   }));
-
-  // for table pagination
-  React.useEffect(() => {
-    if (!current || !pageSize || !total) return;
-
-    setPaginaton({ rowsPerPage: pageSize, count: total, page: current });
-  }, [current, pageSize, total]);
 
   React.useEffect(() => {
     if (typeof onChangeSelection === 'function') {
@@ -173,6 +196,26 @@ const ResoTable = (
       onChangeSelection(_selectedIds, selectionData);
     }
   }, [_selectedIds, onChangeSelection, data?.list, rowKey]);
+
+  const handleEdit = useCallback(
+    (data) => {
+      if (typeof onEdit === 'function') {
+        onEdit(data);
+      }
+      closeEditMenu();
+    },
+    [onEdit]
+  );
+
+  const handleDelete = useCallback(
+    (data) => {
+      if (typeof onDelete === 'function') {
+        onDelete(data);
+      }
+      closeEditMenu();
+    },
+    [onDelete]
+  );
 
   const onSelectAllClick = React.useCallback(
     (e) => {
@@ -221,14 +264,14 @@ const ResoTable = (
   );
 
   const tableHeader = React.useMemo(() => {
-    const headers = [...columns];
+    const headers = [..._columns].filter(({ hideInTable }) => !hideInTable);
 
     const tableHeaders = [];
 
     if (checkboxSelection) {
       const checkAllCurrentData = data?.list?.every((item) => _selectedIds.includes(item[rowKey]));
       const checkIndeterminateCurrentData =
-        _selectedIds.filter((id) => data.list.some((d) => d[rowKey] === id)).length > 0 &&
+        _selectedIds.filter((id) => data?.list.some((d) => d[rowKey] === id)).length > 0 &&
         !checkAllCurrentData;
       tableHeaders.push(
         <StickyLeftTableCell className={classes.stickyLeft} padding="checkbox">
@@ -248,7 +291,7 @@ const ResoTable = (
       const CellComp = TableCell;
       tableHeaders.push(
         <CellComp
-          className={classes.root}
+          className={[classes.root, header.fixed === 'right' ? classes.stickyRight : ''].join(' ')}
           key={`header_${index}`}
           align={header.alignRight ? 'right' : 'left'}
           sx={{ left: checkboxSelection ? '64px' : 0 }}
@@ -277,14 +320,15 @@ const ResoTable = (
 
     return <TableRow>{tableHeaders}</TableRow>;
   }, [
-    columns,
+    _columns,
     checkboxSelection,
     showAction,
     data?.list,
+    _selectedIds,
     classes.stickyLeft,
     classes.root,
+    classes.stickyRight,
     classes.actionColumn,
-    _selectedIds,
     onSelectAllClick,
     rowKey
   ]);
@@ -292,8 +336,9 @@ const ResoTable = (
   const tableBodyContent = React.useMemo(() => {
     if (!data) return;
     const isSelected = (key) => _selectedIds.indexOf(key) !== -1;
+    const isDisabled = (key) => disabledSelections.findIndex((value) => value == key) !== -1;
 
-    const body = [...columns];
+    const body = [..._columns].filter(({ hideInTable }) => !hideInTable);
     const tableBodys = [];
     data?.list.forEach((data, idx) => {
       const bodyRow = body.map((column, index) => {
@@ -313,7 +358,10 @@ const ResoTable = (
 
         return (
           <CellComp
-            className={index === 0 ? classes.stickyLeft : classes.body}
+            className={[
+              index === 0 ? classes.stickyLeft : classes.body,
+              column.fixed === 'right' && classes.stickyRight
+            ].join(' ')}
             left={checkboxSelection ? '64px' : 0}
             key={`${column.title}-${data[rowKey]}`}
           >
@@ -324,32 +372,38 @@ const ResoTable = (
 
       if (checkboxSelection) {
         const isItemSelected = isSelected(data[rowKey]);
+        const disabled = isDisabled(data[rowKey]);
         bodyRow.unshift(
-          <StickyLeftTableCell className={classes.stickyLeft} padding="checkbox">
+          <TableCell className={classes.stickyLeft} padding="checkbox">
             {checkboxSelection?.type === 'checkbox' ? (
-              <Checkbox checked={isItemSelected} inputProps={{ 'aria-labelledby': data[rowKey] }} />
+              <Checkbox
+                disabled={disabled}
+                checked={isItemSelected}
+                inputProps={{ 'aria-labelledby': data[rowKey] }}
+              />
             ) : (
-              <Radio checked={isItemSelected} inputProps={{ 'aria-labelledby': data[rowKey] }} />
+              <Radio
+                disabled={disabled}
+                checked={isItemSelected}
+                inputProps={{ 'aria-labelledby': data[rowKey] }}
+              />
             )}
-          </StickyLeftTableCell>
+          </TableCell>
         );
       }
-
-      const handleEdit = () => onEdit && onEdit(data);
-      const handleDelete = () => onDelete && onDelete(data);
 
       if (showAction) {
         const ActionCell = mdUp ? (
           <StickyRightTableCell>
             <Stack direction="row" justifyContent="flex-end">
               <Tooltip title="Xóa">
-                <IconButton onClick={handleDelete} sx={{ color: 'red' }}>
+                <IconButton onClick={() => handleDelete(data)} sx={{ color: 'red' }}>
                   <Icon icon={trashIcon} />
                 </IconButton>
               </Tooltip>
               <Divider orientation="vertical" flexItem />
               <Tooltip title="Điều chỉnh">
-                <IconButton onClick={handleEdit}>
+                <IconButton onClick={() => handleEdit(data)}>
                   <Icon icon={editIcon} />
                 </IconButton>
               </Tooltip>
@@ -381,13 +435,13 @@ const ResoTable = (
               key={`menu-edit-${data[rowKey]}`}
               id={`menu-edit-${data[rowKey]}`}
             >
-              <MenuItem onClick={handleDelete} sx={{ color: 'red' }}>
+              <MenuItem onClick={() => handleDelete(data)} sx={{ color: 'red' }}>
                 <ListItemIcon>
                   <Icon icon={trashIcon} />
                 </ListItemIcon>
                 <ListItemText>Xóa</ListItemText>
               </MenuItem>
-              <MenuItem onClick={handleEdit}>
+              <MenuItem onClick={() => handleEdit(data)}>
                 <ListItemIcon>
                   <Icon icon={editIcon} />
                 </ListItemIcon>
@@ -412,70 +466,168 @@ const ResoTable = (
     return tableBodys;
   }, [
     data,
-    columns,
+    _columns,
     _selectedIds,
+    disabledSelections,
     checkboxSelection,
     showAction,
     classes.stickyLeft,
     classes.body,
+    classes.stickyRight,
     rowKey,
-    onEdit,
-    onDelete,
     mdUp,
     _anchorEl,
     _openMenu,
+    handleDelete,
+    handleEdit,
     handleClick
   ]);
 
-  return (
-    <Container style={{ padding: 0 }}>
-      <TableContainer sx={{ maxHeight: scroll?.y, maxWidth: scroll?.x }}>
-        <Table stickyHeader>
-          <TableHead>{tableHeader}</TableHead>
+  const settingColumns = () => {
+    const handleToggle = (col, idx) => {
+      const updateColumns = [..._columns];
+      updateColumns[idx].hideInTable = !updateColumns[idx].hideInTable;
+      setColumns(updateColumns);
+    };
 
-          <TableBody>
-            {loading ? (
-              <TableRow style={{ height: '150px' }}>
-                <CircularProgress
-                  style={{
-                    position: 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%,-50%)'
+    const showQuantity = _columns.reduce(
+      (acc, { hideInTable }) => (!hideInTable ? acc + 1 : acc),
+      0
+    );
+
+    const intermediate = showQuantity > 0 && showQuantity < _columns.length;
+
+    const onToggleAll = () => {
+      setColumns(
+        _columns.map((col) => ({ ...col, hideInTable: !(showQuantity < _columns.length) }))
+      );
+    };
+
+    return (
+      <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+        <ListItem disablePadding>
+          <ListItemButton role={undefined} onClick={onToggleAll} dense>
+            <ListItemIcon>
+              <Checkbox
+                edge="start"
+                indeterminate={intermediate}
+                checked={showQuantity === _columns.length}
+                tabIndex={-1}
+                disableRipple
+              />
+            </ListItemIcon>
+            <ListItemText
+              primaryTypographyProps={{
+                noWrap: true
+              }}
+              primary={t('resoTable.settingColumn')}
+            />
+          </ListItemButton>
+        </ListItem>
+        <Divider />
+        {_columns.map((col, idx) => {
+          const labelId = `checkbox-list-label-${col.dataIndex}`;
+
+          return (
+            <ListItem key={col.dataIndex}>
+              <ListItemButton role={undefined} onClick={() => handleToggle(col, idx)} dense>
+                <ListItemIcon>
+                  <Checkbox
+                    edge="start"
+                    checked={!col.hideInTable}
+                    tabIndex={-1}
+                    disableRipple
+                    inputProps={{ 'aria-labelledby': labelId }}
+                  />
+                </ListItemIcon>
+                <ListItemText
+                  primaryTypographyProps={{
+                    noWrap: true
                   }}
+                  id={labelId}
+                  primary={col.title}
                 />
-              </TableRow>
-            ) : (
-              tableBodyContent
-            )}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      {!loading && !data?.list?.length && (
-        <Box width="100%">
-          <EmptyContent
-            title="Trống"
-            sx={{
-              width: '100%'
-            }}
-          />
+              </ListItemButton>
+            </ListItem>
+          );
+        })}
+      </List>
+    );
+  };
+
+  return (
+    <FormProvider {...form}>
+      <Container style={{ padding: 0 }}>
+        <Box py={2}>
+          <TableFilterForm controls={columns} />
         </Box>
-      )}
-      {pagination && (
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={tableProps}
-          {..._paginaton}
-          onPageChange={(_, page) =>
-            tableProps.onChange({ ...tableProps.pagination, current: page })
-          }
-          onRowsPerPageChange={(e) =>
-            tableProps.onChange({ ...tableProps.pagination, pageSize: e.target.value })
-          }
-        />
-      )}
-    </Container>
+        <Box py={1}>
+          <Stack direction="row">
+            <Box ml="auto">
+              <Stack spacing={1} direction="row">
+                {form.formState.isDirty && (
+                  <Button onClick={() => form.reset({})} disableRipple>
+                    {t('resoTable.clearFilters')}
+                  </Button>
+                )}
+                <IconButton size="small" onClick={search?.submit}>
+                  {loading ? <CircularProgress style={{ width: 24, height: 24 }} /> : <Replay />}
+                </IconButton>
+                <IconButton size="small" onClick={(e) => setSettingColEl(e.currentTarget)}>
+                  <SettingsOutlined />
+                </IconButton>
+                <Popover
+                  open={Boolean(_settingColEl)}
+                  anchorEl={_settingColEl}
+                  onClose={() => setSettingColEl(null)}
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left'
+                  }}
+                >
+                  {settingColumns()}
+                </Popover>
+              </Stack>
+            </Box>
+          </Stack>
+        </Box>
+        <TableContainer sx={{ maxHeight: scroll?.y, maxWidth: scroll?.x }}>
+          <Table stickyHeader>
+            <TableHead>{tableHeader}</TableHead>
+
+            <TableBody>
+              {loading && (
+                <TableRow style={{ height: 1 }}>
+                  <TableCell colSpan={20} style={{ paddingBottom: '0px', paddingTop: '0px' }}>
+                    <LinearProgress color="primary" />
+                  </TableCell>
+                </TableRow>
+              )}
+              {tableBodyContent}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        {!loading && !data?.list?.length && (
+          <Box width="100%">
+            <EmptyContent
+              title="Trống"
+              sx={{
+                width: '100%'
+              }}
+            />
+          </Box>
+        )}
+        {pagination && (
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            {...{ rowsPerPage: pageSize, count: total, page: current - 1 }}
+            onPageChange={(_, page) => changeCurrent(page + 1)}
+            onRowsPerPageChange={(e) => changePageSize(e.target.value)}
+          />
+        )}
+      </Container>
+    </FormProvider>
   );
 };
 

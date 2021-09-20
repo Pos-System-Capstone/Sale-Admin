@@ -1,35 +1,57 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import plusFill from '@iconify/icons-eva/plus-fill';
 import Icon from '@iconify/react';
-import { Box, Button, Card, Stack, Typography } from '@material-ui/core';
+import { Box, Button, Card, Chip, Stack, Typography } from '@material-ui/core';
+import { useRequest } from 'ahooks';
 import DeleteConfirmDialog from 'components/DelectConfirmDialog';
+import Label from 'components/Label';
 import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
 import Page from 'components/Page';
 import ResoTable from 'components/ResoTable/ResoTable';
+import { DAY_OF_WEEK } from 'constraints';
 import useLocales from 'hooks/useLocales';
 import { get } from 'lodash-es';
 import { useSnackbar } from 'notistack5';
-import { menuColumns } from 'pages/Menus';
-import MenuSearchForm from 'pages/Menus/components/MenuSearchForm';
 import { CardTitle } from 'pages/Products/components/Card';
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { addProductInMenus, getMenus, updateMenuInfo } from 'redux/menu/api';
+import { addProductInMenus, menuInStoreApi, updateMenuInfo } from 'redux/menu/api';
+import storeApi from 'redux/store/api';
 import { PATH_DASHBOARD } from 'routes/paths';
 import { convertDateToStr } from 'utils/utils';
 import ModalMenuForm from './components/AddMenuModal';
 import StoreForm from './components/StoreForm';
 import { storeSchemaBuilder } from './utils';
 
-const UpdateMenuPage = () => {
+const tranform = (input) => {
+  const output = [];
+
+  input.forEach((mInStore) => {
+    if (mInStore.menus && mInStore.menus.length !== 0) {
+      output.push(
+        ...mInStore.menus.map((menu) => ({
+          menu_in_store_id: mInStore.id,
+          store: { id: mInStore.id, store_name: mInStore.name },
+          dayFilters: menu.day_filters,
+          time_range: menu.time_range,
+          menu_id: menu.menu_id,
+          menu_name: menu.menu_name
+        }))
+      );
+    }
+  });
+
+  return output;
+};
+
+const UpdateStorePage = () => {
   const { state } = useLocation();
   const { id } = useParams();
   const { translate } = useLocales();
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
 
-  const [filters, setFilters] = useState(null);
   const [currentDeleteItem, setCurrentDeleteItem] = useState(null);
 
   const form = useForm({
@@ -41,30 +63,23 @@ const UpdateMenuPage = () => {
     }
   });
 
-  const onUpdateMenu = (updateMenu) => {
-    updateMenu.time_from_to = [
-      convertDateToStr(updateMenu.from, 'HH:mm'),
-      convertDateToStr(updateMenu.to, 'HH:mm')
-    ];
+  const {
+    data: menuInStores,
+    mutate: setappliedStores,
+    run
+  } = useRequest(() => menuInStoreApi.get({ 'store-id': [id] }), {
+    formatResult: (res) => {
+      console.log(`tranform(res.data)`, tranform(res.data));
+      return tranform(res.data);
+    }
+    // debounceInterval: 500
+  });
 
-    return updateMenuInfo(+id, updateMenu)
+  const onUpdateStore = (storeData) =>
+    storeApi
+      .update(+id, storeData)
       .then(() =>
         enqueueSnackbar(`Cập nhật thành công`, {
-          variant: 'success'
-        })
-      )
-      .catch((err) => {
-        const errMsg = get(err.response, ['data', 'message'], `Có lỗi xảy ra. Vui lòng thử lại`);
-        enqueueSnackbar(errMsg, {
-          variant: 'error'
-        });
-      });
-  };
-
-  const addProductToMenu = (datas) =>
-    addProductInMenus(+id, datas)
-      .then(() =>
-        enqueueSnackbar(`Thêm thành công`, {
           variant: 'success'
         })
       )
@@ -117,7 +132,11 @@ const UpdateMenuPage = () => {
 
               <StoreForm />
               <Box textAlign="right" mt={2}>
-                <LoadingAsyncButton size="small" onClick={onUpdateMenu} variant="contained">
+                <LoadingAsyncButton
+                  size="small"
+                  onClick={form.handleSubmit(onUpdateStore)}
+                  variant="contained"
+                >
                   {translate('common.update')}
                 </LoadingAsyncButton>
               </Box>
@@ -126,29 +145,49 @@ const UpdateMenuPage = () => {
             <Card>
               <Box display="flex" justifyContent="space-between">
                 <CardTitle>{translate('pages.stores.storeMenu')}</CardTitle>
-                <ModalMenuForm
-                  selected={[]}
-                  onSubmit={console.log}
-                  trigger={
-                    <Button size="small" startIcon={<Icon icon={plusFill} />}>
-                      {translate('pages.stores.applyMenuStore')}
-                    </Button>
-                  }
-                />
               </Box>
               <Box flex={1}>
                 <Stack spacing={2}>
-                  <MenuSearchForm onChange={setFilters} />
-
                   <ResoTable
-                    getData={getMenus}
-                    rowKey="meunu_id"
-                    filters={filters}
+                    dataSource={menuInStores}
+                    rowKey="menu_id"
                     onDelete={setCurrentDeleteItem}
                     onEdit={(menu) =>
-                      navigate(`${PATH_DASHBOARD.menus.root}/${menu.meunu_id}`, { state: menu })
+                      navigate(`${PATH_DASHBOARD.menus.root}/${menu.menu_id}`, { state: menu })
                     }
-                    columns={menuColumns}
+                    columns={[
+                      {
+                        title: translate('pages.menus.table.dayFilter'),
+                        dataIndex: 'nenu_name'
+                      },
+                      {
+                        title: translate('pages.menus.table.timeRange'),
+                        dataIndex: 'time_range',
+                        render: (range) => (
+                          <>
+                            {translate('pages.menus.table.fromTime')}{' '}
+                            <Label color="success">{range[0]}</Label>{' '}
+                            {translate('pages.menus.table.toTime')}{' '}
+                            <Label color="success">{range[1]}</Label>
+                          </>
+                        )
+                      },
+                      {
+                        title: translate('pages.menus.table.dayFilter'),
+                        dataIndex: 'dayFilters',
+                        render: (dayFilters) => (
+                          <Stack direction="row" spacing={1}>
+                            {dayFilters?.map((day) => (
+                              <Chip
+                                size="small"
+                                key={`${day}`}
+                                label={DAY_OF_WEEK.find(({ value }) => value === day)?.label}
+                              />
+                            ))}
+                          </Stack>
+                        )
+                      }
+                    ]}
                   />
                 </Stack>
               </Box>
@@ -160,4 +199,4 @@ const UpdateMenuPage = () => {
   );
 };
 
-export default UpdateMenuPage;
+export default UpdateStorePage;

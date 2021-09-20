@@ -1,4 +1,6 @@
-export type Store = {
+import { Menu } from './menu';
+
+export type TStore = {
   id: number;
   name: string;
   short_name: string;
@@ -20,4 +22,12 @@ export type StoreInMenu = {
     id: number;
     store_name: string;
   };
+  allDay?: boolean;
+};
+
+export type MenuInStoreAdmin = {
+  id: number;
+  store_id?: any;
+  name: string;
+  menus: Menu[];
 };

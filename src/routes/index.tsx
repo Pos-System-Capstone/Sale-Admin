@@ -1,6 +1,9 @@
 import { Suspense, lazy } from 'react';
 import { Navigate, useRoutes, useLocation } from 'react-router-dom';
 // layouts
+import BlogPosts from 'pages/dashboard/BlogPosts';
+import BlogPost from 'pages/dashboard/BlogPost';
+import BlogNewPost from 'pages/dashboard/BlogNewPost';
 import MainLayout from '../layouts/main';
 import DashboardLayout from '../layouts/dashboard';
 import LogoOnlyLayout from '../layouts/LogoOnlyLayout';
@@ -104,11 +107,22 @@ export default function Router() {
           ]
         },
         {
+          path: 'categories',
+          children: [{ path: '/', element: <CategoryListPage /> }]
+        },
+        {
           path: 'menus',
           children: [
             { path: '/', element: <MenusPage /> },
-            { path: '/stores', element: <MenuInStorePage /> },
             { path: '/:id', element: <UpdateMenuPage /> }
+          ]
+        },
+        { path: '/menu-in-store', element: <MenuInStorePage /> },
+        {
+          path: 'customers',
+          children: [
+            { path: '/', element: <CustomerListPage /> },
+            { path: 'new', element: <ComingSoon /> }
           ]
         },
         {
@@ -121,30 +135,32 @@ export default function Router() {
             },
             { path: '/:id', element: <UpdateStorePage /> }
           ]
-        },
+        }
+      ]
+    },
+    // FOR STORE ADMIN
+    {
+      path: 'store-admin',
+      element: (
+        <AuthGuard>
+          <RoleBasedGuard accessibleRoles={['store-admin']}>
+            <DashboardLayout />
+          </RoleBasedGuard>
+        </AuthGuard>
+      ),
+      children: [
+        { path: '/', element: <Navigate to="/store-admin/orders" replace /> },
+        { path: 'app', element: <GeneralApp /> },
+
         {
-          path: 'e-commerce',
+          path: 'orders',
           children: [
-            { path: '/', element: <Navigate to="/dashboard/e-commerce/shop" replace /> },
-            { path: 'shop', element: <EcommerceShop /> },
-            { path: 'product/:name', element: <EcommerceProductDetails /> },
-            { path: 'list', element: <EcommerceProductList /> },
-            { path: 'product/new', element: <EcommerceProductCreate /> },
-            { path: 'product/:name/edit', element: <EcommerceProductCreate /> },
-            { path: 'checkout', element: <EcommerceCheckout /> },
-            { path: 'invoice', element: <EcommerceInvoice /> }
-          ]
-        },
-        {
-          path: 'user',
-          children: [
-            { path: '/', element: <Navigate to="/dashboard/user/profile" replace /> },
-            { path: 'profile', element: <UserProfile /> },
-            { path: 'cards', element: <UserCards /> },
-            { path: 'list', element: <UserList /> },
-            { path: 'new', element: <UserCreate /> },
-            { path: '/:name/edit', element: <UserCreate /> },
-            { path: 'account', element: <UserAccount /> }
+            { path: '/', element: <OrderListPage /> },
+            {
+              path: '/new',
+              element: <CreateStorePage />
+            },
+            { path: '/:id', element: <UpdateStorePage /> }
           ]
         },
         {
@@ -157,14 +173,12 @@ export default function Router() {
           ]
         },
         {
-          path: 'customers',
-          children: [
-            { path: '/', element: <CustomerListPage /> },
-            { path: 'new', element: <ComingSoon /> }
-          ]
+          path: 'menus',
+          element: <MenuStoreManagementPage />
         }
       ]
     },
+
     {
       path: '/',
       element: <Navigate to="/auth/login" replace />
@@ -195,26 +209,7 @@ const VerifyCode = Loadable(lazy(() => import('../pages/authentication/VerifyCod
 const GeneralApp = Loadable(lazy(() => import('../pages/dashboard/GeneralApp')));
 const GeneralEcommerce = Loadable(lazy(() => import('../pages/dashboard/GeneralEcommerce')));
 const GeneralAnalytics = Loadable(lazy(() => import('../pages/dashboard/GeneralAnalytics')));
-const EcommerceShop = Loadable(lazy(() => import('../pages/dashboard/EcommerceShop')));
-const EcommerceProductDetails = Loadable(
-  lazy(() => import('../pages/dashboard/EcommerceProductDetails'))
-);
-const EcommerceProductList = Loadable(
-  lazy(() => import('../pages/dashboard/EcommerceProductList'))
-);
-const EcommerceProductCreate = Loadable(
-  lazy(() => import('../pages/dashboard/EcommerceProductCreate'))
-);
-const EcommerceCheckout = Loadable(lazy(() => import('../pages/dashboard/EcommerceCheckout')));
-const EcommerceInvoice = Loadable(lazy(() => import('../pages/dashboard/EcommerceInvoice')));
-const BlogPosts = Loadable(lazy(() => import('../pages/dashboard/BlogPosts')));
-const BlogPost = Loadable(lazy(() => import('../pages/dashboard/BlogPost')));
-const BlogNewPost = Loadable(lazy(() => import('../pages/dashboard/BlogNewPost')));
-const UserProfile = Loadable(lazy(() => import('../pages/dashboard/UserProfile')));
-const UserCards = Loadable(lazy(() => import('../pages/dashboard/UserCards')));
-const UserList = Loadable(lazy(() => import('../pages/dashboard/UserList')));
-const UserAccount = Loadable(lazy(() => import('../pages/dashboard/UserAccount')));
-const UserCreate = Loadable(lazy(() => import('../pages/dashboard/UserCreate')));
+
 const ComingSoon = Loadable(lazy(() => import('../pages/ComingSoon')));
 
 const Page500 = Loadable(lazy(() => import('../pages/Page500')));
@@ -238,4 +233,13 @@ const CreateCollectionPage = Loadable(lazy(() => import('../pages/collections/cr
 const StoreListPage = Loadable(lazy(() => import('../pages/Stores')));
 const CreateStorePage = Loadable(lazy(() => import('../pages/Stores/create')));
 const UpdateStorePage = Loadable(lazy(() => import('../pages/Stores/update')));
-const CustomerListPage = Loadable(lazy(() => import('pages/Customer/CustomerList')));
+
+// Store-Order
+const OrderListPage = Loadable(lazy(() => import('../pages/Orders/OrderList')));
+const MenuStoreManagementPage = Loadable(lazy(() => import('../pages/Orders/MenuOfStore')));
+
+// Categories
+const CategoryListPage = Loadable(lazy(() => import('../pages/Categories')));
+
+// customers
+const CustomerListPage = Loadable(lazy(() => import('../pages/Customer/CustomerListPage')));

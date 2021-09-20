@@ -1,5 +1,5 @@
 import trash2Fill from '@iconify/icons-eva/trash-2-fill';
-import { Store, StoreInMenu } from 'types/store';
+import { TStore, StoreInMenu } from 'types/store';
 import { Icon } from '@iconify/react';
 import { useEffect } from 'react';
 import {
@@ -16,7 +16,7 @@ import {
 } from '@material-ui/core';
 import { MobileTimePicker } from '@material-ui/lab';
 import { useRequest } from 'ahooks';
-import { InputField, SelectField, SwitchField } from 'components/form';
+import { AutoCompleteField, InputField, SelectField, SwitchField } from 'components/form';
 import { DAY_OF_WEEK } from 'constraints';
 import useLocales from 'hooks/useLocales';
 import { get, union } from 'lodash';
@@ -31,6 +31,7 @@ import { RootState, useDispatch } from 'redux/store';
 import * as yup from 'yup';
 import { Menu } from 'types/menu';
 import { yupResolver } from '@hookform/resolvers/yup';
+import SelectTimeSlot from 'components/form/common/SelectTimeSlot';
 
 // ----------------------------------------------------------------------
 
@@ -73,19 +74,50 @@ type StoreInMenuFormProps = {
   onAddEvent?: (data: any) => void;
   onUpdateEvent?: (data: any) => void;
   onDelete?: (data: StoreInMenu) => void;
+  hideStoreField?: boolean;
+  hideMenuField?: boolean;
 };
 
-const schema = (translate: any) =>
-  yup.object({
-    menu_id: yup
-      .number()
-      .typeError(translate('common.required', { name: translate('pages.stores.storeMenu') }))
-      .required(translate('common.required', { name: translate('pages.stores.storeMenu') })),
+export default function StoreInMenuForm({
+  onCancel,
+  onAddEvent,
+  onUpdateEvent,
+  storeInMenu,
+  range,
+  onDelete,
+  hideStoreField,
+  hideMenuField
+}: StoreInMenuFormProps) {
+  const { enqueueSnackbar } = useSnackbar();
+  const dispatch = useDispatch();
+  const { translate } = useLocales();
+  const { stores } = useSelector((state: RootState) => state.admin);
+  const { data: menus } = useRequest<any>(getMenus, { formatResult: (res) => res.data.data });
+
+  const schema = yup.object({
+    menu_id: (() => {
+      let validation = yup.number();
+      if (!hideMenuField) {
+        validation = validation
+          .typeError(translate('common.required', { name: translate('pages.stores.storeMenu') }))
+          .required(translate('common.required', { name: translate('pages.stores.storeMenu') }));
+      }
+      return validation;
+    })(),
     store: yup.object({
-      id: yup
-        .number()
-        .typeError(translate('common.required', { name: translate('pages.stores.storeInfoTitle') }))
-        .required(translate('common.required', { name: translate('pages.stores.storeInfoTitle') }))
+      id: (() => {
+        let validation = yup.number();
+        if (!hideStoreField) {
+          validation = validation
+            .typeError(
+              translate('common.required', { name: translate('pages.stores.storeInfoTitle') })
+            )
+            .required(
+              translate('common.required', { name: translate('pages.stores.storeInfoTitle') })
+            );
+        }
+        return validation;
+      })()
     }),
     dayFilters: yup.array().min(1, translate('common.atLeast', { number: 1 })),
     start: yup
@@ -96,27 +128,13 @@ const schema = (translate: any) =>
       .required(translate('common.required', { name: translate('pages.menus.table.timeRange') }))
   });
 
-export default function StoreInMenuForm({
-  onCancel,
-  onAddEvent,
-  onUpdateEvent,
-  storeInMenu,
-  range,
-  onDelete
-}: StoreInMenuFormProps) {
-  const { enqueueSnackbar } = useSnackbar();
-  const dispatch = useDispatch();
-  const { translate } = useLocales();
-  const { stores } = useSelector((state: RootState) => state.admin);
-  const { data: menus } = useRequest<any>(getMenus, { formatResult: (res) => res.data.data });
-
   const isCreating = !storeInMenu;
 
   const form = useForm<StoreInMenuForm>({
     defaultValues: {
       ...getInitialValues(storeInMenu, range)
     },
-    resolver: yupResolver(schema(translate))
+    resolver: yupResolver(schema)
   });
 
   useEffect(() => () => console.log('Unmount'), []);
@@ -188,56 +206,59 @@ export default function StoreInMenuForm({
   return (
     <FormProvider {...form}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <DialogContent sx={{ pb: 0, mt: 2, overflowY: 'unset' }}>
+        <DialogContent sx={{ pb: 0, overflowY: 'unset' }}>
           <Box>
             <Stack spacing={2}>
               <Grid container spacing={2}>
                 <Grid item xs={6}>
-                  <SelectField
-                    required
-                    onChange={(e: any) => {
-                      const selectedMenu = menus.find(
-                        ({ meunu_id }: any) => meunu_id === e.target.value
-                      );
-                      setValue('menu_id', e.target.value);
-                      setValue(
-                        'menu_name',
-                        selectedMenu?.menu_name ?? `Thực đơn ${selectedMenu?.meunu_id}`
-                      );
-                    }}
-                    fullWidth
-                    name="menu_id"
-                    label="Chọn thực đơn"
-                    defaultValue=""
-                    size="small"
-                  >
-                    {menus?.map(({ menu_id, menu_name }: Menu) => (
-                      <MenuItem value={Number(menu_id)} key={`menu_select_${menu_id}`}>
-                        {menu_name ?? `Thực đơn ${menu_id}`}
-                      </MenuItem>
-                    ))}
-                  </SelectField>
+                  {!hideMenuField && (
+                    <SelectField
+                      required
+                      onChange={(e: any) => {
+                        const selectedMenu = menus.find(
+                          ({ menu_id }: any) => menu_id === e.target.value
+                        );
+                        setValue('menu_id', e.target.value);
+                        setValue(
+                          'menu_name',
+                          selectedMenu?.menu_name ?? `Thực đơn ${selectedMenu?.menu_id}`
+                        );
+                      }}
+                      fullWidth
+                      name="menu_id"
+                      label="Chọn thực đơn"
+                      defaultValue=""
+                      size="small"
+                    >
+                      {menus?.map(({ menu_id, menu_name }: Menu) => (
+                        <MenuItem value={Number(menu_id)} key={`menu_select_${menu_id}`}>
+                          {menu_name ?? `Thực đơn ${menu_id}`}
+                        </MenuItem>
+                      ))}
+                    </SelectField>
+                  )}
                 </Grid>
                 <Grid item xs={6}>
-                  <SelectField
-                    required
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      const selectStore: any = stores?.find(({ id }) => id === e.target.value);
-                      setValue('store.id', Number(e.target.value));
-                      setValue('store.store_name', selectStore?.name);
-                    }}
-                    fullWidth
-                    name="store.id"
-                    label="Chọn cửa hàng"
-                    defaultValue=""
-                    size="small"
-                  >
-                    {stores?.map(({ id, name }: any) => (
-                      <MenuItem value={Number(id)} key={`cate_select_${id}`}>
-                        {name}
-                      </MenuItem>
-                    ))}
-                  </SelectField>
+                  {!hideStoreField && (
+                    <SelectField
+                      required
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        const selectStore: any = stores?.find(({ id }) => id === e.target.value);
+                        setValue('store.id', Number(e.target.value));
+                        setValue('store.store_name', selectStore?.name);
+                      }}
+                      fullWidth
+                      name="store.id"
+                      label="Chọn cửa hàng"
+                      size="small"
+                    >
+                      {stores?.map(({ id, name }: any) => (
+                        <MenuItem value={Number(id)} key={`cate_select_${id}`}>
+                          {name}
+                        </MenuItem>
+                      ))}
+                    </SelectField>
+                  )}
                 </Grid>
               </Grid>
 
@@ -258,6 +279,7 @@ export default function StoreInMenuForm({
                       }) => (
                         <MobileTimePicker
                           label="Bắt đầu"
+                          minutesStep={30}
                           inputFormat="hh:mm a"
                           renderInput={(params) => (
                             <TextField size="small" required {...params} fullWidth />
@@ -280,6 +302,7 @@ export default function StoreInMenuForm({
                         <MobileTimePicker
                           label="Kết thúc"
                           inputFormat="hh:mm a"
+                          minutesStep={30}
                           renderInput={(params) => (
                             <TextField required size="small" {...params} fullWidth />
                           )}
@@ -289,6 +312,9 @@ export default function StoreInMenuForm({
                       )}
                     />
                   </Grid>
+                  {/* <Grid item xs={12}>
+                    <SelectTimeSlot multiple fullWidth name="time_slots" label="Time slot" />
+                  </Grid> */}
                 </Grid>
               </Box>
 

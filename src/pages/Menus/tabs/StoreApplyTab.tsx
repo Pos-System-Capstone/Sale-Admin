@@ -19,22 +19,22 @@ import {
   getStoreApplyMenus,
   updateStoreApplyMenus
 } from 'redux/menu/api';
-import { TStoreApplyMenu } from 'types/menu';
+import { StoreInMenu } from 'types/store';
 
 const StoreApplyTab = () => {
   const { id }: any = useParams();
   const { translate } = useLocales();
   const { enqueueSnackbar } = useSnackbar();
 
-  const { data: appliedStores, run }: { data: TStoreApplyMenu[] } & any = useRequest(
+  const { data: appliedStores, run }: { data: StoreInMenu[] } & any = useRequest(
     () => getStoreApplyMenus(Number(id)),
     {
       formatResult: (res: any) => res.data.data
     }
   );
   const [isOpenModal, setIsOpenModal] = useState(false);
-  const [updateStoreInMenu, setUpdateStoreInMenu] = useState<TStoreApplyMenu | null>(null);
-  const [deleteStoreInMenu, setDeleteStoreInMenu] = useState<TStoreApplyMenu | null>(null);
+  const [updateStoreInMenu, setUpdateStoreInMenu] = useState<StoreInMenu | null>(null);
+  const [deleteStoreInMenu, setDeleteStoreInMenu] = useState<StoreInMenu | null>(null);
 
   const handleSelect = (id: number) => {
     const sInMenuId = id;
@@ -56,10 +56,10 @@ const StoreApplyTab = () => {
 
   const handleAddStoreApply = (values: any) => addStoreApplyMenus(+id, values).then(run);
 
-  const handleUpdate = (values: TStoreApplyMenu) =>
+  const handleUpdate = (values: StoreInMenu) =>
     updateStoreApplyMenus(+id, values.store.id, values).then(run);
 
-  const handleDelete = (data: TStoreApplyMenu) =>
+  const handleDelete = (data: StoreInMenu) =>
     deleteStoreApplyMenus(+id, data?.store.id)
       .then(() => setDeleteStoreInMenu(null))
       .then(run)
@@ -102,7 +102,7 @@ const StoreApplyTab = () => {
               storeInMenu={updateStoreInMenu}
               onCancel={handleClose}
               onUpdateEvent={handleUpdate}
-              onAddStoreApply={handleAddStoreApply}
+              onAddEvent={handleAddStoreApply}
               onDelete={handleDelete}
             />
           </DialogAnimate>
@@ -120,7 +120,7 @@ const StoreApplyTab = () => {
               },
               {
                 title: translate('pages.menus.table.timeRange'),
-                render: (_: any, { time_range }: TStoreApplyMenu) => (
+                render: (_: any, { time_range }: StoreInMenu) => (
                   <>
                     {translate('pages.menus.table.fromTime')}{' '}
                     <Label color="success">{time_range[0]}</Label>{' '}
@@ -131,9 +131,9 @@ const StoreApplyTab = () => {
               },
               {
                 title: translate('pages.menus.table.dayFilter'),
-                render: (_: any, { day_filters, menu_in_store_id: menu_id }: TStoreApplyMenu) => (
+                render: (_: any, { dayFilters, menu_in_store_id: menu_id }: StoreInMenu) => (
                   <Stack direction="row" spacing={1}>
-                    {day_filters?.map((day) => (
+                    {dayFilters?.map((day) => (
                       <Chip
                         size="small"
                         key={`${menu_id}-${day}`}
@@ -145,7 +145,7 @@ const StoreApplyTab = () => {
               }
             ]}
             rowKey="menu_id"
-            onEdit={(data: TStoreApplyMenu) => {
+            onEdit={(data: StoreInMenu) => {
               handleSelect(data.menu_in_store_id!);
             }}
             onDelete={setDeleteStoreInMenu}

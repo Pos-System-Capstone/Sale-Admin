@@ -1,13 +1,23 @@
 {
   "menu": {
-    "product": { "root": "Products", "master": "Product Master", "collection": "Collections" },
+    "product": {
+      "root": "Products",
+      "master": "Product Master",
+      "collection": "Collections",
+      "categories": "Categories"
+    },
     "menu": { "root": "Menus", "list": "Menu List", "store-menu": "Menu in Store" },
     "store": "Stores",
     "customer": {
       "root": "Customer",
       "customerList": "Customer list",
       "addNewCustomer": "Add customer"
-    }
+    },
+    "order": "Orders",
+    "store-menu": "Menu",
+    "product-subheader": "Product",
+    "menu-subheader": "Menu",
+    "store-subheader": "Store"
   },
   "demo": {
     "title": "English",
@@ -29,7 +39,8 @@
       },
       "storeInfoTitle": "Store Information",
       "storeMenu": "Menus",
-      "applyMenuStore": "Add more menu"
+      "applyMenuStore": "Add more menu",
+      "editMenuStore": "Edit menu"
     },
     "menus": {
       "table": {
@@ -63,10 +74,24 @@
         "province": "Quận/Huyện",
         "tags": "Thẻ"
       }
+    },
+    "orders": {
+      "table": {
+        "invoice": "Invoice",
+        "quantity": "Quantity",
+        "finalAmount": "Final amount",
+        "paymentType": "Payment type",
+        "orderTime": "Order time",
+        "orderType": "Order Type",
+        "status": "Status",
+        "cashier": "Cashier",
+        "detail": "Detail"
+      }
     }
   },
   "common": {
     "required": "Please enter {{name}}",
+    "navigation": "Navigation",
     "create": "Create",
     "addMore": "Add",
     "delete": "Delete",
@@ -81,6 +106,18 @@
     "confirmDeleteTitle": "Confirm delete",
     "deleteSuccess": "Deleted successfully",
     "atLeast": "At least {{number}} value(s)",
-    "status": "Status"
+    "status": "Status",
+    "filter": "Filters",
+    "clearFilter": "CLear filters",
+    "fromTime": "From",
+    "toTime": "To",
+    "201": "Perform successfully",
+    "200": "Success",
+    "400": "Error",
+    "error": "There has an error. Please try again!"
+  },
+  "resoTable": {
+    "settingColumn": "Show/Hide column",
+    "clearFilters": "Clear filters"
   }
 }

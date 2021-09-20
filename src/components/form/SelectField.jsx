@@ -11,11 +11,12 @@ const SelectField = ({
   fullWidth = false,
   rules = null,
   disabled = false,
-  options = null,
+
   className = null,
   multiple = false,
   ...props
 }) => {
+  const { options = null } = props;
   const { control } = useFormContext();
 
   return (

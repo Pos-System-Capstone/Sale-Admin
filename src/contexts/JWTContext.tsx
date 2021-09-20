@@ -4,7 +4,7 @@ import axios from '../utils/axios';
 import { isValidToken, setSession } from '../utils/jwt';
 import { getUserInfo, setUserInfo } from '../utils/utils';
 // @types
-import { ActionMap, AuthState, AuthUser, JWTContextType } from '../@types/authentication';
+import { ActionMap, AuthState, AuthUser, JWTContextType, UserRole } from '../@types/authentication';
 
 // ----------------------------------------------------------------------
 
@@ -12,7 +12,8 @@ enum Types {
   Initial = 'INITIALIZE',
   Login = 'LOGIN',
   Logout = 'LOGOUT',
-  Register = 'REGISTER'
+  Register = 'REGISTER',
+  ChangeUser = 'CHANGE_USER'
 }
 
 type JWTAuthPayload = {
@@ -25,6 +26,9 @@ type JWTAuthPayload = {
   };
   [Types.Logout]: undefined;
   [Types.Register]: {
+    user: AuthUser;
+  };
+  [Types.ChangeUser]: {
     user: AuthUser;
   };
 };
@@ -46,6 +50,7 @@ const JWTReducer = (state: AuthState, action: JWTActions) => {
         user: action.payload.user
       };
     case 'LOGIN':
+      setUserInfo(action.payload.user);
       return {
         ...state,
         isAuthenticated: true,
@@ -65,6 +70,12 @@ const JWTReducer = (state: AuthState, action: JWTActions) => {
         user: action.payload.user
       };
 
+    case 'CHANGE_USER':
+      setUserInfo(action.payload.user);
+      return {
+        ...state,
+        user: action.payload.user
+      };
     default:
       return state;
   }
@@ -120,6 +131,21 @@ function AuthProvider({ children }: { children: ReactNode }) {
     initialize();
   }, []);
 
+  const changeUser = async (user: AuthUser) => {
+    // dispatch({ type: Types.Logout });
+    // setTimeout(() => {
+    //   const accessToken = window.localStorage.getItem('accessToken');
+    //   setSession(accessToken);
+    // }, 500);
+    setUserInfo(user);
+    dispatch({
+      type: Types.Login,
+      payload: {
+        user
+      }
+    });
+  };
+
   const login = async (user_name: string, password: string) => {
     const response = await axios.post('/admin/login', {
       user_name,
@@ -128,6 +154,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
     const { access_token: accessToken, apps } = response.data;
     const user = {
       name: 'Admin',
+      displayName: 'Admin',
       roles: apps?.find(({ name }: { name: string }) => name === 'sale').role
     };
     setSession(accessToken);
@@ -176,7 +203,8 @@ function AuthProvider({ children }: { children: ReactNode }) {
         logout,
         register,
         resetPassword,
-        updateProfile
+        updateProfile,
+        changeUser
       }}
     >
       {children}

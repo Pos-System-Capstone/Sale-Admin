@@ -10,7 +10,6 @@ import {
   CardContent,
   CardMedia,
   Chip,
-  CircularProgress,
   Grid,
   List,
   ListItemButton,
@@ -20,10 +19,10 @@ import {
   TextField,
   Typography
 } from '@material-ui/core';
-import { useDebounceFn, useRequest } from 'ahooks';
+import { useDebounceFn } from 'ahooks';
 import DeleteConfirmDialog from 'components/DelectConfirmDialog';
 import DrawerProductForm from 'components/DrawerProductForm/DrawerProductForm';
-import { InputField } from 'components/form';
+import Label from 'components/Label';
 import ResoTable from 'components/ResoTable/ResoTable';
 import useLocales from 'hooks/useLocales';
 import { get } from 'lodash-es';
@@ -37,78 +36,15 @@ import {
   getProductInMenus,
   updateProdInMenuInfo
 } from 'redux/menu/api';
-import { getAllProduct } from 'redux/product/api';
 import { formatCurrency } from 'utils/utils';
-import EditProductDialog from '../components/EditProductDialog';
+import ProductInMenuDialog from '../components/EditProductDialog';
 
-const ProductCard = ({ product, onEdit, onDelete }) => {
-  const random = Math.floor(Math.random() * 12) + 1;
-  return (
-    <Card sx={{ width: '100%', display: 'flex', flexDirection: 'column', position: 'relative' }}>
-      <CardMedia
-        sx={{ height: '151px', width: '100%', objectFit: 'cover' }}
-        image={`https://minimals.cc/static/mock-images/products/product_${
-          product.product_name.length % 12
-        }.jpg`}
-        title="Live from space album cover"
-      />
-      <CardContent sx={{ flex: '1 0 auto', px: 1, py: 2 }}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Typography variant="subtitle2" pr={2} noWrap>
-            {product.product_name}
-          </Typography>
-          <Typography component="span" variant="body1">
-            {formatCurrency(product.price1)}
-          </Typography>
-        </Box>
-      </CardContent>
-      <CardActions sx={{ justifyContent: 'flex-end', py: 2 }}>
-        <Button onClick={onDelete} size="small" color="error">
-          Xóa
-        </Button>
-        <Button onClick={onEdit} size="small" color="primary">
-          Điều chỉnh
-        </Button>
-      </CardActions>
-    </Card>
-  );
-};
-
-const createProduct = (name) => ({
-  product_name: name,
-  price1: 100000,
-  price2: 100000
-});
-
-const DEFAULT_DATA = [
-  createProduct('Pizza Hải sản'),
-  createProduct('Coca Cola'),
-  createProduct('Pizza Bánh xèo'),
-  createProduct('Pizza Hải sản'),
-  createProduct('Coca Cola'),
-  createProduct('Pizza Bánh xèo'),
-  createProduct('Pizza Hải sản'),
-  createProduct('Coca Cola'),
-  createProduct('Pizza Bánh xèo'),
-  createProduct('Pizza Hải sản'),
-  createProduct('Coca Cola'),
-  createProduct('Pizza Bánh xèo')
-];
-
-function a11yProps(index) {
-  return {
-    id: `vertical-tab-${index}`,
-    'aria-controls': `vertical-tabpanel-${index}`
-  };
-}
-
-// eslint-disable-next-line react/prop-types
 const ProductInMenuTab = ({ id }) => {
   const [currentCate, setCurrentCate] = React.useState(null);
   const [filters, setFilters] = React.useState(null);
   const ref = React.useRef();
 
-  const run = ref.current?.reload();
+  const run = ref.current?.reload;
 
   const { enqueueSnackbar } = useSnackbar();
   const { translate } = useLocales();
@@ -117,6 +53,7 @@ const ProductInMenuTab = ({ id }) => {
 
   const [currentDeleteItem, setCurrentDeleteItem] = React.useState(null);
   const [currentProduct, setCurrentProduct] = React.useState(null);
+  const [isAddProduct, setIsAddProduct] = React.useState(false);
 
   const { run: changeProductNameFilter } = useDebounceFn(
     (value) => {
@@ -131,17 +68,18 @@ const ProductInMenuTab = ({ id }) => {
     setFilters((prev) => ({ ...prev, 'cat-id': currentCate }));
   }, [currentCate]);
 
-  const handleChangeCurrentCate = (event, newValue) => {
-    setCurrentCate(newValue);
-  };
-
-  const addProductToMenu = (datas) =>
+  const addProductToMenuHandler = (datas) =>
     addProductInMenus(+id, datas)
       .then(() =>
         enqueueSnackbar(`Thêm thành công`, {
           variant: 'success'
         })
       )
+      .then(() => {
+        setIsAddProduct(false);
+        setCurrentProduct(null);
+      })
+      .then(run)
       .catch((err) => {
         const errMsg = get(err.response, ['data', 'message'], `Có lỗi xảy ra. Vui lòng thử lại`);
         enqueueSnackbar(errMsg, {
@@ -150,7 +88,7 @@ const ProductInMenuTab = ({ id }) => {
       });
 
   const updateProdInMenu = (values) =>
-    updateProdInMenuInfo(id, values)
+    updateProdInMenuInfo(id, currentProduct.product_id, values)
       .then(() =>
         enqueueSnackbar(`Cập nhật thành công`, {
           variant: 'success'
@@ -166,7 +104,7 @@ const ProductInMenuTab = ({ id }) => {
       });
 
   const onDelete = () =>
-    deleteProductInMenu(id, [currentDeleteItem.product_id])
+    deleteProductInMenu(id, currentDeleteItem.product_id)
       .then((res) => {
         enqueueSnackbar(`Xóa thành công `, {
           variant: 'success'
@@ -182,16 +120,17 @@ const ProductInMenuTab = ({ id }) => {
 
   return (
     <Box flex={1}>
-      <EditProductDialog
+      <ProductInMenuDialog
+        updateMode={!isAddProduct}
         open={currentProduct}
         onClose={() => setCurrentProduct(null)}
         data={currentProduct}
-        onSubmit={updateProdInMenu}
+        onSubmit={isAddProduct ? addProductToMenuHandler : updateProdInMenu}
       />
       <DeleteConfirmDialog
         open={Boolean(currentDeleteItem)}
         onClose={() => setCurrentDeleteItem(false)}
-        onClick={onDelete}
+        onDelete={onDelete}
         title={
           <>
             {translate('common.confirmDeleteTitle')}{' '}
@@ -204,7 +143,10 @@ const ProductInMenuTab = ({ id }) => {
         <Box display="flex" justifyContent="space-between">
           <CardTitle>Danh sách sản phẩm</CardTitle>
           <DrawerProductForm
-            onSubmit={(ids, data) => addProductToMenu(data)}
+            onSubmit={(ids, data) => {
+              setIsAddProduct(true);
+              setCurrentProduct(data[0]);
+            }}
             trigger={
               <Button size="small" startIcon={<Icon icon={plusFill} />}>
                 Thêm sản phẩm
@@ -297,6 +239,15 @@ const ProductInMenuTab = ({ id }) => {
                     title: 'Danh mục',
                     dataIndex: 'cate_name',
                     render: (cate) => <Chip label={cate} />
+                  },
+                  {
+                    title: 'Cố định giá',
+                    dataIndex: 'is_fixed_price',
+                    render: (isFixed) => (
+                      <Label color={isFixed ? 'success' : 'default'}>
+                        {isFixed ? 'Cố định' : 'Không'}
+                      </Label>
+                    )
                   }
                 ]}
               />
