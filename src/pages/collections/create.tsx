@@ -8,7 +8,7 @@ import {
   Slider,
   Stack,
   Typography
-} from '@material-ui/core';
+} from '@mui/material';
 import { InputField, SelectField, UploadImageField } from 'components/form';
 import * as yup from 'yup';
 import { CardTitle } from 'pages/Products/components/Card';
@@ -24,7 +24,7 @@ import useDashboard from 'hooks/useDashboard';
 import { get, unionBy } from 'lodash';
 
 import Page from 'components/Page';
-import Icon from '@iconify/react';
+import { Icon } from '@iconify/react';
 import searchIcon from '@iconify/icons-eva/search-outline';
 import EmptyContent from 'components/EmptyContent';
 import ModalProductForm from 'components/ModalProductForm/ModalProductForm';
@@ -32,7 +32,7 @@ import { TCollection } from 'types/collection';
 import { useSelector } from 'react-redux';
 import { RootState } from 'redux/store';
 import { createCollection } from 'redux/collections/api';
-import { useSnackbar } from 'notistack5';
+import { useSnackbar } from 'notistack';
 
 import AddProductTable from './AddProductTable';
 

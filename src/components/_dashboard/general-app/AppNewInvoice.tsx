@@ -3,7 +3,7 @@ import { Icon } from '@iconify/react';
 import { sentenceCase } from 'change-case';
 import { Link as RouterLink } from 'react-router-dom';
 // material
-import { useTheme } from '@material-ui/core/styles';
+import { useTheme } from '@mui/material/styles';
 import arrowIosForwardFill from '@iconify/icons-eva/arrow-ios-forward-fill';
 import {
   Box,
@@ -17,7 +17,7 @@ import {
   TableHead,
   CardHeader,
   TableContainer
-} from '@material-ui/core';
+} from '@mui/material';
 // utils
 import { fCurrency } from '../../../utils/formatNumber';
 //

@@ -1,6 +1,6 @@
 import closeFill from '@iconify/icons-eva/close-fill';
-import Icon from '@iconify/react';
-import { Box, Button, Dialog, IconButton, Paper, Stack, Typography } from '@material-ui/core';
+import { Icon } from '@iconify/react';
+import { Box, Button, Dialog, IconButton, Paper, Stack, Typography } from '@mui/material';
 import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
 import ResoTable from 'components/ResoTable/ResoTable';
 import useLocales from 'hooks/useLocales';
@@ -48,7 +48,7 @@ const ModalMenuForm = ({ trigger, onSubmit, selected = [] }) => {
               textAlign="right"
             >
               <Typography variant="h6">{translate('pages.stores.applyMenuStore')}</Typography>
-              <IconButton aria-label="close" onClick={() => setOpen(false)}>
+              <IconButton aria-label="close" onClick={() => setOpen(false)} size="large">
                 <Icon icon={closeFill} />
               </IconButton>
             </Box>

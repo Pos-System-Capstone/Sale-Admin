@@ -11,7 +11,6 @@ import calendarReducer from './slices/calendar';
 import kanbanReducer from './slices/kanban';
 import global from './global';
 import admin from './admin';
-
 // ----------------------------------------------------------------------
 
 const rootPersistConfig = {
@@ -27,6 +26,12 @@ const productPersistConfig = {
   keyPrefix: 'redux-',
   whitelist: ['sortBy', 'checkout']
 };
+// const customerPersistConfig = {
+//   key: 'customer',
+//   storage,
+//   keyPrefix: 'redux-',
+//   whitelist: ['sortBy', 'checkout']
+// };
 
 const rootReducer = combineReducers({
   admin,

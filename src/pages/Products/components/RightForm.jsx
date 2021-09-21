@@ -13,12 +13,12 @@ import {
   MenuItem,
   Chip,
   ListItemText
-} from '@material-ui/core';
-import Icon from '@iconify/react';
+} from '@mui/material';
+import { Icon } from '@iconify/react';
 import { useSelector } from 'react-redux';
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles } from '@mui/styles';
 import { useFormContext, useWatch } from 'react-hook-form';
-import { LoadingButton } from '@material-ui/lab';
+import { LoadingButton } from '@mui/lab';
 
 import moreVerticalFill from '@iconify/icons-eva/more-vertical-fill';
 import { CardTitle, StickyCard, Card } from './Card';
@@ -74,6 +74,7 @@ const RightForm = () => {
               aria-label="more"
               aria-controls="long-menu"
               aria-haspopup="true"
+              size="large"
             >
               <Icon icon={moreVerticalFill} />
             </IconButton>

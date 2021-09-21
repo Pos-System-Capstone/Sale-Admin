@@ -1,4 +1,4 @@
-import { Box, Grid, MenuItem, Slider, Typography } from '@material-ui/core';
+import { Box, Grid, MenuItem, Slider, Typography } from '@mui/material';
 import React from 'react';
 import { Controller } from 'react-hook-form';
 import { useSelector } from 'react-redux';

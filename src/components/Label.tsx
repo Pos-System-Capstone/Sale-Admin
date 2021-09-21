@@ -1,6 +1,6 @@
 // material
-import { alpha, Theme, useTheme, styled } from '@material-ui/core/styles';
-import { BoxProps } from '@material-ui/core';
+import { alpha, Theme, useTheme, styled } from '@mui/material/styles';
+import { BoxProps } from '@mui/material';
 // @types
 import { ColorSchema } from '../@types/theme';
 
@@ -13,16 +13,16 @@ type LabelVariant = 'filled' | 'outlined' | 'ghost';
 const RootStyle = styled('span')(
   ({
     theme,
-    styleProps
+    ownerState
   }: {
     theme: Theme;
-    styleProps: {
+    ownerState: {
       color: LabelColor;
       variant: LabelVariant;
     };
   }) => {
     const isLight = theme.palette.mode === 'light';
-    const { color, variant } = styleProps;
+    const { color, variant } = ownerState;
 
     const styleFilled = (color: ColorSchema) => ({
       color: theme.palette[color].contrastText,
@@ -89,7 +89,7 @@ export default function Label({ color = 'default', variant = 'ghost', children, 
   const theme = useTheme();
 
   return (
-    <RootStyle styleProps={{ color, variant }} sx={sx} theme={theme}>
+    <RootStyle ownerState={{ color, variant }} sx={sx} theme={theme}>
       {children}
     </RootStyle>
   );

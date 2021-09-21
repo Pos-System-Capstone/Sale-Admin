@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react';
 import checkmarkCircle2Fill from '@iconify/icons-eva/checkmark-circle-2-fill';
 // material
-import { styled } from '@material-ui/core/styles';
+import { styled } from '@mui/material/styles';
 import {
   Box,
   Card,
@@ -12,7 +12,7 @@ import {
   CardHeader,
   CardContent,
   FormControlLabel
-} from '@material-ui/core';
+} from '@mui/material';
 // @types
 import { DeliveryOption, PaymentFormikProps } from '../../../../@types/products';
 

@@ -3,8 +3,8 @@ import { Icon } from '@iconify/react';
 import { useState } from 'react';
 import moreVerticalFill from '@iconify/icons-eva/more-vertical-fill';
 // material
-import { alpha, styled } from '@material-ui/core/styles';
-import { Box, Grid, Card, IconButton, Typography, CardContent } from '@material-ui/core';
+import { alpha, styled } from '@mui/material/styles';
+import { Box, Grid, Card, IconButton, Typography, CardContent } from '@mui/material';
 // utils
 import { fDate } from '../../../../utils/formatTime';
 import LightboxModal from '../../../LightboxModal';
@@ -59,7 +59,7 @@ function GalleryItem({ image, onOpenLightbox }: GalleryItemProps) {
             {fDate(postAt)}
           </Typography>
         </div>
-        <IconButton color="inherit">
+        <IconButton color="inherit" size="large">
           <Icon icon={moreVerticalFill} width={20} height={20} />
         </IconButton>
       </CaptionStyle>

@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
-import { TextField } from '@material-ui/core';
-import { TimePicker } from '@material-ui/lab';
+import { TextField } from '@mui/material';
+import { TimePicker } from '@mui/lab';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 

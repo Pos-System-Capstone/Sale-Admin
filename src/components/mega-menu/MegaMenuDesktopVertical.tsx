@@ -3,8 +3,8 @@ import { Icon } from '@iconify/react';
 import { NavLink as RouterLink } from 'react-router-dom';
 import chevronRightFill from '@iconify/icons-eva/chevron-right-fill';
 // material
-import { alpha, Theme } from '@material-ui/core/styles';
-import { Box, Link, List, Paper, ListItem, Typography, Divider, Stack } from '@material-ui/core';
+import { alpha, Theme } from '@mui/material/styles';
+import { Box, Link, List, Paper, ListItem, Typography, Divider, Stack } from '@mui/material';
 // @types
 import { ParentItemProps, MegaMenuItemProps } from '../../@types/mega-menu';
 //

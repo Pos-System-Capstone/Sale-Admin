@@ -3,8 +3,8 @@ import { Icon } from '@iconify/react';
 import appleFilled from '@iconify/icons-ant-design/apple-filled';
 import windowsFilled from '@iconify/icons-ant-design/windows-filled';
 // material
-import { useTheme } from '@material-ui/core/styles';
-import { Box, Card, Rating, CardHeader, Typography, Stack } from '@material-ui/core';
+import { useTheme } from '@mui/material/styles';
+import { Box, Card, Rating, CardHeader, Typography, Stack } from '@mui/material';
 // utils
 import { fCurrency, fShortenNumber } from '../../../utils/formatNumber';
 //

@@ -1,6 +1,9 @@
 import { Suspense, lazy } from 'react';
 import { Navigate, useRoutes, useLocation } from 'react-router-dom';
 // layouts
+import BlogPosts from 'pages/dashboard/BlogPosts';
+import BlogPost from 'pages/dashboard/BlogPost';
+import BlogNewPost from 'pages/dashboard/BlogNewPost';
 import MainLayout from '../layouts/main';
 import DashboardLayout from '../layouts/dashboard';
 import LogoOnlyLayout from '../layouts/LogoOnlyLayout';
@@ -116,6 +119,13 @@ export default function Router() {
         },
         { path: '/menu-in-store', element: <MenuInStorePage /> },
         {
+          path: 'customers',
+          children: [
+            { path: '/', element: <CustomerListPage /> },
+            { path: 'new', element: <ComingSoon /> }
+          ]
+        },
+        {
           path: 'stores',
           children: [
             { path: '/', element: <StoreListPage /> },
@@ -151,6 +161,15 @@ export default function Router() {
               element: <CreateStorePage />
             },
             { path: '/:id', element: <UpdateStorePage /> }
+          ]
+        },
+        {
+          path: 'blog',
+          children: [
+            { path: '/', element: <Navigate to="/dashboard/blog/posts" replace /> },
+            { path: 'posts', element: <BlogPosts /> },
+            { path: 'post/:title', element: <BlogPost /> },
+            { path: 'new-post', element: <BlogNewPost /> }
           ]
         },
         {
@@ -221,3 +240,6 @@ const MenuStoreManagementPage = Loadable(lazy(() => import('../pages/Orders/Menu
 
 // Categories
 const CategoryListPage = Loadable(lazy(() => import('../pages/Categories')));
+
+// customers
+const CustomerListPage = Loadable(lazy(() => import('../pages/Customer/CustomerListPage')));

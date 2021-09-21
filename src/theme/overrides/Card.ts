@@ -1,4 +1,4 @@
-import { Theme } from '@material-ui/core/styles';
+import { Theme } from '@mui/material/styles';
 
 // ----------------------------------------------------------------------
 
@@ -7,6 +7,7 @@ export default function Card(theme: Theme) {
     MuiCard: {
       styleOverrides: {
         root: {
+          backgroundColor: 'red',
           boxShadow: theme.customShadows.z16,
           borderRadius: theme.shape.borderRadiusMd,
           position: 'relative',

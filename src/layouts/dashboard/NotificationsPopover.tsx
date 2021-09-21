@@ -21,7 +21,7 @@ import {
   ListSubheader,
   ListItemAvatar,
   ListItemButton
-} from '@material-ui/core';
+} from '@mui/material';
 // utils
 import { mockImgAvatar } from '../../utils/mockImages';
 // components

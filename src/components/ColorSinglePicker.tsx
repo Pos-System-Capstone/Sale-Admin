@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react';
 import checkmarkFill from '@iconify/icons-eva/checkmark-fill';
 // material
-import { Box, Radio, RadioGroup, BoxProps, RadioGroupProps } from '@material-ui/core';
+import { Box, Radio, RadioGroup, BoxProps, RadioGroupProps } from '@mui/material';
 
 // ----------------------------------------------------------------------
 

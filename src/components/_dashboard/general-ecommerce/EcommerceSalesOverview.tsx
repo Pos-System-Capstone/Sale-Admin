@@ -1,6 +1,6 @@
 import faker from 'faker';
 // material
-import { Card, CardHeader, Typography, Stack, LinearProgress } from '@material-ui/core';
+import { Card, CardHeader, Typography, Stack, LinearProgress } from '@mui/material';
 // utils
 import { fPercent, fCurrency } from '../../../utils/formatNumber';
 

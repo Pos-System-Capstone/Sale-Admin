@@ -1,82 +1,96 @@
 import { ApexOptions } from 'apexcharts';
 // material
-import { createStyles, makeStyles } from '@material-ui/styles';
-import { useTheme, Theme } from '@material-ui/core/styles';
-import typography from '../../theme/typography';
+import { alpha, useTheme } from '@mui/material/styles';
+import { GlobalStyles } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    '@global': {
-      // Tooltip
-      '.apexcharts-tooltip,.apexcharts-xaxistooltip': {
-        border: '0 !important',
-        boxShadow: `${theme.customShadows.z24} !important`,
-        color: `${theme.palette.text.primary} !important`,
-        borderRadius: `${theme.shape.borderRadiusSm}px !important`,
-        backgroundColor: `${theme.palette.background.default} !important`
-      },
-      '.apexcharts-tooltip-title': {
-        border: '0 !important',
-        fontWeight: theme.typography.fontWeightBold,
-        backgroundColor: `${theme.palette.grey[500_16]} !important`,
-        color: theme.palette.text[theme.palette.mode === 'light' ? 'secondary' : 'primary']
-      },
-      '.apexcharts-xaxistooltip-bottom': {
-        '&:before': {
-          borderBottomColor: 'transparent !important'
-        },
-        '&:after': {
-          borderBottomColor: `${theme.palette.background.paper} !important`
-        }
-      },
+export function BaseOptionChartStyle() {
+  const theme = useTheme();
 
-      // Legend
-      '.apexcharts-legend': {
-        padding: '0 !important'
-      },
-      '.apexcharts-legend-series': {
-        alignItems: 'center',
-        display: 'flex !important'
-      },
-      '.apexcharts-legend-marker': {
-        marginTop: '2px !important',
-        marginRight: '8px !important'
-      },
-      '.apexcharts-legend-text': {
-        lineHeight: '18px',
-        textTransform: 'capitalize'
-      }
-    }
-  })
-);
+  const background = {
+    backdropFilter: 'blur(6px)',
+    WebkitBackdropFilter: 'blur(6px)', // Fix on Mobile
+    backgroundColor: alpha(theme.palette.background.default, 0.72)
+  };
+
+  return (
+    <GlobalStyles
+      styles={{
+        '&.apexcharts-canvas': {
+          // Tooltip
+          '.apexcharts-xaxistooltip': {
+            ...background,
+            border: 0,
+            boxShadow: theme.customShadows.z24,
+            color: theme.palette.text.primary,
+            borderRadius: theme.shape.borderRadiusSm,
+            '&:before': { borderBottomColor: 'transparent' },
+            '&:after': { borderBottomColor: alpha(theme.palette.background.default, 0.72) }
+          },
+          '.apexcharts-tooltip.apexcharts-theme-light': {
+            ...background,
+            border: 0,
+            boxShadow: theme.customShadows.z24,
+            borderRadius: theme.shape.borderRadiusSm,
+            '& .apexcharts-tooltip-title': {
+              border: 0,
+              textAlign: 'center',
+              fontWeight: theme.typography.fontWeightBold,
+              backgroundColor: theme.palette.grey[500_16],
+              color: theme.palette.text[theme.palette.mode === 'light' ? 'secondary' : 'primary']
+            }
+          },
+          // Legend
+          '.apexcharts-legend': {
+            padding: 0
+          },
+          '.apexcharts-legend-series': {
+            display: 'flex !important',
+            alignItems: 'center'
+          },
+          '.apexcharts-legend-marker': {
+            marginRight: 8
+          },
+          '.apexcharts-legend-text': {
+            lineHeight: '18px',
+            textTransform: 'capitalize'
+          }
+        }
+      }}
+    />
+  );
+}
 
 export default function BaseOptionChart(): ApexOptions {
-  useStyles();
   const theme = useTheme();
 
   const LABEL_TOTAL = {
     show: true,
     label: 'Total',
     color: theme.palette.text.secondary,
-    ...typography.subtitle2
+    fontSize: theme.typography.subtitle2.fontSize as string,
+    fontWeight: theme.typography.subtitle2.fontWeight,
+    lineHeight: theme.typography.subtitle2.lineHeight
   };
 
   const LABEL_VALUE = {
     offsetY: 8,
     color: theme.palette.text.primary,
-    ...typography.h3
+    fontSize: theme.typography.h3.fontSize as string,
+    fontWeight: theme.typography.h3.fontWeight,
+    lineHeight: theme.typography.h3.lineHeight
   };
 
   return {
     // Colors
     colors: [
       theme.palette.primary.main,
-      theme.palette.warning.main,
-      theme.palette.info.main,
-      theme.palette.error.main,
-      theme.palette.success.main
+      theme.palette.chart.yellow[0],
+      theme.palette.chart.blue[0],
+      theme.palette.chart.violet[0],
+      theme.palette.chart.green[0],
+      theme.palette.chart.red[0]
     ],
 
     // Chart
@@ -154,10 +168,13 @@ export default function BaseOptionChart(): ApexOptions {
     // Legend
     legend: {
       show: true,
-      fontSize: '13',
+      fontSize: String(13),
       position: 'top',
       horizontalAlign: 'right',
-      markers: { radius: 12 },
+      markers: {
+        radius: 12
+      },
+      fontWeight: 500,
       itemMargin: { horizontal: 12 },
       labels: {
         colors: theme.palette.text.primary
@@ -166,6 +183,11 @@ export default function BaseOptionChart(): ApexOptions {
 
     // plotOptions
     plotOptions: {
+      // Bar
+      bar: {
+        columnWidth: '28%',
+        borderRadius: 4
+      },
       // Pie + Donut
       pie: {
         donut: {
@@ -190,12 +212,38 @@ export default function BaseOptionChart(): ApexOptions {
       // Radar
       radar: {
         polygons: {
-          strokeWidth: '1',
           fill: { colors: ['transparent'] },
           strokeColors: theme.palette.divider,
           connectorColors: theme.palette.divider
         }
+      },
+      // polarArea
+      polarArea: {
+        rings: {
+          strokeColor: theme.palette.divider
+        },
+        spokes: {
+          connectorColors: theme.palette.divider
+        }
       }
-    }
+    },
+
+    // Responsive
+    responsive: [
+      {
+        // sm
+        breakpoint: theme.breakpoints.values.sm,
+        options: {
+          plotOptions: { bar: { columnWidth: '40%' } }
+        }
+      },
+      {
+        // md
+        breakpoint: theme.breakpoints.values.md,
+        options: {
+          plotOptions: { bar: { columnWidth: '32%' } }
+        }
+      }
+    ]
   };
 }

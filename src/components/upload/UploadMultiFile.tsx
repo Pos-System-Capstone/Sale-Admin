@@ -5,7 +5,7 @@ import fileFill from '@iconify/icons-eva/file-fill';
 import closeFill from '@iconify/icons-eva/close-fill';
 import { motion, AnimatePresence } from 'framer-motion';
 // material
-import { alpha, Theme, styled } from '@material-ui/core/styles';
+import { alpha, Theme, styled } from '@mui/material/styles';
 import {
   Box,
   List,
@@ -17,8 +17,8 @@ import {
   ListItemIcon,
   ListItemText,
   ListItemSecondaryAction
-} from '@material-ui/core';
-import { SxProps } from '@material-ui/system';
+} from '@mui/material';
+import { SxProps } from '@mui/system';
 
 // utils
 import { fData } from '../../utils/formatNumber';

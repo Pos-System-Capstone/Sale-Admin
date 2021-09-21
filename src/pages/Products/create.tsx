@@ -1,12 +1,12 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-plusplus */
 /* eslint-disable react/prop-types */
-import { Box, Button, Stack, Typography, useTheme } from '@material-ui/core';
+import { Box, Button, Stack, Typography, useTheme } from '@mui/material';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { useSnackbar } from 'notistack5';
+import { useSnackbar } from 'notistack';
 import { getCbn } from 'utils/utils';
 import { ProductTypeEnum } from 'types/product';
 

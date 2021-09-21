@@ -1,27 +1,36 @@
 // material
-import { Theme, useTheme, styled } from '@material-ui/core/styles';
-import { BoxProps } from '@material-ui/core';
+import { Theme, useTheme, styled } from '@mui/material/styles';
+import { BoxProps } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
-type BadgeStatusEnum = 'away' | 'busy' | 'unread' | 'online' | 'offline' | 'invisible' | string;
+export type BadgeStatusEnum =
+  | 'away'
+  | 'busy'
+  | 'unread'
+  | 'online'
+  | 'offline'
+  | 'invisible'
+  | string;
 
-type BadgeSize = 'small' | 'medium';
+type BadgeSize = 'small' | 'medium' | 'large';
 
 const RootStyle = styled('span')(
   ({
     theme,
-    styleProps
+    ownerState
   }: {
     theme: Theme;
-    styleProps: {
+    ownerState: {
       size: BadgeSize;
       status: BadgeStatusEnum;
     };
   }) => {
-    const { status, size } = styleProps;
+    const { status, size } = ownerState;
 
     return {
+      width: 10,
+      height: 10,
       display: 'flex',
       borderRadius: '50%',
       alignItems: 'center',
@@ -32,13 +41,11 @@ const RootStyle = styled('span')(
         backgroundColor: theme.palette.common.white
       },
 
-      ...(size === 'small'
-        ? { height: theme.spacing(1), width: theme.spacing(1) }
-        : { height: theme.spacing(1.25), width: theme.spacing(1.25) }),
+      ...(size === 'small' && { width: 8, height: 8 }),
 
-      ...(status === 'offline' && {
-        backgroundColor: 'transparent'
-      }),
+      ...(size === 'large' && { width: 12, height: 12 }),
+
+      ...(status === 'offline' && { backgroundColor: 'transparent' }),
 
       ...(status === 'away' && {
         backgroundColor: theme.palette.warning.main,
@@ -89,5 +96,5 @@ interface BadgeStatusProps extends BoxProps {
 export default function BadgeStatus({ size = 'medium', status = 'offline', sx }: BadgeStatusProps) {
   const theme = useTheme();
 
-  return <RootStyle styleProps={{ status, size }} sx={sx} theme={theme} />;
+  return <RootStyle ownerState={{ status, size }} sx={sx} theme={theme} />;
 }

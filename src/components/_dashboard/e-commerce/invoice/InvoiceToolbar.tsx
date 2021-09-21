@@ -6,9 +6,9 @@ import shareFill from '@iconify/icons-eva/share-fill';
 import downloadFill from '@iconify/icons-eva/download-fill';
 import { PDFDownloadLink, PDFViewer } from '@react-pdf/renderer';
 // material
-import { styled } from '@material-ui/core/styles';
-import { Box, Tooltip, IconButton, DialogActions, Button } from '@material-ui/core';
-import { LoadingButton } from '@material-ui/lab';
+import { styled } from '@mui/material/styles';
+import { Box, Tooltip, IconButton, DialogActions, Button } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
 // @types
 import { Invoice } from '../../../../@types/products';
 //
@@ -86,7 +86,7 @@ export default function InvoiceToolbar({ invoice, ...other }: InvoiceToolbarProp
             }}
           >
             <Tooltip title="Close">
-              <IconButton color="inherit" onClick={handleClosePreview}>
+              <IconButton color="inherit" onClick={handleClosePreview} size="large">
                 <Icon icon={closeFill} />
               </IconButton>
             </Tooltip>

@@ -1,10 +1,10 @@
-import { useSnackbar } from 'notistack5';
+import { useSnackbar } from 'notistack';
 import { useFormik, Form, FormikProvider } from 'formik';
 // material
-import { Theme } from '@material-ui/core/styles';
-import { Card, Switch, Stack, Typography, FormControlLabel } from '@material-ui/core';
-import { SxProps } from '@material-ui/system';
-import { LoadingButton } from '@material-ui/lab';
+import { Theme } from '@mui/material/styles';
+import { Card, Switch, Stack, Typography, FormControlLabel } from '@mui/material';
+import { SxProps } from '@mui/system';
+import { LoadingButton } from '@mui/lab';
 // utils
 import fakeRequest from '../../../../utils/fakeRequest';
 // @types

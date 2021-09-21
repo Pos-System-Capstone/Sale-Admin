@@ -2,14 +2,13 @@
 /* eslint-disable no-plusplus */
 /* eslint-disable react/prop-types */
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Box, Button, Card, Container, Stack, Typography } from '@material-ui/core';
-import { useTheme } from '@material-ui/styles';
+import { Box, Button, Card, Container, Stack, Typography } from '@mui/material';
+import { useTheme } from '@mui/styles';
 import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
 import Page from 'components/Page';
 import useDashboard from 'hooks/useDashboard';
 import useLocales from 'hooks/useLocales';
-import { DashboardNavLayout } from 'layouts/dashboard/DashboardNavbar';
-import { useSnackbar } from 'notistack5';
+import { useSnackbar } from 'notistack';
 import { CardTitle } from 'pages/Products/components/Card';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';

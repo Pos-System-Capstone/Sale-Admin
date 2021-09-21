@@ -10,12 +10,12 @@ import {
   IconButton,
   styled,
   Typography
-} from '@material-ui/core';
+} from '@mui/material';
 import { useRequest } from 'ahooks';
 import useLocales from 'hooks/useLocales';
 import React from 'react';
 import { getOrderDetail } from 'redux/order/api';
-import Icon from '@iconify/react';
+import { Icon } from '@iconify/react';
 import closeFill from '@iconify/icons-eva/close-fill';
 import { fDate } from 'utils/formatTime';
 import Label from 'components/Label';
@@ -89,7 +89,7 @@ const OrderDetailDialog: React.FC<Props> = ({ open, onClose, orderId }) => {
     <Dialog maxWidth="lg" scroll="paper" open={open} onClose={onClose}>
       <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <Typography variant="h4">Chi tiết đơn hàng</Typography>
-        <IconButton aria-label="close" onClick={onClose}>
+        <IconButton aria-label="close" onClick={onClose} size="large">
           <Icon icon={closeFill} />
         </IconButton>
       </DialogTitle>

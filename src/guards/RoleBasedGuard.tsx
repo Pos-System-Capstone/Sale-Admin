@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { Container, Alert, AlertTitle, Button, Stack } from '@material-ui/core';
+import { Container, Alert, AlertTitle, Button, Stack } from '@mui/material';
 import useAuth from 'hooks/useAuth';
 import { useNavigate } from 'react-router';
 

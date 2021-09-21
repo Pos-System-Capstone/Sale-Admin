@@ -2,7 +2,7 @@ import { merge } from 'lodash';
 import ReactApexChart from 'react-apexcharts';
 
 // material
-import { useTheme } from '@material-ui/core/styles';
+import { useTheme } from '@mui/material/styles';
 // utils
 import { fNumber } from '../../utils/formatNumber';
 //

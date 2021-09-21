@@ -1,6 +1,6 @@
 import { useState } from 'react';
 // material
-import { Divider, Collapse } from '@material-ui/core';
+import { Divider, Collapse } from '@mui/material';
 //
 import ProductDetailsReviewForm from './ProductDetailsReviewForm';
 import ProductDetailsReviewList from './ProductDetailsReviewList';

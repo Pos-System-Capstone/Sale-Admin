@@ -1,4 +1,4 @@
-import { Box, Grid } from '@material-ui/core';
+import { Box, Grid } from '@mui/material';
 import { InputField } from 'components/form';
 import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
 import { Card, CardTitle } from '../../Products/components/Card';

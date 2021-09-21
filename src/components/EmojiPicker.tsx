@@ -4,8 +4,8 @@ import { Icon } from '@iconify/react';
 import { useState } from 'react';
 import smilingFaceFill from '@iconify/icons-eva/smiling-face-fill';
 // material
-import { alpha, useTheme, styled } from '@material-ui/core/styles';
-import { Box, IconButton, ClickAwayListener, BoxProps } from '@material-ui/core';
+import { alpha, useTheme, styled } from '@mui/material/styles';
+import { Box, IconButton, ClickAwayListener, BoxProps } from '@mui/material';
 // theme
 import typography from '../theme/typography';
 

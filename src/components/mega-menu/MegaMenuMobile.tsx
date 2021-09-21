@@ -19,7 +19,7 @@ import {
   ListItemText,
   ListItemIcon,
   ListItemButton
-} from '@material-ui/core';
+} from '@mui/material';
 // @types
 import { ParentItemProps, MegaMenuItemProps } from '../../@types/mega-menu';
 //
@@ -80,7 +80,7 @@ function SubMenu({ parent, pathname }: SubMenuProps) {
           PaperProps={{ sx: { width: DRAWER_WIDTH - 12 } }}
         >
           <Stack direction="row" alignItems="center" px={1} py={1.5}>
-            <IconButton onClick={handleClose}>
+            <IconButton onClick={handleClose} size="large">
               <Icon icon={arrowIosBackFill} width={20} height={20} />
             </IconButton>
             <Typography noWrap variant="subtitle1" sx={{ ml: 1, textTransform: 'capitalize' }}>

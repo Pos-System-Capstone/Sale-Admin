@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-expressions */
-import { Grid, MenuItem } from '@material-ui/core';
+import { Grid, MenuItem } from '@mui/material';
 import { useDebounceFn } from 'ahooks';
 import React from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';

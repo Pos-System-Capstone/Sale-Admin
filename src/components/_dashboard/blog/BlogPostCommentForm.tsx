@@ -1,10 +1,10 @@
 import * as Yup from 'yup';
 import { useFormik, Form, FormikProvider } from 'formik';
-import { useSnackbar } from 'notistack5';
+import { useSnackbar } from 'notistack';
 // material
-import { styled } from '@material-ui/core/styles';
-import { Box, Typography, TextField } from '@material-ui/core';
-import { LoadingButton } from '@material-ui/lab';
+import { styled } from '@mui/material/styles';
+import { Box, Typography, TextField } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
 // utils
 import fakeRequest from '../../../utils/fakeRequest';
 

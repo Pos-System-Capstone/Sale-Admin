@@ -2,8 +2,8 @@ import Slider from 'react-slick';
 import { findIndex } from 'lodash';
 import { useState, useRef, useEffect } from 'react';
 // material
-import { alpha, styled } from '@material-ui/core/styles';
-import { Box } from '@material-ui/core';
+import { alpha, styled } from '@mui/material/styles';
+import { Box } from '@mui/material';
 // @types
 import { Product } from '../../../../@types/products';
 //

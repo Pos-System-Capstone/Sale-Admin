@@ -1,5 +1,5 @@
-import { styled } from '@material-ui/core/styles';
-import { Typography, Box, BoxProps } from '@material-ui/core';
+import { styled } from '@mui/material/styles';
+import { Typography, Box, BoxProps } from '@mui/material';
 
 // ----------------------------------------------------------------------
 

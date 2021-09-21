@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { Icon } from '@iconify/react';
-import { useSnackbar } from 'notistack5';
+import { useSnackbar } from 'notistack';
 import copyFill from '@iconify/icons-eva/copy-fill';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 // material
-import { Tooltip, TextField, IconButton, InputAdornment } from '@material-ui/core';
+import { Tooltip, TextField, IconButton, InputAdornment } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
@@ -40,7 +40,7 @@ export default function CopyClipboard({ value, ...other }: CopyClipboardProps) {
           <InputAdornment position="end">
             <CopyToClipboard text={state.value} onCopy={onCopy}>
               <Tooltip title="Copy">
-                <IconButton>
+                <IconButton size="large">
                   <Icon icon={copyFill} width={24} height={24} />
                 </IconButton>
               </Tooltip>

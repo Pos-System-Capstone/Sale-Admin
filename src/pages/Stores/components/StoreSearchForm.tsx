@@ -1,4 +1,4 @@
-import { Box, Grid, Stack } from '@material-ui/core';
+import { Box, Grid, Stack } from '@mui/material';
 import { useDebounceFn } from 'ahooks';
 import { InputField, SelectField } from 'components/form';
 import useLocales from 'hooks/useLocales';

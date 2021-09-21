@@ -1,7 +1,7 @@
 import faker from 'faker';
 import { sentenceCase } from 'change-case';
 // material
-import { useTheme } from '@material-ui/core/styles';
+import { useTheme } from '@mui/material/styles';
 import {
   Box,
   Card,
@@ -14,7 +14,7 @@ import {
   CardHeader,
   Typography,
   TableContainer
-} from '@material-ui/core';
+} from '@mui/material';
 // utils
 import { fCurrency } from '../../../utils/formatNumber';
 //

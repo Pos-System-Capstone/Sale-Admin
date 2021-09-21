@@ -1,7 +1,7 @@
 import { ReactNode, createContext, useState, useEffect } from 'react';
 // material
-import { useMediaQuery } from '@material-ui/core';
-import { useTheme } from '@material-ui/core/styles';
+import { useMediaQuery } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 
 // ----------------------------------------------------------------------
 
@@ -30,7 +30,7 @@ type CollapseDrawerProviderProps = {
 
 function CollapseDrawerProvider({ children }: CollapseDrawerProviderProps) {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('lg'));
+  const isMobile = useMediaQuery(theme.breakpoints.down('xl'));
   const [collapse, setCollapse] = useState({
     click: true,
     hover: false

@@ -1,9 +1,7 @@
 // routes
 import { PATH_STORE_APP } from 'routes/storeAppPaths';
-import { PATH_DASHBOARD } from '../../routes/paths';
-// components
-import Label from '../../components/Label';
 import SvgIconStyle from '../../components/SvgIconStyle';
+import { PATH_DASHBOARD } from '../../routes/paths';
 
 // ----------------------------------------------------------------------
 
@@ -54,6 +52,21 @@ const sidebarConfig = [
           {
             title: 'categories',
             path: PATH_DASHBOARD.categories.list
+          }
+        ]
+      },
+      {
+        title: 'customer',
+        path: PATH_DASHBOARD.customers.root,
+        icon: ICONS.user,
+        children: [
+          {
+            title: 'customerList',
+            path: PATH_DASHBOARD.customers.list
+          },
+          {
+            title: 'addNewCustomer',
+            path: PATH_DASHBOARD.customers.new
           }
         ]
       }

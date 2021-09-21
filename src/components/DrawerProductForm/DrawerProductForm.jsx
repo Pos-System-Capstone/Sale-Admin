@@ -1,6 +1,6 @@
-import { Box, Button, Drawer, IconButton, Paper, Stack, Typography } from '@material-ui/core';
+import { Box, Button, Drawer, IconButton, Paper, Stack, Typography } from '@mui/material';
 import React from 'react';
-import Icon from '@iconify/react';
+import { Icon } from '@iconify/react';
 import closeFill from '@iconify/icons-eva/close-fill';
 import { Card } from 'pages/Products/components/Card';
 import SeachProductForm from 'pages/Products/SeachProductForm';
@@ -46,7 +46,7 @@ const DrawerProductForm = ({ trigger, onSubmit, disabledSelections = [] }) => {
               textAlign="right"
             >
               <Typography variant="h6">Thêm sản phẩm vào thực đơn</Typography>
-              <IconButton aria-label="close" onClick={() => setOpen(false)}>
+              <IconButton aria-label="close" onClick={() => setOpen(false)} size="large">
                 <Icon icon={closeFill} />
               </IconButton>
             </Box>

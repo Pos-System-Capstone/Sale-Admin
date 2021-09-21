@@ -1,4 +1,4 @@
-import { Box, Divider, Stack, Typography } from '@material-ui/core';
+import { Box, Divider, Stack, Typography } from '@mui/material';
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { InputField, RadioGroupField, UploadImageField } from '../../../components/form';

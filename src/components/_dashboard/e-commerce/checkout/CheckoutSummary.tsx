@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react';
 import editFill from '@iconify/icons-eva/edit-fill';
 // material
-import { styled } from '@material-ui/core/styles';
+import { styled } from '@mui/material/styles';
 import {
   Box,
   Card,
@@ -12,7 +12,7 @@ import {
   Typography,
   CardContent,
   InputAdornment
-} from '@material-ui/core';
+} from '@mui/material';
 // utils
 import { fCurrency } from '../../../../utils/formatNumber';
 

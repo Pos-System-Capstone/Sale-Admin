@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react';
 import { Link as RouterLink } from 'react-router-dom';
 import arrowIosForwardFill from '@iconify/icons-eva/arrow-ios-forward-fill';
 // material
-import { Stack, Link, Button, Typography } from '@material-ui/core';
+import { Stack, Link, Button, Typography } from '@mui/material';
 // utils
 import { fDate } from '../../../../utils/formatTime';
 import { fCurrency } from '../../../../utils/formatNumber';

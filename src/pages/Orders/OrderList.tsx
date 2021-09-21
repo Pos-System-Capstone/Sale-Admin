@@ -2,8 +2,8 @@
 import plusFill from '@iconify/icons-eva/plus-fill';
 import { Icon } from '@iconify/react';
 // material
-import { Button, Card, Container, IconButton, Stack, Tooltip, Typography } from '@material-ui/core';
-import { Visibility } from '@material-ui/icons';
+import { Button, Card, Container, IconButton, Stack, Tooltip, Typography } from '@mui/material';
+import { Visibility } from '@mui/icons-material';
 import Page from 'components/Page';
 import ResoTable from 'components/ResoTable/ResoTable';
 import useLocales from 'hooks/useLocales';
@@ -64,7 +64,7 @@ const OrderListPage = () => {
       fixed: 'right',
       render: (_: any, order: TOrder) => (
         <Tooltip title="Chi tiết">
-          <IconButton onClick={() => setDetailOrder(1)}>
+          <IconButton onClick={() => setDetailOrder(1)} size="large">
             <Visibility />
           </IconButton>
         </Tooltip>

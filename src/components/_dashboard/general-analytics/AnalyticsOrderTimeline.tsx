@@ -1,6 +1,6 @@
 import faker from 'faker';
 // material
-import { Card, Typography, CardHeader, CardContent } from '@material-ui/core';
+import { Card, Typography, CardHeader, CardContent } from '@mui/material';
 import {
   Timeline,
   TimelineDot,
@@ -8,7 +8,7 @@ import {
   TimelineContent,
   TimelineSeparator,
   TimelineConnector
-} from '@material-ui/lab';
+} from '@mui/lab';
 // utils
 import { fDateTime } from '../../../utils/formatTime';
 

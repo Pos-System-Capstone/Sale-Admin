@@ -1,5 +1,5 @@
 // material
-import { Skeleton, Grid } from '@material-ui/core';
+import { Skeleton, Grid } from '@mui/material';
 import ShopProductCard from './ShopProductCard';
 import { Product } from '../../../../@types/products';
 

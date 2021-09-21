@@ -2,8 +2,8 @@ import { useRef } from 'react';
 import Slider from 'react-slick';
 import { NavLink as RouterLink } from 'react-router-dom';
 // material
-import { useTheme } from '@material-ui/core/styles';
-import { Box, Link, Typography } from '@material-ui/core';
+import { useTheme } from '@mui/material/styles';
+import { Box, Link, Typography } from '@mui/material';
 // @types
 import { MegaMenuCarouselProps } from '../../@types/mega-menu';
 //

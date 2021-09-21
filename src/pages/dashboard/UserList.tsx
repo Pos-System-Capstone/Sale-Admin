@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import plusFill from '@iconify/icons-eva/plus-fill';
 import { Link as RouterLink } from 'react-router-dom';
 // material
-import { useTheme } from '@material-ui/core/styles';
+import { useTheme } from '@mui/material/styles';
 import {
   Card,
   Table,
@@ -20,7 +20,7 @@ import {
   Typography,
   TableContainer,
   TablePagination
-} from '@material-ui/core';
+} from '@mui/material';
 // redux
 import { RootState, useDispatch, useSelector } from '../../redux/store';
 import { getUserList, deleteUser } from '../../redux/slices/user';

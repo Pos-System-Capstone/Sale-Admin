@@ -2,8 +2,8 @@ import faker from 'faker';
 import { sample } from 'lodash';
 import { Link as RouterLink } from 'react-router-dom';
 // material
-import { styled } from '@material-ui/core/styles';
-import { Box, Link, Card, CardHeader, Typography, Stack } from '@material-ui/core';
+import { styled } from '@mui/material/styles';
+import { Box, Link, Card, CardHeader, Typography, Stack } from '@mui/material';
 // utils
 import { fCurrency } from '../../../utils/formatNumber';
 import { mockImgProduct } from '../../../utils/mockImages';

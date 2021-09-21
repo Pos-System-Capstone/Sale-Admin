@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react';
 import { useState } from 'react';
 import codeFill from '@iconify/icons-eva/code-fill';
 // material
-import { Box, Tooltip, IconButton, DialogTitle, DialogContent, BoxProps } from '@material-ui/core';
+import { Box, Tooltip, IconButton, DialogTitle, DialogContent, BoxProps } from '@mui/material';
 //
 import Markdown from './Markdown';
 import { DialogAnimate } from './animate';
@@ -28,6 +28,7 @@ export default function CodeSnippets({ source, title, sx }: CodeSnippetsProps) {
             bottom: 8,
             position: 'absolute'
           }}
+          size="large"
         >
           <Icon icon={codeFill} width={20} height={20} />
         </IconButton>

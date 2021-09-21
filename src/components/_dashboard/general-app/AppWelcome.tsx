@@ -1,7 +1,7 @@
 import { Link as RouterLink } from 'react-router-dom';
 // material
-import { styled } from '@material-ui/core/styles';
-import { Typography, Button, Card, CardContent, CardProps } from '@material-ui/core';
+import { styled } from '@mui/material/styles';
+import { Typography, Button, Card, CardContent, CardProps } from '@mui/material';
 import { SeoIllustration } from '../../../assets';
 
 // ----------------------------------------------------------------------

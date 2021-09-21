@@ -1,27 +1,22 @@
-import { Icon } from '@iconify/react';
 import closeFill from '@iconify/icons-eva/close-fill';
 import roundClearAll from '@iconify/icons-ic/round-clear-all';
 import roundFilterList from '@iconify/icons-ic/round-filter-list';
+import { Icon } from '@iconify/react';
 // material
 import {
   Box,
-  Radio,
-  Stack,
   Button,
-  Drawer,
-  Rating,
   Divider,
-  Checkbox,
+  Drawer,
   FormGroup,
-  Typography,
-  RadioGroup,
-  FormControlLabel,
-  IconButton
-} from '@material-ui/core';
-import Scrollbar from 'components/Scrollbar';
+  IconButton,
+  Stack,
+  Typography
+} from '@mui/material';
 import { RadioGroupField } from 'components/form';
-import { ORDER_STATUS_OPTONS, PAYMENT_TYPE_OPTONS } from 'types/order';
+import Scrollbar from 'components/Scrollbar';
 import useLocales from 'hooks/useLocales';
+import { ORDER_STATUS_OPTONS, PAYMENT_TYPE_OPTONS } from 'types/order';
 // @types
 
 // ----------------------------------------------------------------------
@@ -97,7 +92,7 @@ export default function OrderFilterDrawer({
             <Typography variant="subtitle1" sx={{ ml: 1 }}>
               Bộ lọc
             </Typography>
-            <IconButton onClick={onCloseFilter}>
+            <IconButton onClick={onCloseFilter} size="large">
               <Icon icon={closeFill} width={20} height={20} />
             </IconButton>
           </Stack>

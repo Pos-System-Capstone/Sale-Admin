@@ -10,7 +10,7 @@ import interactionPlugin, { EventResizeDoneArg } from '@fullcalendar/interaction
 import listPlugin from '@fullcalendar/list';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import timelinePlugin from '@fullcalendar/timeline';
-import { Popover, useMediaQuery } from '@material-ui/core';
+import { Popover, useMediaQuery } from '@mui/material';
 import { CalendarStyle } from 'components/_dashboard/calendar';
 import useLocales from 'hooks/useLocales';
 import moment from 'moment';
@@ -47,7 +47,7 @@ const MenuInStoreCalendar: React.FC<Props & CalendarOptions> = ({
   ...props
 }) => {
   const { translate } = useLocales();
-  const isMobile = useMediaQuery((theme: any) => theme.breakpoints.down('sm'));
+  const isMobile = useMediaQuery((theme: any) => theme.breakpoints.down('md'));
   const calendarRef = useRef<FullCalendar>(null);
 
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);

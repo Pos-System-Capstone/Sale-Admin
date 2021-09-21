@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { FormControl, FormHelperText, InputLabel, MenuItem, Select } from '@material-ui/core';
+import { FormControl, FormHelperText, InputLabel, MenuItem, Select } from '@mui/material';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 

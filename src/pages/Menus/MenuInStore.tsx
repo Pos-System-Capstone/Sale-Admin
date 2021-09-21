@@ -10,7 +10,7 @@ import {
   Stack,
   Typography,
   useMediaQuery
-} from '@material-ui/core';
+} from '@mui/material';
 // @types
 import { useRequest } from 'ahooks';
 import { DialogAnimate } from 'components/animate';
@@ -22,7 +22,7 @@ import MappingStoreMenuForm from 'components/_dashboard/calendar/MappingStoreMen
 import { DAY_OF_WEEK } from 'constraints';
 import useLocales from 'hooks/useLocales';
 import moment from 'moment';
-import { useSnackbar } from 'notistack5';
+import { useSnackbar } from 'notistack';
 import { useMemo, useState } from 'react';
 import { addStoreApplyMenus, menuInStoreApi } from 'redux/menu/api';
 import { COLOR_OPTIONS } from 'redux/slices/calendar';
@@ -73,7 +73,7 @@ const tranform = (input: MenuInStoreAdmin[]): StoreInMenu[] => {
 };
 
 export default function MenuInStorePage() {
-  const isMobile = useMediaQuery((theme: any) => theme.breakpoints.down('sm'));
+  const isMobile = useMediaQuery((theme: any) => theme.breakpoints.down('lg'));
   const { enqueueSnackbar } = useSnackbar();
   const { translate } = useLocales();
   const { stores }: any = useSelector((state: RootState) => state.admin);

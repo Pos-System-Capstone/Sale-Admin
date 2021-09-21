@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import plusFill from '@iconify/icons-eva/plus-fill';
-import Icon from '@iconify/react';
+import { Icon } from '@iconify/react';
 import {
   Avatar,
   Box,
@@ -18,7 +18,7 @@ import {
   Stack,
   TextField,
   Typography
-} from '@material-ui/core';
+} from '@mui/material';
 import { useDebounceFn } from 'ahooks';
 import DeleteConfirmDialog from 'components/DelectConfirmDialog';
 import DrawerProductForm from 'components/DrawerProductForm/DrawerProductForm';
@@ -26,7 +26,7 @@ import Label from 'components/Label';
 import ResoTable from 'components/ResoTable/ResoTable';
 import useLocales from 'hooks/useLocales';
 import { get } from 'lodash-es';
-import { useSnackbar } from 'notistack5';
+import { useSnackbar } from 'notistack';
 import { CardTitle } from 'pages/Products/components/Card';
 import React from 'react';
 import { useSelector } from 'react-redux';

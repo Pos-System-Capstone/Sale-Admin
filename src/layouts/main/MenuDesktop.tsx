@@ -5,7 +5,7 @@ import { NavLink as RouterLink, useLocation } from 'react-router-dom';
 import arrowIosUpwardFill from '@iconify/icons-eva/arrow-ios-upward-fill';
 import arrowIosDownwardFill from '@iconify/icons-eva/arrow-ios-downward-fill';
 // material
-import { styled } from '@material-ui/core/styles';
+import { styled } from '@mui/material/styles';
 import {
   Box,
   Link,
@@ -16,7 +16,7 @@ import {
   ListItem,
   ListSubheader,
   CardActionArea
-} from '@material-ui/core';
+} from '@mui/material';
 //
 import { MenuProps, MenuItemProps } from './MainNavbar';
 

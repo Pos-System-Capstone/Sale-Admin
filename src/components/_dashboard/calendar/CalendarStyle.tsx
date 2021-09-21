@@ -1,4 +1,4 @@
-import { styled, alpha } from '@material-ui/core/styles';
+import { styled, alpha } from '@mui/material/styles';
 // theme
 import typography from '../../../theme/typography';
 

@@ -4,7 +4,7 @@
 import editIcon from '@iconify/icons-eva/edit-outline';
 import moreVerticalFill from '@iconify/icons-eva/more-vertical-fill';
 import trashIcon from '@iconify/icons-eva/trash-outline';
-import Icon from '@iconify/react';
+import { Icon } from '@iconify/react';
 import {
   Box,
   Button,
@@ -35,15 +35,15 @@ import {
   Tooltip,
   Typography,
   useMediaQuery
-} from '@material-ui/core';
-import { ClearAllOutlined, Replay, SettingsOutlined } from '@material-ui/icons';
-import { makeStyles, withStyles } from '@material-ui/styles';
+} from '@mui/material';
+import { Replay, SettingsOutlined } from '@mui/icons-material';
+import { makeStyles, withStyles } from '@mui/styles';
 import { useAntdTable } from 'ahooks';
 import EmptyContent from 'components/EmptyContent';
 import TableFilterForm from 'components/ResoTable/TableFilterForm';
 import useLocales from 'hooks/useLocales';
 import get from 'lodash/get';
-import { useSnackbar } from 'notistack5';
+import { useSnackbar } from 'notistack';
 import React, { useCallback } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { getCellValue, transformParamToHyphen } from './utils';
@@ -364,6 +364,7 @@ const ResoTable = (
             ].join(' ')}
             left={checkboxSelection ? '64px' : 0}
             key={`${column.title}-${data[rowKey]}`}
+            hover
           >
             {cell}
           </CellComp>
@@ -374,7 +375,7 @@ const ResoTable = (
         const isItemSelected = isSelected(data[rowKey]);
         const disabled = isDisabled(data[rowKey]);
         bodyRow.unshift(
-          <TableCell className={classes.stickyLeft} padding="checkbox">
+          <TableCell hover className={classes.stickyLeft} padding="checkbox">
             {checkboxSelection?.type === 'checkbox' ? (
               <Checkbox
                 disabled={disabled}
@@ -397,13 +398,13 @@ const ResoTable = (
           <StickyRightTableCell>
             <Stack direction="row" justifyContent="flex-end">
               <Tooltip title="Xóa">
-                <IconButton onClick={() => handleDelete(data)} sx={{ color: 'red' }}>
+                <IconButton onClick={() => handleDelete(data)} sx={{ color: 'red' }} size="large">
                   <Icon icon={trashIcon} />
                 </IconButton>
               </Tooltip>
               <Divider orientation="vertical" flexItem />
               <Tooltip title="Điều chỉnh">
-                <IconButton onClick={() => handleEdit(data)}>
+                <IconButton onClick={() => handleEdit(data)} size="large">
                   <Icon icon={editIcon} />
                 </IconButton>
               </Tooltip>
@@ -419,6 +420,7 @@ const ResoTable = (
               aria-label="more"
               aria-controls="long-menu"
               aria-haspopup="true"
+              size="large"
             >
               <Icon icon={moreVerticalFill} />
             </IconButton>
@@ -456,6 +458,7 @@ const ResoTable = (
 
       tableBodys.push(
         <TableRow
+          hover
           onClick={(event) => checkboxSelection && handleClick(event, data[rowKey])}
           role="checkbox"
         >

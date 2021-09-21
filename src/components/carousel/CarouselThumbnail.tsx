@@ -2,8 +2,8 @@ import faker from 'faker';
 import Slider from 'react-slick';
 import { useState, useRef, useEffect } from 'react';
 // material
-import { styled } from '@material-ui/core/styles';
-import { Box } from '@material-ui/core';
+import { styled } from '@mui/material/styles';
+import { Box } from '@mui/material';
 // utils
 import { mockImgFeed } from '../../utils/mockImages';
 //

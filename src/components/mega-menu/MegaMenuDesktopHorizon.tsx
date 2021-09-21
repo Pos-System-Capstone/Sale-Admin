@@ -3,7 +3,7 @@ import { NavLink as RouterLink } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 import chevronDownFill from '@iconify/icons-eva/chevron-down-fill';
 // material
-import { Box, Link, Paper, Typography, Divider, Stack } from '@material-ui/core';
+import { Box, Link, Paper, Typography, Divider, Stack } from '@mui/material';
 // @types
 import { ParentItemProps, MegaMenuItemProps } from '../../@types/mega-menu';
 //

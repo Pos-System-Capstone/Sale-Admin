@@ -8,7 +8,7 @@ import facebookFill from '@iconify/icons-eva/facebook-fill';
 import moreVerticalFill from '@iconify/icons-eva/more-vertical-fill';
 import instagramFilled from '@iconify/icons-ant-design/instagram-filled';
 // material
-import { styled } from '@material-ui/core/styles';
+import { styled } from '@mui/material/styles';
 import {
   Box,
   Grid,
@@ -20,7 +20,7 @@ import {
   Typography,
   OutlinedInput,
   InputAdornment
-} from '@material-ui/core';
+} from '@mui/material';
 // @types
 import { Friend } from '../../../../@types/user';
 //
@@ -100,7 +100,7 @@ function FriendCard({ friend }: { friend: Friend }) {
       <Box sx={{ display: 'flex', mt: 1 }}>
         {SOCIALS.map((social) => (
           <Tooltip key={social.name} title={social.name}>
-            <IconButton>{social.icon}</IconButton>
+            <IconButton size="large">{social.icon}</IconButton>
           </Tooltip>
         ))}
       </Box>
@@ -110,6 +110,7 @@ function FriendCard({ friend }: { friend: Friend }) {
           right: 8,
           position: 'absolute'
         }}
+        size="large"
       >
         <Icon icon={moreVerticalFill} width={20} height={20} />
       </IconButton>

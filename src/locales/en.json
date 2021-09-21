@@ -8,6 +8,11 @@
     },
     "menu": { "root": "Menus", "list": "Menu List", "store-menu": "Menu in Store" },
     "store": "Stores",
+    "customer": {
+      "root": "Customer",
+      "customerList": "Customer list",
+      "addNewCustomer": "Add customer"
+    },
     "order": "Orders",
     "store-menu": "Menu",
     "product-subheader": "Product",
@@ -51,6 +56,25 @@
         "editStoreInMenu": "Update store for this menu"
       }
     },
+    "customers": {
+      "listTitle": "Danh sách khách hàng",
+      "updateTitle": "Cập nhật khách hàng",
+      "addBtn": "Thêm khách hàng",
+      "table": {
+        "no": "STT",
+        "name": "Tên khách hàng",
+        "homePhone": "Số điện thoại cá nhân",
+        "companyName": "Tên công ty",
+        "homeAddress": "Địa chỉ nhà riêng",
+        "companyAddress": "Địa chỉ công ty",
+        "homeEmail": "Email cá nhân",
+        "companyEmail": "Email công ty",
+        "companyPhone": "Số điện thoại công ty",
+        "city": "Tỉnh/Thành phố",
+        "province": "Quận/Huyện",
+        "tags": "Thẻ"
+      }
+    },
     "orders": {
       "table": {
         "invoice": "Invoice",
@@ -82,6 +106,7 @@
     "confirmDeleteTitle": "Confirm delete",
     "deleteSuccess": "Deleted successfully",
     "atLeast": "At least {{number}} value(s)",
+    "status": "Status",
     "filter": "Filters",
     "clearFilter": "CLear filters",
     "fromTime": "From",
@@ -91,7 +116,6 @@
     "400": "Error",
     "error": "There has an error. Please try again!"
   },
-
   "resoTable": {
     "settingColumn": "Show/Hide column",
     "clearFilters": "Clear filters"

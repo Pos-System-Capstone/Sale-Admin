@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react';
 import arrowIosBackFill from '@iconify/icons-eva/arrow-ios-back-fill';
 import arrowIosForwardFill from '@iconify/icons-eva/arrow-ios-forward-fill';
 // material
-import { Paper, CardActionArea, Stack } from '@material-ui/core';
+import { Paper, CardActionArea, Stack } from '@mui/material';
 // hooks
 import useSettings from '../../hooks/useSettings';
 

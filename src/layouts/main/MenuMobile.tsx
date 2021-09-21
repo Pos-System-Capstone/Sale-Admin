@@ -5,7 +5,7 @@ import { NavLink as RouterLink, useLocation } from 'react-router-dom';
 import arrowIosForwardFill from '@iconify/icons-eva/arrow-ios-forward-fill';
 import arrowIosDownwardFill from '@iconify/icons-eva/arrow-ios-downward-fill';
 // material
-import { alpha, styled } from '@material-ui/core/styles';
+import { alpha, styled } from '@mui/material/styles';
 import {
   Box,
   List,
@@ -15,7 +15,7 @@ import {
   ListItemButton,
   ListItemText,
   ListItemIcon
-} from '@material-ui/core';
+} from '@mui/material';
 // components
 import Logo from '../../components/Logo';
 import NavSection from '../../components/NavSection';

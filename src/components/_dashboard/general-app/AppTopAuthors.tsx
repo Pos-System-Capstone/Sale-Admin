@@ -4,8 +4,8 @@ import { Icon } from '@iconify/react';
 import heartFill from '@iconify/icons-eva/heart-fill';
 import trophyFilled from '@iconify/icons-ant-design/trophy-filled';
 // material
-import { alpha, styled } from '@material-ui/core/styles';
-import { Box, Stack, Card, Avatar, CardHeader, Typography } from '@material-ui/core';
+import { alpha, styled } from '@mui/material/styles';
+import { Box, Stack, Card, Avatar, CardHeader, Typography } from '@mui/material';
 // utils
 import { fShortenNumber } from '../../../utils/formatNumber';
 

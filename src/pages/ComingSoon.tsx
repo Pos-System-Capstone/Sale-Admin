@@ -4,7 +4,7 @@ import facebookFill from '@iconify/icons-eva/facebook-fill';
 import linkedinFill from '@iconify/icons-eva/linkedin-fill';
 import instagramFilled from '@iconify/icons-ant-design/instagram-filled';
 // material
-import { styled } from '@material-ui/core/styles';
+import { styled } from '@mui/material/styles';
 import {
   Box,
   Button,
@@ -13,7 +13,7 @@ import {
   Typography,
   InputAdornment,
   OutlinedInput
-} from '@material-ui/core';
+} from '@mui/material';
 // hooks
 import useCountdown from '../hooks/useCountdown';
 // components

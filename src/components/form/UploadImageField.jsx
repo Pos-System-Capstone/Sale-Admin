@@ -8,12 +8,12 @@ import {
   ListItem,
   Paper,
   Typography
-} from '@material-ui/core';
-import { styled } from '@material-ui/styles';
+} from '@mui/material';
+import { styled } from '@mui/styles';
 import React from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { Icon } from '@iconify/react';
-import { useSnackbar } from 'notistack5';
+import { useSnackbar } from 'notistack';
 import { UploadAvatar } from 'components/upload';
 
 import closeFill from '@iconify/icons-eva/close-fill';
@@ -93,7 +93,7 @@ const UploadImageField = ({ name, label, defaultValue = '' }) => {
                 height: '100%'
               }}
               display={isUploading ? 'flex' : 'none'}
-              borderRadius={1}
+              borderRadius="1px"
               flexDirection="column"
               zIndex={999}
               justifyContent="center"

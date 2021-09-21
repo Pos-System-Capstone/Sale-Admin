@@ -1,7 +1,7 @@
 import useLocales from 'hooks/useLocales';
 import { CardTitle } from 'pages/Products/components/Card';
 import { InputField, SelectField, SwitchField, TimePickerField } from 'components/form';
-import { Card, Grid, Typography } from '@material-ui/core';
+import { Card, Grid, Typography } from '@mui/material';
 
 const StoreForm = () => {
   const fieldSetting = {

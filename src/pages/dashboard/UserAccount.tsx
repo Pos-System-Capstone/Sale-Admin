@@ -7,7 +7,7 @@ import roundVpnKey from '@iconify/icons-ic/round-vpn-key';
 import roundReceipt from '@iconify/icons-ic/round-receipt';
 import roundAccountBox from '@iconify/icons-ic/round-account-box';
 // material
-import { Container, Tab, Box, Tabs } from '@material-ui/core';
+import { Container, Tab, Box, Tabs } from '@mui/material';
 // redux
 import { RootState, useDispatch, useSelector } from '../../redux/store';
 import {

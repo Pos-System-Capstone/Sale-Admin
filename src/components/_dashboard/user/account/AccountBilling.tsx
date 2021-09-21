@@ -1,9 +1,9 @@
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { useState } from 'react';
-import { useSnackbar } from 'notistack5';
+import { useSnackbar } from 'notistack';
 // material
-import { Box, Grid, Card, Button, Typography, Stack } from '@material-ui/core';
+import { Box, Grid, Card, Button, Typography, Stack } from '@mui/material';
 // utils
 import fakeRequest from '../../../../utils/fakeRequest';
 // @types

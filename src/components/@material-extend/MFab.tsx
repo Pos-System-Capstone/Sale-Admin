@@ -1,7 +1,7 @@
 import { forwardRef } from 'react';
 // material
-import { useTheme } from '@material-ui/core/styles';
-import { Fab, FabProps } from '@material-ui/core';
+import { useTheme } from '@mui/material/styles';
+import { Fab, FabProps } from '@mui/material';
 //
 import { ButtonAnimate } from '../animate';
 

@@ -1,5 +1,5 @@
-import { styled } from '@material-ui/core/styles';
-import { Box } from '@material-ui/core';
+import { styled } from '@mui/material/styles';
+import { Box } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
@@ -114,7 +114,7 @@ const DraftEditorStyle = styled(Box)(({ theme }) => {
               color: theme.palette.action.disabled,
               background: theme.palette.action.disabledBackground
             },
-            '&:last-child': {
+            '&:last-of-type': {
               background: 'transparent',
               color: theme.palette.text.primary
             },

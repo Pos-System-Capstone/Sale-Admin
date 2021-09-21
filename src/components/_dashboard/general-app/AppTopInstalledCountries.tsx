@@ -4,8 +4,8 @@ import appleFilled from '@iconify/icons-ant-design/apple-filled';
 import windowsFilled from '@iconify/icons-ant-design/windows-filled';
 import androidFilled from '@iconify/icons-ant-design/android-filled';
 // material
-import { styled } from '@material-ui/core/styles';
-import { Box, Card, CardHeader, Typography, Stack, StackProps } from '@material-ui/core';
+import { styled } from '@mui/material/styles';
+import { Box, Card, CardHeader, Typography, Stack, StackProps } from '@mui/material';
 //
 import Scrollbar from '../../Scrollbar';
 import { fShortenNumber } from '../../../utils/formatNumber';
