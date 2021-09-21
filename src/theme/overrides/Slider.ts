@@ -7,6 +7,10 @@ export default function Slider(theme: Theme) {
 
   return {
     MuiSlider: {
+      defaultProps: {
+        size: 'small'
+      },
+
       styleOverrides: {
         root: {
           '&.Mui-disabled': {

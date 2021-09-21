@@ -4,7 +4,7 @@ import { GlobalStyles as GlobalThemeStyles } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
-const GlobalStyles = () => {
+export default function GlobalStyles() {
   const theme = useTheme();
 
   return (
@@ -68,25 +68,8 @@ const GlobalStyles = () => {
         '.blur-up.lazyloaded ': {
           WebkitFilter: 'blur(0)',
           filter: 'blur(0)'
-        },
-        '*::-webkit-scrollbar': {
-          width: '0.4em',
-          height: '0.4em'
-        },
-        '*::-webkit-scrollbar-track': {
-          '-webkit-box-shadow': 'inset 0 0 6px rgba(0,0,0,0.00)',
-          background: 'transparent'
-        },
-        '*::-webkit-scrollbar-thumb': {
-          backgroundColor: 'rgba(0,0,0,.1)',
-          borderRadius: '10px !important'
-        },
-        '::-webkit-scrollbar *': {
-          background: 'transparent' // manage scrollbar background color here
         }
       }}
     />
   );
-};
-
-export default GlobalStyles;
+}

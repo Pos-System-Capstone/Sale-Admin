@@ -9,12 +9,12 @@ import useAuth from './hooks/useAuth';
 import Settings from './components/settings';
 import RtlLayout from './components/RtlLayout';
 import ScrollToTop from './components/ScrollToTop';
-import { BaseOptionChartStyle } from './components/charts/BaseOptionChart';
-import LoadingScreen, { ProgressBarStyle } from './components/LoadingScreen';
 import GoogleAnalytics from './components/GoogleAnalytics';
 import NotistackProvider from './components/NotistackProvider';
 import ThemePrimaryColor from './components/ThemePrimaryColor';
 import ThemeLocalization from './components/ThemeLocalization';
+import { BaseOptionChartStyle } from './components/charts/BaseOptionChart';
+import LoadingScreen, { ProgressBarStyle } from './components/LoadingScreen';
 
 // ----------------------------------------------------------------------
 

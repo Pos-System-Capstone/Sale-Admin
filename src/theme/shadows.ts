@@ -25,7 +25,7 @@ declare module '@mui/material/styles' {
   interface Theme {
     customShadows: CustomShadowOptions;
   }
-  interface DeprecatedThemeOptions {
+  interface ThemeOptions {
     customShadows?: CustomShadowOptions;
   }
 }

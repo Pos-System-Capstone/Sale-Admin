@@ -1,4 +1,5 @@
 import { useMemo, ReactNode } from 'react';
+import type {} from '@mui/lab/themeAugmentation';
 // material
 import { CssBaseline } from '@mui/material';
 import {
@@ -43,7 +44,7 @@ export default function ThemeConfig({ children }: ThemeConfigProps) {
   const theme = createTheme(themeOptions);
   theme.components = componentsOverride(theme);
 
-  console.log(`theme`, theme);
+  console.log(theme);
 
   return (
     <StyledEngineProvider injectFirst>
