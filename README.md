@@ -1,14 +1,6 @@
 # Sale admin
 
-## Update
-- [ ] time slot API
-
-
-## Product module
-
-- [ ] Tạo **dòng sản phẩm**
-- [ ] Tạo biến thể cho **dòng sản phẩm**
-- [ ] Điều chỉnh **biến thể**
+- [ ] Add `date` ,`dateRange`
 
 ```
 variants

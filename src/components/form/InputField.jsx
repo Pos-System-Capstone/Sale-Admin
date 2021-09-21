@@ -3,7 +3,7 @@ import { TextField } from '@material-ui/core';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
-const FormInput = ({ name, label = null, rules = null, defaultValue = '', ...props }) => {
+const FormInput = ({ name, label = '', rules = null, defaultValue = '', ...props }) => {
   const { control } = useFormContext();
 
   return (

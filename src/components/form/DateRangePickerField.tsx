@@ -17,7 +17,7 @@ const DateRangePickerField: React.FC<Props & Partial<DatePickerProps>> = ({
   name,
   label = null,
   rules,
-  defaultValue = [],
+  defaultValue = [null, null],
   ...props
 }) => {
   const { control } = useFormContext();
@@ -29,6 +29,7 @@ const DateRangePickerField: React.FC<Props & Partial<DatePickerProps>> = ({
         <DateRangePicker
           calendars={2}
           {...field}
+          value={field.value ?? [null, null]}
           renderInput={(startProps, endProps) => (
             <>
               <TextField

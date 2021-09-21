@@ -1,5 +1,13 @@
 import { Grid } from '@material-ui/core';
-import { CheckBoxField, InputField, RadioGroupField, SelectField } from 'components/form';
+import {
+  CheckBoxField,
+  InputField,
+  RadioGroupField,
+  SelectField,
+  TimePickerField,
+  DatePickerField
+} from 'components/form';
+import DateRangePickerField from 'components/form/DateRangePickerField';
 import React from 'react';
 import { TableValueType, TTableColumn } from 'types/table';
 
@@ -37,7 +45,15 @@ const buildFormItem = (tableConfig: TableType) => {
     case 'checkbox':
       C = CheckBoxField;
       break;
-
+    case 'time':
+      C = TimePickerField;
+      break;
+    case 'date':
+      C = DatePickerField;
+      break;
+    case 'dateRange':
+      C = DateRangePickerField;
+      break;
     default:
       break;
   }

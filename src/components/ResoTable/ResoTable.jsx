@@ -36,7 +36,7 @@ import {
   Typography,
   useMediaQuery
 } from '@material-ui/core';
-import { Replay, SettingsOutlined } from '@material-ui/icons';
+import { ClearAllOutlined, Replay, SettingsOutlined } from '@material-ui/icons';
 import { makeStyles, withStyles } from '@material-ui/styles';
 import { useAntdTable } from 'ahooks';
 import EmptyContent from 'components/EmptyContent';
@@ -529,7 +529,7 @@ const ResoTable = (
           const labelId = `checkbox-list-label-${col.dataIndex}`;
 
           return (
-            <ListItem key={col.dataIndex}>
+            <ListItem key={col.dataIndex} disablePadding sx={{ paddingLeft: 1 }}>
               <ListItemButton role={undefined} onClick={() => handleToggle(col, idx)} dense>
                 <ListItemIcon>
                   <Checkbox
@@ -566,7 +566,11 @@ const ResoTable = (
             <Box ml="auto">
               <Stack spacing={1} direction="row">
                 {form.formState.isDirty && (
-                  <Button onClick={() => form.reset({})} disableRipple>
+                  <Button
+                    startIcon={<ClearAllOutlined />}
+                    onClick={() => form.reset({})}
+                    disableRipple
+                  >
                     {t('resoTable.clearFilters')}
                   </Button>
                 )}

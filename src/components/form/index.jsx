@@ -6,6 +6,7 @@ import UploadImageField from './UploadImageField';
 import SwitchField from './SwitchField';
 import RadioGroupField from './RadioGroupField';
 import TimePickerField from './TimePickerField';
+import DatePickerField from './DatePickerField';
 
 export {
   InputField,
@@ -15,5 +16,6 @@ export {
   UploadImageField,
   SwitchField,
   RadioGroupField,
-  TimePickerField
+  TimePickerField,
+  DatePickerField
 };
