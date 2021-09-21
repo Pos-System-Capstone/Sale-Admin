@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
-import { TextField } from '@material-ui/core';
-import { DatePicker } from '@material-ui/lab';
-import React from 'react';
+import { DatePicker } from '@mui/lab';
+import { TextField } from '@mui/material';
 import { Controller, useFormContext } from 'react-hook-form';
 
 const DatePickerField = ({ name, label, defaultValue = '', transform, ...props }: any) => {
