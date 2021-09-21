@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import plusFill from '@iconify/icons-eva/plus-fill';
-import Icon from '@iconify/react';
+import { Icon } from '@iconify/react';
 import { Box, Button, Card, Chip, Stack, Typography } from '@mui/material';
 import { useRequest } from 'ahooks';
 import DeleteConfirmDialog from 'components/DelectConfirmDialog';

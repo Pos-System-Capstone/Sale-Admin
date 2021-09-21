@@ -1,4 +1,4 @@
-import Icon from '@iconify/react';
+import { Icon } from '@iconify/react';
 import { Stack, Box, Avatar, IconButton, Typography } from '@mui/material';
 import ResoTable from 'components/ResoTable/ResoTable';
 import React from 'react';

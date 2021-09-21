@@ -1,5 +1,5 @@
 import closeFill from '@iconify/icons-eva/close-fill';
-import Icon from '@iconify/react';
+import { Icon } from '@iconify/react';
 import { Box, Button, Dialog, IconButton, Paper, Stack, Typography } from '@mui/material';
 import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
 import ResoTable from 'components/ResoTable/ResoTable';

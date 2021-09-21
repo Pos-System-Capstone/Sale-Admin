@@ -114,7 +114,7 @@ const DraftEditorStyle = styled(Box)(({ theme }) => {
               color: theme.palette.action.disabled,
               background: theme.palette.action.disabledBackground
             },
-            '&:last-child': {
+            '&:last-of-type': {
               background: 'transparent',
               color: theme.palette.text.primary
             },

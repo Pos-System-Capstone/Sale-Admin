@@ -1,11 +1,10 @@
 import { useMemo, ReactNode } from 'react';
 // material
-import { CssBaseline, adaptV4Theme } from '@mui/material';
+import { CssBaseline } from '@mui/material';
 import {
   createTheme,
-  DeprecatedThemeOptions,
+  ThemeOptions,
   ThemeProvider,
-  Theme,
   StyledEngineProvider
 } from '@mui/material/styles';
 // hooks
@@ -18,11 +17,6 @@ import breakpoints from './breakpoints';
 import componentsOverride from './overrides';
 import shadows, { customShadows } from './shadows';
 
-declare module '@mui/styles/defaultTheme' {
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  interface DefaultTheme extends Theme {}
-}
-
 // ----------------------------------------------------------------------
 
 type ThemeConfigProps = {
@@ -33,7 +27,7 @@ export default function ThemeConfig({ children }: ThemeConfigProps) {
   const { themeMode, themeDirection } = useSettings();
   const isLight = themeMode === 'light';
 
-  const themeOptions: DeprecatedThemeOptions = useMemo(
+  const themeOptions: ThemeOptions = useMemo(
     () => ({
       palette: isLight ? { ...palette.light, mode: 'light' } : { ...palette.dark, mode: 'dark' },
       shape,
@@ -46,8 +40,10 @@ export default function ThemeConfig({ children }: ThemeConfigProps) {
     [isLight, themeDirection]
   );
 
-  const theme = createTheme(adaptV4Theme(themeOptions));
+  const theme = createTheme(themeOptions);
   theme.components = componentsOverride(theme);
+
+  console.log(`theme`, theme);
 
   return (
     <StyledEngineProvider injectFirst>

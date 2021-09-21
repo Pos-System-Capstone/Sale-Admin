@@ -24,7 +24,7 @@ import useDashboard from 'hooks/useDashboard';
 import { get, unionBy } from 'lodash';
 
 import Page from 'components/Page';
-import Icon from '@iconify/react';
+import { Icon } from '@iconify/react';
 import searchIcon from '@iconify/icons-eva/search-outline';
 import EmptyContent from 'components/EmptyContent';
 import ModalProductForm from 'components/ModalProductForm/ModalProductForm';

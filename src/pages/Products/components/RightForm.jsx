@@ -14,7 +14,7 @@ import {
   Chip,
   ListItemText
 } from '@mui/material';
-import Icon from '@iconify/react';
+import { Icon } from '@iconify/react';
 import { useSelector } from 'react-redux';
 import { makeStyles } from '@mui/styles';
 import { useFormContext, useWatch } from 'react-hook-form';

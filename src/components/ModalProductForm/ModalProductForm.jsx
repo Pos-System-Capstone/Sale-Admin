@@ -10,7 +10,7 @@ import {
   Typography
 } from '@mui/material';
 import React from 'react';
-import Icon from '@iconify/react';
+import { Icon } from '@iconify/react';
 import closeFill from '@iconify/icons-eva/close-fill';
 import { Card } from 'pages/Products/components/Card';
 import SeachProductForm from 'pages/Products/SeachProductForm';

@@ -15,7 +15,7 @@ import { useRequest } from 'ahooks';
 import useLocales from 'hooks/useLocales';
 import React from 'react';
 import { getOrderDetail } from 'redux/order/api';
-import Icon from '@iconify/react';
+import { Icon } from '@iconify/react';
 import closeFill from '@iconify/icons-eva/close-fill';
 import { fDate } from 'utils/formatTime';
 import Label from 'components/Label';

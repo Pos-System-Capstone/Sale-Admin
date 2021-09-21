@@ -1,13 +1,6 @@
 {
-  "plugins": [
-    "prettier",
-    "@typescript-eslint"
-  ],
-  "extends": [
-    "airbnb-typescript",
-    "react-app",
-    "prettier"
-  ],
+  "plugins": ["prettier", "@typescript-eslint"],
+  "extends": ["airbnb-typescript", "react-app", "prettier"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "project": "./tsconfig.json"
@@ -49,11 +42,10 @@
     "@typescript-eslint/naming-convention": 0,
     "jsx-a11y/control-has-associated-label": 0,
     "import/no-extraneous-dependencies": 0,
-    "react/jsx-filename-extension" : 0,
-    "object-curly-spacing": [
-      1,
-      "always"
-    ],
+    "react/jsx-filename-extension": 0,
+    "import/no-named-as-default": 0,
+    "import/no-named-as-default-member": 0,
+    "object-curly-spacing": [1, "always"],
     "@typescript-eslint/no-unused-vars": [
       1,
       {
@@ -68,7 +60,7 @@
         "singleQuote": true,
         "trailingComma": "none",
         "tabWidth": 2,
-        "endOfLine":"auto"
+        "endOfLine": "auto"
       }
     ]
   }

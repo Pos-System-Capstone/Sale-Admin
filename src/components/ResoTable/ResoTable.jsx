@@ -4,7 +4,7 @@
 import editIcon from '@iconify/icons-eva/edit-outline';
 import moreVerticalFill from '@iconify/icons-eva/more-vertical-fill';
 import trashIcon from '@iconify/icons-eva/trash-outline';
-import Icon from '@iconify/react';
+import { Icon } from '@iconify/react';
 import {
   Box,
   Button,
@@ -364,6 +364,7 @@ const ResoTable = (
             ].join(' ')}
             left={checkboxSelection ? '64px' : 0}
             key={`${column.title}-${data[rowKey]}`}
+            hover
           >
             {cell}
           </CellComp>
@@ -374,7 +375,7 @@ const ResoTable = (
         const isItemSelected = isSelected(data[rowKey]);
         const disabled = isDisabled(data[rowKey]);
         bodyRow.unshift(
-          <TableCell className={classes.stickyLeft} padding="checkbox">
+          <TableCell hover className={classes.stickyLeft} padding="checkbox">
             {checkboxSelection?.type === 'checkbox' ? (
               <Checkbox
                 disabled={disabled}
@@ -457,6 +458,7 @@ const ResoTable = (
 
       tableBodys.push(
         <TableRow
+          hover
           onClick={(event) => checkboxSelection && handleClick(event, data[rowKey])}
           role="checkbox"
         >

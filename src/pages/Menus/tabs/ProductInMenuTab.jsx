@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import plusFill from '@iconify/icons-eva/plus-fill';
-import Icon from '@iconify/react';
+import { Icon } from '@iconify/react';
 import {
   Avatar,
   Box,

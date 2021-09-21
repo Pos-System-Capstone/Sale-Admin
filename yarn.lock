@@ -1932,10 +1932,10 @@
   resolved "https://registry.yarnpkg.com/@iconify/icons-ic/-/icons-ic-1.1.7.tgz#ddd214f471b647e75ef1826fe69d2d01f43aa0a4"
   integrity sha512-bNABWmzSnwEV5y141KX0uuBl1cm2WjxWo/BoPX3j73sZ/9e+/mfJu3DB5DaPas2x7tjXj95r+eVMEJavllmHCA==
 
-"@iconify/react@^1.1.4":
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/@iconify/react/-/react-1.1.4.tgz#c778eddbaf196e55705d0bedff00d039dc1de8d3"
-  integrity sha512-oxq8IMOq8q3nKGiDHbQPC8FcFuBsKve68JWBo140d5LRnj0bv5TB/FE/y01ZSvEZ7PlI2HIrnb2qivPN8kTDgw==
+"@iconify/react@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@iconify/react/-/react-3.0.1.tgz#ce2cb3f4a2b6aab5f7af082c833d869b6fb43182"
+  integrity sha512-yUskSSR80JzRSWcqNsBAG9AN802XzZgHsex8mTOkMLYcPQC3fk1XwK17ulnY5vf692OafhGCAMccR8TWKFaGdw==
 
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
@@ -14711,8 +14711,10 @@ watchpack@^1.7.4:
   resolved "https://registry.yarnpkg.com/watchpack/-/watchpack-1.7.5.tgz#1267e6c55e0b9b5be44c2023aed5437a2c26c453"
   integrity sha512-9P3MWk6SrKjHsGkLT2KHXdQ/9SNkyoJbabxnKOoJepsvJjJG8uYTR3yTPxPQvNDI3w4Nz1xnE0TLHK4RIVe/MQ==
   dependencies:
+    chokidar "^3.4.1"
     graceful-fs "^4.1.2"
     neo-async "^2.5.0"
+    watchpack-chokidar2 "^2.0.1"
   optionalDependencies:
     chokidar "^3.4.1"
     watchpack-chokidar2 "^2.0.1"

@@ -1,5 +1,5 @@
 import plusFill from '@iconify/icons-eva/plus-fill';
-import Icon from '@iconify/react';
+import { Icon } from '@iconify/react';
 import { Box, Button, Card, Chip, DialogTitle, Stack } from '@mui/material';
 import { useRequest } from 'ahooks';
 import { DialogAnimate } from 'components/animate';
