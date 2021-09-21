@@ -13,16 +13,16 @@ type LabelVariant = 'filled' | 'outlined' | 'ghost';
 const RootStyle = styled('span')(
   ({
     theme,
-    styleProps
+    ownerState
   }: {
     theme: Theme;
-    styleProps: {
+    ownerState: {
       color: LabelColor;
       variant: LabelVariant;
     };
   }) => {
     const isLight = theme.palette.mode === 'light';
-    const { color, variant } = styleProps;
+    const { color, variant } = ownerState;
 
     const styleFilled = (color: ColorSchema) => ({
       color: theme.palette[color].contrastText,
@@ -89,7 +89,7 @@ export default function Label({ color = 'default', variant = 'ghost', children, 
   const theme = useTheme();
 
   return (
-    <RootStyle styleProps={{ color, variant }} sx={sx} theme={theme}>
+    <RootStyle ownerState={{ color, variant }} sx={sx} theme={theme}>
       {children}
     </RootStyle>
   );

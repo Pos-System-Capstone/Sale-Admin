@@ -2,13 +2,15 @@
 import Router from './routes';
 // theme
 import ThemeConfig from './theme';
+import GlobalStyles from './theme/globalStyles';
 // hooks
 import useAuth from './hooks/useAuth';
 // components
 import Settings from './components/settings';
 import RtlLayout from './components/RtlLayout';
 import ScrollToTop from './components/ScrollToTop';
-import LoadingScreen from './components/LoadingScreen';
+import { BaseOptionChartStyle } from './components/charts/BaseOptionChart';
+import LoadingScreen, { ProgressBarStyle } from './components/LoadingScreen';
 import GoogleAnalytics from './components/GoogleAnalytics';
 import NotistackProvider from './components/NotistackProvider';
 import ThemePrimaryColor from './components/ThemePrimaryColor';
@@ -25,6 +27,9 @@ export default function App() {
         <ThemeLocalization>
           <RtlLayout>
             <NotistackProvider>
+              <GlobalStyles />
+              <ProgressBarStyle />
+              <BaseOptionChartStyle />
               <Settings />
               <ScrollToTop />
               <GoogleAnalytics />

@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 import Lightbox from 'react-image-lightbox';
 // material
-import { makeStyles, createStyles } from '@mui/styles';
-import { alpha, Theme } from '@mui/material/styles';
-import { Typography } from '@mui/material';
+import { alpha, useTheme } from '@mui/material/styles';
+import { Typography, GlobalStyles } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
-const useStyles = makeStyles((theme: Theme) => {
+function LightboxModalStyles() {
+  const theme = useTheme();
   const isRTL = theme.direction === 'rtl';
 
   const backgroundIcon = (iconName: string) => ({
@@ -18,66 +18,72 @@ const useStyles = makeStyles((theme: Theme) => {
     backgroundImage: `url("/static/icons/controls/${iconName}.svg")`
   });
 
-  return createStyles({
-    root: {
-      backdropFilter: 'blur(8px)',
-      backgroundColor: alpha(theme.palette.grey[900], 0.88),
+  return (
+    <GlobalStyles
+      styles={{
+        '& .ReactModalPortal': {
+          '& .ril__outer': {
+            backdropFilter: 'blur(8px)',
+            backgroundColor: alpha(theme.palette.grey[900], 0.88)
+          },
 
-      // Toolbar
-      '& .ril__toolbar': {
-        height: 'auto !important',
-        padding: theme.spacing(2, 3),
-        backgroundColor: 'transparent'
-      },
-      '& .ril__toolbarLeftSide': { display: 'none' },
-      '& .ril__toolbarRightSide': {
-        height: 'auto !important',
-        padding: 0,
-        flexGrow: 1,
-        display: 'flex',
-        alignItems: 'center',
-        '& li': {
-          display: 'flex',
-          alignItems: 'center'
-        },
-        '& li:first-child': {
-          flexGrow: 1
-        },
-        '& li:not(:first-child)': {
-          width: theme.spacing(5),
-          height: theme.spacing(5),
-          justifyContent: 'center',
-          marginLeft: theme.spacing(1),
-          borderRadius: theme.shape.borderRadius
-        }
-      },
+          // Toolbar
+          '& .ril__toolbar': {
+            height: 'auto !important',
+            padding: theme.spacing(2, 3),
+            backgroundColor: 'transparent'
+          },
+          '& .ril__toolbarLeftSide': { display: 'none' },
+          '& .ril__toolbarRightSide': {
+            height: 'auto !important',
+            padding: 0,
+            flexGrow: 1,
+            display: 'flex',
+            alignItems: 'center',
+            '& li': {
+              display: 'flex',
+              alignItems: 'center'
+            },
+            '& li:first-of-type': {
+              flexGrow: 1
+            },
+            '& li:not(:first-of-type)': {
+              width: theme.spacing(5),
+              height: theme.spacing(5),
+              justifyContent: 'center',
+              marginLeft: theme.spacing(1),
+              borderRadius: theme.shape.borderRadius
+            }
+          },
 
-      // Button
-      '& button:focus': { outline: 'none' },
-      '& .ril__toolbarRightSide button': {
-        width: '100%',
-        height: '100%',
-        '&.ril__zoomInButton': backgroundIcon('maximize-outline'),
-        '&.ril__zoomOutButton': backgroundIcon('minimize-outline'),
-        '&.ril__closeButton': backgroundIcon('close')
-      },
-      '& .ril__navButtons': {
-        padding: theme.spacing(3),
-        borderRadius: theme.shape.borderRadiusSm,
-        '&.ril__navButtonPrev': {
-          left: theme.spacing(2),
-          right: 'auto',
-          ...backgroundIcon(isRTL ? 'arrow-ios-forward' : 'arrow-ios-back')
-        },
-        '&.ril__navButtonNext': {
-          right: theme.spacing(2),
-          left: 'auto',
-          ...backgroundIcon(isRTL ? 'arrow-ios-back' : 'arrow-ios-forward')
+          // Button
+          '& button:focus': { outline: 'none' },
+          '& .ril__toolbarRightSide button': {
+            width: '100%',
+            height: '100%',
+            '&.ril__zoomInButton': backgroundIcon('maximize-outline'),
+            '&.ril__zoomOutButton': backgroundIcon('minimize-outline'),
+            '&.ril__closeButton': backgroundIcon('close')
+          },
+          '& .ril__navButtons': {
+            padding: theme.spacing(3),
+            borderRadius: theme.shape.borderRadiusSm,
+            '&.ril__navButtonPrev': {
+              left: theme.spacing(2),
+              right: 'auto',
+              ...backgroundIcon(isRTL ? 'arrow-ios-forward' : 'arrow-ios-back')
+            },
+            '&.ril__navButtonNext': {
+              right: theme.spacing(2),
+              left: 'auto',
+              ...backgroundIcon(isRTL ? 'arrow-ios-back' : 'arrow-ios-forward')
+            }
+          }
         }
-      }
-    }
-  });
-});
+      }}
+    />
+  );
+}
 
 // ----------------------------------------------------------------------
 
@@ -97,8 +103,6 @@ function LightboxModal({
   onClose,
   ...other
 }: ModalLighboxProps) {
-  const classes = useStyles();
-
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
@@ -120,8 +124,11 @@ function LightboxModal({
 
   return (
     <>
+      <LightboxModalStyles />
+
       {isOpen && (
         <Lightbox
+          animationDuration={120}
           mainSrc={images[photoIndex]}
           nextSrc={images[(photoIndex + 1) % images.length]}
           prevSrc={images[(photoIndex + images.length - 1) % images.length]}
@@ -130,7 +137,6 @@ function LightboxModal({
           onMoveNextRequest={() => setPhotoIndex((photoIndex + 1) % images.length)}
           toolbarButtons={toolbarButtons}
           reactModalStyle={customStyles}
-          wrapperClassName={classes.root}
           {...other}
         />
       )}
