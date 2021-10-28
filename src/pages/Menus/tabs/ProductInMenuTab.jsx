@@ -6,17 +6,12 @@ import {
   Box,
   Button,
   Card,
-  CardActions,
-  CardContent,
-  CardMedia,
   Chip,
   Grid,
   List,
   ListItemButton,
   ListItemText,
   ListSubheader,
-  Stack,
-  TextField,
   Typography
 } from '@mui/material';
 import { useDebounceFn } from 'ahooks';
@@ -193,15 +188,6 @@ const ProductInMenuTab = ({ id }) => {
           </Grid>
           <Grid item xs={12} sm={9}>
             <Box mt={2}>
-              <Stack justifyContent="space-between" mb={2} direction="row" spacing={2}>
-                <TextField
-                  onChange={(e) => changeProductNameFilter(e.target.value)}
-                  size="small"
-                  label="Tên sản phẩm"
-                  name="product-name"
-                />
-              </Stack>
-
               <ResoTable
                 ref={ref}
                 filters={filters}

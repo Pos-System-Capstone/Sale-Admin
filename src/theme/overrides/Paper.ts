@@ -11,7 +11,8 @@ export default function Paper(theme: Theme) {
 
       styleOverrides: {
         root: {
-          backgroundImage: 'none'
+          backgroundImage: 'none',
+          padding: theme.spacing(2)
         }
       }
     }

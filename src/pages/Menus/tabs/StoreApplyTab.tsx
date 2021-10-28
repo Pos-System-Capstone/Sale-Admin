@@ -120,6 +120,7 @@ const StoreApplyTab = () => {
               },
               {
                 title: translate('pages.menus.table.timeRange'),
+                dataIndex: 'timeRange',
                 render: (_: any, { time_range }: StoreInMenu) => (
                   <>
                     {translate('pages.menus.table.fromTime')}{' '}
@@ -131,6 +132,7 @@ const StoreApplyTab = () => {
               },
               {
                 title: translate('pages.menus.table.dayFilter'),
+                dataIndex: 'dayFilter',
                 render: (_: any, { dayFilters, menu_in_store_id: menu_id }: StoreInMenu) => (
                   <Stack direction="row" spacing={1}>
                     {dayFilters?.map((day) => (
