@@ -146,7 +146,7 @@ export default function StoreInMenuForm({
           menu_id: values.menu_id,
           menu_name: values.menu_name,
           menu_in_store_id: storeInMenu?.menu_in_store_id,
-          dayFilters: values.dayFilters,
+          day_filters: values.day_filters,
           store: {
             id: values?.store?.id!,
             store_name: values?.store?.store_name!
@@ -164,7 +164,7 @@ export default function StoreInMenuForm({
         const _storeInMenuData: Partial<StoreInMenu> = {
           menu_id: values.menu_id,
           menu_name: values.menu_name,
-          dayFilters: values.dayFilters,
+          day_filters: values.day_filters,
           store: {
             id: values?.store?.id!,
             store_name: values?.store?.store_name!

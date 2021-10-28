@@ -14,6 +14,7 @@ import {
   ListSubheader,
   Typography
 } from '@mui/material';
+import { Controller } from 'react-hook-form';
 import { useDebounceFn } from 'ahooks';
 import DeleteConfirmDialog from 'components/DelectConfirmDialog';
 import DrawerProductForm from 'components/DrawerProductForm/DrawerProductForm';
@@ -38,6 +39,8 @@ const ProductInMenuTab = ({ id }) => {
   const [currentCate, setCurrentCate] = React.useState(null);
   const [filters, setFilters] = React.useState(null);
   const ref = React.useRef();
+
+  const form = ref.current?.formControl;
 
   const run = ref.current?.reload;
 
@@ -176,13 +179,19 @@ const ProductInMenuTab = ({ id }) => {
                 <ListItemText primary="Tất cả" />
               </ListItemButton>
               {categories?.map(({ cate_id, cate_name }) => (
-                <ListItemButton
+                <Controller
+                  control={form?.control}
+                  name="cat-id"
                   key={`list-button-${cate_id}`}
-                  selected={currentCate === cate_id}
-                  onClick={() => setCurrentCate(cate_id)}
-                >
-                  <ListItemText primary={cate_name} />
-                </ListItemButton>
+                  render={({ field }) => (
+                    <ListItemButton
+                      selected={field.value === cate_id}
+                      onClick={() => field.onChange(cate_id)}
+                    >
+                      <ListItemText primary={cate_name} />
+                    </ListItemButton>
+                  )}
+                />
               ))}
             </List>
           </Grid>
@@ -210,7 +219,8 @@ const ProductInMenuTab = ({ id }) => {
                         variant="square"
                         style={{ width: '54px', height: '54px', zIndex: 1 }}
                       />
-                    )
+                    ),
+                    hideInSearch: true
                   },
                   {
                     title: 'Tên sản phẩm',
@@ -219,12 +229,14 @@ const ProductInMenuTab = ({ id }) => {
                   {
                     title: 'Giá',
                     dataIndex: 'price1',
-                    render: (value) => <Typography>{formatCurrency(value)}</Typography>
+                    render: (value) => <Typography>{formatCurrency(value)}</Typography>,
+                    hideInSearch: true
                   },
                   {
                     title: 'Danh mục',
                     dataIndex: 'cate_name',
-                    render: (cate) => <Chip label={cate} />
+                    render: (cate) => <Chip label={cate} />,
+                    hideInSearch: true
                   },
                   {
                     title: 'Cố định giá',
@@ -233,7 +245,8 @@ const ProductInMenuTab = ({ id }) => {
                       <Label color={isFixed ? 'success' : 'default'}>
                         {isFixed ? 'Cố định' : 'Không'}
                       </Label>
-                    )
+                    ),
+                    hideInSearch: true
                   }
                 ]}
               />

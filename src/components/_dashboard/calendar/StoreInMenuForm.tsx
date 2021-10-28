@@ -47,7 +47,8 @@ const getInitialValues = (
       ? new Date(range.end)
       : convertStrToDate(get(data, ['time_range', 1], moment().format('HH:mm')), 'HH:mm'),
     day_filters: get(data, ['day_filters'], []),
-    allDay: data?.time_range[0] === '00:00' && data?.time_range[1] === '24:00'
+    allDay: data?.time_range[0] === '00:00' && data?.time_range[1] === '24:00',
+    menu_id: get(data, ['menu_id'])
   };
 
   return initState;
@@ -158,90 +159,84 @@ export default function StoreInMenuForm({
 
   return (
     <FormProvider {...form}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <DialogContent sx={{ pb: 0, mt: 2, overflowY: 'unset' }}>
-          <Stack spacing={2}>
-            <SelectField
-              onChange={(e: any) => {
-                setValue('id', e.target.value);
-              }}
-              fullWidth
-              name="id"
-              label="Chọn cửa hàng"
-              defaultValue=""
-              size="small"
-            >
-              {stores?.map(({ id, name }: any) => (
-                <MenuItem value={Number(id)} key={`cate_select_${id}`}>
-                  {name}
-                </MenuItem>
-              ))}
-            </SelectField>
+      <DialogContent sx={{ pb: 0, mt: 2, overflowY: 'unset' }}>
+        <Stack spacing={2}>
+          <SelectField
+            onChange={(e: any) => {
+              setValue('id', e.target.value);
+            }}
+            fullWidth
+            name="id"
+            label="Chọn cửa hàng"
+            defaultValue=""
+            size="small"
+          >
+            {stores?.map(({ id, name }: any) => (
+              <MenuItem value={Number(id)} key={`cate_select_${id}`}>
+                {name}
+              </MenuItem>
+            ))}
+          </SelectField>
 
-            <InputField hidden name="store_name" sx={{ display: 'none' }} />
-            <SwitchField name="allDay" label="Cả ngày" fullWidth />
+          <InputField hidden name="store_name" sx={{ display: 'none' }} />
+          <SwitchField name="allDay" label="Cả ngày" fullWidth />
 
-            <Controller
-              control={control}
-              name="start"
-              render={({
-                field: { onChange, onBlur, value, name, ref },
-                fieldState,
-                formState
-              }) => (
-                <MobileTimePicker
-                  label="Bắt đầu"
-                  inputFormat="hh:mm a"
-                  renderInput={(params) => <TextField {...params} fullWidth sx={{ mb: 3 }} />}
-                  onChange={onChange}
-                  value={value}
-                />
-              )}
-            />
-            <Controller
-              control={control}
-              name="end"
-              render={({
-                field: { onChange, onBlur, value, name, ref },
-                fieldState,
-                formState
-              }) => (
-                <MobileTimePicker
-                  label="Kết thúc"
-                  inputFormat="hh:mm a"
-                  renderInput={(params) => <TextField {...params} fullWidth sx={{ mb: 3 }} />}
-                  onChange={onChange}
-                  value={value}
-                />
-              )}
-            />
-            <SelectField
-              options={DAY_OF_WEEK}
-              fullWidth
-              name="day_filters"
-              multiple
-              label="Ngày hiệu lực"
-            />
-          </Stack>
-        </DialogContent>
+          <Controller
+            control={control}
+            name="start"
+            render={({ field: { onChange, onBlur, value, name, ref }, fieldState, formState }) => (
+              <MobileTimePicker
+                label="Bắt đầu"
+                inputFormat="hh:mm a"
+                renderInput={(params) => <TextField {...params} fullWidth sx={{ mb: 3 }} />}
+                onChange={onChange}
+                value={value}
+              />
+            )}
+          />
+          <Controller
+            control={control}
+            name="end"
+            render={({ field: { onChange, onBlur, value, name, ref }, fieldState, formState }) => (
+              <MobileTimePicker
+                label="Kết thúc"
+                inputFormat="hh:mm a"
+                renderInput={(params) => <TextField {...params} fullWidth sx={{ mb: 3 }} />}
+                onChange={onChange}
+                value={value}
+              />
+            )}
+          />
+          <SelectField
+            options={DAY_OF_WEEK}
+            fullWidth
+            name="day_filters"
+            multiple
+            label="Ngày hiệu lực"
+          />
+        </Stack>
+      </DialogContent>
 
-        <DialogActions>
-          {!isCreating && (
-            <Tooltip title="Delete Event">
-              <IconButton onClick={handleDelete} size="large">
-                <Icon icon={trash2Fill} width={20} height={20} />
-              </IconButton>
-            </Tooltip>
-          )}
-          <Box sx={{ flexGrow: 1 }} />
-          <Button type="button" variant="outlined" color="inherit" onClick={onCancel}>
-            {translate('common.cancel')}
-          </Button>
-          <Button type="submit" variant="contained">
-            {translate('common.create')}
-          </Button>
-        </DialogActions>
-      </form>
+      <DialogActions>
+        {!isCreating && (
+          <Tooltip title="Delete Event">
+            <IconButton onClick={handleDelete} size="large">
+              <Icon icon={trash2Fill} width={20} height={20} />
+            </IconButton>
+          </Tooltip>
+        )}
+        <Box sx={{ flexGrow: 1 }} />
+        <Button type="button" variant="outlined" color="inherit" onClick={onCancel}>
+          {translate('common.cancel')}
+        </Button>
+        <Button
+          onClick={() => handleSubmit(onSubmit, console.log)()}
+          type="submit"
+          variant="contained"
+        >
+          {isCreating ? translate('common.create') : translate('common.update')}
+        </Button>
+      </DialogActions>
     </FormProvider>
   );
 }

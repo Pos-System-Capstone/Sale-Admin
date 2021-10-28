@@ -41,6 +41,18 @@ export const productColumns: TTableColumn<TProductBase>[] = [
     render: (type) => <Chip label={PRODUCT_TYPE_DATA.find(({ value }) => value === type)?.label} />
   },
   {
+    title: 'Thực đơn',
+    dataIndex: 'product_in_menu',
+    hideInSearch: true,
+    render: (productInMenus) => (
+      <Label color={!productInMenus?.length ? 'default' : 'info'}>
+        {!productInMenus?.length
+          ? 'Chưa được bán ở thực đơn nào'
+          : `Đang bán trong ${productInMenus.length} thực đơn`}
+      </Label>
+    )
+  },
+  {
     title: 'Trạng thái',
     dataIndex: 'is_available',
     width: 150,

@@ -11,6 +11,9 @@ export const getCellValue = (cell: any, ...args: any[]) => {
   }
 };
 
+export const removeEmptyField = (obj: any) =>
+  Object.fromEntries(Object.entries(obj).filter(([_, v]) => v != null && v !== ''));
+
 export const transformParamToHyphen = (params: any) => {
   const transformParams: any = {};
 
@@ -22,5 +25,5 @@ export const transformParamToHyphen = (params: any) => {
     }
   }
 
-  return transformParams;
+  return removeEmptyField(transformParams);
 };

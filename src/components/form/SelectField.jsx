@@ -7,16 +7,14 @@ const SelectField = ({
   name,
   label,
   size = 'small',
-  children = null,
   fullWidth = false,
   rules = null,
   disabled = false,
-
   className = null,
   multiple = false,
   ...props
 }) => {
-  const { options = null } = props;
+  const { options = null, children = null } = props;
   const { control } = useFormContext();
 
   return (

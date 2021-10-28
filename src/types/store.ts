@@ -17,7 +17,7 @@ export type StoreInMenu = {
   menu_id?: number;
   menu_name?: string | null;
   time_range: string[];
-  dayFilters: number[];
+  day_filters: number[];
   store: {
     id: number;
     store_name: string;

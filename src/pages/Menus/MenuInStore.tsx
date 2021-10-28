@@ -44,7 +44,7 @@ const transformSIMtoEvent = (storeInMenus: StoreInMenu[] = []): EventInput[] =>
     // end: moment(sInMenu.time_range[1], 'HH:mm').toDate(),
     startTime: moment(sInMenu.time_range[0], 'HH:mm').format('HH:mm:ss'),
     endTime: moment(sInMenu.time_range[1], 'HH:mm').format('HH:mm:ss'),
-    daysOfWeek: sInMenu.dayFilters,
+    daysOfWeek: sInMenu.day_filters,
     allDay: sInMenu.time_range[0] === '00:00' && sInMenu.time_range[1] === '24:00',
     textColor: COLOR_OPTIONS[sInMenu.store.id % COLOR_OPTIONS.length],
     groupId: `menu_${sInMenu.menu_in_store_id}`,
@@ -60,7 +60,7 @@ const tranform = (input: MenuInStoreAdmin[]): StoreInMenu[] => {
         ...mInStore.menus.map<StoreInMenu>((menu, idx) => ({
           menu_in_store_id: output.length + idx + 1,
           store: { id: mInStore.id, store_name: mInStore.name },
-          dayFilters: menu.day_filters,
+          day_filters: menu.day_filters,
           time_range: menu.time_range,
           menu_id: menu.menu_id,
           menu_name: menu.menu_name
@@ -105,7 +105,7 @@ export default function MenuInStorePage() {
   const handleAddEvent = async (storeData: Omit<StoreInMenu, 'menu_in_store_id'>) => {
     console.log(`storeData`, storeData);
     const _storeInMenuData: Partial<TStoreApplyMenuRequest> = {
-      day_filters: storeData.dayFilters,
+      day_filters: storeData.day_filters,
       store_id: storeData.store.id,
       time_range: [
         storeData.allDay ? '00:00' : storeData.time_range[0],
@@ -182,7 +182,7 @@ export default function MenuInStorePage() {
         updateSInMens[mInStoreIdx] = {
           ...updateSInMens[mInStoreIdx],
           time_range: [startTime, endTime],
-          dayFilters: daysOfWeek
+          day_filters: daysOfWeek
         };
         setappliedStores(updateSInMens);
         enqueueSnackbar('Update event success', {
@@ -278,7 +278,7 @@ export default function MenuInStorePage() {
           <Box>
             <Typography variant="subtitle1">{translate('pages.menus.table.dayFilter')}</Typography>
             <Stack direction="row" spacing={1}>
-              {popoverStoreInMenu.dayFilters?.map((day) => (
+              {popoverStoreInMenu.day_filters?.map((day) => (
                 <Chip
                   size="small"
                   key={`${popoverStoreInMenu.menu_in_store_id}-${day}`}

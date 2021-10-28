@@ -41,7 +41,7 @@ const transformSIMtoEvent = (storeInMenus: StoreInMenu[] = []): EventInput[] =>
     // end: moment(sInMenu.time_range[1], 'HH:mm').toDate(),
     startTime: moment(sInMenu.time_range[0], 'HH:mm').format('HH:mm:ss'),
     endTime: moment(sInMenu.time_range[1], 'HH:mm').format('HH:mm:ss'),
-    daysOfWeek: sInMenu.dayFilters,
+    daysOfWeek: sInMenu.day_filters,
     allDay: sInMenu.time_range[0] === '00:00' && sInMenu.time_range[1] === '24:00',
     textColor: COLOR_OPTIONS[sInMenu.store.id % COLOR_OPTIONS.length],
     groupId: `menu_${sInMenu.menu_in_store_id}`,
@@ -61,7 +61,7 @@ export default function MenuOfStorePage() {
     {
       menu_id: 1,
       menu_name: 'Thực đơn 1',
-      dayFilters: [1, 2],
+      day_filters: [1, 2],
       store: { id: 1161, store_name: 'store của tuấn' },
       time_range: ['02:30', '03:30'],
       menu_in_store_id: 0
@@ -146,7 +146,7 @@ export default function MenuOfStorePage() {
         updateSInMens[mInStoreIdx] = {
           ...updateSInMens[mInStoreIdx],
           time_range: [startTime, endTime],
-          dayFilters: daysOfWeek
+          day_filters: daysOfWeek
         };
         setappliedStores(updateSInMens);
         enqueueSnackbar('Update event success', {
@@ -228,7 +228,7 @@ export default function MenuOfStorePage() {
           <Box>
             <Typography variant="subtitle1">{translate('pages.menus.table.dayFilter')}</Typography>
             <Stack direction="row" spacing={1}>
-              {popoverStoreInMenu.dayFilters?.map((day) => (
+              {popoverStoreInMenu.day_filters?.map((day) => (
                 <Chip
                   size="small"
                   key={`${popoverStoreInMenu.menu_in_store_id}-${day}`}

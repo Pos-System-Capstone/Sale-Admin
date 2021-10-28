@@ -27,6 +27,11 @@ export const PRODUCT_TYPE_DATA = [
     label: 'SP Đơn'
   },
   {
+    value: PRODUCT_DETAIL,
+    typeCode: 'child',
+    label: 'SP Con'
+  },
+  {
     value: PRODUCT_EXTRA,
     typeCode: 'extra',
     label: 'SP Extra'

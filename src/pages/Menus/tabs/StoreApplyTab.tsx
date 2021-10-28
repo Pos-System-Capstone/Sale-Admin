@@ -19,6 +19,7 @@ import {
   getStoreApplyMenus,
   updateStoreApplyMenus
 } from 'redux/menu/api';
+import { TStoreApplyMenuRequest } from 'types/menu';
 import { StoreInMenu } from 'types/store';
 
 const StoreApplyTab = () => {
@@ -56,8 +57,8 @@ const StoreApplyTab = () => {
 
   const handleAddStoreApply = (values: any) => addStoreApplyMenus(+id, values).then(run);
 
-  const handleUpdate = (values: StoreInMenu) =>
-    updateStoreApplyMenus(+id, values.store.id, values).then(run);
+  const handleUpdate = (values: TStoreApplyMenuRequest) =>
+    updateStoreApplyMenus(+id, values.store_id, values).then(run);
 
   const handleDelete = (data: StoreInMenu) =>
     deleteStoreApplyMenus(+id, data?.store.id)
@@ -132,8 +133,11 @@ const StoreApplyTab = () => {
               },
               {
                 title: translate('pages.menus.table.dayFilter'),
-                dataIndex: 'dayFilter',
-                render: (_: any, { dayFilters, menu_in_store_id: menu_id }: StoreInMenu) => (
+                dataIndex: 'day_filters',
+                render: (
+                  _: any,
+                  { day_filters: dayFilters, menu_in_store_id: menu_id }: StoreInMenu
+                ) => (
                   <Stack direction="row" spacing={1}>
                     {dayFilters?.map((day) => (
                       <Chip

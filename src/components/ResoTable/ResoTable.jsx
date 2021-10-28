@@ -185,7 +185,8 @@ const ResoTable = (
   };
 
   React.useImperativeHandle(ref, () => ({
-    reload: () => search?.submit()
+    reload: () => search?.submit(),
+    formControl: form
   }));
 
   React.useEffect(() => {

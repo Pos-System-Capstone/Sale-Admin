@@ -54,6 +54,7 @@ export type TProductBase = {
   tags?: string[];
   atts?: string[];
   groups?: TGroupProduct[];
+  product_in_menu?: TProductInMenu[];
 };
 
 export type TProductMaster = TProductBase & {
