@@ -10,33 +10,39 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- task: Npm@1
+# - task: Npm@1
 
-  displayName: 'installing dependencies'
+#   displayName: 'installing dependencies'
 
+#   inputs:
+
+#     workingDir: '$(System.DefaultWorkingDirectory)'
+
+#     verbose: false
+- task: Yarn@3
   inputs:
+    projectDirectory: '$(System.DefaultWorkingDirectory)'
+    arguments: 'yarn install'
+    productionMode: true
 
-    workingDir: '$(System.DefaultWorkingDirectory)'
+# - task: Npm@1
 
-    verbose: false
+#   displayName: 'building app'
 
+#   inputs:
 
+#     command: custom
 
-- task: Npm@1
+#     workingDir: '$(System.DefaultWorkingDirectory)'
 
-  displayName: 'building app'
+#     verbose: false
 
+#     customCommand: 'run-script build'
+
+- task: Yarn@3
   inputs:
-
-    command: custom
-
-    workingDir: '$(System.DefaultWorkingDirectory)'
-
-    verbose: false
-
-    customCommand: 'run-script build'
-
-
+    projectDirectory: '$(System.DefaultWorkingDirectory)'
+    arguments: 'yarn run build'
 
 - task: CopyFiles@2
 
