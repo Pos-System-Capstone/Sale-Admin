@@ -74,7 +74,8 @@ const StickyRightTableCell = withStyles((theme) => ({
     minWidth: '50px',
     right: '0',
     position: 'sticky',
-    zIndex: theme.zIndex.modal
+    zIndex: theme.zIndex.modal,
+    backgroundColor: 'white'
     // borderLeft: `1px solid ${theme.palette.grey[400]}`
   }
 }))(TableCell);
@@ -91,7 +92,8 @@ const useStyles = makeStyles((theme) => ({
   stickyLeft: {
     width: '60px',
     position: 'sticky',
-    left: (props) => props.left ?? '0'
+    left: (props) => props.left ?? '0',
+    backgroundColor: 'white'
     // borderRight: `1px solid ${theme.palette.grey[400]}`
   },
   stickyRight: {

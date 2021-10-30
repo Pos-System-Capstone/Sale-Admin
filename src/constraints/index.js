@@ -22,7 +22,7 @@ export const PRODUCT_TYPE_DATA = [
     label: 'SP Combo'
   },
   {
-    value: PRODUCT_SINGLE,
+    value: `${PRODUCT_SINGLE}`,
     typeCode: 'single',
     label: 'SP Đơn'
   },

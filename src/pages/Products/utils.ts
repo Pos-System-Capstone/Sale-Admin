@@ -1,3 +1,6 @@
+import { ContentState, convertToRaw, EditorState } from 'draft-js';
+import draftToHtml from 'draftjs-to-html';
+import htmlToDraft from 'html-to-draftjs';
 import { TProductMaster } from 'types/product';
 import { getCbn } from 'utils/utils';
 import { UpdateProductForm } from './type';
@@ -15,6 +18,15 @@ export const transformProductForm = (values: UpdateProductForm) => {
     // }));
   }
   return transformData;
+};
+
+export const normalizeProduct = (values: UpdateProductForm) => {
+  const data = { ...values };
+  data.description = draftToHtml(
+    convertToRaw((data.description as any as EditorState).getCurrentContent())
+  );
+
+  return data;
 };
 
 export const transformProductData = (values: TProductMaster) => {
@@ -37,6 +49,14 @@ export const transformProductData = (values: TProductMaster) => {
       }
     }
   });
+  const html = transformData.description;
+  const contentBlock = htmlToDraft(html ?? '');
+  if (contentBlock) {
+    const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
+    const editorState = EditorState.createWithContent(contentState);
+    transformData.description = editorState as any as string;
+  }
 
+  console.log(`transformData`, transformData);
   return transformData;
 };

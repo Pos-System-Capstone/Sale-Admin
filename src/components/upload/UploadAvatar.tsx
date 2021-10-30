@@ -98,7 +98,7 @@ export default function UploadAvatar({
             onFormChange(res.data);
           }
         } catch (err) {
-          enqueueSnackbar(err.message ?? 'Có lỗi', {
+          enqueueSnackbar((err as any).message ?? 'Có lỗi', {
             variant: 'error'
           });
           console.log(`err`, err);

@@ -39,7 +39,7 @@ const RadioGroupField = (props) => {
           disabled={disabled}
         >
           <FormLabel component="legend">{label}</FormLabel>
-          <RadioGroup name={name} {...field} {...others}>
+          <RadioGroup name={name} {...field} value={`${field.value}`} {...others}>
             {children ??
               options?.map(({ label, value, id }) => (
                 <FormControlLabel

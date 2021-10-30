@@ -16,7 +16,7 @@ import { getProdById, updateProdById } from '../../redux/product/api';
 import MiddleForm from './components/MiddleForm';
 import RightForm from './components/RightForm';
 import { DEFAULT_VALUES, UpdateProductForm, validationSchema } from './type';
-import { transformProductData, transformProductForm } from './utils';
+import { normalizeProduct, transformProductData, transformProductForm } from './utils';
 
 const UpdateProduct = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -45,8 +45,9 @@ const UpdateProduct = () => {
     }
   }, [data, reset]);
 
-  const onSubmit = (values: UpdateProductForm) =>
-    updateProdById(id, transformProductForm(values))
+  const onSubmit = (values: UpdateProductForm) => {
+    const data = normalizeProduct(values);
+    return updateProdById(id, transformProductForm(data))
       .then((res) => {
         enqueueSnackbar(`Cập nhật thành công ${values.product_name}`, {
           variant: 'success'
@@ -57,6 +58,7 @@ const UpdateProduct = () => {
           variant: 'error'
         });
       });
+  };
 
   if (loading) {
     return (

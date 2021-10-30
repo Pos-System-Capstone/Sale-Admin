@@ -67,7 +67,7 @@ export default function AccountGeneral() {
         }
       } catch (error) {
         if (isMountedRef.current) {
-          setErrors({ afterSubmit: error.code });
+          setErrors({ afterSubmit: (error as any).code });
           setSubmitting(false);
         }
       }

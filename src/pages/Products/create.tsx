@@ -1,26 +1,22 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-plusplus */
 /* eslint-disable react/prop-types */
-import { Box, Button, Stack, Typography, useTheme } from '@mui/material';
-import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { Box, Button, Stack, Typography, useTheme } from '@mui/material';
+import { convertToRaw, EditorState } from 'draft-js';
+import draftToHtml from 'draftjs-to-html';
+import { useSnackbar } from 'notistack';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { useSnackbar } from 'notistack';
-import { getCbn } from 'utils/utils';
-import { ProductTypeEnum } from 'types/product';
-
+import LoadingAsyncButton from '../../components/LoadingAsyncButton/LoadingAsyncButton';
 import Page from '../../components/Page';
-
+import useDashboard from '../../hooks/useDashboard';
+import { DashboardNavLayout } from '../../layouts/dashboard/DashboardNavbar';
+import { createMasterProd } from '../../redux/product/api';
 import MiddleForm from './components/MiddleForm';
 import RightForm from './components/RightForm';
-import { PRODUCT_MASTER } from '../../constraints';
-import { createMasterProd } from '../../redux/product/api';
-import { DashboardNavLayout } from '../../layouts/dashboard/DashboardNavbar';
-import useDashboard from '../../hooks/useDashboard';
-import LoadingAsyncButton from '../../components/LoadingAsyncButton/LoadingAsyncButton';
-import { DEFAULT_VALUES, UpdateProductForm, validationSchema } from './type';
-import { transformProductForm } from './utils';
+import { UpdateProductForm, validationSchema } from './type';
+import { normalizeProduct, transformProductForm } from './utils';
 
 const CreateProduct = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -29,23 +25,13 @@ const CreateProduct = () => {
   const theme = useTheme();
 
   const methods = useForm<UpdateProductForm>({
-    resolver: yupResolver(validationSchema),
-    defaultValues: {
-      ...DEFAULT_VALUES,
-      variants: [
-        {
-          optName: 'size',
-          values: []
-        }
-      ]
-    }
+    resolver: yupResolver(validationSchema)
   });
   const { handleSubmit } = methods;
 
   const onSubmit = (values: UpdateProductForm) => {
-    console.log(`values`, values);
-
-    return createMasterProd(transformProductForm(values))
+    const data = normalizeProduct(values);
+    return createMasterProd(transformProductForm(data))
       .then((res) => {
         enqueueSnackbar(`Tạo thành công ${values.product_name}`, {
           variant: 'success'

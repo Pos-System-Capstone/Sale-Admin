@@ -37,8 +37,9 @@ export const productColumns: TTableColumn<TProductBase>[] = [
   {
     title: 'Loại Sản Phẩm',
     dataIndex: 'product_type',
-    hideInSearch: true,
-    render: (type) => <Chip label={PRODUCT_TYPE_DATA.find(({ value }) => value === type)?.label} />
+    valueType: 'select',
+    valueEnum: PRODUCT_TYPE_DATA,
+    render: (type) => <Chip label={PRODUCT_TYPE_DATA.find(({ value }) => value == type)?.label} />
   },
   {
     title: 'Thực đơn',
