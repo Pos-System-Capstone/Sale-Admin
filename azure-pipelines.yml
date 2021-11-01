@@ -5,23 +5,47 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- task: YarnInstaller@3
-  displayName: 'Intall Yarn'
+- task: NodeTool@0
+
+  displayName: 'Use Node version 14x'
+
   inputs:
-    versionSpec: '1.x'
+
+    versionSpec: 14.x
+
     checkLatest: true
-- task: Yarn@3
-  displayName: 'Install dependencies'
+
+- task: YarnInstaller@3
+
+  displayName: 'Intall Yarn'
+
   inputs:
+
+    versionSpec: '1.x'
+
+    checkLatest: true
+
+- task: Yarn@3
+
+  displayName: 'Install dependencies'
+
+  inputs:
+
     projectDirectory: '$(System.DefaultWorkingDirectory)'
+
     arguments: 'yarn install'
+
     productionMode: true
 
 
 - task: Yarn@3
+
   displayName: 'Build'
+
   inputs:
+
     projectDirectory: '$(System.DefaultWorkingDirectory)'
+
     arguments: 'run build'
 
 - task: CopyFiles@2
@@ -35,8 +59,6 @@ steps:
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
     OverWrite: true
-
-
 
 - task: PublishBuildArtifacts@1
 
