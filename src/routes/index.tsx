@@ -82,7 +82,7 @@ export default function Router() {
         </AuthGuard>
       ),
       children: [
-        { path: '/', element: <Navigate to="/dashboard/app" replace /> },
+        { path: '', element: <Navigate to="/dashboard/app" replace /> },
         { path: 'app', element: <GeneralApp /> },
         { path: 'ecommerce', element: <GeneralEcommerce /> },
         {
@@ -92,48 +92,48 @@ export default function Router() {
         {
           path: 'products',
           children: [
-            { path: '/', element: <Products /> },
+            { path: '', element: <Products /> },
             { path: 'new', element: <CreateProduct /> },
-            { path: '/:id', element: <UpdateProduct /> },
+            { path: ':id', element: <UpdateProduct /> },
             { path: 'master', element: <Products /> }
           ]
         },
         {
           path: 'collections',
           children: [
-            { path: '/', element: <CollectionListPage /> },
+            { path: '', element: <CollectionListPage /> },
             { path: 'new', element: <CreateCollectionPage /> },
-            { path: '/:id', element: <UpdateCollectionPage /> }
+            { path: ':id', element: <UpdateCollectionPage /> }
           ]
         },
         {
           path: 'categories',
-          children: [{ path: '/', element: <CategoryListPage /> }]
+          children: [{ path: '', element: <CategoryListPage /> }]
         },
         {
           path: 'menus',
           children: [
-            { path: '/', element: <MenusPage /> },
-            { path: '/:id', element: <UpdateMenuPage /> }
+            { path: '', element: <MenusPage /> },
+            { path: ':id', element: <UpdateMenuPage /> }
           ]
         },
-        { path: '/menu-in-store', element: <MenuInStorePage /> },
+        { path: 'menu-in-store', element: <MenuInStorePage /> },
         {
           path: 'customers',
           children: [
-            { path: '/', element: <CustomerListPage /> },
+            { path: '', element: <CustomerListPage /> },
             { path: 'new', element: <ComingSoon /> }
           ]
         },
         {
           path: 'stores',
           children: [
-            { path: '/', element: <StoreListPage /> },
+            { path: '', element: <StoreListPage /> },
             {
-              path: '/new',
+              path: 'new',
               element: <CreateStorePage />
             },
-            { path: '/:id', element: <UpdateStorePage /> }
+            { path: ':id', element: <UpdateStorePage /> }
           ]
         }
       ]
@@ -149,24 +149,24 @@ export default function Router() {
         </AuthGuard>
       ),
       children: [
-        { path: '/', element: <Navigate to="/store-admin/orders" replace /> },
+        { path: '', element: <Navigate to="/store-admin/orders" replace /> },
         { path: 'app', element: <GeneralApp /> },
 
         {
           path: 'orders',
           children: [
-            { path: '/', element: <OrderListPage /> },
+            { path: '', element: <OrderListPage /> },
             {
-              path: '/new',
+              path: 'new',
               element: <CreateStorePage />
             },
-            { path: '/:id', element: <UpdateStorePage /> }
+            { path: ':id', element: <UpdateStorePage /> }
           ]
         },
         {
           path: 'blog',
           children: [
-            { path: '/', element: <Navigate to="/dashboard/blog/posts" replace /> },
+            { path: '', element: <Navigate to="/dashboard/blog/posts" replace /> },
             { path: 'posts', element: <BlogPosts /> },
             { path: 'post/:title', element: <BlogPost /> },
             { path: 'new-post', element: <BlogNewPost /> }
