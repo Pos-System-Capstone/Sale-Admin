@@ -80,7 +80,7 @@ export default function UserNewForm({ isEdit, currentUser }: UserNewFormProps) {
       } catch (error) {
         console.error(error);
         setSubmitting(false);
-        setErrors(error);
+        setErrors(error as any);
       }
     }
   });

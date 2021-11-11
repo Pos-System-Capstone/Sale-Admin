@@ -43,7 +43,7 @@ export default function ResetPasswordForm({ onSent, onGetEmail }: ResetPasswordF
       } catch (error) {
         console.error(error);
         if (isMountedRef.current) {
-          setErrors({ afterSubmit: error.message });
+          setErrors({ afterSubmit: (error as any).message });
           setSubmitting(false);
         }
       }

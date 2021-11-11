@@ -105,7 +105,7 @@ export default function CheckoutPayment() {
       } catch (error) {
         console.error(error);
         setSubmitting(false);
-        setErrors(error.message);
+        setErrors((error as any).message);
       }
     }
   });
