@@ -2,12 +2,7 @@ import { Box, Divider, Stack, Typography } from '@mui/material';
 import { DraftEditor, QuillEditor } from 'components/editor';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
-import {
-  CheckBoxField,
-  InputField,
-  RadioGroupField,
-  UploadImageField
-} from '../../../components/form';
+import { InputField, RadioGroupField, UploadImageField } from '../../../components/form';
 import { PRODUCT_MASTER, PRODUCT_SINGLE, PRODUCT_TYPE_DATA } from '../../../constraints';
 import VariantForm from '../VariantForm';
 import { Card, CardTitle } from './Card';
@@ -27,9 +22,8 @@ const MiddleForm: React.FC<Props> = ({ updateMode }) => {
       <Card id="product-detail">
         <Box textAlign="left">
           <CardTitle mb={2} variant="subtitle1">
-            Thông tin sản phẩm
+            Chi tiết sản phẩm
           </CardTitle>
-          <CheckBoxField label="Hiển thị trên web" name="isVisible" />
           <Stack spacing={2} direction="row" width="100%">
             <UploadImageField.Avatar label="Ảnh đại diện" name="pic_url" />
             <Stack spacing={2} flex={1}>
