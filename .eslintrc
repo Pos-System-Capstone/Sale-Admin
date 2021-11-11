@@ -2,6 +2,7 @@
   "plugins": ["prettier", "@typescript-eslint"],
   "extends": ["react-app", "prettier"],
   "parser": "@typescript-eslint/parser",
+  "eslint.workingDirectories": [{ "mode": "auto" }],
   "parserOptions": {
     "project": "./tsconfig.json"
   },
