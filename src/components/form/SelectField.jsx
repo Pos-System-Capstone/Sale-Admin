@@ -6,15 +6,19 @@ import { Controller, useFormContext } from 'react-hook-form';
 const SelectField = ({
   name,
   label,
-  size = 'small',
-  fullWidth = false,
-  rules = null,
-  disabled = false,
-  className = null,
-  multiple = false,
+
   ...props
 }) => {
-  const { options = null, children = null } = props;
+  const {
+    options = null,
+    children = null,
+    size = 'small',
+    fullWidth = false,
+    rules = null,
+    disabled = false,
+    className = null,
+    multiple = false
+  } = props;
   const { control } = useFormContext();
 
   return (

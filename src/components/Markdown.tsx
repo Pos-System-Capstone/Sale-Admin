@@ -93,14 +93,14 @@ export default function Markdown({ ...other }: ReactMarkdown.ReactMarkdownOption
       <ReactMarkdown
         rehypePlugins={[rehypeRaw, rehypeHighlight]}
         components={{
-          h1: (props) => <Typography variant="h1" {...props} />,
-          h2: (props) => <Typography variant="h2" {...props} />,
-          h3: (props) => <Typography variant="h3" {...props} />,
-          h4: (props) => <Typography variant="h4" {...props} />,
-          h5: (props) => <Typography variant="h5" {...props} />,
-          h6: (props) => <Typography variant="h6" {...props} />,
-          p: (props) => <Typography variant="body1" {...props} />,
-          hr: (props) => <Divider sx={{ my: 3 }} {...props} />,
+          h1: (props) => <Typography variant="h1" {...(props as any)} />,
+          h2: (props) => <Typography variant="h2" {...(props as any)} />,
+          h3: (props) => <Typography variant="h3" {...(props as any)} />,
+          h4: (props) => <Typography variant="h4" {...(props as any)} />,
+          h5: (props) => <Typography variant="h5" {...(props as any)} />,
+          h6: (props) => <Typography variant="h6" {...(props as any)} />,
+          p: (props) => <Typography variant="body1" {...(props as any)} />,
+          hr: (props) => <Divider sx={{ my: 3 }} {...(props as any)} />,
           a: LinkTo
         }}
         {...other}

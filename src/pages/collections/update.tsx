@@ -50,7 +50,7 @@ const UpdateCollectionPage = () => {
   });
 
   const onUpdateCollection = (values: TCollection) =>
-    updateCollection(+id, values)
+    updateCollection(+id!, values)
       .then(() =>
         enqueueSnackbar(translate('common.201'), {
           variant: 'success'

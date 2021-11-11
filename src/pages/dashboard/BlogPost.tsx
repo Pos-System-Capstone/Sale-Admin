@@ -47,8 +47,8 @@ export default function BlogPost() {
   const { post, error, recentPosts } = useSelector((state: { blog: BlogState }) => state.blog);
 
   useEffect(() => {
-    dispatch(getPost(title));
-    dispatch(getRecentPosts(title));
+    dispatch(getPost(title!));
+    dispatch(getRecentPosts(title!));
   }, [dispatch, title]);
 
   return (
@@ -59,7 +59,7 @@ export default function BlogPost() {
           links={[
             { name: 'Dashboard', href: PATH_DASHBOARD.root },
             { name: 'Blog', href: PATH_DASHBOARD.blog.root },
-            { name: sentenceCase(title) }
+            { name: sentenceCase(title!) }
           ]}
         />
 

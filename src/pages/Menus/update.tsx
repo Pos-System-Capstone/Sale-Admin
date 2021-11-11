@@ -53,7 +53,7 @@ const UpdateMenuPage = () => {
   });
 
   const onUpdateMenu = (updateMenu: any) =>
-    updateMenuInfo(+id, updateMenu)
+    updateMenuInfo(+id!, updateMenu)
       .then(() =>
         enqueueSnackbar(`Cập nhật thành công`, {
           variant: 'success'

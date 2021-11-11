@@ -31,7 +31,7 @@ const Transition = forwardRef(
       children?: React.ReactElement;
     },
     ref: React.Ref<unknown>
-  ) => <Slide direction="up" ref={ref} {...props} />
+  ) => <Slide direction="up" ref={ref} {...(props as any)} />
 );
 
 type Props = {
