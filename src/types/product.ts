@@ -55,6 +55,8 @@ export type TProductBase = {
   atts?: string[];
   groups?: TGroupProduct[];
   product_in_menu?: TProductInMenu[];
+  /** Giá của sản phẩm sẽ được sử dụng khi sản phẩm này không được cấu hình giá ở bảng `ProductInMenu` */
+  price?: number;
 };
 
 export type TProductMaster = TProductBase & {
