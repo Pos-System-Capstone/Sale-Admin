@@ -121,6 +121,7 @@ const ResoTable = (
     showAction = true,
     disabledSelections = [],
     showFilter = true,
+    showSettings = true,
     ...props
   },
   ref = null
@@ -570,40 +571,42 @@ const ResoTable = (
             <TableFilterForm controls={columns} />
           </Box>
         )}
-        <Box py={1}>
-          <Stack direction="row">
-            <Box ml="auto">
-              <Stack spacing={1} direction="row">
-                {form.formState.isDirty && (
-                  <Button
-                    startIcon={<ClearAllOutlined />}
-                    onClick={() => form.reset({})}
-                    disableRipple
+        {showSettings && (
+          <Box py={1}>
+            <Stack direction="row">
+              <Box ml="auto">
+                <Stack spacing={1} direction="row">
+                  {form.formState.isDirty && (
+                    <Button
+                      startIcon={<ClearAllOutlined />}
+                      onClick={() => form.reset({})}
+                      disableRipple
+                    >
+                      {t('resoTable.clearFilters')}
+                    </Button>
+                  )}
+                  <IconButton size="small" onClick={search?.submit}>
+                    {loading ? <CircularProgress style={{ width: 24, height: 24 }} /> : <Replay />}
+                  </IconButton>
+                  <IconButton size="small" onClick={(e) => setSettingColEl(e.currentTarget)}>
+                    <SettingsOutlined />
+                  </IconButton>
+                  <Popover
+                    open={Boolean(_settingColEl)}
+                    anchorEl={_settingColEl}
+                    onClose={() => setSettingColEl(null)}
+                    anchorOrigin={{
+                      vertical: 'bottom',
+                      horizontal: 'left'
+                    }}
                   >
-                    {t('resoTable.clearFilters')}
-                  </Button>
-                )}
-                <IconButton size="small" onClick={search?.submit}>
-                  {loading ? <CircularProgress style={{ width: 24, height: 24 }} /> : <Replay />}
-                </IconButton>
-                <IconButton size="small" onClick={(e) => setSettingColEl(e.currentTarget)}>
-                  <SettingsOutlined />
-                </IconButton>
-                <Popover
-                  open={Boolean(_settingColEl)}
-                  anchorEl={_settingColEl}
-                  onClose={() => setSettingColEl(null)}
-                  anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'left'
-                  }}
-                >
-                  {settingColumns()}
-                </Popover>
-              </Stack>
-            </Box>
-          </Stack>
-        </Box>
+                    {settingColumns()}
+                  </Popover>
+                </Stack>
+              </Box>
+            </Stack>
+          </Box>
+        )}
         <TableContainer sx={{ maxHeight: scroll?.y, maxWidth: scroll?.x }}>
           <Table stickyHeader>
             <TableHead>{tableHeader}</TableHead>
