@@ -120,6 +120,7 @@ const ResoTable = (
     scroll = null,
     showAction = true,
     disabledSelections = [],
+    showFilter = true,
     ...props
   },
   ref = null
@@ -350,7 +351,7 @@ const ResoTable = (
         let cell;
 
         if (typeof column.render === 'function') {
-          cell = column.render(get(data, column.dataIndex, '-'), data) ?? '-';
+          cell = column.render(get(data, column.dataIndex, '-'), data, idx) ?? '-';
         } else {
           cell = (
             <Typography variant="subtitle2" noWrap>
@@ -564,9 +565,11 @@ const ResoTable = (
   return (
     <FormProvider {...form}>
       <Container style={{ padding: 0 }}>
-        <Box py={2}>
-          <TableFilterForm controls={columns} />
-        </Box>
+        {showFilter && (
+          <Box py={2}>
+            <TableFilterForm controls={columns} />
+          </Box>
+        )}
         <Box py={1}>
           <Stack direction="row">
             <Box ml="auto">
