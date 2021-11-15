@@ -1,13 +1,7 @@
-import { ProductTypeEnum, TProductMaster } from 'types/product';
+import { CreateProductForm, ProductTypeEnum, TProductMaster } from 'types/product';
 import * as yup from 'yup';
 
-export type UpdateProductForm = TProductMaster & {
-  variants: {
-    optName: string;
-    values: string[];
-  }[];
-  hasVariant?: boolean;
-};
+export type UpdateProductForm = CreateProductForm;
 
 export const DEFAULT_VALUES: UpdateProductForm = {
   code: 'TEST',

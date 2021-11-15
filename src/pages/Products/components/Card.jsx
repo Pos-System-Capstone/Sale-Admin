@@ -1,4 +1,4 @@
-import { Card as MuiCard, Typography } from '@mui/material';
+import { Card as MuiCard, Stack, Typography } from '@mui/material';
 import { styled } from '@mui/styles';
 
 export const StickyCard = styled(MuiCard)({
@@ -9,17 +9,18 @@ export const StickyCard = styled(MuiCard)({
   // left: 0
 });
 
-export const Card = styled(MuiCard)({
+export const Card = styled((props) => (
+  <MuiCard {...props}>
+    <Stack spacing={2}>{props.children}</Stack>
+  </MuiCard>
+))({
   textAlign: 'left',
   padding: '1em',
   marginBottom: '1em'
 });
 
 export const CardTitle = styled(Typography)({
-  borderBottom: '1px solid',
-  borderColor: 'gray',
   display: 'inline-block',
-  paddingBottom: '0.25rem',
-  marginBottom: '1rem',
-  textAlign: 'left'
+  textAlign: 'left',
+  marginBottom: '0px'
 });

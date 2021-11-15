@@ -12,7 +12,7 @@ const AutoCompleteField = ({
   ...props
 }) => {
   const { control } = useFormContext();
-  const { transformValue } = props;
+  const { transformValue, multiple } = props;
 
   return (
     <Controller
@@ -41,7 +41,7 @@ const AutoCompleteField = ({
       )}
       name={name}
       control={control}
-      defaultValue={defaultValue}
+      defaultValue={multiple ? [] : ''}
       rules={rules}
     />
   );

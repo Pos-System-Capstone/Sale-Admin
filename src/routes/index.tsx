@@ -2,11 +2,11 @@ import { Suspense, lazy } from 'react';
 import { Navigate, useRoutes, useLocation } from 'react-router-dom';
 // layouts
 import BlogPosts from 'pages/dashboard/BlogPosts';
-import BlogPost from 'pages/dashboard/BlogPost';
-import BlogNewPost from 'pages/dashboard/BlogNewPost';
-import MainLayout from '../layouts/main';
 import DashboardLayout from '../layouts/dashboard';
 import LogoOnlyLayout from '../layouts/LogoOnlyLayout';
+// static
+import BlogPost from 'pages/dashboard/BlogPost';
+import BlogNewPost from 'pages/dashboard/BlogNewPost';
 // guards
 import AuthGuard from '../guards/AuthGuard';
 import GuestGuard from '../guards/GuestGuard';

@@ -22,9 +22,11 @@ export const transformProductForm = (values: UpdateProductForm) => {
 
 export const normalizeProduct = (values: UpdateProductForm) => {
   const data = { ...values };
-  data.description = draftToHtml(
-    convertToRaw((data.description as any as EditorState).getCurrentContent())
-  );
+  if (data.description) {
+    data.description = draftToHtml(
+      convertToRaw((data.description as any as EditorState).getCurrentContent())
+    );
+  }
 
   return data;
 };

@@ -29,6 +29,11 @@ export const productColumns: TTableColumn<TProductBase>[] = [
     dataIndex: 'product_name'
   },
   {
+    title: 'Giá mặc định',
+    dataIndex: 'price',
+    hideInSearch: true
+  },
+  {
     title: 'Nhóm Sản Phẩm',
     dataIndex: 'cate_name',
     valueType: 'select',

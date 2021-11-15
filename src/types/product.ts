@@ -77,3 +77,25 @@ export type TProductInMenu = {
   price10: number;
   is_fixed_price: boolean;
 };
+
+export type CreateProductForm = Partial<CreateProductRequest> & {
+  hasExtra?: boolean;
+  hasVariant?: boolean;
+  variants: {
+    optName: string;
+    values: string[];
+  }[];
+};
+
+export interface ProductImage {
+  image_url: string;
+  title: string;
+  description: string;
+  position: number;
+}
+
+/** Create `product master` or `single product` */
+export interface CreateProductRequest extends TProductBase {
+  child_products: TProductBase[];
+  product_image: Partial<ProductImage>[];
+}

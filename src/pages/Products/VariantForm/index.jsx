@@ -1,10 +1,13 @@
 /* eslint-disable no-plusplus */
+import trashIcon from '@iconify/icons-eva/trash-outline';
+import { Icon } from '@iconify/react';
+import DeleteIcon from '@mui/icons-material/Delete';
 import {
   Box,
   Button,
-  Chip,
   Divider,
   IconButton,
+  Radio,
   Stack,
   Table,
   TableBody,
@@ -14,12 +17,11 @@ import {
   TableRow,
   Typography
 } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
 import ConfirmDialog from 'components/Dialog/ConfirmDialog';
 import Label from 'components/Label';
 import faker from 'faker';
 import { useEffect, useState } from 'react';
-import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
+import { Controller, useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 import { getCbn } from 'utils/utils';
 import { AutoCompleteField, InputField } from '../../../components/form';
 
@@ -79,6 +81,8 @@ const VariantForm = ({ name, updateMode: defaultMode = true }) => {
             <TableCell align="left">Sản phẩm</TableCell>
             <TableCell align="center">Mã sản phẩm</TableCell>
             <TableCell align="center">Thuộc tính</TableCell>
+            <TableCell align="center">Giá</TableCell>
+            <TableCell align="center">SP Mặc định</TableCell>
             <TableCell align="center">Hành động</TableCell>
           </TableRow>
         </TableHead>
@@ -96,10 +100,28 @@ const VariantForm = ({ name, updateMode: defaultMode = true }) => {
                   {atts?.map((att) => <Label key={`${id}-${atts?.join('-')}`}>{att}</Label>) ?? '-'}
                 </Stack>
               </TableCell>
+              <TableCell>
+                <InputField
+                  type="number"
+                  name={`child_products.${index}.price`}
+                  fullWidth
+                  size="small"
+                />
+              </TableCell>
+              <TableCell>
+                <Controller
+                  name={`child_products.${index}.isDefaultChildProduct`}
+                  render={({ field }) => <Radio {...field} />}
+                />
+              </TableCell>
               <TableCell align="center">
-                <Button variant="outlined" color="error" onClick={() => removeChildProd(index)}>
-                  Xóa
-                </Button>
+                <IconButton
+                  onClick={() => removeChildProd(index)}
+                  sx={{ color: 'red' }}
+                  size="large"
+                >
+                  <Icon icon={trashIcon} />
+                </IconButton>
               </TableCell>
             </TableRow>
           ))}
@@ -132,27 +154,15 @@ const VariantForm = ({ name, updateMode: defaultMode = true }) => {
             />
 
             <AutoCompleteField
-              disabled={!_updateMode}
               name={`variants.${optIndex}.values`}
+              label="Tag"
               multiple
-              size="small"
-              options={values}
-              fullWidth
               freeSolo
-              label="Tùy chọn"
-              placeholder={_updateMode && 'Nhấn Enter để thêm giá trị'}
-              getOptionLabel={(option) => option}
-              renderTags={(value, getTagProps) =>
-                value.map((option, index) => (
-                  <Chip
-                    size="small"
-                    key={option}
-                    variant="outlined"
-                    label={option}
-                    {...(!_updateMode ? {} : getTagProps({ index }))}
-                  />
-                ))
-              }
+              size="small"
+              variant="outlined"
+              options={[]}
+              limitTags={2}
+              fullWidth
             />
 
             <IconButton
