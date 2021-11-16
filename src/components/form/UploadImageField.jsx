@@ -145,7 +145,7 @@ const UploadAvatarField = ({ name, label, defaultValue = '' }) => {
       control={control}
       name={name}
       render={({ field, fieldState }) => (
-        <Box sx={{ mb: 5 }}>
+        <Box sx={{ mb: 5, width: 'fit-content' }}>
           <UploadAvatar
             caption={
               <Typography

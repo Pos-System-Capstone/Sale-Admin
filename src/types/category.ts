@@ -10,6 +10,7 @@ export type TCategory = {
   parent_cate_id?: any;
   position: number;
   active: boolean;
+  is_available: boolean;
   brand_id: number;
   pic_url?: any;
   banner_url?: any;

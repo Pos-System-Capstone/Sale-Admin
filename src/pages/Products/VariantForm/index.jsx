@@ -26,10 +26,11 @@ import { getCbn } from 'utils/utils';
 import { AutoCompleteField, InputField } from '../../../components/form';
 
 const VariantForm = ({ name, updateMode: defaultMode = true }) => {
-  const { control, setValue, getValues, reset } = useFormContext();
+  const { control, setValue, getValues, reset, watch } = useFormContext();
   const { fields: childProducts, remove: removeChildProd } = useFieldArray({
     control,
-    name: 'child_products'
+    name: 'child_products',
+    key: 'product_id'
   });
   const [_updateMode, setUpdateMode] = useState(defaultMode);
   const [openConfirm, setOpenConfirm] = useState(false);
@@ -43,6 +44,8 @@ const VariantForm = ({ name, updateMode: defaultMode = true }) => {
     name // unique name for your Field Array
     // keyName: "id", default to "id", you can change the key name
   });
+
+  const [masterName, masterPrice] = watch(['product_name', 'price']);
 
   const variantsWatch = useWatch({
     name: 'variants'
@@ -58,11 +61,12 @@ const VariantForm = ({ name, updateMode: defaultMode = true }) => {
     const prodComb = getCbn(...(variantArr ?? []));
     // [[a,c][b,c]]
     const generateDefaultProductChilds = prodComb.map((atts = []) => ({
-      id: faker.datatype.uuid(),
+      product_id: faker.datatype.uuid(),
       atts,
       is_available: true,
       code: `${atts.join('')}`,
-      product_name: `${atts.join('-')}`
+      product_name: `${masterName} ${atts.join('-')}`,
+      price: masterPrice
     }));
 
     if (_updateMode) {
@@ -87,8 +91,8 @@ const VariantForm = ({ name, updateMode: defaultMode = true }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {childProducts.map(({ atts, product_name, id }, index) => (
-            <TableRow key={id}>
+          {childProducts.map(({ atts, product_name, product_id }, index) => (
+            <TableRow key={product_id}>
               <TableCell align="left">
                 <InputField name={`child_products.${index}.product_name`} fullWidth size="small" />
               </TableCell>
@@ -97,7 +101,9 @@ const VariantForm = ({ name, updateMode: defaultMode = true }) => {
               </TableCell>
               <TableCell>
                 <Stack spacing={1}>
-                  {atts?.map((att) => <Label key={`${id}-${atts?.join('-')}`}>{att}</Label>) ?? '-'}
+                  {atts?.map((att) => (
+                    <Label key={`${product_id}-${atts?.join('-')}`}>{att}</Label>
+                  )) ?? '-'}
                 </Stack>
               </TableCell>
               <TableCell>
@@ -110,8 +116,16 @@ const VariantForm = ({ name, updateMode: defaultMode = true }) => {
               </TableCell>
               <TableCell>
                 <Controller
-                  name={`child_products.${index}.isDefaultChildProduct`}
-                  render={({ field }) => <Radio {...field} />}
+                  key={`child-product-select-${product_id}`}
+                  name="defaultChildProduct"
+                  render={({ field }) => (
+                    <Radio
+                      onChange={() => {
+                        field.onChange(product_id);
+                      }}
+                      checked={field.value === product_id}
+                    />
+                  )}
                 />
               </TableCell>
               <TableCell align="center">

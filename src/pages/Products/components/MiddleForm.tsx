@@ -14,7 +14,8 @@ import {
   Typography
 } from '@mui/material';
 import { DraftEditor } from 'components/editor';
-import { AutoCompleteField, CheckBoxField, InputField } from 'components/form';
+import { AutoCompleteField, CheckBoxField, DraftEditorField, InputField } from 'components/form';
+import SeoForm from 'components/form/Seo/SeoForm';
 import TreeViewField, { RenderTree } from 'components/form/TreeViewField/TreeViewField';
 import Label from 'components/Label';
 import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
@@ -86,7 +87,7 @@ const MiddleForm: React.FC<Props> = ({ updateMode }) => {
     name: 'product_image'
   });
 
-  const [hasExtra, hasVariant] = watch(['hasExtra', 'hasVariant']);
+  const [hasExtra, hasVariant] = watch(['has_extra', 'hasVariant']);
 
   const onUploadProductImg = async () => {
     const data: CreateProductForm['product_image'] = [
@@ -142,7 +143,6 @@ const MiddleForm: React.FC<Props> = ({ updateMode }) => {
                 value={data.image_url}
                 onChange={() => {
                   field.onChange(data.image_url);
-                  console.log(`data.image_url`, data.image_url);
                 }}
                 checked={data.image_url === field.value}
               />
@@ -232,7 +232,7 @@ const MiddleForm: React.FC<Props> = ({ updateMode }) => {
             <CardTitle mb={2} variant="subtitle1">
               Thông tin sản phẩm
             </CardTitle>
-            <CheckBoxField name="isAvailable" label="Hiển thị trên web" />
+            <CheckBoxField name="is_available" label="Hiển thị trên web" />
             <Box>
               <Grid container spacing={2}>
                 <Grid item xs={6}>
@@ -295,7 +295,7 @@ const MiddleForm: React.FC<Props> = ({ updateMode }) => {
           <Controller
             name="description"
             render={({ field }) => (
-              <DraftEditor editorState={field.value} onEditorStateChange={field.onChange} />
+              <DraftEditorField value={field.value} onChange={field.onChange} />
             )}
           />
         </Card>
@@ -341,7 +341,7 @@ const MiddleForm: React.FC<Props> = ({ updateMode }) => {
               Thêm nhóm sản phẩm extra
             </Button>
           </Stack>
-          <CheckBoxField name="hasExtra" label="Sản phẩm có extra" />
+          <CheckBoxField name="has_extra" label="Sản phẩm có extra" />
           {hasExtra &&
             prodExtraData.map((categoryExtra, idx) => (
               <Box key={`extra-product-group-${categoryExtra.id}`}>
@@ -453,37 +453,7 @@ const MiddleForm: React.FC<Props> = ({ updateMode }) => {
             SEO
           </CardTitle>
           <Box textAlign="left">
-            <Stack spacing={2}>
-              <Stack direction="row" spacing={2}>
-                <InputField
-                  name="seo_name"
-                  size="small"
-                  type="text"
-                  label="Đường dẫn SEO"
-                  sx={{
-                    width: '50%'
-                  }}
-                />
-                <InputField
-                  name="seo_key_words"
-                  size="small"
-                  type="text"
-                  label="Từ khóa SEO"
-                  sx={{
-                    width: '50%'
-                  }}
-                />
-              </Stack>
-              <InputField
-                name="seo_description"
-                fullWidth
-                id="outlined-multiline-static"
-                multiline
-                rows={4}
-                variant="outlined"
-                label="Mô tả SEO"
-              />
-            </Stack>
+            <SeoForm />
           </Box>
         </Card>
       </Stack>

@@ -7,6 +7,7 @@ import SwitchField from './SwitchField';
 import RadioGroupField from './RadioGroupField';
 import TimePickerField from './TimePickerField';
 import DatePickerField from './DatePickerField';
+import DraftEditorField from './DraftEditorField';
 
 export {
   InputField,
@@ -17,5 +18,6 @@ export {
   SwitchField,
   RadioGroupField,
   TimePickerField,
-  DatePickerField
+  DatePickerField,
+  DraftEditorField
 };

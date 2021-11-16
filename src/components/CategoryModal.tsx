@@ -5,18 +5,15 @@ import {
   DialogActions,
   DialogContent,
   DialogProps,
-  DialogTitle,
-  Grid,
-  Slider
+  DialogTitle
 } from '@mui/material';
-import { Box } from '@mui/system';
 import { useRequest } from 'ahooks';
 import useLocales from 'hooks/useLocales';
 import React, { useEffect } from 'react';
-import { Controller, FormProvider, useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { getCategoyById } from 'redux/category/api';
 import { TCategory } from 'types/category';
-import { InputField } from './form';
+import CategoryForm from './form/common/Category/CategoryForm';
 import LoadingAsyncButton from './LoadingAsyncButton/LoadingAsyncButton';
 
 type Props = DialogProps & {
@@ -78,40 +75,7 @@ const CategoryModal: React.FC<Props> = ({ open, cate_id, onClose, onAdd, onEdit 
           <CircularProgress />
         ) : (
           <FormProvider {...form}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <InputField
-                  fullWidth
-                  name="cate_name"
-                  label={translate('categories.table.cateName')}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <InputField
-                  fullWidth
-                  name="cate_name_eng"
-                  label={translate('categories.table.cateNameEn')}
-                />
-              </Grid>
-              <Grid item xs={12} sm={12}>
-                <Box px={4}>
-                  <Controller
-                    name="position"
-                    render={({ field }) => (
-                      <Slider
-                        sx={{ width: '100%' }}
-                        aria-label="Custom marks"
-                        defaultValue={0}
-                        step={1}
-                        valueLabelDisplay="auto"
-                        marks={marks}
-                        {...field}
-                      />
-                    )}
-                  />
-                </Box>
-              </Grid>
-            </Grid>
+            <CategoryForm />
           </FormProvider>
         )}
       </DialogContent>

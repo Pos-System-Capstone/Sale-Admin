@@ -38,6 +38,7 @@ const RootStyle = styled(AppBar)(({ theme }) => ({
 
 const ToolbarStyle = styled(Toolbar)(({ theme }) => ({
   minHeight: APPBAR_MOBILE,
+  width: '100%',
   [theme.breakpoints.up('lg')]: {
     minHeight: APPBAR_DESKTOP,
     padding: theme.spacing(0, 5)
@@ -50,21 +51,33 @@ type DashboardNavbarProps = {
   onOpenSidebar: VoidFunction;
 };
 
-export const DashboardNavLayout = ({ onOpenSidebar, children, ...props }: any) => (
-  <RootStyle {...props}>
-    <ToolbarStyle>
-      <MHidden width="lgUp">
-        <IconButton onClick={onOpenSidebar} sx={{ mr: 1, color: 'text.primary' }} size="large">
-          <Icon icon={menu2Fill} />
-        </IconButton>
-      </MHidden>
+export const DashboardNavLayout = ({ onOpenSidebar, children, ...props }: any) => {
+  const { isCollapse } = useCollapseDrawer();
+  return (
+    <RootStyle
+      sx={{
+        backgroundColor: 'background.paper',
+        boxShadow: 1,
+        ...(isCollapse && {
+          width: { lg: `calc(100% - 80px)` }
+        })
+      }}
+      {...props}
+    >
+      <ToolbarStyle>
+        <MHidden width="lgUp">
+          <IconButton onClick={onOpenSidebar} sx={{ mr: 1, color: 'text.primary' }} size="large">
+            <Icon icon={menu2Fill} />
+          </IconButton>
+        </MHidden>
 
-      <Box sx={{ flexGrow: 1 }} />
+        <Box sx={{ flexGrow: 1 }} />
 
-      {children}
-    </ToolbarStyle>
-  </RootStyle>
-);
+        {children}
+      </ToolbarStyle>
+    </RootStyle>
+  );
+};
 
 export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps) {
   const { isCollapse } = useCollapseDrawer();
@@ -108,7 +121,7 @@ export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps)
     <RootStyle
       sx={{
         ...(isCollapse && {
-          width: { lg: `calc(100% - ${COLLAPSE_WIDTH}px)` }
+          width: { lg: `calc(100% - 80px)` }
         })
       }}
     >

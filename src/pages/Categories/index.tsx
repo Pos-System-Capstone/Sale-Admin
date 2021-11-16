@@ -2,18 +2,21 @@
 import plusFill from '@iconify/icons-eva/plus-fill';
 import { Icon } from '@iconify/react';
 // material
-import { Button, Card, Container, Stack, Typography } from '@mui/material';
+import { Avatar, Button, Card, Container, Stack, Typography } from '@mui/material';
 import CategoryModal from 'components/CategoryModal';
 import DeleteConfirmDialog from 'components/DelectConfirmDialog';
+import Label from 'components/Label';
 import Page from 'components/Page';
 import ResoTable from 'components/ResoTable/ResoTable';
 import useLocales from 'hooks/useLocales';
 import { get } from 'lodash';
 import { useSnackbar } from 'notistack';
 import { useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 // components
 import { useNavigate } from 'react-router-dom';
 import { addCategoy, deleteCategoyById, editCategory, getCategories } from 'redux/category/api';
+import { PATH_DASHBOARD } from 'routes/paths';
 import { TCategory } from 'types/category';
 import { TTableColumn } from 'types/table';
 
@@ -29,14 +32,57 @@ const CategoryListPage = () => {
 
   const columns: TTableColumn<TCategory>[] = [
     {
-      title: translate('categories.table.cateName'),
-      dataIndex: 'cate_name',
-      fixed: 'left'
+      title: 'Hình ảnh',
+      dataIndex: 'pic_url',
+      hideInSearch: true,
+      render: (src, { product_name }: any) => (
+        <Avatar
+          alt={product_name}
+          src={src}
+          variant="square"
+          style={{ width: '54px', height: '54px' }}
+        />
+      )
     },
     {
-      title: translate('categories.table.cateNameEn'),
-      dataIndex: 'cate_name_eng',
-      fixed: 'left'
+      title: translate('categories.table.cateName'),
+      dataIndex: 'cate_name'
+    },
+    {
+      title: translate('categories.table.subCategory'),
+      dataIndex: 'childs',
+      render: (_, { childs }) => (
+        <Stack>
+          {childs.map((c) => (
+            <Link
+              key={`sub-cate-${c.cate_id}`}
+              to={`${PATH_DASHBOARD.categories.editById(c.cate_id)}`}
+            >
+              {c.cate_name}
+            </Link>
+          ))}
+        </Stack>
+      )
+    },
+    {
+      title: translate('categories.table.visible'),
+      dataIndex: 'is_available',
+      valueType: 'select',
+      valueEnum: [
+        {
+          label: 'Hiển thị',
+          value: 'true'
+        },
+        {
+          label: 'Không hiển thị',
+          value: 'false'
+        }
+      ],
+      render: (isAvailable) => (
+        <Label color={isAvailable ? 'success' : 'default'}>
+          {isAvailable ? 'Hiển thị' : 'Không hiển thị'}
+        </Label>
+      )
     },
     {
       title: translate('categories.table.position'),
@@ -117,7 +163,7 @@ const CategoryListPage = () => {
           </Typography>
           <Button
             onClick={() => {
-              setFormModal(true);
+              navigate(PATH_DASHBOARD.categories.new);
             }}
             variant="contained"
             startIcon={<Icon icon={plusFill} />}
@@ -130,8 +176,7 @@ const CategoryListPage = () => {
             <ResoTable
               ref={tableRef}
               onEdit={(cate: TCategory) => {
-                setUpdateCateId(cate.cate_id);
-                setFormModal(true);
+                navigate(`${PATH_DASHBOARD.categories.editById(cate.cate_id)}`);
               }}
               onDelete={(cate: TCategory) => setCurrentDeleteItem(cate)}
               rowKey="cate_id"

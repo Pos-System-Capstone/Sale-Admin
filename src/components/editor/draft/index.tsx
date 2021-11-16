@@ -6,7 +6,7 @@ import DraftEditorStyle from './DraftEditorStyle';
 
 // ----------------------------------------------------------------------
 
-interface DEditorProps extends EditorProps {
+export interface DEditorProps extends EditorProps {
   simple?: boolean;
   error?: boolean;
   sx?: BoxProps;

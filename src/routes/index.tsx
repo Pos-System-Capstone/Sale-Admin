@@ -108,7 +108,11 @@ export default function Router() {
         },
         {
           path: 'categories',
-          children: [{ path: '', element: <CategoryListPage /> }]
+          children: [
+            { path: '', element: <CategoryListPage /> },
+            { path: 'new', element: <CreateCategoryPage /> },
+            { path: ':id', element: <UpdateCategoryPage /> }
+          ]
         },
         {
           path: 'menus',
@@ -240,6 +244,8 @@ const MenuStoreManagementPage = Loadable(lazy(() => import('../pages/Orders/Menu
 
 // Categories
 const CategoryListPage = Loadable(lazy(() => import('../pages/Categories')));
+const CreateCategoryPage = Loadable(lazy(() => import('../pages/Categories/CreateCategory')));
+const UpdateCategoryPage = Loadable(lazy(() => import('../pages/Categories/UpdateCategory')));
 
 // customers
 const CustomerListPage = Loadable(lazy(() => import('../pages/Customer/CustomerListPage')));

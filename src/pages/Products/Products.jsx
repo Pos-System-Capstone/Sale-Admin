@@ -1,10 +1,8 @@
 /* eslint-disable camelcase */
-import React, { useState } from 'react';
 import plusFill from '@iconify/icons-eva/plus-fill';
 import { Icon } from '@iconify/react';
 // material
 import {
-  Box,
   Button,
   Card,
   Container,
@@ -13,22 +11,21 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  InputAdornment,
   Stack,
   Typography
 } from '@mui/material';
-import { useSnackbar } from 'notistack';
-import { PATH_DASHBOARD } from 'routes/paths';
 import Page from 'components/Page';
-// components
-import { useNavigate } from 'react-router-dom';
 import ResoTable from 'components/ResoTable/ResoTable';
 import useLocales from 'hooks/useLocales';
+import { useSnackbar } from 'notistack';
+import React, { useState } from 'react';
+// components
+import { useNavigate } from 'react-router-dom';
+import { PATH_DASHBOARD } from 'routes/paths';
+import LoadingAsyncButton from '../../components/LoadingAsyncButton/LoadingAsyncButton';
+import { deleteProdById, getAllProduct } from '../../redux/product/api';
 //
 import { productColumns } from './config';
-import SeachProductForm from './SeachProductForm';
-import { deleteProdById, getAllProduct } from '../../redux/product/api';
-import LoadingAsyncButton from '../../components/LoadingAsyncButton/LoadingAsyncButton';
 
 // ----------------------------------------------------------------------
 
@@ -39,7 +36,7 @@ export default function EcommerceShop() {
 
   const [currentDeleteItem, setCurrentDeleteItem] = useState(null);
 
-  const editProuct = ({ product_id }) => navigate(`/${PATH_DASHBOARD.products.root}/${product_id}`);
+  const editProuct = ({ product_id }) => navigate(`${PATH_DASHBOARD.products.root}/${product_id}`);
 
   const onDelete = () =>
     deleteProdById(currentDeleteItem.product_id)

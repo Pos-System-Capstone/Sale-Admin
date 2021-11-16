@@ -42,6 +42,7 @@ export type TProductBase = {
   product_id?: number;
   product_type?: ProductTypeEnum;
   is_available: boolean;
+  is_default_child?: boolean;
   code?: string;
   cate_name?: string;
   product_name?: string;
@@ -55,6 +56,8 @@ export type TProductBase = {
   atts?: string[];
   groups?: TGroupProduct[];
   product_in_menu?: TProductInMenu[];
+  has_extra?: boolean;
+
   /** Giá của sản phẩm sẽ được sử dụng khi sản phẩm này không được cấu hình giá ở bảng `ProductInMenu` */
   price?: number;
 };
@@ -79,8 +82,8 @@ export type TProductInMenu = {
 };
 
 export type CreateProductForm = Partial<CreateProductRequest> & {
-  hasExtra?: boolean;
   hasVariant?: boolean;
+  defaultChildProduct?: string | number;
   variants: {
     optName: string;
     values: string[];

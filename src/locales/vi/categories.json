@@ -3,7 +3,10 @@
   "table": {
     "cateName": "Tên",
     "cateNameEn": "Tên tiếng Anh",
-    "position": "Thứ tự"
+    "position": "Thứ tự",
+    "thumbnail": "Ảnh đại diện",
+    "subCategory": "Phân mục con",
+    "visible": "Hiển thị trên web"
   },
   "addBtn": "Thêm danh mục",
   "addTitle": "Thêm danh mục",

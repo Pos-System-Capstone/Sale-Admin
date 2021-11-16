@@ -87,11 +87,13 @@ export default function TreeViewField({ data = sample, value, onChange, multiple
 
   const controlledValue = value ?? selected;
 
-  useEffect(() => {
+  const onChangeValue = (updateValue: any) => {
     if (onChange) {
-      onChange(selected);
+      onChange(updateValue);
+    } else {
+      setSelected(updateValue);
     }
-  }, [selected, onChange]);
+  };
 
   function getDefaultExpand() {
     let array: string[] = [];
@@ -146,7 +148,7 @@ export default function TreeViewField({ data = sample, value, onChange, multiple
 
   function getOnChange(checked: boolean, nodes: RenderTree) {
     if (!multiple) {
-      setSelected(checked ? nodes.id : null);
+      onChangeValue(checked ? nodes.id : null);
       return;
     }
 
@@ -154,13 +156,13 @@ export default function TreeViewField({ data = sample, value, onChange, multiple
       ? [...controlledValue, nodes.id]
       : controlledValue.filter((value: any) => value !== nodes.id);
 
-    setSelected(array);
+    onChangeValue(array);
   }
 
   const renderTree = (nodes: RenderTree) => {
     const checked = multiple
-      ? controlledValue.some((item: any) => item === nodes.id)
-      : nodes.id === controlledValue;
+      ? controlledValue.some((item: any) => `${item}` == nodes.id)
+      : nodes.id == `${controlledValue}`;
     const Control = multiple ? Checkbox : Radio;
 
     const childs = getChildById(nodes, nodes.id);
@@ -170,20 +172,20 @@ export default function TreeViewField({ data = sample, value, onChange, multiple
 
     return (
       <StyledTreeItem
-        key={nodes.id}
+        key={`${nodes.id}`}
         defaultChecked={childHasSelected}
-        nodeId={nodes.id}
+        nodeId={`${nodes.id}`}
         label={
           <FormControlLabel
             control={
               <Control
+                defaultChecked={checked}
                 checked={checked}
                 onChange={(event) => getOnChange(event.currentTarget.checked, nodes)}
                 onClick={(e) => e.stopPropagation()}
               />
             }
             label={<>{nodes.name}</>}
-            key={nodes.id}
           />
         }
       >
@@ -192,10 +194,12 @@ export default function TreeViewField({ data = sample, value, onChange, multiple
     );
   };
 
+  const defaultExpanded = getDefaultExpand();
+  console.log(`defaultExpanded`, defaultExpanded);
   return (
     <TreeView
-      aria-label="customized"
-      defaultExpanded={getDefaultExpand()}
+      defaultExpanded={defaultExpanded}
+      expanded={defaultExpanded}
       defaultCollapseIcon={<MinusSquare />}
       defaultExpandIcon={<PlusSquare />}
       defaultEndIcon={<CloseSquare />}

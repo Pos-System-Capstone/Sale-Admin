@@ -111,7 +111,7 @@ export const PATH_DASHBOARD = {
   categories: {
     root: path(ROOTS_DASHBOARD, '/categories'),
     list: path(ROOTS_DASHBOARD, '/categories'),
-    editById: path(ROOTS_DASHBOARD, '/categories/:id'),
+    editById: (id: any) => path(ROOTS_DASHBOARD, `/categories/${id}`),
     new: path(ROOTS_DASHBOARD, '/categories/new')
   }
 };

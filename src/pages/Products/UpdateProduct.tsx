@@ -16,7 +16,7 @@ import { getProdById, updateProdById } from '../../redux/product/api';
 import MiddleForm from './components/MiddleForm';
 import RightForm from './components/RightForm';
 import { DEFAULT_VALUES, UpdateProductForm, validationSchema } from './type';
-import { normalizeProduct, transformProductData, transformProductForm } from './utils';
+import { normalizeDraftEdtior, normalizeProductData, transformProductForm } from './utils';
 
 const UpdateProduct = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -30,7 +30,7 @@ const UpdateProduct = () => {
 
   const defaultValues = {
     ...DEFAULT_VALUES,
-    ...transformProductData(data)
+    ...normalizeProductData(data)
   };
 
   const form = useForm<UpdateProductForm>({
@@ -41,12 +41,12 @@ const UpdateProduct = () => {
 
   React.useEffect(() => {
     if (data) {
-      reset({ ...transformProductData(data) });
+      reset({ ...normalizeProductData(data) });
     }
   }, [data, reset]);
 
   const onSubmit = (values: UpdateProductForm) => {
-    const data = normalizeProduct(values);
+    const data = normalizeDraftEdtior(values);
     return updateProdById(id, transformProductForm(data))
       .then((res) => {
         enqueueSnackbar(`Cập nhật thành công ${values.product_name}`, {
@@ -82,13 +82,7 @@ const UpdateProduct = () => {
 
   return (
     <FormProvider<UpdateProductForm> {...form}>
-      <DashboardNavLayout
-        onOpenSidebar={() => setNavOpen(true)}
-        sx={{
-          backgroundColor: 'white',
-          boxShadow: 1
-        }}
-      >
+      <DashboardNavLayout onOpenSidebar={() => setNavOpen(true)}>
         <Stack direction="row" spacing={2}>
           <Button onClick={() => navigate(-1)} variant="outlined">
             Hủy
@@ -106,7 +100,6 @@ const UpdateProduct = () => {
         </Box>
         <Box display="flex" px={2}>
           <MiddleForm updateMode={false} />
-          <RightForm />
         </Box>
       </Page>
     </FormProvider>

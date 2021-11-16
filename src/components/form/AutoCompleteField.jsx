@@ -19,6 +19,7 @@ const AutoCompleteField = ({
       render={({ field, fieldState }) => (
         <Autocomplete
           {...field}
+          value={field.value ? field.value : multiple ? [] : null}
           label={label}
           onChange={(event, newValue) => {
             const updateValue = transformValue ? transformValue(newValue) : newValue;
