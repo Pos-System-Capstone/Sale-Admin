@@ -40,6 +40,7 @@ import {
 import { makeStyles, withStyles } from '@mui/styles';
 import { useAntdTable } from 'ahooks';
 import EmptyContent from 'components/EmptyContent';
+import Label from 'components/Label';
 import TableFilterForm from 'components/ResoTable/TableFilterForm';
 import useLocales from 'hooks/useLocales';
 import get from 'lodash/get';
@@ -354,11 +355,24 @@ const ResoTable = (
         if (typeof column.render === 'function') {
           cell = column.render(get(data, column.dataIndex, '-'), data, idx) ?? '-';
         } else {
-          cell = (
-            <Typography variant="subtitle2" noWrap>
-              {column.dataIndex === 'index' ? idx + 1 : get(data, column.dataIndex, '-')}
-            </Typography>
-          );
+          if (column.valueType === 'select') {
+            const opt =
+              column.valueEnum?.find((opt) => opt.value === get(data, column.dataIndex))?.label ??
+              '-';
+            cell = (
+              <Label>
+                <Typography variant="subtitle2" noWrap>
+                  {opt}
+                </Typography>
+              </Label>
+            );
+          } else {
+            cell = (
+              <Typography variant="subtitle2" noWrap>
+                {column.dataIndex === 'index' ? idx + 1 : get(data, column.dataIndex, '-')}
+              </Typography>
+            );
+          }
         }
 
         return (
