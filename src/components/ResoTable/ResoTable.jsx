@@ -127,7 +127,12 @@ const ResoTable = (
   },
   ref = null
 ) => {
-  const { getData, defaultFilters = {} } = props || {};
+  const {
+    getData,
+    defaultFilters = {},
+    renderEdit = (dom) => dom,
+    renderDelete = (dom) => dom
+  } = props || {};
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
   const { t } = useLocales();
@@ -413,20 +418,28 @@ const ResoTable = (
       }
 
       if (showAction) {
+        const editComp = renderEdit(
+          <Tooltip title="Điều chỉnh">
+            <IconButton onClick={() => handleEdit(data)} size="large">
+              <Icon icon={editIcon} />
+            </IconButton>
+          </Tooltip>,
+          data
+        );
+        const deleteComp = renderDelete(
+          <Tooltip title="Xóa">
+            <IconButton onClick={() => handleDelete(data)} sx={{ color: 'red' }} size="large">
+              <Icon icon={trashIcon} />
+            </IconButton>
+          </Tooltip>,
+          data
+        );
         const ActionCell = mdUp ? (
           <StickyRightTableCell>
             <Stack direction="row" justifyContent="flex-end">
-              <Tooltip title="Xóa">
-                <IconButton onClick={() => handleDelete(data)} sx={{ color: 'red' }} size="large">
-                  <Icon icon={trashIcon} />
-                </IconButton>
-              </Tooltip>
+              {deleteComp}
               <Divider orientation="vertical" flexItem />
-              <Tooltip title="Điều chỉnh">
-                <IconButton onClick={() => handleEdit(data)} size="large">
-                  <Icon icon={editIcon} />
-                </IconButton>
-              </Tooltip>
+              {editComp}
             </Stack>
           </StickyRightTableCell>
         ) : (
@@ -457,10 +470,15 @@ const ResoTable = (
               id={`menu-edit-${data[rowKey]}`}
             >
               <MenuItem onClick={() => handleDelete(data)} sx={{ color: 'red' }}>
-                <ListItemIcon>
-                  <Icon icon={trashIcon} />
-                </ListItemIcon>
-                <ListItemText>Xóa</ListItemText>
+                {renderDelete(
+                  <>
+                    <ListItemIcon>
+                      <Icon icon={trashIcon} />
+                    </ListItemIcon>
+                    <ListItemText>Xóa</ListItemText>
+                  </>,
+                  data
+                )}
               </MenuItem>
               <MenuItem onClick={() => handleEdit(data)}>
                 <ListItemIcon>
