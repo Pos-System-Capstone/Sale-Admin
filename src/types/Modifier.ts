@@ -26,6 +26,7 @@ export type TModifier = {
   json_value: string;
   display_index: number;
   cate_id: number;
+  is_required: boolean;
 };
 
 export type ModifierValue = {

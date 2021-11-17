@@ -13,8 +13,11 @@ const getModifiersOfCategory = (catId: number) =>
 const addModifiersOfCategory = (catId: number, values: Omit<TModifier, 'id'>) =>
   request.post<number>(`/categories/${catId}/modifiers`, values);
 
-const updateModifiersOfCategory = (catId: number, modifierId: number, values: TModifier) =>
-  request.put<number>(`/categories/${catId}/modifiers/${modifierId}`, values);
+const updateModifiersOfCategory = (
+  catId: number,
+  modifierId: number,
+  values: Omit<TModifier, 'id'>
+) => request.put<number>(`/categories/${catId}/modifiers/${modifierId}`, values);
 
 const deleteModifiersOfCategory = (catId: number, modifierId: number) =>
   request.delete<number>(`/categories/${catId}/modifiers/${modifierId}`);

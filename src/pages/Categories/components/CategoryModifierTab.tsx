@@ -1,13 +1,17 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Box, Card, Button, Typography } from '@mui/material';
+import { Box, Button, Card, Typography } from '@mui/material';
 import CategoryModifierForm from 'components/form/CategoryModifier/CategoryModifierForm';
+import confirm from 'components/Modal/confirm';
 import ModalForm from 'components/ModalForm/ModalForm';
 import ResoTable from 'components/ResoTable/ResoTable';
 import useAddModifier from 'hooks/categories/useAddModifier';
 import useCategoryModifiers from 'hooks/categories/useCategoryModifers';
+import useDeleteModifier from 'hooks/categories/useDeleteModifier';
+import useUpdateModifier from 'hooks/categories/useUpdateModifier';
 import { useSnackbar } from 'notistack';
-import React, { useState } from 'react';
+import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { ReactNode } from 'react-markdown';
 import { useParams } from 'react-router';
 import {
   ModifierForm,
@@ -36,15 +40,20 @@ const schema = yup.object({
 
 const CategoryModifierTab = (props: Props) => {
   const { id } = useParams();
-  const createModifierForm = useForm<ModifierForm>({
-    resolver: yupResolver(schema)
+  const modifierForm = useForm<ModifierForm>({
+    resolver: yupResolver(schema),
+    shouldUnregister: true
+  });
+  const updateForm = useForm<ModifierForm>({
+    resolver: yupResolver(schema),
+    shouldUnregister: true
   });
   const { enqueueSnackbar } = useSnackbar();
 
   const { data: modifiers } = useCategoryModifiers(Number(id));
   const { mutateAsync: addModifierAsync } = useAddModifier();
-
-  const [editModifier, setEditModifier] = useState<TModifier | null>(null);
+  const { mutateAsync: deleteModifierAsync } = useDeleteModifier();
+  const { mutateAsync: updateModifierAsync } = useUpdateModifier();
 
   const modifierColumns: TTableColumn<TModifier>[] = [
     {
@@ -64,6 +73,25 @@ const CategoryModifierTab = (props: Props) => {
         const values = normalizeModifier(data).modifiers?.map((m) => m.label);
         return <Typography>{values?.join(',') ?? 'N/A'}</Typography>;
       }
+    },
+    {
+      title: 'Bắt buộc',
+      dataIndex: 'is_required',
+      valueType: 'select',
+      valueEnum: [
+        {
+          label: 'Bắt buộc',
+          value: true
+        },
+        {
+          label: 'Không bắt buộc',
+          value: false
+        }
+      ]
+    },
+    {
+      title: 'Thứ tự',
+      dataIndex: 'display_index'
     }
   ];
 
@@ -80,13 +108,30 @@ const CategoryModifierTab = (props: Props) => {
     return false;
   };
 
+  const onDeleteModifier = (values: TModifier) => {
+    confirm({
+      title: 'Xác nhận xoá',
+      content: 'Xoá tuỳ chỉnh này sẽ tác động tới các sản phẩm đang được áp dụng',
+      onOk: async () => {
+        try {
+          await deleteModifierAsync({ cateId: Number(id), modifierId: values.id });
+        } catch (error) {
+          console.log(`error`, error);
+          enqueueSnackbar(error as any, {
+            variant: 'error'
+          });
+        }
+      },
+      onCancle: () => {}
+    });
+  };
+
   return (
     <Card>
       <ModalForm
         onOk={async () => {
           try {
-            await createModifierForm.handleSubmit(onAddModifier, (e) => {
-              console.log(`e`, e);
+            await modifierForm.handleSubmit(onAddModifier, (e) => {
               throw e;
             })();
             console.log(`success`);
@@ -98,7 +143,7 @@ const CategoryModifierTab = (props: Props) => {
         title={<Typography variant="h3">Thêm tuỳ chỉnh</Typography>}
         trigger={<Button variant="contained">Thêm tuỳ chỉnh</Button>}
       >
-        <FormProvider {...createModifierForm}>
+        <FormProvider {...modifierForm}>
           <CategoryModifierForm />
         </FormProvider>
       </ModalForm>
@@ -110,7 +155,37 @@ const CategoryModifierTab = (props: Props) => {
           columns={modifierColumns}
           rowKey="description"
           dataSource={modifiers ?? []}
-          onEdit={setEditModifier}
+          onDelete={onDeleteModifier}
+          onEdit={(values: TModifier) => updateForm.reset(normalizeModifier(values))}
+          renderEdit={(dom: ReactNode, modifier: TModifier) => (
+            <ModalForm
+              onOk={async () => {
+                try {
+                  await updateForm.handleSubmit(
+                    (data) => {
+                      return updateModifierAsync({
+                        cateId: Number(id),
+                        data: transformModifier(data),
+                        modifierId: modifier.id
+                      });
+                    },
+                    (e) => {
+                      throw e;
+                    }
+                  )();
+                  return true;
+                } catch (error) {
+                  return false;
+                }
+              }}
+              title={<Typography variant="h3">Cập nhật tuỳ chỉnh</Typography>}
+              trigger={dom}
+            >
+              <FormProvider {...updateForm}>
+                <CategoryModifierForm />
+              </FormProvider>
+            </ModalForm>
+          )}
         />
       </Box>
     </Card>
