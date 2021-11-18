@@ -45,7 +45,7 @@ import TableFilterForm from 'components/ResoTable/TableFilterForm';
 import useLocales from 'hooks/useLocales';
 import get from 'lodash/get';
 import { useSnackbar } from 'notistack';
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { getCellValue, transformParamToHyphen } from './utils';
 
@@ -193,6 +193,10 @@ const ResoTable = (
   const closeEditMenu = () => {
     setAnchorEl(null);
   };
+
+  useEffect(() => {
+    setColumns(columns);
+  }, [columns]);
 
   React.useImperativeHandle(ref, () => ({
     reload: () => search?.submit(),
