@@ -195,7 +195,6 @@ export default function TreeViewField({ data = sample, value, onChange, multiple
   };
 
   const defaultExpanded = getDefaultExpand();
-  console.log(`defaultExpanded`, defaultExpanded);
   return (
     <TreeView
       defaultExpanded={defaultExpanded}

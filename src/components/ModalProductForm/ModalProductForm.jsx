@@ -21,7 +21,6 @@ import LoadingAsyncButton from '../LoadingAsyncButton/LoadingAsyncButton';
 
 const ModalProductForm = ({ trigger, onSubmit, selected = [] }) => {
   const [open, setOpen] = React.useState(false);
-  const [filters, setFilters] = React.useState(null);
 
   const [selectedProductIds, setSelectedProductIds] = React.useState(selected);
   const [selectedProducts, setSelectedProduct] = React.useState([]);
@@ -61,9 +60,6 @@ const ModalProductForm = ({ trigger, onSubmit, selected = [] }) => {
               </IconButton>
             </Box>
           </Paper>
-          <Box p={1}>
-            <SeachProductForm onChange={setFilters} />
-          </Box>
           <Box p={1} sx={{ flex: 1, overflowY: 'auto' }}>
             <Stack spacing={2}>
               <ResoTable
@@ -75,7 +71,6 @@ const ModalProductForm = ({ trigger, onSubmit, selected = [] }) => {
                 rowKey="product_id"
                 getData={getAllProduct}
                 onChangeSelection={handleChangeSelection}
-                filters={filters}
                 columns={productColumns}
               />
             </Stack>

@@ -11,6 +11,11 @@ export type TCollection = {
   link: string;
   banner_url: string;
   brand_id: number;
-  type: number;
+  type: CollectionTypeEnum;
   position: number;
 };
+
+export enum CollectionTypeEnum {
+  MenuCollection = 0,
+  GroupCollection = 1
+}

@@ -1,3 +1,5 @@
+import { ModifierSelectType } from './Modifier';
+
 export type TCategory = {
   cate_id: number;
   cate_name: string;
@@ -22,6 +24,17 @@ export type TCategory = {
   category_extra_cate: CategoryExtraCate[];
   category_modifier: any[];
   childs: TCategory[];
+};
+
+export type TCategoryExtra = {
+  /** Min max co dang 1-2 */
+  id: number;
+  cate_id: number;
+  extra_cate_id: number;
+  min_max: string;
+  select_type: ModifierSelectType;
+  cate: TCategory;
+  extra_cate: TCategory;
 };
 
 export interface CategoryExtraCate {

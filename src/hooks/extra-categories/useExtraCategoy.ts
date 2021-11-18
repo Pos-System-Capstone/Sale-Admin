@@ -5,7 +5,7 @@ import { useQuery } from 'react-query';
 const useExtraCategory = (cateId: number) => {
   return useQuery(
     ['categories', cateId, 'extras'],
-    () => categoryApi.getExtraCategoriesFromCateId(cateId),
+    () => categoryApi.getExtraCategoriesFromCateId(cateId).then((res) => res.data.data),
     {
       enabled: Boolean(cateId)
     }

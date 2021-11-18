@@ -1,3 +1,4 @@
+import { TCategoryExtra } from 'types/category';
 import { ModifierForm, TModifier } from 'types/Modifier';
 
 export const transformModifier = (values: ModifierForm) => {
@@ -20,6 +21,21 @@ export const normalizeModifier = (values: TModifier) => {
   } catch (error) {}
 
   data.modifiers = modifiers;
+
+  return data;
+};
+
+export const normalizeExtra = (values: TCategoryExtra) => {
+  const data: any = { ...values };
+  let minMaxArr = data.min_max?.split('-') ?? [];
+  data.min = minMaxArr[0] ?? 0;
+  data.max = minMaxArr[1] ?? 1;
+  return data;
+};
+
+export const transformExtra = (values: TCategoryExtra & { min?: number; max?: number }) => {
+  const data: any = { ...values };
+  data.min_max = `${values.min ?? 0}-${values.max ?? 1}`;
 
   return data;
 };

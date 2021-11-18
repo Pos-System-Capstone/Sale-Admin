@@ -5,12 +5,11 @@ import React from 'react';
 import closeIcon from '@iconify/icons-eva/close-outline';
 
 const AddProductTable = ({ data = [], onRemove }) => {
-  const a = '';
   return (
     <Box>
       <ResoTable
         dataSource={data}
-        checkboxSelection
+        checkboxSelection={false}
         pagination={false}
         showAction={false}
         rowKey="product_id"
@@ -34,6 +33,10 @@ const AddProductTable = ({ data = [], onRemove }) => {
                 </IconButton>
               </Box>
             )
+          },
+          {
+            title: 'Giá',
+            dataIndex: 'price'
           }
         ]}
       />

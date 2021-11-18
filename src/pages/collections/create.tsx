@@ -215,19 +215,6 @@ const CreateCollectionPage = () => {
                 {translate('collections.productInCollection')}
               </CardTitle>
               <Stack spacing={1} direction="row">
-                <InputField
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <Icon icon={searchIcon} />
-                      </InputAdornment>
-                    )
-                  }}
-                  name="search"
-                  label="Tìm sản phẩm"
-                  fullWidth
-                  size="small"
-                />
                 <ModalProductForm
                   selected={products?.map(({ product_id }) => product_id)}
                   onSubmit={handleAddProd}

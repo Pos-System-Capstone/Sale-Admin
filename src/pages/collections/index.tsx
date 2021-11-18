@@ -14,7 +14,7 @@ import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { deleteCollection, getCollections } from 'redux/collections/api';
 import { PATH_DASHBOARD } from 'routes/paths';
-import { TCollection } from 'types/collection';
+import { CollectionTypeEnum, TCollection } from 'types/collection';
 import { TTableColumn } from 'types/table';
 
 const CollectionListPage = () => {
@@ -96,6 +96,9 @@ const CollectionListPage = () => {
         <Card style={{ padding: '1em' }}>
           <Stack spacing={2}>
             <ResoTable
+              defaultFilters={{
+                type: CollectionTypeEnum.MenuCollection
+              }}
               ref={tableRef}
               onEdit={(collecton: TCollection) =>
                 navigate(`${PATH_DASHBOARD.collections.root}/${collecton.id}`, {

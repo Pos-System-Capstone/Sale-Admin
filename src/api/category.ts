@@ -1,10 +1,16 @@
 import { TCategory } from 'types/category';
 import { TModifier } from 'types/Modifier';
+import { TProductBase } from 'types/product';
+import { BaseReponse } from 'types/response';
 import request from 'utils/axios';
 import { generateAPIWithPaging } from './utils';
 
 const getExtraCategoriesFromCateId = (catId: number, params?: any) => {
-  return request.get(`/categories/${catId}/extras`, { params });
+  return request.get<BaseReponse<TCategory>>(`/categories/${catId}/extras`, { params });
+};
+
+const getProductsInCategory = (catId: number, params?: any) => {
+  return request.get<BaseReponse<TProductBase>>(`/categories/${catId}/products`, { params });
 };
 
 const getModifiersOfCategory = (catId: number) =>
@@ -28,7 +34,8 @@ const categoryApi = {
   getModifiersOfCategory,
   addModifiersOfCategory,
   updateModifiersOfCategory,
-  deleteModifiersOfCategory
+  deleteModifiersOfCategory,
+  getProductsInCategory
 };
 
 export default categoryApi;

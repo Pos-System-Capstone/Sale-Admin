@@ -34,9 +34,8 @@ export const productColumns: TTableColumn<TProductBase>[] = [
     hideInSearch: true
   },
   {
-    title: 'Nhóm Sản Phẩm',
+    title: 'Danh mục',
     dataIndex: 'cate_name',
-    valueType: 'select',
     hideInSearch: true
   },
   {
