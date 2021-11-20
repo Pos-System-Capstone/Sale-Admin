@@ -47,7 +47,7 @@ const ProductImagesForm = (props: Props) => {
       }
     },
     {
-      title: 'Miêu tả',
+      title: 'Mô tả',
       dataIndex: 'description',
       render: (_, data, idx) => (
         <Controller
@@ -56,7 +56,7 @@ const ProductImagesForm = (props: Props) => {
           render={({ field }) => (
             <TextField
               key={`${data.image_url}-${productImages[idx]?.id}`}
-              label="Miêu tả"
+              label="Mô tả"
               {...field}
             />
           )}

@@ -36,10 +36,10 @@ const CategoryModifierForm = (props: Props) => {
   const { translate } = useLocales();
   return (
     <Grid container spacing={2}>
-      <Grid item xs={12} md={6}>
+      <Grid item xs={6} md={6}>
         <InputField name="title" size="small" type="text" label="Tên tuỳ chỉnh" fullWidth />
       </Grid>
-      <Grid item xs={12} md={6}>
+      <Grid item xs={6} md={6}>
         <SelectField
           options={modifierSelectTypeOptions}
           name="select_type"

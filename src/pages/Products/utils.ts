@@ -129,12 +129,13 @@ export const transformComboForm = (
     data.groups?.push({
       collection_id: g.id,
       combination_mode: g.combination_mode,
-      default_min_max: `${g.default ?? 0}-${g.min}-${g.max}`
+      default_min_max: `${g.default ?? 0}-${g.min ?? 0}-${g.max ?? 0}`,
+      position: g.position
     });
     data.groups?.push(
       ...g.products.map((p) => ({
         collection_id: g.id,
-        default_min_max: `${p.default ?? 0}-${p.min}-${p.max}`,
+        default_min_max: `${p.default ?? 0}-${p.min ?? 0}-${p.max ?? 0}`,
         product_id: p.product_id
       }))
     );
@@ -143,7 +144,7 @@ export const transformComboForm = (
     data.groups?.push({
       product_id: g.product_id,
       combination_mode: CombinationModeEnum.FixedCombo,
-      default_min_max: `${g.default ?? 0}-${g.min}-${g.max}`
+      default_min_max: `${g.default ?? 0}-${g.min ?? 0}-${g.max ?? 1}`
     });
   });
   data.product_type = ProductTypeEnum.Combo;

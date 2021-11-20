@@ -192,27 +192,29 @@ const CreateCollectionPage = () => {
                           label={translate('collections.table.description')}
                         />
                       </Grid>
-                      <Grid item xs={12}>
-                        <Typography gutterBottom>
-                          {translate('collections.table.position')}
-                        </Typography>
-                        <Box px={4}>
-                          <Controller
-                            name="position"
-                            render={({ field }) => (
-                              <Slider
-                                sx={{ width: '100%' }}
-                                aria-label="Custom marks"
-                                defaultValue={0}
-                                step={1}
-                                valueLabelDisplay="auto"
-                                marks={marks}
-                                {...field}
-                              />
-                            )}
-                          />
-                        </Box>
-                      </Grid>
+                      {isMenuCollection && (
+                        <Grid item xs={12}>
+                          <Typography gutterBottom>
+                            {translate('collections.table.position')}
+                          </Typography>
+                          <Box px={4}>
+                            <Controller
+                              name="position"
+                              render={({ field }) => (
+                                <Slider
+                                  sx={{ width: '100%' }}
+                                  aria-label="Custom marks"
+                                  defaultValue={0}
+                                  step={1}
+                                  valueLabelDisplay="auto"
+                                  marks={marks}
+                                  {...field}
+                                />
+                              )}
+                            />
+                          </Box>
+                        </Grid>
+                      )}
                     </Grid>
                   </Grid>
                 </Grid>

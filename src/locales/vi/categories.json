@@ -1,5 +1,5 @@
 {
-  "list": "Danh sách các danh mục",
+  "list": "Danh sách các Phân mục",
   "table": {
     "cateName": "Tên",
     "cateNameEn": "Tên tiếng Anh",
@@ -8,7 +8,7 @@
     "subCategory": "Phân mục con",
     "visible": "Hiển thị trên web"
   },
-  "addBtn": "Thêm danh mục",
-  "addTitle": "Thêm danh mục",
-  "editTitle": "Cập nhật danh mục"
+  "addBtn": "Thêm Phân mục",
+  "addTitle": "Thêm Phân mục",
+  "editTitle": "Cập nhật Phân mục"
 }

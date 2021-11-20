@@ -44,8 +44,6 @@ export default function ThemeConfig({ children }: ThemeConfigProps) {
   const theme = createTheme(themeOptions);
   theme.components = componentsOverride(theme);
 
-  console.log(theme);
-
   return (
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={theme}>

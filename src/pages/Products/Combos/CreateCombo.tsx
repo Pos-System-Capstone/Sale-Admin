@@ -137,7 +137,7 @@ const CreateCombo = (props: Props) => {
 
                 <Card>
                   <CardTitle mb={2} variant="subtitle1">
-                    Miêu tả
+                    Mô tả
                   </CardTitle>
                   <Controller
                     name="description"

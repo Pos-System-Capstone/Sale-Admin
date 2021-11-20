@@ -135,6 +135,7 @@ export type CreateComboForm = TProductBase & {
     default?: number;
     min?: number;
     max?: number;
+    position?: number;
     combination_mode: CombinationModeEnum;
     products: ComboProductType[];
   }[];

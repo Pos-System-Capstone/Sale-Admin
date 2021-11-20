@@ -26,13 +26,12 @@ export default function App() {
     () =>
       new QueryClient({
         queryCache: new QueryCache({
-          onSuccess: (data) => console.log(data)
+          // onSuccess: (data) => console.log(data)
         })
       })
   );
   const { isInitialized } = useAuth();
 
-  console.log(`isInitialized`, isInitialized);
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={true} />

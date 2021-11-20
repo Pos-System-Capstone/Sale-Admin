@@ -51,6 +51,7 @@ const CategoryListPage = () => {
     {
       title: translate('categories.table.subCategory'),
       dataIndex: 'childs',
+      hideInSearch: true,
       render: (_, { childs }) => (
         <Stack>
           {childs.map((c) => (
@@ -68,6 +69,7 @@ const CategoryListPage = () => {
       title: translate('categories.table.visible'),
       dataIndex: 'is_available',
       valueType: 'select',
+      hideInSearch: true,
       valueEnum: [
         {
           label: 'Hiển thị',
@@ -86,7 +88,8 @@ const CategoryListPage = () => {
     },
     {
       title: translate('categories.table.position'),
-      dataIndex: 'position'
+      dataIndex: 'position',
+      hideInSearch: true
     }
   ];
 
@@ -138,7 +141,7 @@ const CategoryListPage = () => {
       });
 
   return (
-    <Page title="Dashboard: Danh mục | Sale Reso">
+    <Page title="Dashboard: Phân mục | Sale Reso">
       <CategoryModal
         open={formModal}
         cate_id={updateCateId}

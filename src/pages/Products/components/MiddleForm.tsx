@@ -112,7 +112,7 @@ const MiddleForm: React.FC<Props> = ({ updateMode }) => {
 
         <Card>
           <CardTitle mb={2} variant="subtitle1">
-            Miêu tả
+            Mô tả
           </CardTitle>
           <Controller
             name="description"

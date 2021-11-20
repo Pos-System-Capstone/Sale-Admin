@@ -79,7 +79,7 @@ const CategoryInfoTab = (props: Props) => {
       {isLoading ? (
         <CircularProgress />
       ) : (
-        <>
+        <Stack spacing={2}>
           <Card>
             <Box>
               <CategoryForm />
@@ -90,7 +90,7 @@ const CategoryInfoTab = (props: Props) => {
               <SeoForm />
             </Box>
           </Card>
-        </>
+        </Stack>
       )}
     </FormProvider>
   );

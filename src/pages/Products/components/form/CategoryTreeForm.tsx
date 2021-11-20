@@ -39,8 +39,6 @@ const CategoryTreeForm = (props: Props) => {
     );
   }, [categories]);
 
-  console.log(`errors`, errors);
-
   return (
     <>
       <ErrorMessage

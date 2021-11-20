@@ -27,7 +27,7 @@ const UpdateCategory = (props: Props) => {
               <TabList onChange={handleChangeTab}>
                 <Tab label="Thông tin chung" value="1" />
                 <Tab label="Sản phẩm đi kèm" value="2" />
-                <Tab label="Sản phẩm bổ sung" value="3" />
+                <Tab label="Tuỳ chỉnh" value="3" />
               </TabList>
             </Box>
 

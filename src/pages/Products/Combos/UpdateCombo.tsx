@@ -58,7 +58,8 @@ const UpdateCombo = (props: Props) => {
     onSuccess: (res) => {
       console.log(`res`, res);
       createComboForm.reset(res as CreateComboForm);
-    }
+    },
+    staleTime: Infinity
   });
 
   const { handleSubmit } = createComboForm;
@@ -153,7 +154,7 @@ const UpdateCombo = (props: Props) => {
 
                 <Card>
                   <CardTitle mb={2} variant="subtitle1">
-                    Miêu tả
+                    Mô tả
                   </CardTitle>
                   <Controller
                     name="description"

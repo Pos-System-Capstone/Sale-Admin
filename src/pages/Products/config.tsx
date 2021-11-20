@@ -1,4 +1,6 @@
 import { Avatar, Chip } from '@mui/material';
+import { AutoCompleteField } from 'components/form';
+import AutocompleteCategory from 'components/form/common/Category/AutocompleteCategory';
 import Label from 'components/Label';
 import { PRODUCT_TYPE_DATA } from 'constraints';
 import React from 'react';
@@ -34,9 +36,9 @@ export const productColumns: TTableColumn<TProductBase>[] = [
     hideInSearch: true
   },
   {
-    title: 'Danh mục',
+    title: 'Phân mục',
     dataIndex: 'cate_name',
-    hideInSearch: true
+    renderFormItem: () => <AutocompleteCategory name="cat-id" label="Phân mục" />
   },
   {
     title: 'Loại Sản Phẩm',

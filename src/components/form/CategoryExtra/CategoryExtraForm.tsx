@@ -1,35 +1,13 @@
-import trashIcon from '@iconify/icons-eva/trash-outline';
-import { Icon } from '@iconify/react';
-import { Grid, Box, Typography, Slider, IconButton, Button, Stack } from '@mui/material';
-import useLocales from 'hooks/useLocales';
-import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
-import { modifierSelectTypeOptions } from 'types/Modifier';
-import { ErrorMessage } from '@hookform/error-message';
-import { InputField, SelectField, CheckBoxField, AutoCompleteField } from '..';
-import useCategories from 'hooks/categories/useCategories';
+import { Grid } from '@mui/material';
 import useExtras from 'hooks/extras/useExtras';
+import { modifierSelectTypeOptions } from 'types/Modifier';
+import { AutoCompleteField, InputField, SelectField } from '..';
 
 interface Props {
   updateMode?: boolean;
 }
 
-const marks = [
-  {
-    value: 0,
-    label: 'Đầu tiền'
-  },
-  {
-    value: 100,
-    label: 'Cuối cùng'
-  }
-];
-
 const CategoryExtraForm = ({ updateMode }: Props) => {
-  const {
-    control,
-    formState: { errors }
-  } = useFormContext();
-
   const { data: extras = [] } = useExtras();
 
   const extraOptions = extras.map((c) => ({ label: c.cate_name, value: c.cate_id }));
@@ -48,7 +26,6 @@ const CategoryExtraForm = ({ updateMode }: Props) => {
           disabled={updateMode}
           options={extraOptions}
           getOptionLabel={(value: any) => {
-            console.log(`option label`, value);
             return getOpObj(value)?.label;
           }}
           isOptionEqualToValue={(option: any, value: any) => {
@@ -59,7 +36,7 @@ const CategoryExtraForm = ({ updateMode }: Props) => {
           name="extra_cate_id"
           size="small"
           type="text"
-          label=""
+          label="Nhóm extra"
           fullWidth
         />
       </Grid>
