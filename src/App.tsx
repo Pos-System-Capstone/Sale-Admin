@@ -16,13 +16,20 @@ import ThemeLocalization from './components/ThemeLocalization';
 import { BaseOptionChartStyle } from './components/charts/BaseOptionChart';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import LoadingScreen, { ProgressBarStyle } from './components/LoadingScreen';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryCache, QueryClient, QueryClientProvider } from 'react-query';
 import { useState } from 'react';
 
 // ----------------------------------------------------------------------
 
 export default function App() {
-  const [queryClient] = useState(() => new QueryClient());
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        queryCache: new QueryCache({
+          onSuccess: (data) => console.log(data)
+        })
+      })
+  );
   const { isInitialized } = useAuth();
 
   console.log(`isInitialized`, isInitialized);

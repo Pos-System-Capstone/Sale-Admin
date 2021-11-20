@@ -1,165 +1,30 @@
-import trashIcon from '@iconify/icons-eva/trash-outline';
-import { Icon } from '@iconify/react';
-import { AddOutlined, Info, UploadFileOutlined } from '@mui/icons-material';
-import {
-  Avatar,
-  Box,
-  Button,
-  Grid,
-  IconButton,
-  Radio,
-  Stack,
-  TextField,
-  Tooltip,
-  Typography
-} from '@mui/material';
-import { DraftEditor } from 'components/editor';
-import { AutoCompleteField, CheckBoxField, DraftEditorField, InputField } from 'components/form';
+import { AddOutlined, Info } from '@mui/icons-material';
+import { Box, Button, Stack, TextField, Tooltip, Typography } from '@mui/material';
+import { CheckBoxField, DraftEditorField } from 'components/form';
 import SeoForm from 'components/form/Seo/SeoForm';
-import TreeViewField, { RenderTree } from 'components/form/TreeViewField/TreeViewField';
 import Label from 'components/Label';
-import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
 import ResoTable from 'components/ResoTable/ResoTable';
-import useCategories from 'hooks/categories/useCategories';
-import React, { useMemo, useState } from 'react';
-import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
-import { TCategory } from 'types/category';
-import { CreateProductForm, ProductImage, TProductBase } from 'types/product';
+import React, { useState } from 'react';
+import { Controller, useFormContext } from 'react-hook-form';
+import { CreateProductForm, TProductBase } from 'types/product';
 import { TTableColumn } from 'types/table';
 import VariantForm from '../VariantForm';
 import AddCategoryModal from './AddCategoryModal';
 import { Card, CardTitle } from './Card';
+import BasicProductInfoForm from './form/BasicProductInfoForm';
+import CategoryTreeForm from './form/CategoryTreeForm';
+import ProductImagesForm from './form/ProductImagesForm';
 
 type Props = {
   updateMode?: boolean;
 };
 
-// TODO: Disable nhung category cha da co san pham => Khong cho chon category con
-// TODO: Tao `CreateProduct` type
-// TODO: Them rule cho form
-
 // eslint-disable-next-line arrow-body-style
 const MiddleForm: React.FC<Props> = ({ updateMode }) => {
-  const { data: categories } = useCategories();
-
-  const categoryTreeData = useMemo<RenderTree[]>(() => {
-    const generateTree: any = (category: TCategory) => {
-      if (!category.childs || category.childs.length === 0) {
-        return {
-          id: category.cate_id,
-          name: category.cate_name,
-          children: []
-        };
-      }
-      return {
-        id: category.cate_id,
-        name: category.cate_name,
-        children: category.childs.map(generateTree)
-      };
-    };
-
-    return (
-      categories?.map((c) => ({
-        id: `${c.cate_id}`,
-        name: c.cate_name,
-        children: c?.childs.map(generateTree)
-      })) ?? []
-    );
-  }, [categories]);
-
   const { control, watch } = useFormContext<CreateProductForm>();
   const [showAddCategoryModal, setShowAddCategoryModal] = useState(false);
-  // const {
-  //   fields: modifiers,
-  //   append: appendModifier,
-  //   remove: removeModifier
-  // } = useFieldArray({
-  //   control,
-  //   name: 'modifires'
-  // });
-
-  const {
-    fields: productImages,
-    append: appendProductImage,
-    remove: removeProductImage
-  } = useFieldArray({
-    control,
-    name: 'product_image'
-  });
 
   const [hasExtra, hasVariant] = watch(['has_extra', 'hasVariant']);
-
-  const onUploadProductImg = async () => {
-    const data: CreateProductForm['product_image'] = [
-      {
-        image_url:
-          'https://images.unsplash.com/photo-1517142089942-ba376ce32a2e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80',
-        description: 'Product'
-      },
-      {
-        image_url:
-          'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2832&q=80',
-        description: 'Product'
-      }
-    ];
-    appendProductImage(data);
-  };
-
-  const productImgColumns: TTableColumn<ProductImage>[] = [
-    {
-      title: 'Hình ảnh',
-      dataIndex: 'image_url',
-      render: (_: any, data) => {
-        return <Avatar variant="square" sx={{ width: 54, height: 54 }} src={data.image_url} />;
-      }
-    },
-    {
-      title: 'Miêu tả',
-      dataIndex: 'description',
-      render: (_, data, idx) => (
-        <Controller
-          control={control}
-          name={`product_image.${idx}.description`}
-          render={({ field }) => (
-            <TextField
-              key={`${data.image_url}-${productImages[idx]?.id}`}
-              label="Miêu tả"
-              {...field}
-            />
-          )}
-        />
-      )
-    },
-    {
-      title: 'Ảnh đại diện',
-      render: (_: any, data, idx) => {
-        return (
-          <Controller
-            control={control}
-            name={`pic_url`}
-            render={({ field }) => (
-              <Radio
-                key={`${data.image_url}`}
-                value={data.image_url}
-                onChange={() => {
-                  field.onChange(data.image_url);
-                }}
-                checked={data.image_url === field.value}
-              />
-            )}
-          />
-        );
-      }
-    },
-    {
-      title: '',
-      render: (_, __, idx) => (
-        <IconButton onClick={() => removeProductImage(idx)} sx={{ color: 'red' }} size="large">
-          <Icon icon={trashIcon} />
-        </IconButton>
-      )
-    }
-  ];
 
   const productExtraColumns: TTableColumn<TProductBase>[] = [
     {
@@ -232,47 +97,7 @@ const MiddleForm: React.FC<Props> = ({ updateMode }) => {
             <CardTitle mb={2} variant="subtitle1">
               Thông tin sản phẩm
             </CardTitle>
-            <CheckBoxField name="is_available" label="Hiển thị trên web" />
-            <Box>
-              <Grid container spacing={2}>
-                <Grid item xs={6}>
-                  <InputField
-                    fullWidth
-                    name="product_name"
-                    label="Tên sản phẩm"
-                    required
-                    size="small"
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  <InputField fullWidth name="code" label="Mã sản phẩm" required size="small" />
-                </Grid>
-                <Grid item xs={6}>
-                  <InputField
-                    fullWidth
-                    type="number"
-                    name="price"
-                    label="Giá sản phẩm"
-                    required
-                    size="small"
-                    helperText="Giá áp dụng khi không được cấu hình trong menu"
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  <AutoCompleteField
-                    name="tags"
-                    label="Tag"
-                    multiple
-                    freeSolo
-                    size="small"
-                    variant="outlined"
-                    options={[]}
-                    limitTags={2}
-                    fullWidth
-                  />
-                </Grid>
-              </Grid>
-            </Box>
+            <BasicProductInfoForm />
             <Box>
               <Stack direction="row" justifyContent="space-between">
                 <Typography my={2} variant="subtitle2">
@@ -281,10 +106,7 @@ const MiddleForm: React.FC<Props> = ({ updateMode }) => {
                 <Button onClick={() => setShowAddCategoryModal(true)}>Thêm phân mục</Button>
               </Stack>
             </Box>
-            <Controller
-              name="cat_id"
-              render={({ field }) => <TreeViewField data={categoryTreeData} {...field} />}
-            />
+            <CategoryTreeForm />
           </Stack>
         </Card>
 
@@ -301,28 +123,7 @@ const MiddleForm: React.FC<Props> = ({ updateMode }) => {
         </Card>
 
         <Card>
-          <Stack direction="row" justifyContent="space-between" alignItems="center">
-            <CardTitle mb={2} variant="subtitle1">
-              Hình ảnh
-            </CardTitle>
-            <LoadingAsyncButton
-              onClick={onUploadProductImg}
-              size="small"
-              variant="outlined"
-              startIcon={<UploadFileOutlined />}
-            >
-              Thêm ảnh
-            </LoadingAsyncButton>
-          </Stack>
-          <ResoTable
-            showFilter={false}
-            pagination={false}
-            showSettings={false}
-            showAction={false}
-            columns={productImgColumns}
-            rowKey="description"
-            dataSource={productImages}
-          />
+          <ProductImagesForm />
         </Card>
 
         <Card>

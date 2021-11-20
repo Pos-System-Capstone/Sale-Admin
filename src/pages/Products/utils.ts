@@ -1,7 +1,17 @@
+import { da } from 'date-fns/locale';
 import { ContentState, convertToRaw, EditorState } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
-import { ProductTypeEnum, TProductBase, TProductMaster } from 'types/product';
+import {
+  CombinationModeEnum,
+  ComboProductType,
+  CreateComboForm,
+  CreateComboRequest,
+  ProductTypeEnum,
+  TProductBase,
+  TProductCombo,
+  TProductMaster
+} from 'types/product';
 import { getCbn } from 'utils/utils';
 import { UpdateProductForm } from './type';
 
@@ -28,7 +38,7 @@ export const transformProductForm = (values: UpdateProductForm) => {
   return transformData;
 };
 
-export const normalizeDraftEdtior = (values: any) => {
+export const transformDraftToStr = (values: any) => {
   const data = { ...values };
   if ((data.description as any) instanceof EditorState) {
     data.description = draftToHtml(
@@ -91,4 +101,51 @@ export const normalizeProductData = (values: TProductMaster) => {
   console.log(`transformData`, transformData);
 
   return transformData;
+};
+
+export const normalizeProductCombo = (values: TProductCombo): CreateComboForm => {
+  let data: Partial<CreateComboForm> = { ...transformDraftToStr(values) } as any;
+
+  data.groups = values.groups
+    .filter((g) => g.combination_mode === CombinationModeEnum.ChoiceCombo)
+    .map((g) => ({
+      ...g
+    }));
+
+  data.fixedProducts = values.groups
+    .filter((g) => g.combination_mode === CombinationModeEnum.FixedCombo)
+    .reduce((current, g) => [...current, ...g.products], [] as ComboProductType[]);
+
+  return data as CreateComboForm;
+};
+
+export const transformComboForm = (
+  values: CreateComboForm,
+  mode: CombinationModeEnum = CombinationModeEnum.ChoiceCombo
+): CreateComboRequest => {
+  let data: Partial<CreateComboRequest> = { ...transformDraftToStr(values) } as any;
+  data.groups = [];
+  values.groups.forEach((g) => {
+    data.groups?.push({
+      collection_id: g.id,
+      combination_mode: g.combination_mode,
+      default_min_max: `${g.default ?? 0}-${g.min}-${g.max}`
+    });
+    data.groups?.push(
+      ...g.products.map((p) => ({
+        collection_id: g.id,
+        default_min_max: `${p.default ?? 0}-${p.min}-${p.max}`,
+        product_id: p.product_id
+      }))
+    );
+  });
+  values.fixedProducts?.forEach((g) => {
+    data.groups?.push({
+      product_id: g.product_id,
+      combination_mode: CombinationModeEnum.FixedCombo,
+      default_min_max: `${g.default ?? 0}-${g.min}-${g.max}`
+    });
+  });
+  data.product_type = ProductTypeEnum.Combo;
+  return data as CreateComboRequest;
 };

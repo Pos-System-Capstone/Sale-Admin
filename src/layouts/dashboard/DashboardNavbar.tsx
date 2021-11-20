@@ -31,6 +31,7 @@ const RootStyle = styled(AppBar)(({ theme }) => ({
   backdropFilter: 'blur(6px)',
   WebkitBackdropFilter: 'blur(6px)', // Fix on Mobile
   backgroundColor: alpha(theme.palette.background.default, 0.72),
+  padding: 0,
   [theme.breakpoints.up('lg')]: {
     width: `calc(100% - ${DRAWER_WIDTH}px)`
   }
@@ -41,7 +42,7 @@ const ToolbarStyle = styled(Toolbar)(({ theme }) => ({
   width: '100%',
   [theme.breakpoints.up('lg')]: {
     minHeight: APPBAR_DESKTOP,
-    padding: theme.spacing(0, 5)
+    padding: theme.spacing(0, 2)
   }
 }));
 
@@ -55,22 +56,20 @@ export const DashboardNavLayout = ({ onOpenSidebar, children, ...props }: any) =
   const { isCollapse } = useCollapseDrawer();
   return (
     <RootStyle
+      position="fixed"
+      {...props}
       sx={{
+        top: 'auto',
+        bottom: 0,
         backgroundColor: 'background.paper',
         boxShadow: 1,
         ...(isCollapse && {
           width: { lg: `calc(100% - 80px)` }
-        })
+        }),
+        ...(props.sx || {})
       }}
-      {...props}
     >
       <ToolbarStyle>
-        <MHidden width="lgUp">
-          <IconButton onClick={onOpenSidebar} sx={{ mr: 1, color: 'text.primary' }} size="large">
-            <Icon icon={menu2Fill} />
-          </IconButton>
-        </MHidden>
-
         <Box sx={{ flexGrow: 1 }} />
 
         {children}

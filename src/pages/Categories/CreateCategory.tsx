@@ -9,7 +9,7 @@ import useDashboard from 'hooks/useDashboard';
 import { DashboardNavLayout } from 'layouts/dashboard/DashboardNavbar';
 import { useSnackbar } from 'notistack';
 import {
-  normalizeDraftEdtior,
+  transformDraftToStr,
   normalizeProductData,
   transformProductForm
 } from 'pages/Products/utils';
@@ -37,7 +37,7 @@ const CreateCategory = (props: Props) => {
 
   const onSubmit = (values: TCategory) => {
     console.log(`data`, values);
-    const data = transformProductForm(normalizeDraftEdtior(values));
+    const data = transformProductForm(transformDraftToStr(values));
     return categoryApi
       .create(data)
       .then((res) => {

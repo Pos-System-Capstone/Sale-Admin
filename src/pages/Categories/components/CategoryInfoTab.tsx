@@ -9,7 +9,7 @@ import useCategory from 'hooks/categories/useCategory';
 import useDashboard from 'hooks/useDashboard';
 import { DashboardNavLayout } from 'layouts/dashboard/DashboardNavbar';
 import { useSnackbar } from 'notistack';
-import { normalizeDraftEdtior } from 'pages/Products/utils';
+import { transformDraftToStr } from 'pages/Products/utils';
 import React, { useEffect } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router';
@@ -47,7 +47,7 @@ const CategoryInfoTab = (props: Props) => {
   const onSubmit = (values: TCategory) => {
     console.log(`data`, values);
     return categoryApi
-      .update(id, normalizeDraftEdtior(values))
+      .update(id, transformDraftToStr(values))
       .then((res) => {
         enqueueSnackbar(`Cập nhật thành công`, {
           variant: 'success'

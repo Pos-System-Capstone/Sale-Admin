@@ -1,7 +1,7 @@
 {
-  "list": "Danh sách Bộ sưu tập",
+  "list": "Danh sách Nhóm",
   "table": {
-    "collectionName": "Tên",
+    "comboName": "Tên nhóm",
     "collectionNameEn": "Tên tiếng Anh",
     "position": "Thứ tự",
     "banner_url": "Ảnh đại diện",

@@ -4,12 +4,19 @@
       "root": "Sản phẩm",
       "master": "Dòng Sản phẩm",
       "collection": "Bộ sưu tập",
-      "categories": "Danh mục"
+      "categories": "Danh mục",
+      "combo": "Combo"
     },
+
     "menu": { "root": "Thực đơn", "list": "Danh sách thực đơn", "store-menu": "Cửa hàng áp dụng" },
     "store": "Cửa hàng",
     "customer": {
       "root": "Khách hàng",
+      "customerList": "Danh sách khách hàng",
+      "addNewCustomer": "Thêm mới khách hàng"
+    },
+    "combo": {
+      "root": "Combo",
       "customerList": "Danh sách khách hàng",
       "addNewCustomer": "Thêm mới khách hàng"
     },

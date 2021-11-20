@@ -12,6 +12,11 @@ export enum ProductTypeEnum {
   CHARGES = 11
 }
 
+export enum CombinationModeEnum {
+  FixedCombo = 0,
+  ChoiceCombo = 1
+}
+
 export type TProductInGroup = {
   product_id: number;
   product_name: string;
@@ -26,16 +31,14 @@ export type TProductInGroup = {
 
 export type TGroupProduct = {
   base_product_id: number;
-  product_id: number;
-  is_and: boolean;
-  default: number;
-  min: number;
-  max: number;
-  group_id: number;
-  quantity: number;
+  collection_id?: number;
+  combination_mode?: CombinationModeEnum;
   default_min_max: string;
+  product_id?: number;
+  position: number;
+  description: string;
+  quantity: number;
   product_name: string;
-  product_childs: TProductInGroup[];
 };
 
 export type TProductBase = {
@@ -54,7 +57,6 @@ export type TProductBase = {
   seo_description?: string;
   tags?: string[];
   atts?: string[];
-  groups?: TGroupProduct[];
   product_in_menu?: TProductInMenu[];
   has_extra?: boolean;
 
@@ -64,6 +66,23 @@ export type TProductBase = {
 
 export type TProductMaster = TProductBase & {
   child_products: TProductBase[];
+};
+
+export type TProductCombo = TProductBase & {
+  groups: {
+    id: number;
+    combination_mode: number;
+    products: {
+      position: number;
+      combination_mode?: any;
+      product_id: number;
+      default: number;
+      min: number;
+      max: number;
+      product_name?: any;
+      price: number;
+    }[];
+  }[];
 };
 
 export type TProductInMenu = {
@@ -102,3 +121,29 @@ export interface CreateProductRequest extends TProductBase {
   child_products: TProductBase[];
   product_image: Partial<ProductImage>[];
 }
+
+export type CreateComboRequest = TProductBase & {
+  product_image: Partial<ProductImage>[];
+  groups: Partial<TGroupProduct>[];
+};
+
+export type CreateComboForm = TProductBase & {
+  product_image: Partial<ProductImage>[];
+  groups: {
+    // collection id
+    id?: number;
+    default?: number;
+    min?: number;
+    max?: number;
+    combination_mode: CombinationModeEnum;
+    products: ComboProductType[];
+  }[];
+  fixedProducts?: ComboProductType[];
+};
+
+export type ComboProductType = {
+  product_id: number;
+  default?: number;
+  min: number;
+  max: number;
+};

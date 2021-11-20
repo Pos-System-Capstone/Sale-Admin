@@ -137,7 +137,7 @@ const UploadImageField = ({ name, label, defaultValue = '' }) => {
   );
 };
 
-const UploadAvatarField = ({ name, label, defaultValue = '' }) => {
+const UploadAvatarField = ({ name, label, defaultValue = '', ...others }) => {
   const { control } = useFormContext();
   return (
     <Controller
@@ -145,7 +145,7 @@ const UploadAvatarField = ({ name, label, defaultValue = '' }) => {
       control={control}
       name={name}
       render={({ field, fieldState }) => (
-        <Box sx={{ mb: 5, width: 'fit-content' }}>
+        <Box sx={{ mb: 5, width: 'fit-content' }} {...others}>
           <UploadAvatar
             caption={
               <Typography

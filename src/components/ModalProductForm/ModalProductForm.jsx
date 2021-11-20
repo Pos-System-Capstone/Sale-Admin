@@ -1,23 +1,11 @@
-import {
-  Box,
-  Button,
-  Dialog,
-  DialogActions,
-  Drawer,
-  IconButton,
-  Paper,
-  Stack,
-  Typography
-} from '@mui/material';
-import React from 'react';
-import { Icon } from '@iconify/react';
 import closeFill from '@iconify/icons-eva/close-fill';
-import { Card } from 'pages/Products/components/Card';
-import SeachProductForm from 'pages/Products/SeachProductForm';
+import { Icon } from '@iconify/react';
+import { Box, Button, Dialog, IconButton, Paper, Stack, Typography } from '@mui/material';
 import { productColumns } from 'pages/Products/config';
+import React from 'react';
 import { getAllProduct } from 'redux/product/api';
-import ResoTable from '../ResoTable/ResoTable';
 import LoadingAsyncButton from '../LoadingAsyncButton/LoadingAsyncButton';
+import ResoTable from '../ResoTable/ResoTable';
 
 const ModalProductForm = ({ trigger, onSubmit, selected = [] }) => {
   const [open, setOpen] = React.useState(false);
@@ -42,7 +30,7 @@ const ModalProductForm = ({ trigger, onSubmit, selected = [] }) => {
   return (
     <>
       {React.cloneElement(trigger, { onClick: handleClick })}
-      <Dialog anchor="right" open={open} onClose={() => setOpen(false)}>
+      <Dialog maxWidth="md" anchor="right" open={open} onClose={() => setOpen(false)}>
         <Box display="flex" flexDirection="column" maxHeight="80vh">
           <Paper>
             <Box
@@ -50,6 +38,7 @@ const ModalProductForm = ({ trigger, onSubmit, selected = [] }) => {
               justifyContent="space-between"
               alignItems="center"
               p={2}
+              pt={0}
               borderBottom={1}
               borderColor="grey.300"
               textAlign="right"
@@ -64,7 +53,8 @@ const ModalProductForm = ({ trigger, onSubmit, selected = [] }) => {
             <Stack spacing={2}>
               <ResoTable
                 checkboxSelection={{
-                  selection: selectedProductIds
+                  selection: selectedProductIds,
+                  type: 'checkbox'
                 }}
                 showAction={false}
                 scroll={{ y: '50%', x: '100%' }}

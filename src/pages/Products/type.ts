@@ -1,4 +1,4 @@
-import { CreateProductForm, ProductTypeEnum, TProductMaster } from 'types/product';
+import { CreateProductForm } from 'types/product';
 import * as yup from 'yup';
 
 export type UpdateProductForm = CreateProductForm;
@@ -25,15 +25,13 @@ export const DEFAULT_VALUES: UpdateProductForm = {
 
 export const validationSchema = yup.object({
   code: yup.string().required('Vui lòng nhập mã sản phẩm'),
-  product_name: yup.string().required('Vui lòng nhập tên sản phẩm')
-  // menus: yup
-  //   .array()
-  //   .of(
-  //     yup.object().shape({
-  //       price: yup.number('Nhập giá').required('Nhập giá'), // these constraints take precedence
-  //       menuId: yup.number('Chọn menu').required('Chọn menu').typeError('Vui lòng chọn menu') // these constraints take precedence
-  //     })
-  //   )
-  //   .required('Vui lòng chọn 1 bảng giá') // these constraints are shown if and only if inner constraints are satisfied
-  //   .min(1, 'Ít nhất 1 bảng giá')
+  product_name: yup.string().required('Vui lòng nhập tên sản phẩm'),
+  price: yup
+    .number()
+    .typeError('Vui lòng nhập giá sản phẩm')
+    .required('Vui lòng nhập giá sản phẩm'),
+  cat_id: yup
+    .number()
+    .typeError('Vui lòng chọn phân mục cho sản phẩm')
+    .required('Vui lòng chọn phân mục cho sản phẩm')
 });

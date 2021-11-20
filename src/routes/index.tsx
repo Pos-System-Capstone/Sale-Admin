@@ -99,6 +99,15 @@ export default function Router() {
           ]
         },
         {
+          path: 'combos',
+          children: [
+            { path: '', element: <ComboListPage /> },
+            { path: 'new', element: <CreateComboPage /> },
+            { path: ':comboId', element: <UpdateComboPage /> },
+            { path: 'master', element: <Products /> }
+          ]
+        },
+        {
           path: 'collections',
           children: [
             { path: '', element: <CollectionListPage /> },
@@ -249,3 +258,8 @@ const UpdateCategoryPage = Loadable(lazy(() => import('../pages/Categories/Updat
 
 // customers
 const CustomerListPage = Loadable(lazy(() => import('../pages/Customer/CustomerListPage')));
+
+// combos
+const ComboListPage = Loadable(lazy(() => import('../pages/Products/Combos/ComboList')));
+const CreateComboPage = Loadable(lazy(() => import('../pages/Products/Combos/CreateCombo')));
+const UpdateComboPage = Loadable(lazy(() => import('../pages/Products/Combos/UpdateCombo')));

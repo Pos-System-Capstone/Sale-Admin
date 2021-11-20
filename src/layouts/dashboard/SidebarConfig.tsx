@@ -46,6 +46,10 @@ const sidebarConfig = [
             path: PATH_DASHBOARD.products.list
           },
           {
+            title: 'combo',
+            path: PATH_DASHBOARD.combos.list
+          },
+          {
             title: 'collection',
             path: PATH_DASHBOARD.collections.list
           },

@@ -14,13 +14,12 @@ import { DashboardNavLayout } from '../../layouts/dashboard/DashboardNavbar';
 import { createMasterProd } from '../../redux/product/api';
 import MiddleForm from './components/MiddleForm';
 import { UpdateProductForm, validationSchema } from './type';
-import { normalizeDraftEdtior, transformProductForm } from './utils';
+import { transformDraftToStr, transformProductForm } from './utils';
 
 const CreateProduct = () => {
   const { enqueueSnackbar } = useSnackbar();
   const { setNavOpen } = useDashboard();
   const navigate = useNavigate();
-  const theme = useTheme();
 
   const methods = useForm<UpdateProductForm & any>({
     resolver: yupResolver(validationSchema),
@@ -33,7 +32,7 @@ const CreateProduct = () => {
   const { handleSubmit } = methods;
 
   const onSubmit = (values: UpdateProductForm) => {
-    const data = normalizeDraftEdtior(values);
+    const data = transformDraftToStr(values);
     data.product_type = data.hasVariant ? ProductTypeEnum.General : ProductTypeEnum.Single;
     return createMasterProd(transformProductForm(data))
       .then((res) => {
