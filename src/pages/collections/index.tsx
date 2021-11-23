@@ -76,7 +76,32 @@ const CollectionListPage = () => {
       });
 
   return (
-    <Page title={`Dashboard: ${translate('collections.list')} | Sale Reso`}>
+    <Page
+      title={translate('collections.list')}
+      actions={() => [
+        <Button
+          key="add-group-combo"
+          onClick={() => {
+            navigate(
+              `${PATH_DASHBOARD.collections.new}?type=${CollectionTypeEnum.GroupCollection}`
+            );
+          }}
+          variant="outlined"
+        >
+          Tạo nhóm combo
+        </Button>,
+        <Button
+          key="add-collection"
+          onClick={() => {
+            navigate(PATH_DASHBOARD.collections.new);
+          }}
+          variant="contained"
+          startIcon={<Icon icon={plusFill} />}
+        >
+          {translate('collections.addBtn')}
+        </Button>
+      ]}
+    >
       <DeleteConfirmDialog
         open={Boolean(currentDeleteItem)}
         onClose={() => setCurrentDeleteItem(null)}
@@ -87,50 +112,22 @@ const CollectionListPage = () => {
           </>
         }
       />
-      <Container>
-        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={2}>
-          <Typography variant="h4" gutterBottom>
-            {translate('collections.list')}
-          </Typography>
-          <Stack direction="row" spacing={2}>
-            <Button
-              onClick={() => {
-                navigate(
-                  `${PATH_DASHBOARD.collections.new}?type=${CollectionTypeEnum.GroupCollection}`
-                );
-              }}
-              variant="outlined"
-            >
-              Tạo nhóm combo
-            </Button>
-            <Button
-              onClick={() => {
-                navigate(PATH_DASHBOARD.collections.new);
-              }}
-              variant="contained"
-              startIcon={<Icon icon={plusFill} />}
-            >
-              {translate('collections.addBtn')}
-            </Button>
-          </Stack>
+      <Card>
+        <Stack spacing={2}>
+          <ResoTable
+            ref={tableRef}
+            onEdit={(collecton: TCollection) =>
+              navigate(`${PATH_DASHBOARD.collections.root}/${collecton.id}`, {
+                state: collecton
+              })
+            }
+            onDelete={setCurrentDeleteItem}
+            rowKey="id"
+            getData={getCollections}
+            columns={columns}
+          />
         </Stack>
-        <Card style={{ padding: '1em' }}>
-          <Stack spacing={2}>
-            <ResoTable
-              ref={tableRef}
-              onEdit={(collecton: TCollection) =>
-                navigate(`${PATH_DASHBOARD.collections.root}/${collecton.id}`, {
-                  state: collecton
-                })
-              }
-              onDelete={setCurrentDeleteItem}
-              rowKey="id"
-              getData={getCollections}
-              columns={columns}
-            />
-          </Stack>
-        </Card>
-      </Container>
+      </Card>
     </Page>
   );
 };

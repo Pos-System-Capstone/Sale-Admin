@@ -91,15 +91,8 @@ const UpdateProduct = () => {
           </LoadingAsyncButton>
         </Stack>
       </DashboardNavLayout>
-      <Page title="Tạo sản phẩm">
-        <Box px={4}>
-          <Typography variant="h3" component="h2" gutterBottom>
-            Cập nhật sản phẩm
-          </Typography>
-        </Box>
-        <Box display="flex" px={2}>
-          <MiddleForm updateMode={false} />
-        </Box>
+      <Page title="Cập nhật sản phẩm">
+        <MiddleForm updateMode={false} />
       </Page>
     </FormProvider>
   );

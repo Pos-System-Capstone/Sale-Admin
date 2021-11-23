@@ -36,7 +36,8 @@ export type TableValueType =
   | 'option'
   | 'date'
   | 'dateRange'
-  | 'time';
+  | 'time'
+  | 'switch';
 
 type TableValueEnum = {
   label: any;

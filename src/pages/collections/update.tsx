@@ -83,16 +83,15 @@ const UpdateCollectionPage = () => {
 
   return (
     <FormProvider {...form}>
-      <Page title={translate('collections.editTitle')}>
-        <Box px={2} mx="auto">
-          <Stack mb={2} direction="row" justifyContent="space-between">
-            <Typography px={1} variant="h3" component="h4" gutterBottom>
-              {translate('collections.updateTitle')}
-            </Typography>
-            <Button size="small" color="error" variant="outlined">
-              {translate('common.delete')}
-            </Button>
-          </Stack>
+      <Page
+        title={translate('collections.editTitle')}
+        actions={() => [
+          <Button key="delete-collection" size="small" color="error" variant="outlined">
+            {translate('common.delete')}
+          </Button>
+        ]}
+      >
+        <Box mx="auto">
           <Tabs
             value={currentTab}
             scrollButtons="auto"

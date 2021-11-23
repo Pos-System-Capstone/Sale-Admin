@@ -51,7 +51,7 @@ const CategoryListPage = () => {
     {
       title: 'Danh mục extra',
       dataIndex: 'is_extra',
-      valueType: 'checkbox',
+      valueType: 'switch',
       valueEnum: [
         {
           label: 'Extra',
@@ -139,7 +139,21 @@ const CategoryListPage = () => {
       });
 
   return (
-    <Page title="Dashboard: Danh mục | Sale Reso">
+    <Page
+      title="Danh mục"
+      actions={() => [
+        <Button
+          key="add-category"
+          onClick={() => {
+            navigate(PATH_DASHBOARD.categories.new);
+          }}
+          variant="contained"
+          startIcon={<Icon icon={plusFill} />}
+        >
+          {translate('categories.addBtn')}
+        </Button>
+      ]}
+    >
       <CategoryModal
         open={formModal}
         cate_id={updateCateId}
@@ -157,36 +171,20 @@ const CategoryListPage = () => {
           </>
         }
       />
-      <Container>
-        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={2}>
-          <Typography variant="h4" gutterBottom>
-            {translate('categories.list')}
-          </Typography>
-          <Button
-            onClick={() => {
-              navigate(PATH_DASHBOARD.categories.new);
+      <Card>
+        <Stack spacing={2}>
+          <ResoTable
+            ref={tableRef}
+            onEdit={(cate: TCategory) => {
+              navigate(`${PATH_DASHBOARD.categories.editById(cate.cate_id)}`);
             }}
-            variant="contained"
-            startIcon={<Icon icon={plusFill} />}
-          >
-            {translate('categories.addBtn')}
-          </Button>
+            onDelete={(cate: TCategory) => setCurrentDeleteItem(cate)}
+            rowKey="cate_id"
+            getData={getCategories}
+            columns={columns}
+          />
         </Stack>
-        <Card style={{ padding: '1em' }}>
-          <Stack spacing={2}>
-            <ResoTable
-              ref={tableRef}
-              onEdit={(cate: TCategory) => {
-                navigate(`${PATH_DASHBOARD.categories.editById(cate.cate_id)}`);
-              }}
-              onDelete={(cate: TCategory) => setCurrentDeleteItem(cate)}
-              rowKey="cate_id"
-              getData={getCategories}
-              columns={columns}
-            />
-          </Stack>
-        </Card>
-      </Container>
+      </Card>
     </Page>
   );
 };

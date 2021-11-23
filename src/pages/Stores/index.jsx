@@ -92,7 +92,7 @@ const StoreListPage = () => {
             {translate('pages.stores.addBtn')}
           </Button>
         </Stack>
-        <Card style={{ padding: '1em' }}>
+        <Card>
           <Stack spacing={2}>
             <ResoTable
               rowKey="id"

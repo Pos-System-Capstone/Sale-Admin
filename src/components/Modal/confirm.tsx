@@ -15,7 +15,7 @@ type ConfirmProps = {
   title: ReactNode;
   content: ReactNode;
   onOk: () => void;
-  onCancle: () => void;
+  onCancle?: () => void;
 };
 
 const confirm = ({ onCancle, onOk, title, content }: ConfirmProps) => {
@@ -49,7 +49,7 @@ const confirm = ({ onCancle, onOk, title, content }: ConfirmProps) => {
   }
 
   function cancle() {
-    onCancle();
+    if (onCancle) onCancle();
     currentConfig = {
       ...currentConfig,
       open: false

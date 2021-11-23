@@ -67,7 +67,7 @@ const UpdateCombo = (props: Props) => {
   const onSubmit = (values: any) => {
     return createMasterProd(transformComboForm(values, CombinationModeEnum.ChoiceCombo))
       .then((res) => {
-        enqueueSnackbar(`Tạo thành công ${values.product_name}`, {
+        enqueueSnackbar(`Cập nhật thành công ${values.product_name}`, {
           variant: 'success'
         });
       })
@@ -110,9 +110,6 @@ const UpdateCombo = (props: Props) => {
       </DashboardNavLayout>
       <Page title="Cập nhật combo">
         <Container maxWidth="lg" sx={{ mx: 'auto' }}>
-          <Typography px={1} variant="h3" component="h4" gutterBottom>
-            Cập nhật combo
-          </Typography>
           <Box py={2}>
             <Stepper alternativeLabel activeStep={activeStep}>
               {STEPS.map((label) => (

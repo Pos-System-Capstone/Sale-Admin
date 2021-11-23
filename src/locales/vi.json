@@ -2,7 +2,8 @@
   "menu": {
     "product": {
       "root": "Sản phẩm",
-      "master": "Dòng Sản phẩm",
+      "master": "Danh mục Sản phẩm",
+      "extra": "Danh mục Extra",
       "collection": "Bộ sưu tập",
       "categories": "Danh mục",
       "combo": "Combo"

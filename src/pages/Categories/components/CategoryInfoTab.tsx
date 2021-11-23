@@ -16,13 +16,15 @@ import { useNavigate, useParams } from 'react-router';
 import { TCategory } from 'types/category';
 import * as yup from 'yup';
 
-interface Props {}
+interface Props {
+  updateMode?: boolean;
+}
 
 const schema = yup.object({
   cate_name: yup.string().required('Vui lòng nhập tên Danh mục')
 });
 
-const CategoryInfoTab = (props: Props) => {
+const CategoryInfoTab = ({ updateMode }: Props) => {
   const { id } = useParams();
   const { enqueueSnackbar } = useSnackbar();
   const { setNavOpen } = useDashboard();
@@ -30,7 +32,7 @@ const CategoryInfoTab = (props: Props) => {
 
   const { data: category, isLoading } = useCategory(Number(id));
 
-  const updateCategoryForm = useForm<TCategory>({
+  const updateCategoryForm = useForm<TCategory & { is_root: boolean }>({
     resolver: yupResolver(schema),
     defaultValues: {
       description: EditorState.createEmpty(),
@@ -40,8 +42,7 @@ const CategoryInfoTab = (props: Props) => {
 
   useEffect(() => {
     if (!category) return;
-    updateCategoryForm.reset(category);
-    console.log(`reset`);
+    updateCategoryForm.reset({ ...category, is_root: !Boolean(category.parent_cate_id) });
   }, [category, updateCategoryForm]);
 
   const onSubmit = (values: TCategory) => {
@@ -82,7 +83,7 @@ const CategoryInfoTab = (props: Props) => {
         <Stack spacing={2}>
           <Card>
             <Box>
-              <CategoryForm />
+              <CategoryForm updateMode={updateMode} />
             </Box>
           </Card>
           <Card>

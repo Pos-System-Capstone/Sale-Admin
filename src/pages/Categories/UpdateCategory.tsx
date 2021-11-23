@@ -1,5 +1,5 @@
 import { TabContext, TabList, TabPanel } from '@mui/lab';
-import { Box, Container, Stack, Tab, Typography } from '@mui/material';
+import { Box, Container, Stack, Tab } from '@mui/material';
 import Page from 'components/Page';
 import useCategory from 'hooks/categories/useCategory';
 import { useState } from 'react';
@@ -21,25 +21,23 @@ const UpdateCategory = (props: Props) => {
 
   const { data: category } = useCategory(Number(id));
   const isExtra = category?.is_extra;
+  const isContainer = category?.is_container;
   return (
     <>
       <Page title="Cập nhật Danh mục">
         <TabContext value={activeTab}>
           <Container maxWidth="lg" sx={{ mx: 'auto' }}>
-            <Typography px={1} variant="h3" component="h4" gutterBottom>
-              Cập nhật Danh mục
-            </Typography>
-            <Box py={2}>
+            <Box>
               <TabList onChange={handleChangeTab}>
                 <Tab label="Thông tin chung" value="1" />
-                {!isExtra && <Tab label="Sản phẩm đi kèm" value="2" />}
-                {!isExtra && <Tab label="Tuỳ chỉnh" value="3" />}
+                {!(isExtra || isContainer) && <Tab label="Sản phẩm đi kèm" value="2" />}
+                {!(isExtra || isContainer) && <Tab label="Tuỳ chỉnh" value="3" />}
               </TabList>
             </Box>
 
             <Stack spacing={2}>
               <TabPanel value="1">
-                <CategoryInfoTab />
+                <CategoryInfoTab updateMode />
               </TabPanel>
               <TabPanel value="2">
                 <CategoryExtraTab />

@@ -6,13 +6,15 @@ import React, { useMemo } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { TCategory } from 'types/category';
 
-interface Props {}
+interface Props {
+  isExtraCate?: boolean;
+}
 
-const CategoryTreeForm = (props: Props) => {
+const CategoryTreeForm = ({ isExtraCate = false }: Props) => {
   const {
     formState: { errors }
   } = useFormContext();
-  const { data: categories } = useCategories();
+  const { data: categories } = useCategories({ 'is-extra': isExtraCate, 'only-root': true });
 
   const categoryTreeData = useMemo<RenderTree[]>(() => {
     const generateTree: any = (category: TCategory) => {
@@ -39,10 +41,16 @@ const CategoryTreeForm = (props: Props) => {
     );
   }, [categories]);
 
-  const checkIsNotRootCategory = (id: string) => {
-    const cate = categories?.find((c) => c.cate_id === Number(id));
-    if (!cate) return true;
-    return !cate.is_container;
+  const checkIsRootCategory = (id: string, cates: TCategory[]): boolean => {
+    return cates?.some((c) => {
+      if (c.cate_id === Number(id)) {
+        return c.is_container;
+      }
+      if (c.childs) {
+        return checkIsRootCategory(id, c.childs);
+      }
+      return false;
+    });
   };
 
   return (
@@ -59,7 +67,11 @@ const CategoryTreeForm = (props: Props) => {
       <Controller
         name="cat_id"
         render={({ field }) => (
-          <TreeViewField onDisabled={checkIsNotRootCategory} data={categoryTreeData} {...field} />
+          <TreeViewField
+            onDisabled={(id) => checkIsRootCategory(id, categories ?? [])}
+            data={categoryTreeData}
+            {...field}
+          />
         )}
       />
     </>

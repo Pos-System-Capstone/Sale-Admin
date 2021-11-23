@@ -1,4 +1,6 @@
-import { TreeItem, TreeView } from '@mui/lab';
+/* eslint-disable eqeqeq */
+import { Folder } from '@mui/icons-material';
+import { TreeView } from '@mui/lab';
 import { Checkbox, FormControlLabel, Radio, Box, Typography } from '@mui/material';
 import { union } from 'lodash';
 import {
@@ -17,76 +19,7 @@ type Props = {
   onDisabled?: (id: string) => boolean;
 };
 
-const sample: RenderTree[] = [
-  {
-    id: '0',
-    name: 'Parent',
-    children: [
-      {
-        id: '1',
-        name: 'Child - 1'
-      },
-      {
-        id: '3',
-        name: 'Child - 3',
-        children: [
-          {
-            id: '4',
-            name: 'Child - 4',
-            children: [
-              {
-                id: '7',
-                name: 'Child - 7'
-              },
-              {
-                id: '8',
-                name: 'Child - 8'
-              }
-            ]
-          }
-        ]
-      },
-      {
-        id: '5',
-        name: 'Child - 5',
-        children: [
-          {
-            id: '6',
-            name: 'Child - 6'
-          }
-        ]
-      }
-    ]
-  },
-  {
-    id: '7',
-    name: 'Paren2 - 2',
-    children: [
-      {
-        id: '8',
-        name: 'Child - 8',
-        children: [
-          {
-            id: '9',
-            name: 'Child - 9'
-          },
-          {
-            id: '10',
-            name: 'Child - 10'
-          }
-        ]
-      }
-    ]
-  }
-];
-
-export default function TreeViewField({
-  data = sample,
-  value,
-  onChange,
-  multiple,
-  onDisabled
-}: Props) {
+export default function TreeViewField({ data = [], value, onChange, multiple, onDisabled }: Props) {
   const [selected, setSelected] = useState<any[] | any>(() => {
     if (value) return value;
     return multiple ? [] : null;
@@ -122,8 +55,6 @@ export default function TreeViewField({
     }
     setExpanded((prev) => union(prev, array));
   }, [controlledValue, data, multiple]);
-
-  function getDefaultExpand() {}
 
   function getChildById(node: RenderTree, id: string) {
     let array: string[] = [];
@@ -184,6 +115,8 @@ export default function TreeViewField({
       : childs.some((v) => v === controlledValue);
 
     const disabled = onDisabled && onDisabled(nodes.id);
+    const isContainer = Boolean(nodes.children?.length);
+    // console.log(`nodes.id, disabled`, nodes.id, disabled);
     return (
       <StyledTreeItem
         key={`${nodes.id}`}
@@ -191,18 +124,25 @@ export default function TreeViewField({
         nodeId={`${nodes.id}`}
         label={
           <Box sx={{ display: 'flex', alignItems: 'center', p: 0.5, pr: 0 }}>
-            <FormControlLabel
-              disabled={disabled}
-              control={
-                <Control
-                  defaultChecked={checked}
-                  checked={checked}
-                  onChange={(event) => getOnChange(event.currentTarget.checked, nodes)}
-                  // onClick={(e) => e.stopPropagation()}
-                />
-              }
-              label={<>{nodes.name}</>}
-            />
+            {isContainer && <Folder sx={{ color: 'primary.main', pr: 1 }} />}
+            {disabled ? (
+              <>
+                <Typography>{nodes.name}</Typography>
+              </>
+            ) : (
+              <FormControlLabel
+                disabled={disabled}
+                control={
+                  <Control
+                    defaultChecked={checked}
+                    checked={checked}
+                    onChange={(event) => getOnChange(event.currentTarget.checked, nodes)}
+                    // onClick={(e) => e.stopPropagation()}
+                  />
+                }
+                label={<>{nodes.name}</>}
+              />
+            )}
           </Box>
         }
       >

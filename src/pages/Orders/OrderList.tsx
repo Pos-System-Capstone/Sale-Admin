@@ -96,7 +96,7 @@ const OrderListPage = () => {
             Xuất file
           </Button>
         </Stack>
-        <Card style={{ padding: '1em' }}>
+        <Card>
           <Stack spacing={2}>
             <OrderSearchForm />
             <ResoTable

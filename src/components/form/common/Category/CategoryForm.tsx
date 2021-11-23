@@ -1,16 +1,17 @@
-import React, { useMemo } from 'react';
-import { Box, Grid, Slider, Typography } from '@mui/material';
+import { useMemo } from 'react';
+import { Box, Grid, Typography } from '@mui/material';
 import { CheckBoxField, DraftEditorField, InputField, UploadImageField } from 'components/form';
 import useLocales from 'hooks/useLocales';
 import { Controller, useFormContext } from 'react-hook-form';
 import TreeViewField, { RenderTree } from 'components/form/TreeViewField/TreeViewField';
 import useCategories from 'hooks/categories/useCategories';
 import { TCategory } from 'types/category';
-import { DraftEditor } from 'components/editor';
 
-interface Props {}
+interface Props {
+  updateMode?: boolean;
+}
 
-const CategoryForm = (props: Props) => {
+const CategoryForm = ({ updateMode }: Props) => {
   const { translate } = useLocales();
   const { watch } = useFormContext();
   const { data: categories } = useCategories({ 'only-root': true });
@@ -40,18 +41,28 @@ const CategoryForm = (props: Props) => {
     );
   }, [categories]);
 
-  const checkIsNotRootCategory = (id: string) => {
-    const cate = categories?.find((c) => c.cate_id === Number(id));
-    if (!cate) return true;
-    return !cate.is_container;
+  const checkIsRootCategory = (id: string, cates: TCategory[]): boolean => {
+    return cates?.some((c) => {
+      if (c.cate_id === Number(id)) {
+        return c.is_container;
+      }
+      if (c.childs) {
+        return checkIsRootCategory(id, c.childs);
+      }
+      return false;
+    });
   };
 
-  const [isExtra, isRoot, is_container] = watch(['is_extra', 'is_root', 'is_container']);
+  const [, isRoot, is_container] = watch(['is_extra', 'is_root', 'is_container']);
 
   return (
     <Grid container spacing={2}>
       <Grid item xs={6}>
-        <CheckBoxField name="is_container" label="Đây không phải danh mục chứa sản phẩm" />
+        <CheckBoxField
+          disabled={updateMode}
+          name="is_container"
+          label="Đây không phải danh mục chứa sản phẩm"
+        />
       </Grid>
       <Grid item xs={6}>
         {!is_container && <CheckBoxField name="is_extra" label="Đây là Danh mục extra" />}
@@ -93,7 +104,7 @@ const CategoryForm = (props: Props) => {
             name="parent_cate_id"
             render={({ field }) => (
               <TreeViewField
-                onDisabled={checkIsNotRootCategory}
+                onDisabled={(id) => !checkIsRootCategory(id, categories ?? [])}
                 data={categoryTreeData}
                 value={field.value}
                 onChange={field.onChange}
@@ -105,16 +116,5 @@ const CategoryForm = (props: Props) => {
     </Grid>
   );
 };
-
-const marks = [
-  {
-    value: 0,
-    label: 'Đầu tiền'
-  },
-  {
-    value: 100,
-    label: 'Cuối cùng'
-  }
-];
 
 export default CategoryForm;

@@ -2,10 +2,10 @@
 /* eslint-disable no-plusplus */
 /* eslint-disable react/prop-types */
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Box, Button, Container, Stack, Typography, useTheme } from '@mui/material';
+import { Box, Button, Stack } from '@mui/material';
 import { useSnackbar } from 'notistack';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { ProductTypeEnum } from 'types/product';
 import LoadingAsyncButton from '../../components/LoadingAsyncButton/LoadingAsyncButton';
 import Page from '../../components/Page';
@@ -21,12 +21,16 @@ const CreateProduct = () => {
   const { setNavOpen } = useDashboard();
   const navigate = useNavigate();
 
+  const [searchParams] = useSearchParams();
+  const productType: any = Number(searchParams.get('productType') ?? ProductTypeEnum.Single);
+
   const methods = useForm<UpdateProductForm & any>({
     resolver: yupResolver(validationSchema),
     defaultValues: {
       tags: [],
       category: '5',
-      description: ''
+      description: '',
+      product_type: productType
     }
   });
   const { handleSubmit } = methods;
@@ -60,15 +64,9 @@ const CreateProduct = () => {
         </Stack>
       </DashboardNavLayout>
       <Page title="Tạo sản phẩm">
-        <Container maxWidth="lg" sx={{ mx: 'auto' }}>
-          <Typography px={1} variant="h3" component="h4" gutterBottom>
-            Tạo dòng sản phẩm
-          </Typography>
-          <Box display="flex">
-            <MiddleForm />
-            {/* <RightForm /> */}
-          </Box>
-        </Container>
+        <Box display="flex">
+          <MiddleForm />
+        </Box>
       </Page>
     </FormProvider>
   );

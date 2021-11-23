@@ -5,6 +5,7 @@ import {
   InputField,
   RadioGroupField,
   SelectField,
+  SwitchField,
   TimePickerField
 } from 'components/form';
 import DateRangePickerField from 'components/form/DateRangePickerField';
@@ -53,6 +54,9 @@ const buildFormItem = (tableConfig: TableType) => {
       break;
     case 'dateRange':
       C = DateRangePickerField;
+      break;
+    case 'switch':
+      C = SwitchField;
       break;
     default:
       break;

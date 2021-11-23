@@ -23,7 +23,7 @@ const ModalForm = ({ trigger, onOk: onSubmit, title, children, ...others }: Prop
   const { translate } = useLocales();
 
   return (
-    <div>
+    <>
       <span onClick={() => setOpen(true)}>{trigger}</span>
       <Dialog {...others} fullWidth maxWidth="sm" open={open} onClose={() => setOpen(false)}>
         <DialogTitle>{title}</DialogTitle>
@@ -40,7 +40,7 @@ const ModalForm = ({ trigger, onOk: onSubmit, title, children, ...others }: Prop
           </LoadingAsyncButton>
         </DialogActions>
       </Dialog>
-    </div>
+    </>
   );
 };
 

@@ -105,19 +105,20 @@ const CreateCollectionPage = () => {
   };
 
   return (
-    <Page title={isMenuCollection ? 'Tạo bộ sưu tập' : 'Tạo nhóm sản phẩm'}>
-      <Box px={2} pb={2}>
-        <Typography variant="h3" component="h2" gutterBottom>
-          {isMenuCollection
-            ? translate('collections.createInfo')
-            : translate('collections.groupCollection')}
-        </Typography>
-        {!isMenuCollection && (
+    <Page
+      title={
+        isMenuCollection
+          ? translate('collections.createInfo')
+          : translate('collections.groupCollection')
+      }
+      content={
+        !isMenuCollection && (
           <Typography color="GrayText">
             Nhóm combo được sử dụng để cấu hình các bước trong một combo
           </Typography>
-        )}
-      </Box>
+        )
+      }
+    >
       <Box px={2}>
         <FormProvider {...form}>
           <DashboardNavLayout onOpenSidebar={() => setNavOpen(true)}>
