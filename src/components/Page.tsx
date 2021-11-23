@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet-async';
 import { useLocation } from 'react-router-dom';
 import { forwardRef, useEffect, useCallback, ReactNode } from 'react';
 // material
-import { Box, BoxProps } from '@mui/material';
+import { Box, BoxProps, Container, Typography } from '@mui/material';
 // utils
 import track from '../utils/analytics';
 
@@ -32,6 +32,11 @@ const Page = forwardRef<HTMLDivElement, PageProps>(({ children, title = '', ...o
       <Helmet>
         <title>{title}</title>
       </Helmet>
+      <Container maxWidth="lg" sx={{ mx: 'auto' }}>
+        <Box pb={4}>
+          <Typography variant="h3">{title}</Typography>
+        </Box>
+      </Container>
       {children}
     </Box>
   );

@@ -95,7 +95,7 @@ const RightForm = () => {
       </StickyCard>
       <Card sx={{ textAlign: 'left', paddingX: 0 }}>
         <Box textAlign="left">
-          <CardTitle>Phân mục sản phẩm</CardTitle>
+          <CardTitle>Danh mục sản phẩm</CardTitle>
           <SelectField
             name="cat_id"
             label="Chọn loại sản phẩm"

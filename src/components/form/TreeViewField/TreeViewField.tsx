@@ -1,5 +1,5 @@
 import { TreeItem, TreeView } from '@mui/lab';
-import { Checkbox, FormControlLabel, Radio } from '@mui/material';
+import { Checkbox, FormControlLabel, Radio, Box, Typography } from '@mui/material';
 import { union } from 'lodash';
 import {
   MinusSquare,
@@ -14,6 +14,7 @@ type Props = {
   data?: RenderTree[];
   value?: any[] | any;
   onChange?: (updatedValue: any[] | any) => any;
+  onDisabled?: (id: string) => boolean;
 };
 
 const sample: RenderTree[] = [
@@ -79,11 +80,18 @@ const sample: RenderTree[] = [
   }
 ];
 
-export default function TreeViewField({ data = sample, value, onChange, multiple }: Props) {
+export default function TreeViewField({
+  data = sample,
+  value,
+  onChange,
+  multiple,
+  onDisabled
+}: Props) {
   const [selected, setSelected] = useState<any[] | any>(() => {
     if (value) return value;
     return multiple ? [] : null;
   });
+  const [expanded, setExpanded] = useState<string[]>([]);
 
   const controlledValue = value ?? selected;
 
@@ -95,7 +103,11 @@ export default function TreeViewField({ data = sample, value, onChange, multiple
     }
   };
 
-  function getDefaultExpand() {
+  const handleToggle = (event: React.SyntheticEvent, nodeIds: string[]) => {
+    setExpanded(nodeIds);
+  };
+
+  useEffect(() => {
     let array: string[] = [];
 
     for (let index = 0; index < data?.length; index++) {
@@ -108,9 +120,10 @@ export default function TreeViewField({ data = sample, value, onChange, multiple
         array.push(node.id);
       }
     }
+    setExpanded((prev) => union(prev, array));
+  }, [controlledValue, data, multiple]);
 
-    return array;
-  }
+  function getDefaultExpand() {}
 
   function getChildById(node: RenderTree, id: string) {
     let array: string[] = [];
@@ -170,23 +183,27 @@ export default function TreeViewField({ data = sample, value, onChange, multiple
       ? union(controlledValue, childs).length !== 0
       : childs.some((v) => v === controlledValue);
 
+    const disabled = onDisabled && onDisabled(nodes.id);
     return (
       <StyledTreeItem
         key={`${nodes.id}`}
         defaultChecked={childHasSelected}
         nodeId={`${nodes.id}`}
         label={
-          <FormControlLabel
-            control={
-              <Control
-                defaultChecked={checked}
-                checked={checked}
-                onChange={(event) => getOnChange(event.currentTarget.checked, nodes)}
-                onClick={(e) => e.stopPropagation()}
-              />
-            }
-            label={<>{nodes.name}</>}
-          />
+          <Box sx={{ display: 'flex', alignItems: 'center', p: 0.5, pr: 0 }}>
+            <FormControlLabel
+              disabled={disabled}
+              control={
+                <Control
+                  defaultChecked={checked}
+                  checked={checked}
+                  onChange={(event) => getOnChange(event.currentTarget.checked, nodes)}
+                  // onClick={(e) => e.stopPropagation()}
+                />
+              }
+              label={<>{nodes.name}</>}
+            />
+          </Box>
         }
       >
         {Array.isArray(nodes.children) ? nodes.children.map((node) => renderTree(node)) : null}
@@ -194,14 +211,13 @@ export default function TreeViewField({ data = sample, value, onChange, multiple
     );
   };
 
-  const defaultExpanded = getDefaultExpand();
   return (
     <TreeView
-      defaultExpanded={defaultExpanded}
-      expanded={defaultExpanded}
+      expanded={expanded}
       defaultCollapseIcon={<MinusSquare />}
       defaultExpandIcon={<PlusSquare />}
       defaultEndIcon={<CloseSquare />}
+      onNodeToggle={handleToggle}
       sx={{ height: 300, flexGrow: 1, overflowY: 'auto' }}
     >
       {data.map((d) => renderTree(d))}

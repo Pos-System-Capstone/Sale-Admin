@@ -52,19 +52,14 @@ const CollectionInfoTab = ({ onSubmit }: { onSubmit: Function }) => {
                   label={translate('collections.table.collectionNameEn')}
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <SelectField
+              <Grid item xs={6}>
+                <InputField
+                  label={translate('collections.table.position')}
+                  name="position"
+                  type="number"
                   fullWidth
-                  label={translate('collections.table.store')}
-                  size="small"
-                  name="store_id"
-                >
-                  {stores?.map(({ id, name }: any) => (
-                    <MenuItem value={Number(id)} key={`cate_select_${id}`}>
-                      {name}
-                    </MenuItem>
-                  ))}
-                </SelectField>
+                  min={0}
+                />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <InputField
@@ -75,25 +70,6 @@ const CollectionInfoTab = ({ onSubmit }: { onSubmit: Function }) => {
                   name="description"
                   label={translate('collections.table.description')}
                 />
-              </Grid>
-              <Grid item xs={12}>
-                <Typography gutterBottom>{translate('collections.table.position')}</Typography>
-                <Box px={4}>
-                  <Controller
-                    name="position"
-                    render={({ field }) => (
-                      <Slider
-                        sx={{ width: '100%' }}
-                        aria-label="Custom marks"
-                        defaultValue={0}
-                        step={1}
-                        valueLabelDisplay="auto"
-                        marks={marks}
-                        {...field}
-                      />
-                    )}
-                  />
-                </Box>
               </Grid>
             </Grid>
           </Grid>

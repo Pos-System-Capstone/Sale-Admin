@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { Box, Grid, Slider, Typography } from '@mui/material';
 import { CheckBoxField, DraftEditorField, InputField, UploadImageField } from 'components/form';
 import useLocales from 'hooks/useLocales';
-import { Controller } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 import TreeViewField, { RenderTree } from 'components/form/TreeViewField/TreeViewField';
 import useCategories from 'hooks/categories/useCategories';
 import { TCategory } from 'types/category';
@@ -12,8 +12,8 @@ interface Props {}
 
 const CategoryForm = (props: Props) => {
   const { translate } = useLocales();
-
-  const { data: categories } = useCategories();
+  const { watch } = useFormContext();
+  const { data: categories } = useCategories({ 'only-root': true });
 
   const categoryTreeData = useMemo<RenderTree[]>(() => {
     const generateTree: any = (category: TCategory) => {
@@ -40,35 +40,30 @@ const CategoryForm = (props: Props) => {
     );
   }, [categories]);
 
+  const checkIsNotRootCategory = (id: string) => {
+    const cate = categories?.find((c) => c.cate_id === Number(id));
+    if (!cate) return true;
+    return !cate.is_container;
+  };
+
+  const [isExtra, isRoot, is_container] = watch(['is_extra', 'is_root', 'is_container']);
+
   return (
     <Grid container spacing={2}>
-      <Grid item xs={12}>
-        <CheckBoxField name="is_available" label="Hiển thị trên web" />
+      <Grid item xs={6}>
+        <CheckBoxField name="is_container" label="Đây không phải danh mục chứa sản phẩm" />
       </Grid>
-      <Grid item xs={12} sm={6} sx={{ textAlign: 'left' }}>
+      <Grid item xs={6}>
+        {!is_container && <CheckBoxField name="is_extra" label="Đây là Danh mục extra" />}
+      </Grid>
+      <Grid item xs={12} sm={12} sx={{ textAlign: 'left' }}>
         <Box>
           <UploadImageField.Avatar name="pic_url" label={translate('categories.table.thumbnail')} />
         </Box>
       </Grid>
-      <Grid item xs={12} sm={6}>
-        <Box px={4}>
-          <Typography>Thứ tự xuất hiện</Typography>
-          <Controller
-            name="position"
-            render={({ field }) => (
-              <Slider
-                sx={{ width: '100%' }}
-                aria-label="Custom marks"
-                defaultValue={0}
-                step={1}
-                valueLabelDisplay="auto"
-                marks={marks}
-                {...field}
-              />
-            )}
-          />
-        </Box>
-      </Grid>
+      {/* <Grid item xs={12} sm={6}>
+        <InputField fullWidth label="Thứ tự" name="position" />
+      </Grid> */}
 
       <Grid item xs={12} sm={6}>
         <InputField fullWidth name="cate_name" label={translate('categories.table.cateName')} />
@@ -88,16 +83,25 @@ const CategoryForm = (props: Props) => {
           }}
         />
       </Grid>
-
       <Grid item xs={12}>
-        <Typography mb={2}>Phân mục cha</Typography>
-        <Controller
-          name="parent_cate_id"
-          render={({ field }) => (
-            <TreeViewField data={categoryTreeData} value={field.value} onChange={field.onChange} />
-          )}
-        />
+        <CheckBoxField name="is_root" label="Đây là Danh mục gốc" />
       </Grid>
+      {!isRoot && (
+        <Grid item xs={12}>
+          <Typography mb={2}>Danh mục cha</Typography>
+          <Controller
+            name="parent_cate_id"
+            render={({ field }) => (
+              <TreeViewField
+                onDisabled={checkIsNotRootCategory}
+                data={categoryTreeData}
+                value={field.value}
+                onChange={field.onChange}
+              />
+            )}
+          />
+        </Grid>
+      )}
     </Grid>
   );
 };

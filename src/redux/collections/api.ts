@@ -15,4 +15,4 @@ export const updateCollection = (collectionId: number, data: TCollection) =>
   request.put<any>(`/collections/${collectionId}`, data);
 
 export const productCollectionApi = (collectionId: number) =>
-  generateAPIWithPaging<TProductBase>(`collections/${collectionId}/products`);
+  generateAPIWithPaging<TProductBase>(`admin/collections/${collectionId}/products`);

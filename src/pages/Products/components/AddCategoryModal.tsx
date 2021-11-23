@@ -27,17 +27,17 @@ const AddCategoryModal = ({ onClose, onFinish, ...modalProps }: Props) => {
   return (
     <Dialog {...modalProps}>
       <DialogTitle>
-        <Typography variant="h3">Thêm phân mục</Typography>
+        <Typography variant="h3">Thêm Danh mục</Typography>
       </DialogTitle>
       <DialogContent>
         <Controller
           control={control}
           name="categoryName"
-          render={({ field }) => <TextField placeholder="Tên phân mục" fullWidth {...field} />}
+          render={({ field }) => <TextField placeholder="Tên Danh mục" fullWidth {...field} />}
         />
         <Box py={4}>
           <Typography color="gray" variant="h6">
-            Chọn phân mục cha
+            Chọn Danh mục cha
           </Typography>
           <Controller
             control={control}

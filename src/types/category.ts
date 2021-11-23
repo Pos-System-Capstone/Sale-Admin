@@ -24,6 +24,7 @@ export type TCategory = {
   category_extra_cate: CategoryExtraCate[];
   category_modifier: any[];
   childs: TCategory[];
+  is_container: boolean;
 };
 
 export type TCategoryExtra = {

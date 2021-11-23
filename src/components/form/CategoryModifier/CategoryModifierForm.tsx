@@ -56,19 +56,7 @@ const CategoryModifierForm = (props: Props) => {
         <Box>
           <Typography gutterBottom>{translate('collections.table.position')}</Typography>
           <Box px={4}>
-            <Controller
-              name="display_index"
-              render={({ field }) => (
-                <Slider
-                  sx={{ width: '100%' }}
-                  defaultValue={0}
-                  step={1}
-                  valueLabelDisplay="auto"
-                  marks={marks}
-                  {...field}
-                />
-              )}
-            />
+            <InputField type="number" min={0} name="display_index" />
           </Box>
         </Box>
       </Grid>

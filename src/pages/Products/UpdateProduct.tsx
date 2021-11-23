@@ -14,7 +14,6 @@ import useDashboard from '../../hooks/useDashboard';
 import { DashboardNavLayout } from '../../layouts/dashboard/DashboardNavbar';
 import { getProdById, updateProdById } from '../../redux/product/api';
 import MiddleForm from './components/MiddleForm';
-import RightForm from './components/RightForm';
 import { DEFAULT_VALUES, UpdateProductForm, validationSchema } from './type';
 import { transformDraftToStr, normalizeProductData, transformProductForm } from './utils';
 

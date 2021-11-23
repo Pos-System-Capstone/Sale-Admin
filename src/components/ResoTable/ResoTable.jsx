@@ -364,7 +364,10 @@ const ResoTable = (
         if (typeof column.render === 'function') {
           cell = column.render(get(data, column.dataIndex, '-'), data, idx) ?? '-';
         } else {
-          if (column.valueType === 'select') {
+          if (
+            column.valueType === 'select' ||
+            (column.valueType === 'checkbox' && column.valueEnum)
+          ) {
             const opt =
               column.valueEnum?.find((opt) => opt.value === get(data, column.dataIndex))?.label ??
               '-';

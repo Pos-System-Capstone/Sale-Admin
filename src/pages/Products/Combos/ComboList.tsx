@@ -1,7 +1,7 @@
 import plusFill from '@iconify/icons-eva/plus-fill';
 import { Icon } from '@iconify/react';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
-import { Container, Stack, Typography, Button, Card, Tab, Box } from '@mui/material';
+import { Box, Button, Card, Container, Stack, Tab, Typography } from '@mui/material';
 import Page from 'components/Page';
 import ResoTable from 'components/ResoTable/ResoTable';
 import useLocales from 'hooks/useLocales';
@@ -13,7 +13,7 @@ import { PATH_DASHBOARD } from 'routes/paths';
 import { CollectionTypeEnum, TCollection } from 'types/collection';
 import { ProductTypeEnum, TProductBase } from 'types/product';
 import { TTableColumn } from 'types/table';
-import { productColumns } from '../config';
+import { comboColumns } from './components/columns';
 
 interface Props {}
 
@@ -101,7 +101,7 @@ const ComboList = (props: Props) => {
                     navigate(`${PATH_DASHBOARD.combos.editById(data.product_id)}`)
                   }
                   //   onDelete={setCurrentDeleteItem}
-                  columns={productColumns}
+                  columns={comboColumns}
                   rowKey="product_id"
                 />
               </Stack>

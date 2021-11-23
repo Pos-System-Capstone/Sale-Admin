@@ -1,199 +1,132 @@
 /* eslint-disable react/prop-types */
-import {
-  Box,
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  CardMedia,
-  CircularProgress,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  Grid,
-  Pagination,
-  Stack,
-  TextField,
-  Typography
-} from '@mui/material';
-import { useRequest } from 'ahooks';
+import { Avatar, Box, Button, Card, Stack } from '@mui/material';
 import DrawerProductForm from 'components/DrawerProductForm/DrawerProductForm';
-import EmptyContent from 'components/EmptyContent';
-import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
+import confirm from 'components/Modal/confirm';
+import ModalProductForm from 'components/ModalProductForm/ModalProductForm';
+import ResoTable from 'components/ResoTable/ResoTable';
 import useLocales from 'hooks/useLocales';
 import { get } from 'lodash';
 import { useSnackbar } from 'notistack';
-import React, { useState } from 'react';
+import React, { useRef } from 'react';
 import { productCollectionApi } from 'redux/collections/api';
 import { TProductBase } from 'types/product';
-import { formatCurrency } from 'utils/utils';
-
-const ProductCard = ({ product, onEdit, onDelete, translate }: any) => (
-  <Card sx={{ width: '100%', display: 'flex', flexDirection: 'column', position: 'relative' }}>
-    <CardMedia
-      sx={{ height: '151px', width: '100%', objectFit: 'cover' }}
-      image={`https://minimals.cc/static/mock-images/products/product_${
-        product.product_name.length % 12
-      }.jpg`}
-      title="Live from space album cover"
-    />
-    <CardContent sx={{ flex: '1 0 auto', px: 1, py: 2 }}>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-        <Typography variant="subtitle2" pr={2} noWrap>
-          {product.product_name}
-        </Typography>
-        <Typography component="span" variant="body1">
-          {formatCurrency(product.price1)}
-        </Typography>
-      </Box>
-    </CardContent>
-    <CardActions sx={{ justifyContent: 'flex-end', py: 2 }}>
-      <Button onClick={onDelete} size="small" color="error">
-        {translate('common.delete')}
-      </Button>
-    </CardActions>
-  </Card>
-);
-
-const DEFAULT_SIZE = 10;
+import { TTableColumn } from 'types/table';
 
 // eslint-disable-next-line react/prop-types
 const ProductInCollectionTab = ({ id, onAddProduct }: any) => {
   const api = productCollectionApi(id);
   const { translate } = useLocales();
-  const [prodNameFilter, setProdNameFilter] = useState<string | null>(null);
-  const [page, setPage] = useState(1);
+  const tableRef = useRef<any>();
 
-  const {
-    data: response,
-    loading,
-    run
-  } = useRequest(() => api.get({ 'product-name': prodNameFilter, page, size: DEFAULT_SIZE }), {
-    formatResult: (res) => res.data,
-    refreshDeps: [prodNameFilter, page],
-    debounceInterval: 500
-  });
-
-  const data = response?.data;
-  const totalPage = response?.metadata ? Math.floor(response?.metadata.total / DEFAULT_SIZE) : 1;
-
-  const [currentDeleteItem, setCurrentDeleteItem] = React.useState<any>(null);
-  const [currentProduct, setCurrentProduct] = React.useState<TProductBase | null>(null);
   const { enqueueSnackbar } = useSnackbar();
 
-  const onDelete = () =>
-    api
-      .delete(Number(currentDeleteItem!.product_id))
-      .then((res) => {
-        enqueueSnackbar(translate('common.201'), {
-          variant: 'success'
-        });
-      })
-      .then(run)
-      .catch((err) => {
-        enqueueSnackbar(translate('common.error'), {
-          variant: 'error'
-        });
-      })
-      .finally(() => setCurrentDeleteItem(null));
+  const onDelete = (currentDeleteItem: TProductBase) =>
+    confirm({
+      title: 'Xác nhận xoá',
+      content: 'Xoá tuỳ chỉnh này sẽ tác động tới các sản phẩm đang được áp dụng',
+      onOk: async () => {
+        try {
+          await api.delete(Number(currentDeleteItem!.product_id));
+          enqueueSnackbar(translate('common.201'), {
+            variant: 'success'
+          });
+          tableRef.current?.reload();
+        } catch (error) {
+          enqueueSnackbar(translate('common.error'), {
+            variant: 'error'
+          });
+        }
+      },
+      onCancle: () => {}
+    });
 
-  const addProductToCollection = (data: any) =>
-    api
-      .create(data)
-      .then(() =>
-        enqueueSnackbar('common.201', {
-          variant: 'success'
-        })
-      )
-      .then(run)
-      .catch((err) => {
-        const errMsg = get(err.response, ['data', 'message'], `Có lỗi xảy ra. Vui lòng thử lại`);
-        enqueueSnackbar(errMsg, {
-          variant: 'error'
-        });
+  const addProductToCollection = async (ids: number[], data: any) => {
+    try {
+      await api.create(data);
+      enqueueSnackbar('common.201', {
+        variant: 'success'
       });
+      tableRef.current?.reload();
+    } catch (err) {
+      console.log(`err.response`, err as any);
+      const errMsg = get(err as any, ['message'], `Có lỗi xảy ra. Vui lòng thử lại`);
+      enqueueSnackbar(errMsg, {
+        variant: 'error'
+      });
+    }
+  };
+
+  const categoryExtraColumns: TTableColumn<TProductBase>[] = [
+    {
+      title: 'STT',
+      dataIndex: 'index',
+      hideInSearch: true
+    },
+    {
+      title: 'Hình ảnh',
+      dataIndex: 'pic_url',
+      hideInSearch: true,
+      render: (src, { product_name }: any) => (
+        <Avatar
+          alt={product_name}
+          src={src}
+          variant="square"
+          style={{ width: '54px', height: '54px' }}
+        />
+      )
+    },
+    {
+      title: 'Tên sản phẩm',
+      dataIndex: 'product_name'
+    },
+    {
+      title: 'Giá mặc định',
+      dataIndex: 'price',
+      hideInSearch: true
+    },
+    {
+      title: 'Thứ tự',
+      dataIndex: 'price',
+      hideInSearch: true
+    }
+  ];
 
   return (
     <Box flex={1}>
-      {currentDeleteItem && (
-        <Dialog
-          open={!!currentDeleteItem}
-          onClose={() => setCurrentDeleteItem(null)}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">
-            {translate('common.confirmDeleteTitle')}{' '}
-            <strong>{currentDeleteItem.product_name}</strong>
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              {translate('common.confirmDeleteTitle')}?
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={() => setCurrentDeleteItem(null)} variant="text" color="secondary">
-              {translate('common.cancel')}
-            </Button>
-            <LoadingAsyncButton onClick={onDelete} color="error" variant="contained" autoFocus>
-              {translate('common.update')}
-            </LoadingAsyncButton>
-          </DialogActions>
-        </Dialog>
-      )}
       <Box component={Card} p={2}>
-        <Stack justifyContent="space-between" mb={2} direction="row" spacing={2}>
-          <TextField
-            onChange={(e) => setProdNameFilter(e.target.value)}
-            size="small"
-            label="Tên sản phẩm"
-            name="product-name"
-          />
-          <DrawerProductForm
-            disabledSelections={data?.map((prod) => prod.product_id)}
-            onSubmit={(ids: any, data: any) => addProductToCollection(ids)}
-            trigger={<Button variant="contained">{translate('common.addMore')}</Button>}
+        <Stack justifyContent="flex-end" mb={2} direction="row" spacing={2}>
+          <ModalProductForm
+            onSubmit={addProductToCollection}
+            trigger={<Button variant="outlined">Thêm sản phẩm</Button>}
           />
         </Stack>
-        {loading ? (
-          <CircularProgress />
-        ) : (
-          <>
-            <Grid py={2} container spacing={3}>
-              {data && data?.length !== 0 ? (
-                data?.map((pro: any) => (
-                  <Grid key={pro.product_id} item xs={4} md={3}>
-                    <ProductCard
-                      onEdit={() => setCurrentProduct(pro)}
-                      onDelete={() => setCurrentDeleteItem(pro)}
-                      product={pro}
-                      translate={translate}
-                    />
-                  </Grid>
-                ))
-              ) : (
-                <EmptyContent title="Chưa có sản phẩm nào" />
-              )}
-            </Grid>
-            <Box textAlign="right" py={2}>
-              <Pagination
-                page={page}
-                onChange={(_, page) => setPage(page)}
-                showFirstButton
-                showLastButton
-                count={totalPage}
-                color="primary"
-                sx={{
-                  '& .MuiPagination-ul': {
-                    justifyContent: 'flex-end'
-                  }
-                }}
-              />
-            </Box>
-          </>
-        )}
+        <ResoTable
+          ref={tableRef}
+          showFilter={false}
+          showSettings={false}
+          columns={categoryExtraColumns}
+          rowKey="product_id"
+          onDelete={onDelete}
+          // onEdit={(values: TModifier) => updateForm.reset(normalizeModifier(values))}
+          // renderEdit={(dom: ReactNode, modifier: TModifier) => (
+          //   <ModalForm
+          //     onOk={async () => {
+          //       try {
+          //         return true;
+          //       } catch (error) {
+          //         return false;
+          //       }
+          //     }}
+          //     title={<Typography variant="h3">Cập nhật sản phẩm trong bộ sưu tập</Typography>}
+          //     trigger={dom}
+          //   >
+          //     <FormProvider {...updateForm}>
+          //       <InputField name="position" label="Thứ tự" />
+          //     </FormProvider>
+          //   </ModalForm>
+          // )}
+          getData={(params: any) => api.get(params)}
+        />
       </Box>
     </Box>
   );

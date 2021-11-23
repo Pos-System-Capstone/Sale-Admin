@@ -1,7 +1,7 @@
 import request from 'utils/axios';
 import { TCategory } from 'types/category';
 
-export const getCategories = () => request.get<TCategory>('/categories');
+export const getCategories = (params: any) => request.get<TCategory>('/categories', { params });
 
 export const getCategoyById = (cateId: number) => request.get<TCategory>(`/categories/${cateId}`);
 

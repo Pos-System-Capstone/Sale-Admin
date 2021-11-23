@@ -6,7 +6,8 @@
     "position": "Thứ tự",
     "banner_url": "Ảnh đại diện",
     "store": "Cửa hàng",
-    "description": "Mô tả"
+    "description": "Mô tả",
+    "type": "Loại"
   },
   "createInfo": "Thông tin",
   "productInCollection": "Sản phẩm",

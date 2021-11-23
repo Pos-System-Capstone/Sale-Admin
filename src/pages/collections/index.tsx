@@ -38,10 +38,19 @@ const CollectionListPage = () => {
       hideInSearch: true
     },
     {
-      title: translate('collections.table.store'),
-      dataIndex: 'store_id',
-      fixed: 'left',
-      hideInSearch: true
+      title: translate('collections.table.type'),
+      dataIndex: 'type',
+      valueType: 'select',
+      valueEnum: [
+        {
+          label: 'Nhóm combo',
+          value: CollectionTypeEnum.GroupCollection
+        },
+        {
+          label: 'Bộ sưu tập',
+          value: CollectionTypeEnum.MenuCollection
+        }
+      ]
     },
     {
       title: translate('collections.table.position'),
@@ -83,22 +92,31 @@ const CollectionListPage = () => {
           <Typography variant="h4" gutterBottom>
             {translate('collections.list')}
           </Typography>
-          <Button
-            onClick={() => {
-              navigate(PATH_DASHBOARD.collections.new);
-            }}
-            variant="contained"
-            startIcon={<Icon icon={plusFill} />}
-          >
-            {translate('collections.addBtn')}
-          </Button>
+          <Stack direction="row" spacing={2}>
+            <Button
+              onClick={() => {
+                navigate(
+                  `${PATH_DASHBOARD.collections.new}?type=${CollectionTypeEnum.GroupCollection}`
+                );
+              }}
+              variant="outlined"
+            >
+              Tạo nhóm combo
+            </Button>
+            <Button
+              onClick={() => {
+                navigate(PATH_DASHBOARD.collections.new);
+              }}
+              variant="contained"
+              startIcon={<Icon icon={plusFill} />}
+            >
+              {translate('collections.addBtn')}
+            </Button>
+          </Stack>
         </Stack>
         <Card style={{ padding: '1em' }}>
           <Stack spacing={2}>
             <ResoTable
-              defaultFilters={{
-                type: CollectionTypeEnum.MenuCollection
-              }}
               ref={tableRef}
               onEdit={(collecton: TCollection) =>
                 navigate(`${PATH_DASHBOARD.collections.root}/${collecton.id}`, {

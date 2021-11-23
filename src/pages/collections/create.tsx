@@ -43,10 +43,6 @@ const CreateCollectionPage = () => {
   const collectionSchema = (translate: TFunction) =>
     yup.object({
       name: yup.string().required(translate('common.required', { name: 'Bộ sưu tập' })),
-      store_id: yup
-        .number()
-        .typeError(translate('common.required', { name: 'Cửa hàng' }))
-        .required(translate('common.required', { name: 'Cửa hàng' })),
       products: yup
         .array()
         .min(isMenuCollection ? 0 : 1, 'Vui lòng có ít nhất một sản phẩm')
@@ -116,6 +112,11 @@ const CreateCollectionPage = () => {
             ? translate('collections.createInfo')
             : translate('collections.groupCollection')}
         </Typography>
+        {!isMenuCollection && (
+          <Typography color="GrayText">
+            Nhóm combo được sử dụng để cấu hình các bước trong một combo
+          </Typography>
+        )}
       </Box>
       <Box px={2}>
         <FormProvider {...form}>
@@ -154,7 +155,6 @@ const CreateCollectionPage = () => {
                     <Grid container spacing={2}>
                       <Grid item xs={12} sm={6}>
                         <InputField
-                          size="small"
                           fullWidth
                           name="name"
                           label={translate('collections.table.collectionName')}
@@ -162,26 +162,22 @@ const CreateCollectionPage = () => {
                       </Grid>
                       <Grid item xs={12} sm={6}>
                         <InputField
-                          size="small"
                           fullWidth
                           name="name_eng"
                           label={translate('collections.table.collectionNameEn')}
                         />
                       </Grid>
-                      <Grid item xs={12} sm={6}>
-                        <SelectField
-                          fullWidth
-                          label={translate('collections.table.store')}
-                          size="small"
-                          name="store_id"
-                        >
-                          {stores?.map(({ id, name }: any) => (
-                            <MenuItem value={Number(id)} key={`cate_select_${id}`}>
-                              {name}
-                            </MenuItem>
-                          ))}
-                        </SelectField>
-                      </Grid>
+                      {isMenuCollection && (
+                        <Grid item xs={6}>
+                          <InputField
+                            label={translate('collections.table.position')}
+                            name="position"
+                            type="number"
+                            min={0}
+                            fullWidth
+                          />
+                        </Grid>
+                      )}
                       <Grid item xs={12} sm={6}>
                         <InputField
                           size="small"
@@ -192,29 +188,6 @@ const CreateCollectionPage = () => {
                           label={translate('collections.table.description')}
                         />
                       </Grid>
-                      {isMenuCollection && (
-                        <Grid item xs={12}>
-                          <Typography gutterBottom>
-                            {translate('collections.table.position')}
-                          </Typography>
-                          <Box px={4}>
-                            <Controller
-                              name="position"
-                              render={({ field }) => (
-                                <Slider
-                                  sx={{ width: '100%' }}
-                                  aria-label="Custom marks"
-                                  defaultValue={0}
-                                  step={1}
-                                  valueLabelDisplay="auto"
-                                  marks={marks}
-                                  {...field}
-                                />
-                              )}
-                            />
-                          </Box>
-                        </Grid>
-                      )}
                     </Grid>
                   </Grid>
                 </Grid>

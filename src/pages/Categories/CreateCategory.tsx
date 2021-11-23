@@ -21,7 +21,7 @@ import * as yup from 'yup';
 interface Props {}
 
 const schema = yup.object({
-  cate_name: yup.string().required('Vui lòng nhập tên phân mục')
+  cate_name: yup.string().required('Vui lòng nhập tên Danh mục')
 });
 
 const CreateCategory = (props: Props) => {
@@ -32,7 +32,9 @@ const CreateCategory = (props: Props) => {
 
   const createCategoryForm = useForm<TCategory>({
     resolver: yupResolver(schema),
-    defaultValues: {}
+    defaultValues: {
+      is_container: true
+    }
   });
 
   const onSubmit = (values: TCategory) => {
@@ -72,15 +74,15 @@ const CreateCategory = (props: Props) => {
         <Container maxWidth="lg" sx={{ mx: 'auto' }}>
           <Stack spacing={2}>
             <Card>
-              <Typography px={1} variant="h3" component="h4" gutterBottom>
-                Tạo phân mục
-              </Typography>
               <Box>
                 <CategoryForm />
               </Box>
             </Card>
             <Card>
               <Box>
+                <Typography variant="h3" component="h4" gutterBottom>
+                  SEO
+                </Typography>
                 <SeoForm />
               </Box>
             </Card>

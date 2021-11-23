@@ -7,7 +7,7 @@ import { getAllProduct } from 'redux/product/api';
 import LoadingAsyncButton from '../LoadingAsyncButton/LoadingAsyncButton';
 import ResoTable from '../ResoTable/ResoTable';
 
-const ModalProductForm = ({ trigger, onSubmit, selected = [] }) => {
+const ModalProductForm = ({ trigger, onSubmit, selected = [], type = 'checkbox' }) => {
   const [open, setOpen] = React.useState(false);
 
   const [selectedProductIds, setSelectedProductIds] = React.useState(selected);
@@ -54,7 +54,7 @@ const ModalProductForm = ({ trigger, onSubmit, selected = [] }) => {
               <ResoTable
                 checkboxSelection={{
                   selection: selectedProductIds,
-                  type: 'checkbox'
+                  type: type
                 }}
                 showAction={false}
                 scroll={{ y: '50%', x: '100%' }}

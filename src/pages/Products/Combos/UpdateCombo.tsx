@@ -144,7 +144,7 @@ const UpdateCombo = (props: Props) => {
                     <Box>
                       <Stack direction="row" justifyContent="space-between">
                         <Typography my={2} variant="subtitle2">
-                          Phân mục sản phẩm
+                          Danh mục sản phẩm
                         </Typography>
                       </Stack>
                     </Box>

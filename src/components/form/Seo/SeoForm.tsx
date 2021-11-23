@@ -6,10 +6,10 @@ interface Props {}
 const SeoForm = (props: Props) => {
   return (
     <Grid container spacing={2}>
-      <Grid item xs={12} md={6}>
+      <Grid item xs={6} md={6}>
         <InputField name="seo_name" size="small" type="text" label="Đường dẫn SEO" fullWidth />
       </Grid>
-      <Grid item xs={12} md={6}>
+      <Grid item xs={6} md={6}>
         <InputField name="seo_keyword" size="small" type="text" label="Đường dẫn SEO" fullWidth />
       </Grid>
       <Grid item xs={12}>

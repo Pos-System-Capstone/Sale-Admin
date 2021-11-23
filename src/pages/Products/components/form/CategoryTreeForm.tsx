@@ -39,6 +39,12 @@ const CategoryTreeForm = (props: Props) => {
     );
   }, [categories]);
 
+  const checkIsNotRootCategory = (id: string) => {
+    const cate = categories?.find((c) => c.cate_id === Number(id));
+    if (!cate) return true;
+    return !cate.is_container;
+  };
+
   return (
     <>
       <ErrorMessage
@@ -52,7 +58,9 @@ const CategoryTreeForm = (props: Props) => {
       />
       <Controller
         name="cat_id"
-        render={({ field }) => <TreeViewField data={categoryTreeData} {...field} />}
+        render={({ field }) => (
+          <TreeViewField onDisabled={checkIsNotRootCategory} data={categoryTreeData} {...field} />
+        )}
       />
     </>
   );

@@ -1,11 +1,14 @@
 import { AddOutlined, Info } from '@mui/icons-material';
 import { Box, Button, Stack, TextField, Tooltip, Typography } from '@mui/material';
+import categoryApi from 'api/category';
 import { CheckBoxField, DraftEditorField } from 'components/form';
 import SeoForm from 'components/form/Seo/SeoForm';
 import Label from 'components/Label';
 import ResoTable from 'components/ResoTable/ResoTable';
+import useExtraCategory from 'hooks/extra-categories/useExtraCategoy';
 import React, { useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
+import { useQueries } from 'react-query';
 import { CreateProductForm, TProductBase } from 'types/product';
 import { TTableColumn } from 'types/table';
 import VariantForm from '../VariantForm';
@@ -25,6 +28,15 @@ const MiddleForm: React.FC<Props> = ({ updateMode }) => {
   const [showAddCategoryModal, setShowAddCategoryModal] = useState(false);
 
   const [hasExtra, hasVariant] = watch(['has_extra', 'hasVariant']);
+  const cateId = watch('cat_id');
+
+  const { data: extras } = useExtraCategory(Number(cateId));
+  const extraProductsResult = useQueries(
+    extras?.map((e) => ({
+      queryFn: () => categoryApi.getProductsInCategory(e.cate_id).then((res) => res.data.data),
+      queryKey: ['categories', e.cate_id, 'products']
+    })) ?? []
+  );
 
   const productExtraColumns: TTableColumn<TProductBase>[] = [
     {
@@ -33,14 +45,12 @@ const MiddleForm: React.FC<Props> = ({ updateMode }) => {
     },
     {
       title: 'Mã sản phẩm',
-      dataIndex: 'code',
-      render: (value, __) => <TextField value={value} label="Mã sản phẩm" disabled />
+      dataIndex: 'code'
     },
 
     {
       title: 'Giá',
-      dataIndex: 'price',
-      render: (value, __) => <TextField value={value} label="Giá" disabled />
+      dataIndex: 'price'
     }
   ];
 
@@ -101,9 +111,9 @@ const MiddleForm: React.FC<Props> = ({ updateMode }) => {
             <Box>
               <Stack direction="row" justifyContent="space-between">
                 <Typography my={2} variant="subtitle2">
-                  Phân mục sản phẩm
+                  Danh mục sản phẩm
                 </Typography>
-                <Button onClick={() => setShowAddCategoryModal(true)}>Thêm phân mục</Button>
+                <Button onClick={() => setShowAddCategoryModal(true)}>Thêm Danh mục</Button>
               </Stack>
             </Box>
             <CategoryTreeForm />
@@ -131,7 +141,7 @@ const MiddleForm: React.FC<Props> = ({ updateMode }) => {
             <Stack direction="row" spacing={1}>
               <CardTitle variant="subtitle1">Extra</CardTitle>
               <Tooltip
-                title="Các nhóm sản phẩm extra phụ thuộc vào phân mục sản phẩm"
+                title="Các nhóm sản phẩm extra phụ thuộc vào Danh mục sản phẩm"
                 placement="right"
                 arrow
               >
@@ -144,20 +154,23 @@ const MiddleForm: React.FC<Props> = ({ updateMode }) => {
           </Stack>
           <CheckBoxField name="has_extra" label="Sản phẩm có extra" />
           {hasExtra &&
-            prodExtraData.map((categoryExtra, idx) => (
-              <Box key={`extra-product-group-${categoryExtra.id}`}>
+            extras?.map((categoryExtra, idx) => (
+              <Box key={`extra-product-group-${categoryExtra.cate_id}`}>
                 <Stack direction="row" spacing={1} alignItems="center" mb={1}>
                   <Label color="default">{idx + 1}</Label>
-                  <Typography variant="h6">{categoryExtra.categoryName}</Typography>
+                  <Typography variant="h6">{categoryExtra.cate_name}</Typography>
                 </Stack>
                 <ResoTable
+                  getData={(params: any) =>
+                    categoryApi.getProductsInCategory(categoryExtra.cate_id, params)
+                  }
                   showFilter={false}
                   pagination={false}
                   showSettings={false}
                   showAction={false}
                   columns={productExtraColumns}
-                  rowKey="description"
-                  dataSource={categoryExtra.products}
+                  rowKey="cate_id"
+                  // dataSource={categoryExtra.products}
                 />
               </Box>
             ))}
@@ -167,7 +180,7 @@ const MiddleForm: React.FC<Props> = ({ updateMode }) => {
           <Stack direction="row" spacing={1}>
             <CardTitle variant="subtitle1">Tuỳ chỉnh cho sản phẩm</CardTitle>
             <Tooltip
-              title="Các tuỳ chỉnh cho sản phẩm phụ thuộc vào phân mục sản phẩm"
+              title="Các tuỳ chỉnh cho sản phẩm phụ thuộc vào Danh mục sản phẩm"
               placement="right"
               arrow
             >

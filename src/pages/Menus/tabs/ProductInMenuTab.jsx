@@ -167,7 +167,7 @@ const ProductInMenuTab = ({ id }) => {
               aria-label="select category"
               subheader={
                 <ListSubheader component="div" id="nested-list-subheader">
-                  Có {categories.length} Phân mục
+                  Có {categories.length} Danh mục
                 </ListSubheader>
               }
             >
@@ -233,7 +233,7 @@ const ProductInMenuTab = ({ id }) => {
                     hideInSearch: true
                   },
                   {
-                    title: 'Phân mục',
+                    title: 'Danh mục',
                     dataIndex: 'cate_name',
                     render: (cate) => <Chip label={cate} />,
                     hideInSearch: true

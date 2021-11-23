@@ -7,13 +7,13 @@ interface Props {}
 const BasicProductInfoForm = (props: Props) => {
   return (
     <Box>
-      <CheckBoxField name="is_available" label="Hiển thị trên web" />
+      <CheckBoxField name="is_available" label="Sản phẩm đang được bán" />
       <Grid container spacing={2}>
         <Grid item xs={6}>
-          <InputField fullWidth name="product_name" label="Tên sản phẩm" required size="small" />
+          <InputField fullWidth name="code" label="SKU" required size="small" />
         </Grid>
         <Grid item xs={6}>
-          <InputField fullWidth name="code" label="Mã sản phẩm" required size="small" />
+          <InputField fullWidth name="product_name" label="Tên sản phẩm" required size="small" />
         </Grid>
         <Grid item xs={6}>
           <InputField

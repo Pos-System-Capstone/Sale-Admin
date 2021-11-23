@@ -19,7 +19,7 @@ import * as yup from 'yup';
 interface Props {}
 
 const schema = yup.object({
-  cate_name: yup.string().required('Vui lòng nhập tên phân mục')
+  cate_name: yup.string().required('Vui lòng nhập tên Danh mục')
 });
 
 const CategoryInfoTab = (props: Props) => {

@@ -10,6 +10,7 @@ const CheckBoxField = ({ name, label, rules = null, defaultValue = false, ...pro
     <Controller
       render={({ field, fieldState }) => (
         <FormControlLabel
+          sx={{ paddingBottom: '1rem' }}
           {...props}
           control={
             <Checkbox

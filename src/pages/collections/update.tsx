@@ -4,13 +4,12 @@ import { Icon } from '@iconify/react';
 import { Box, Button, Stack, Tab, Tabs, Typography } from '@mui/material';
 import Page from 'components/Page';
 import useLocales from 'hooks/useLocales';
-import { get } from 'lodash-es';
+import { get } from 'lodash';
 import { useSnackbar } from 'notistack';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useLocation, useParams } from 'react-router-dom';
 import { updateCollection } from 'redux/collections/api';
-import { addProductInMenus } from 'redux/menu/api';
 import { TCollection } from 'types/collection';
 import CollectionInfoTab from './tabs/CollectionInfoTab';
 import ProductInCollectionTab from './tabs/ProductInCollectionTab';
@@ -52,7 +51,7 @@ const UpdateCollectionPage = () => {
   const onUpdateCollection = (values: TCollection) =>
     updateCollection(+id!, values)
       .then(() =>
-        enqueueSnackbar(translate('common.201'), {
+        enqueueSnackbar(translate('common.200'), {
           variant: 'success'
         })
       )
@@ -68,7 +67,11 @@ const UpdateCollectionPage = () => {
       value: TabType.COLLECTION_INFO,
       label: translate('collections.createInfo'),
       icon: <Icon icon={roundAccountBox} width={20} height={20} />,
-      component: <CollectionInfoTab onSubmit={form.handleSubmit(onUpdateCollection)} />
+      component: (
+        <Stack>
+          <CollectionInfoTab onSubmit={form.handleSubmit(onUpdateCollection)} />
+        </Stack>
+      )
     },
     {
       value: TabType.PRODUCT_COLLECTION,

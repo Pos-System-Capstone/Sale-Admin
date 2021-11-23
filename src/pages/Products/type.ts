@@ -32,6 +32,6 @@ export const validationSchema = yup.object({
     .required('Vui lòng nhập giá sản phẩm'),
   cat_id: yup
     .number()
-    .typeError('Vui lòng chọn phân mục cho sản phẩm')
-    .required('Vui lòng chọn phân mục cho sản phẩm')
+    .typeError('Vui lòng chọn Danh mục cho sản phẩm')
+    .required('Vui lòng chọn Danh mục cho sản phẩm')
 });

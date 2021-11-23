@@ -49,21 +49,19 @@ const CategoryListPage = () => {
       dataIndex: 'cate_name'
     },
     {
-      title: translate('categories.table.subCategory'),
-      dataIndex: 'childs',
-      hideInSearch: true,
-      render: (_, { childs }) => (
-        <Stack>
-          {childs.map((c) => (
-            <Link
-              key={`sub-cate-${c.cate_id}`}
-              to={`${PATH_DASHBOARD.categories.editById(c.cate_id)}`}
-            >
-              {c.cate_name}
-            </Link>
-          ))}
-        </Stack>
-      )
+      title: 'Danh mục extra',
+      dataIndex: 'is_extra',
+      valueType: 'checkbox',
+      valueEnum: [
+        {
+          label: 'Extra',
+          value: true
+        },
+        {
+          label: 'Không phải extra',
+          value: false
+        }
+      ]
     },
     {
       title: translate('categories.table.visible'),
@@ -141,7 +139,7 @@ const CategoryListPage = () => {
       });
 
   return (
-    <Page title="Dashboard: Phân mục | Sale Reso">
+    <Page title="Dashboard: Danh mục | Sale Reso">
       <CategoryModal
         open={formModal}
         cate_id={updateCateId}

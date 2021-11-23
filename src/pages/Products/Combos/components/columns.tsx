@@ -7,7 +7,7 @@ import React from 'react';
 import { TProductBase } from 'types/product';
 import { TTableColumn } from 'types/table';
 
-export const productColumns: TTableColumn<TProductBase>[] = [
+export const comboColumns: TTableColumn<TProductBase>[] = [
   {
     title: 'STT',
     dataIndex: 'index',
@@ -39,14 +39,6 @@ export const productColumns: TTableColumn<TProductBase>[] = [
     title: 'Danh mục',
     dataIndex: 'cate_name',
     renderFormItem: () => <AutocompleteCategory name="cat-id" label="Danh mục" />
-  },
-  {
-    title: 'Loại Sản Phẩm',
-    dataIndex: 'product_type',
-    valueType: 'select',
-    valueEnum: PRODUCT_TYPE_DATA
-    // hideInSearch: true
-    // render: (type) => <Chip label={PRODUCT_TYPE_DATA.find(({ value }) => value == type)?.label} />
   },
   {
     title: 'Trạng thái',
