@@ -14,7 +14,7 @@ import { daysInWeek } from 'utils/utils';
 
 export const menuColumns = [
   {
-    title: 'Tên thực đơn',
+    title: 'Tên bảng giá',
     dataIndex: 'menu_name',
     fixed: 'left'
   },
@@ -47,36 +47,34 @@ export const menuColumns = [
 const MenusPage = () => {
   const navigate = useNavigate();
   return (
-    <Page title="Dashboard: Products | Minimal-UI">
-      <Container>
-        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={2}>
-          <Typography variant="h4" gutterBottom>
-            Thực đơn
-          </Typography>
-          <Button
-            onClick={() => {
-              navigate('/menus/create');
-            }}
-            variant="contained"
-            to="#"
-            startIcon={<Icon icon={plusFill} />}
-          >
-            Thêm Thực đơn
-          </Button>
+    <Page
+      title="Bảng giá"
+      actions={() => [
+        <Button
+          key="create-menu"
+          onClick={() => {
+            navigate('/menus/create');
+          }}
+          variant="contained"
+          to="#"
+          startIcon={<Icon icon={plusFill} />}
+        >
+          Thêm Bảng giá
+        </Button>
+      ]}
+    >
+      <Card>
+        <Stack spacing={2}>
+          <ResoTable
+            rowKey="menu_id"
+            onEdit={(menu) =>
+              navigate(`${PATH_DASHBOARD.menus.root}/${menu.menu_id}`, { state: menu })
+            }
+            getData={getMenus}
+            columns={menuColumns}
+          />
         </Stack>
-        <Card>
-          <Stack spacing={2}>
-            <ResoTable
-              rowKey="menu_id"
-              onEdit={(menu) =>
-                navigate(`${PATH_DASHBOARD.menus.root}/${menu.menu_id}`, { state: menu })
-              }
-              getData={getMenus}
-              columns={menuColumns}
-            />
-          </Stack>
-        </Card>
-      </Container>
+      </Card>
     </Page>
   );
 };

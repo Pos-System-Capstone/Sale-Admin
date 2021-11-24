@@ -26,27 +26,25 @@ const UpdateCategory = (props: Props) => {
     <>
       <Page title="Cập nhật Danh mục">
         <TabContext value={activeTab}>
-          <Container maxWidth="lg" sx={{ mx: 'auto' }}>
-            <Box>
-              <TabList onChange={handleChangeTab}>
-                <Tab label="Thông tin chung" value="1" />
-                {!(isExtra || isContainer) && <Tab label="Sản phẩm đi kèm" value="2" />}
-                {!(isExtra || isContainer) && <Tab label="Tuỳ chỉnh" value="3" />}
-              </TabList>
-            </Box>
+          <Box>
+            <TabList onChange={handleChangeTab}>
+              <Tab label="Thông tin chung" value="1" />
+              {!(isExtra || isContainer) && <Tab label="Sản phẩm đi kèm" value="2" />}
+              {!(isExtra || isContainer) && <Tab label="Tuỳ chỉnh" value="3" />}
+            </TabList>
+          </Box>
 
-            <Stack spacing={2}>
-              <TabPanel value="1">
-                <CategoryInfoTab updateMode />
-              </TabPanel>
-              <TabPanel value="2">
-                <CategoryExtraTab />
-              </TabPanel>
-              <TabPanel value="3">
-                <CategoryModifierTab />
-              </TabPanel>
-            </Stack>
-          </Container>
+          <Stack spacing={2}>
+            <TabPanel value="1">
+              <CategoryInfoTab updateMode />
+            </TabPanel>
+            <TabPanel value="2">
+              <CategoryExtraTab />
+            </TabPanel>
+            <TabPanel value="3">
+              <CategoryModifierTab />
+            </TabPanel>
+          </Stack>
         </TabContext>
       </Page>
     </>

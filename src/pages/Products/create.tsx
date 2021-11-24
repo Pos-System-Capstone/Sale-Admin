@@ -4,17 +4,19 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Button, Stack } from '@mui/material';
 import { useSnackbar } from 'notistack';
+import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useQuery } from 'react-query';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { ProductTypeEnum } from 'types/product';
 import LoadingAsyncButton from '../../components/LoadingAsyncButton/LoadingAsyncButton';
 import Page from '../../components/Page';
 import useDashboard from '../../hooks/useDashboard';
 import { DashboardNavLayout } from '../../layouts/dashboard/DashboardNavbar';
-import { createMasterProd } from '../../redux/product/api';
+import { createMasterProd, getProdById } from '../../redux/product/api';
 import MiddleForm from './components/MiddleForm';
 import { UpdateProductForm, validationSchema } from './type';
-import { transformDraftToStr, transformProductForm } from './utils';
+import { normalizeProductData, transformDraftToStr, transformProductForm } from './utils';
 
 const CreateProduct = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -22,6 +24,7 @@ const CreateProduct = () => {
   const navigate = useNavigate();
 
   const [searchParams] = useSearchParams();
+  const cloneProductId: any = searchParams.get('cloneProductId');
   const productType: any = Number(searchParams.get('productType') ?? ProductTypeEnum.Single);
 
   const methods = useForm<UpdateProductForm & any>({
@@ -33,7 +36,22 @@ const CreateProduct = () => {
       product_type: productType
     }
   });
-  const { handleSubmit } = methods;
+  const { handleSubmit, reset } = methods;
+
+  const { data, isLoading } = useQuery(
+    ['products', Number(cloneProductId)],
+    () => getProdById(cloneProductId),
+    {
+      select: (res) => res.data,
+      enabled: Boolean(cloneProductId)
+    }
+  );
+
+  useEffect(() => {
+    if (data) {
+      reset({ ...normalizeProductData(data) });
+    }
+  }, [data, reset]);
 
   const onSubmit = (values: UpdateProductForm) => {
     const data = transformDraftToStr(values);

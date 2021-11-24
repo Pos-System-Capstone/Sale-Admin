@@ -44,14 +44,6 @@ const CollectionInfoTab = ({ onSubmit }: { onSubmit: Function }) => {
                   label={translate('collections.table.collectionName')}
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <InputField
-                  size="small"
-                  fullWidth
-                  name="name_eng"
-                  label={translate('collections.table.collectionNameEn')}
-                />
-              </Grid>
               <Grid item xs={6}>
                 <InputField
                   label={translate('collections.table.position')}
@@ -61,7 +53,7 @@ const CollectionInfoTab = ({ onSubmit }: { onSubmit: Function }) => {
                   min={0}
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={12}>
                 <InputField
                   size="small"
                   rows={4}

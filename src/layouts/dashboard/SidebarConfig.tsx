@@ -23,73 +23,76 @@ const ICONS = {
   tag: getIcon('tag'),
   menu: getIcon('menu'),
   store: getIcon('ic_store'),
-  order: getIcon('ic_order')
+  order: getIcon('ic_order'),
+  category: getIcon('ic_category'),
+  extraCategory: getIcon('ic_extra_category'),
+  storeApply: getIcon('ic_store_apply'),
+  combo: getIcon('ic_combo'),
+  product: getIcon('ic_product'),
+  collection: getIcon('ic_collection')
 };
 
 const sidebarConfig = [
-  // GENERAL
-  // ----------------------------------------------------------------------
-
-  // MANAGEMENT
-  // ----------------------------------------------------------------------
   {
-    subheader: 'product-subheader',
+    subheader: 'general',
     items: [
-      // MANAGEMENT : PRODUCT
       {
-        title: 'product',
-        path: PATH_DASHBOARD.products.root,
-        icon: ICONS.tag,
-        children: [
-          {
-            title: 'master',
-            path: PATH_DASHBOARD.products.list
-          },
-          {
-            title: 'combo',
-            path: PATH_DASHBOARD.combos.list
-          },
-          {
-            title: 'collection',
-            path: PATH_DASHBOARD.collections.list
-          },
-          {
-            title: 'categories',
-            path: PATH_DASHBOARD.categories.list
-          }
-        ]
+        title: 'app',
+        path: PATH_DASHBOARD.general.app,
+        icon: ICONS.dashboard
       },
       {
-        title: 'customer',
-        path: PATH_DASHBOARD.customers.root,
-        icon: ICONS.user,
-        children: [
-          {
-            title: 'customerList',
-            path: PATH_DASHBOARD.customers.list
-          },
-          {
-            title: 'addNewCustomer',
-            path: PATH_DASHBOARD.customers.new
-          }
-        ]
+        title: 'order',
+        path: PATH_DASHBOARD.chat.root,
+        icon: ICONS.order
       }
     ]
   },
   {
     subheader: 'menu-subheader',
     items: [
+      { title: 'menu-list', path: PATH_DASHBOARD.menus.list, icon: ICONS.menu },
+      { title: 'store-menu-apply', path: PATH_DASHBOARD.menus.storeMenu, icon: ICONS.storeApply }
+    ]
+  },
+  {
+    subheader: 'product-subheader',
+    items: [
+      // MANAGEMENT : PRODUCT
       {
-        title: 'menu',
-        path: PATH_DASHBOARD.menus.list,
-        icon: ICONS.menu,
-        children: [
-          { title: 'list', path: PATH_DASHBOARD.menus.list },
-          { title: 'store-menu', path: PATH_DASHBOARD.menus.storeMenu }
-        ]
+        title: 'master',
+        path: PATH_DASHBOARD.products.list,
+        icon: ICONS.product
+      },
+      {
+        title: 'combo-list',
+        path: PATH_DASHBOARD.combos.list,
+        icon: ICONS.combo
       }
     ]
   },
+  {
+    subheader: 'group-subheader',
+    path: PATH_DASHBOARD.group.root,
+    items: [
+      {
+        title: 'category',
+        path: PATH_DASHBOARD.categories.list,
+        icon: ICONS.category
+      },
+      {
+        title: 'extra-category',
+        path: PATH_DASHBOARD.categories.extra,
+        icon: ICONS.extraCategory
+      },
+      {
+        title: 'collection',
+        path: PATH_DASHBOARD.collections.list,
+        icon: ICONS.collection
+      }
+    ]
+  },
+
   {
     subheader: 'store-subheader',
     items: [

@@ -47,7 +47,7 @@ export default function Login() {
   const { method } = useAuth();
 
   return (
-    <RootStyle title="Đăng nhập | Sales Admin">
+    <Box display="flex">
       <MHidden width="mdDown">
         <SectionStyle>
           <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
@@ -84,6 +84,6 @@ export default function Login() {
           <LoginForm />
         </ContentStyle>
       </Container>
-    </RootStyle>
+    </Box>
   );
 }

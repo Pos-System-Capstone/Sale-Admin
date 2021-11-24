@@ -118,6 +118,7 @@ export default function Router() {
         {
           path: 'categories',
           children: [
+            { path: 'extra', element: <CategoryListPage isExtra /> },
             { path: '', element: <CategoryListPage /> },
             { path: 'new', element: <CreateCategoryPage /> },
             { path: ':id', element: <UpdateCategoryPage /> }

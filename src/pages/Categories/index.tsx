@@ -11,7 +11,7 @@ import ResoTable from 'components/ResoTable/ResoTable';
 import useLocales from 'hooks/useLocales';
 import { get } from 'lodash';
 import { useSnackbar } from 'notistack';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 // components
 import { useNavigate } from 'react-router-dom';
@@ -20,10 +20,11 @@ import { PATH_DASHBOARD } from 'routes/paths';
 import { TCategory } from 'types/category';
 import { TTableColumn } from 'types/table';
 
-const CategoryListPage = () => {
+const CategoryListPage = ({ isExtra = false }: { isExtra?: boolean }) => {
   const navigate = useNavigate();
   const { translate } = useLocales();
   const { enqueueSnackbar } = useSnackbar();
+  console.log(`isExtra`, isExtra);
 
   const tableRef = useRef<any>();
   const [formModal, setFormModal] = useState(false);
@@ -49,47 +50,18 @@ const CategoryListPage = () => {
       dataIndex: 'cate_name'
     },
     {
-      title: 'Danh mục extra',
-      dataIndex: 'is_extra',
-      valueType: 'switch',
-      valueEnum: [
-        {
-          label: 'Extra',
-          value: true
-        },
-        {
-          label: 'Không phải extra',
-          value: false
-        }
-      ]
-    },
-    {
-      title: translate('categories.table.visible'),
-      dataIndex: 'is_available',
-      valueType: 'select',
-      hideInSearch: true,
-      valueEnum: [
-        {
-          label: 'Hiển thị',
-          value: 'true'
-        },
-        {
-          label: 'Không hiển thị',
-          value: 'false'
-        }
-      ],
-      render: (isAvailable) => (
-        <Label color={isAvailable ? 'success' : 'default'}>
-          {isAvailable ? 'Hiển thị' : 'Không hiển thị'}
-        </Label>
-      )
-    },
-    {
       title: translate('categories.table.position'),
       dataIndex: 'position',
       hideInSearch: true
     }
   ];
+
+  useEffect(() => {
+    const form = tableRef.current?.formControl;
+    if (form) {
+      form.setValue('is-extra', isExtra);
+    }
+  }, [isExtra, tableRef]);
 
   const addCategoryHander = (values: TCategory) =>
     addCategoy(values)
@@ -140,12 +112,12 @@ const CategoryListPage = () => {
 
   return (
     <Page
-      title="Danh mục"
+      title={isExtra ? 'Danh mục extra' : 'Danh mục'}
       actions={() => [
         <Button
           key="add-category"
           onClick={() => {
-            navigate(PATH_DASHBOARD.categories.new);
+            navigate(`${PATH_DASHBOARD.categories.new}?isExtra=${isExtra}`);
           }}
           variant="contained"
           startIcon={<Icon icon={plusFill} />}
@@ -174,6 +146,9 @@ const CategoryListPage = () => {
       <Card>
         <Stack spacing={2}>
           <ResoTable
+            defaultFilters={{
+              'is-extra': isExtra
+            }}
             ref={tableRef}
             onEdit={(cate: TCategory) => {
               navigate(`${PATH_DASHBOARD.categories.editById(cate.cate_id)}`);

@@ -7,7 +7,9 @@ import { useRequest } from 'ahooks';
 import { useSnackbar } from 'notistack';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useQuery } from 'react-query';
 import { useNavigate, useParams } from 'react-router-dom';
+import { PATH_DASHBOARD } from 'routes/paths';
 import LoadingAsyncButton from '../../components/LoadingAsyncButton/LoadingAsyncButton';
 import Page from '../../components/Page';
 import useDashboard from '../../hooks/useDashboard';
@@ -23,8 +25,8 @@ const UpdateProduct = () => {
   const { setNavOpen } = useDashboard();
   const navigate = useNavigate();
 
-  const { data, loading } = useRequest(() => getProdById(id), {
-    formatResult: (res) => res.data
+  const { data, isLoading } = useQuery(['products', Number(id)], () => getProdById(id), {
+    select: (res) => res.data
   });
 
   const defaultValues = {
@@ -59,7 +61,7 @@ const UpdateProduct = () => {
       });
   };
 
-  if (loading) {
+  if (isLoading) {
     return (
       <Box
         sx={{
@@ -85,6 +87,12 @@ const UpdateProduct = () => {
         <Stack direction="row" spacing={2}>
           <Button onClick={() => navigate(-1)} variant="outlined">
             Hủy
+          </Button>
+          <Button
+            onClick={() => navigate(`${PATH_DASHBOARD.products.newProduct}?cloneProductId=${id}`)}
+            variant="outlined"
+          >
+            Sao chép
           </Button>
           <LoadingAsyncButton onClick={handleSubmit(onSubmit)} type="submit" variant="contained">
             Lưu

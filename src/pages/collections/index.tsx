@@ -32,12 +32,6 @@ const CollectionListPage = () => {
       fixed: 'left'
     },
     {
-      title: translate('collections.table.collectionNameEn'),
-      dataIndex: 'name_eng',
-      fixed: 'left',
-      hideInSearch: true
-    },
-    {
       title: translate('collections.table.type'),
       dataIndex: 'type',
       valueType: 'select',

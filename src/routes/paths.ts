@@ -112,12 +112,21 @@ export const PATH_DASHBOARD = {
   categories: {
     root: path(ROOTS_DASHBOARD, '/categories'),
     list: path(ROOTS_DASHBOARD, '/categories'),
+    extra: path(ROOTS_DASHBOARD, '/categories/extra'),
     editById: (id: any) => path(ROOTS_DASHBOARD, `/categories/${id}`),
     new: path(ROOTS_DASHBOARD, '/categories/new')
   },
   combos: {
     root: path(ROOTS_DASHBOARD, '/combos'),
     list: path(ROOTS_DASHBOARD, '/combos'),
+    editById: (id: any) => path(ROOTS_DASHBOARD, `/combos/${id}`),
+    new: path(ROOTS_DASHBOARD, '/combos/new')
+  },
+  group: {
+    root: path(ROOTS_DASHBOARD, '/groups'),
+    list: path(ROOTS_DASHBOARD, '/groups'),
+    category: path(ROOTS_DASHBOARD, '/groups/category'),
+    'extra-category': path(ROOTS_DASHBOARD, '/groups/extra-category'),
     editById: (id: any) => path(ROOTS_DASHBOARD, `/combos/${id}`),
     new: path(ROOTS_DASHBOARD, '/combos/new')
   }

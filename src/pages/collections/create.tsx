@@ -119,99 +119,90 @@ const CreateCollectionPage = () => {
         )
       }
     >
-      <Box px={2}>
-        <FormProvider {...form}>
-          <DashboardNavLayout onOpenSidebar={() => setNavOpen(true)}>
-            <Stack direction="row" spacing={2}>
-              <Button onClick={() => navigate(-1)} variant="outlined">
-                {translate('common.cancel')}
-              </Button>
-              <LoadingAsyncButton
-                disabled={!isDirty}
-                onClick={handleSubmit(onSubmit, console.log)}
-                type="submit"
-                variant="contained"
-              >
-                {translate('common.save')}
-              </LoadingAsyncButton>
-            </Stack>
-          </DashboardNavLayout>
-          <Stack spacing={2}>
-            <Card>
-              <CardTitle pb={2} variant="subtitle1">
-                {isMenuCollection
-                  ? translate('collections.createInfo')
-                  : translate('collections.groupCollection')}
-              </CardTitle>
-              <Box>
-                <Grid spacing={2} container>
-                  <Grid item xs={4}>
-                    <UploadImageField.Avatar
-                      label={translate('collections.table.banner_url')}
-                      name="banner_url"
-                      style={{ margin: '0 auto 40px' }}
-                    />
-                  </Grid>
-                  <Grid item xs={8}>
-                    <Grid container spacing={2}>
-                      <Grid item xs={12} sm={6}>
+      <FormProvider {...form}>
+        <DashboardNavLayout onOpenSidebar={() => setNavOpen(true)}>
+          <Stack direction="row" spacing={2}>
+            <Button onClick={() => navigate(-1)} variant="outlined">
+              {translate('common.cancel')}
+            </Button>
+            <LoadingAsyncButton
+              disabled={!isDirty}
+              onClick={handleSubmit(onSubmit, console.log)}
+              type="submit"
+              variant="contained"
+            >
+              {translate('common.save')}
+            </LoadingAsyncButton>
+          </Stack>
+        </DashboardNavLayout>
+        <Stack spacing={2}>
+          <Card>
+            <CardTitle pb={2} variant="subtitle1">
+              {isMenuCollection
+                ? translate('collections.createInfo')
+                : translate('collections.groupCollection')}
+            </CardTitle>
+            <Box>
+              <Grid spacing={2} container>
+                <Grid item xs={4}>
+                  <UploadImageField.Avatar
+                    label={translate('collections.table.banner_url')}
+                    name="banner_url"
+                    style={{ margin: '0 auto 40px' }}
+                  />
+                </Grid>
+                <Grid item xs={8}>
+                  <Grid container spacing={2}>
+                    <Grid item xs={12} sm={6}>
+                      <InputField
+                        fullWidth
+                        name="name"
+                        label={translate('collections.table.collectionName')}
+                      />
+                    </Grid>
+                    {isMenuCollection && (
+                      <Grid item xs={6}>
                         <InputField
+                          label={translate('collections.table.position')}
+                          name="position"
+                          type="number"
+                          min={0}
                           fullWidth
-                          name="name"
-                          label={translate('collections.table.collectionName')}
                         />
                       </Grid>
-                      <Grid item xs={12} sm={6}>
-                        <InputField
-                          fullWidth
-                          name="name_eng"
-                          label={translate('collections.table.collectionNameEn')}
-                        />
-                      </Grid>
-                      {isMenuCollection && (
-                        <Grid item xs={6}>
-                          <InputField
-                            label={translate('collections.table.position')}
-                            name="position"
-                            type="number"
-                            min={0}
-                            fullWidth
-                          />
-                        </Grid>
-                      )}
-                      <Grid item xs={12} sm={6}>
-                        <InputField
-                          size="small"
-                          rows={4}
-                          multiline
-                          fullWidth
-                          name="description"
-                          label={translate('collections.table.description')}
-                        />
-                      </Grid>
+                    )}
+                    <Grid item xs={12} sm={12}>
+                      <InputField
+                        size="small"
+                        rows={4}
+                        multiline
+                        fullWidth
+                        name="description"
+                        label={translate('collections.table.description')}
+                      />
                     </Grid>
                   </Grid>
                 </Grid>
-              </Box>
-            </Card>
-            <Card>
-              <Stack spacing={1} direction="row" justifyContent="space-between" alignItems="center">
-                <CardTitle mb={2} variant="subtitle1">
-                  {translate('collections.productInCollection')}
-                </CardTitle>
-                <ModalProductForm
-                  selected={products?.map(({ product_id }) => product_id)}
-                  onSubmit={handleAddProd}
-                  trigger={<Button variant="outlined">Thêm sản phẩm</Button>}
-                />
-              </Stack>
-              <Box mt={2}>
-                <AddProductTable control={control} />
-              </Box>
-            </Card>
-          </Stack>
-        </FormProvider>
-      </Box>
+              </Grid>
+            </Box>
+          </Card>
+          <Card>
+            <Stack spacing={1} direction="row" justifyContent="space-between" alignItems="center">
+              <CardTitle mb={2} variant="subtitle1">
+                {translate('collections.productInCollection')}
+              </CardTitle>
+              <ModalProductForm
+                selected={products?.map(({ product_id }) => product_id)}
+                onSubmit={handleAddProd}
+                trigger={<Button variant="outlined">Thêm sản phẩm</Button>}
+              />
+            </Stack>
+            <Box mt={2}>
+              <AddProductTable control={control} />
+            </Box>
+          </Card>
+        </Stack>
+      </FormProvider>
     </Page>
   );
 };

@@ -15,6 +15,7 @@ import {
 } from 'pages/Products/utils';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
+import { useSearchParams } from 'react-router-dom';
 import { TCategory } from 'types/category';
 import * as yup from 'yup';
 
@@ -29,12 +30,16 @@ const CreateCategory = (props: Props) => {
   const { setNavOpen } = useDashboard();
   const navigate = useNavigate();
   const theme = useTheme();
+  const [searchParams] = useSearchParams();
+  const isExtra: boolean = Boolean(searchParams.get('isExtra'));
 
   const createCategoryForm = useForm<TCategory>({
     resolver: yupResolver(schema),
     defaultValues: {
-      is_container: true
-    }
+      is_container: !isExtra,
+      is_extra: isExtra
+    },
+    shouldUnregister: false
   });
 
   const onSubmit = (values: TCategory) => {

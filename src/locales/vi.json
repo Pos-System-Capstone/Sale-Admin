@@ -1,16 +1,23 @@
 {
   "menu": {
     "product": {
-      "root": "Sản phẩm",
-      "master": "Danh mục Sản phẩm",
-      "extra": "Danh mục Extra",
-      "collection": "Bộ sưu tập",
-      "categories": "Danh mục",
-      "combo": "Combo"
+      "root": "Sản phẩm"
     },
-
-    "menu": { "root": "Thực đơn", "list": "Danh sách thực đơn", "store-menu": "Cửa hàng áp dụng" },
+    "group": {
+      "root": "Danh mục"
+    },
+    "master": "Danh sách Sản phẩm",
+    "extra": "Danh mục Extra",
+    "combo-list": "Sản phẩm Combo",
+    "category": "Danh mục sản phẩm",
+    "extra-category": "Danh mục extra",
+    "collection": "Bộ sưu tập",
+    "menu": { "root": "Bảng giá" },
     "store": "Cửa hàng",
+    "menu-list": "Bảng giá",
+    "store-menu-apply": "Cửa hàng áp dụng",
+    "app": "Bảng điều khiển",
+    "general": "Tổng quan",
     "customer": {
       "root": "Khách hàng",
       "customerList": "Danh sách khách hàng",
@@ -25,7 +32,9 @@
     "store-menu": "Bảng giá",
     "product-subheader": "Sản phẩm",
     "menu-subheader": "Bảng giá",
-    "store-subheader": "Cửa hàng"
+    "store-subheader": "Cửa hàng",
+    "customer-subheader": "Khách hàng",
+    "group-subheader": "Danh mục"
   },
   "pages": {
     "stores": {
