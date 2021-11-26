@@ -70,10 +70,10 @@ type StoreInMenuFormProps = {
 
 const schema = (translate: any) =>
   yup.object({
-    menu_id: yup
-      .number()
-      .typeError(translate('common.required', { name: translate('pages.stores.storeMenu') }))
-      .required(translate('common.required', { name: translate('pages.stores.storeMenu') })),
+    // menu_id: yup
+    //   .number()
+    //   .typeError(translate('common.required', { name: translate('pages.stores.storeMenu') }))
+    //   .required(translate('common.required', { name: translate('pages.stores.storeMenu') })),
     dayFilters: yup.array().min(1, translate('common.atLeast', { number: 1 })),
     start: yup
       .date()
@@ -187,7 +187,8 @@ export default function StoreInMenuForm({
             render={({ field: { onChange, onBlur, value, name, ref }, fieldState, formState }) => (
               <MobileTimePicker
                 label="Bắt đầu"
-                inputFormat="hh:mm a"
+                ampm={false}
+                inputFormat="HH:mm"
                 renderInput={(params) => <TextField {...params} fullWidth sx={{ mb: 3 }} />}
                 onChange={onChange}
                 value={value}
@@ -200,7 +201,8 @@ export default function StoreInMenuForm({
             render={({ field: { onChange, onBlur, value, name, ref }, fieldState, formState }) => (
               <MobileTimePicker
                 label="Kết thúc"
-                inputFormat="hh:mm a"
+                ampm={false}
+                inputFormat="HH:mm"
                 renderInput={(params) => <TextField {...params} fullWidth sx={{ mb: 3 }} />}
                 onChange={onChange}
                 value={value}

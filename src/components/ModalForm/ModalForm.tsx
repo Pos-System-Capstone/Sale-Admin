@@ -14,7 +14,7 @@ interface Props extends Omit<Partial<DialogProps>, 'title'> {
   title: ReactNode;
   trigger: ReactNode;
   onCancle?: () => void;
-  onOk: () => Promise<boolean>;
+  onOk: () => Promise<any>;
   children?: ReactNode;
 }
 
@@ -34,7 +34,7 @@ const ModalForm = ({ trigger, onOk: onSubmit, title, children, ...others }: Prop
           </Button>
           <LoadingAsyncButton
             variant="contained"
-            onClick={() => onSubmit().then((res) => setOpen(!res))}
+            onClick={() => onSubmit().then((res) => setOpen(Boolean(!res)))}
           >
             {translate('common.save')}
           </LoadingAsyncButton>

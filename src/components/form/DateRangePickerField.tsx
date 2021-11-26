@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Box, Input, TextField, TextFieldProps } from '@mui/material';
+import { Box, Input, Stack, TextField, TextFieldProps } from '@mui/material';
 import { DatePickerProps, DateRangePicker } from '@mui/lab';
 import useLocales from 'hooks/useLocales';
 import moment from 'moment';
@@ -31,20 +31,26 @@ const DateRangePickerField: React.FC<Props & Partial<DatePickerProps>> = ({
           {...field}
           value={field.value ?? [null, null]}
           renderInput={(startProps, endProps) => (
-            <>
-              <TextField
-                size="small"
-                {...startProps}
-                label={translate('common.fromTime')}
-                placeholder={translate('common.fromTime')}
-              />
-              <TextField
-                size="small"
-                {...endProps}
-                label={translate('common.toTime')}
-                placeholder={translate('common.toTime')}
-              />
-            </>
+            <Stack width="100%" spacing={2} direction="row">
+              <Box flex={1}>
+                <TextField
+                  size="small"
+                  fullWidth
+                  {...startProps}
+                  label={translate('common.fromTime')}
+                  placeholder={translate('common.fromTime')}
+                />
+              </Box>
+              <Box flex={1}>
+                <TextField
+                  size="small"
+                  fullWidth
+                  {...endProps}
+                  label={translate('common.toTime')}
+                  placeholder={translate('common.toTime')}
+                />
+              </Box>
+            </Stack>
           )}
         />
       )}

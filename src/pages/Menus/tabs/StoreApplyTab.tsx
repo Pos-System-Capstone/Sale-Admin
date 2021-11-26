@@ -121,15 +121,15 @@ const StoreApplyTab = () => {
               },
               {
                 title: translate('pages.menus.table.timeRange'),
-                dataIndex: 'timeRange',
-                render: (_: any, { time_range }: StoreInMenu) => (
-                  <>
-                    {translate('pages.menus.table.fromTime')}{' '}
-                    <Label color="success">{time_range[0]}</Label>{' '}
-                    {translate('pages.menus.table.toTime')}{' '}
-                    <Label color="success">{time_range[1]}</Label>
-                  </>
-                )
+                dataIndex: 'timeRange'
+                // render: (_: any, { time_range = [] }: StoreInMenu) => (
+                //   <>
+                //     {translate('pages.menus.table.fromTime')}{' '}
+                //     <Label color="success">{time_range[0]}</Label>{' '}
+                //     {translate('pages.menus.table.toTime')}{' '}
+                //     <Label color="success">{time_range[1]}</Label>
+                //   </>
+                // )
               },
               {
                 title: translate('pages.menus.table.dayFilter'),

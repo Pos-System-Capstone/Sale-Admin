@@ -44,6 +44,8 @@ const UpdateMenuPage = () => {
   const [currentTab, setCurrentTab] = React.useState<TabType>(TabType.MENU_INFO);
   const { enqueueSnackbar } = useSnackbar();
 
+  console.log(`state`, state);
+
   const form = useForm({
     defaultValues: {
       ...state,
@@ -88,37 +90,34 @@ const UpdateMenuPage = () => {
 
   return (
     <FormProvider {...form}>
-      <Page title="Cập nhật thực đơn">
-        <Box px={2} mx="auto">
-          <Stack mb={2} direction="row" justifyContent="space-between">
-            <Typography px={1} variant="h3" component="h4" gutterBottom>
-              Cập nhật thực đơn
-            </Typography>
-            <Button size="small" color="error" variant="outlined">
-              Xóa
-            </Button>
-          </Stack>
-          <Tabs
-            value={currentTab}
-            scrollButtons="auto"
-            variant="scrollable"
-            allowScrollButtonsMobile
-            onChange={(e, value) => setCurrentTab(value)}
-          >
-            {MENU_TABS.map((tab) => (
-              <Tab key={tab.value} label={tab.label} icon={tab.icon} value={tab.value} />
-            ))}
-          </Tabs>
-          <Box mt={2}>
-            {MENU_TABS.map((tab, index) => {
-              const isMatched = tab.value === currentTab;
-              return (
-                <TabPanel key={tab.value} index={index} hidden={!isMatched}>
-                  {tab.component}
-                </TabPanel>
-              );
-            })}
-          </Box>
+      <Page
+        title="Cập nhật thực đơn"
+        actions={() => [
+          <Button key="delete-menu" size="small" color="error" variant="outlined">
+            Xóa
+          </Button>
+        ]}
+      >
+        <Tabs
+          value={currentTab}
+          scrollButtons="auto"
+          variant="scrollable"
+          allowScrollButtonsMobile
+          onChange={(e, value) => setCurrentTab(value)}
+        >
+          {MENU_TABS.map((tab) => (
+            <Tab key={tab.value} label={tab.label} icon={tab.icon} value={tab.value} />
+          ))}
+        </Tabs>
+        <Box mt={2}>
+          {MENU_TABS.map((tab, index) => {
+            const isMatched = tab.value === currentTab;
+            return (
+              <TabPanel key={tab.value} index={index} hidden={!isMatched}>
+                {tab.component}
+              </TabPanel>
+            );
+          })}
         </Box>
       </Page>
     </FormProvider>

@@ -1,14 +1,18 @@
 export type Menu = {
   menu_id: number;
-  store_id: number;
-  time_from?: any;
-  time_to?: any;
-  day_filter?: any;
-  active?: any;
+  store_id?: number;
   menu_name?: any;
   store_name: string;
   day_filters: number[];
   time_range: string[];
+  is_brand_mode: boolean;
+  start_time?: any;
+  end_time?: any;
+  hour_filter: number;
+  time_ranges: string[][];
+  priority: number;
+  create_at?: any;
+  store_names: any[];
 };
 
 export type TStoreApplyMenuRequest = {
