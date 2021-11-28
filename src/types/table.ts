@@ -2,7 +2,7 @@ import { ReactElement } from 'react';
 
 export type TTableColumn<T extends any> = {
   title: string | ReactElement;
-  dataIndex?: keyof T | 'index';
+  dataIndex?: keyof T | 'index' | string[];
   fixed?: 'left' | 'right' | undefined;
   render?: (value: any, data: T, index: number) => string | JSX.Element | string | undefined;
   renderFormItem?: (columnSetting: TTableColumn<T>, formProps: any) => JSX.Element;

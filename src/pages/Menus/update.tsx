@@ -15,6 +15,8 @@ import { convertDateToStr, convertStrToDate } from 'utils/utils';
 import MenuInfoTab from './tabs/MenuInfoTab';
 import ProductInMenuTab from './tabs/ProductInMenuTab';
 import StoreApplyTab from './tabs/StoreApplyTab';
+import { normalizeMenuData, transformMenuForm } from 'components/form/Menu/helper';
+import menuApi from 'api/menu';
 
 enum TabType {
   MENU_INFO = 'MENUINFO',
@@ -44,25 +46,20 @@ const UpdateMenuPage = () => {
   const [currentTab, setCurrentTab] = React.useState<TabType>(TabType.MENU_INFO);
   const { enqueueSnackbar } = useSnackbar();
 
-  console.log(`state`, state);
-
   const form = useForm({
-    defaultValues: {
-      ...state,
-      from: convertStrToDate(get(state, ['time_from_to', '0'], null), 'HH:mm').toDate(),
-      to: convertStrToDate(get(state, ['time_from_to', '1'], null), 'HH:mm').toDate()
-    }
+    defaultValues: normalizeMenuData(state)
   });
 
   const onUpdateMenu = (updateMenu: any) =>
-    updateMenuInfo(+id!, updateMenu)
+    menuApi
+      .update(+id!, transformMenuForm(updateMenu))
       .then(() =>
         enqueueSnackbar(`Cập nhật thành công`, {
           variant: 'success'
         })
       )
       .catch((err) => {
-        const errMsg = get(err.response, ['data', 'message'], `Có lỗi xảy ra. Vui lòng thử lại`);
+        const errMsg = get(err, ['message'], `Có lỗi xảy ra. Vui lòng thử lại`);
         enqueueSnackbar(errMsg, {
           variant: 'error'
         });

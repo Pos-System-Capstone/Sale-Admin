@@ -1,5 +1,5 @@
-import { Box, Grid } from '@mui/material';
-import { InputField } from 'components/form';
+import { Box } from '@mui/material';
+import MenuForm from 'components/form/Menu/MenuForm';
 import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
 import { Card, CardTitle } from '../../Products/components/Card';
 
@@ -7,11 +7,7 @@ const MenuInfoTab = ({ onSubmit }) => (
   <Box>
     <Card>
       <CardTitle>Thông tin Menu</CardTitle>
-      <Grid spacing={2} container>
-        <Grid item xs={12} sm={6}>
-          <InputField fullWidth size="small" name="menu_name" label="Tên menu" />
-        </Grid>
-      </Grid>
+      <MenuForm />
       <Box textAlign="right" mt={2}>
         <LoadingAsyncButton size="small" onClick={onSubmit} variant="contained">
           Cập nhật

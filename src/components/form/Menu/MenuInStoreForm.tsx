@@ -3,7 +3,6 @@ import {
   Box,
   Button,
   Divider,
-  FormLabel,
   Grid,
   IconButton,
   Stack,
@@ -17,10 +16,11 @@ import { Controller, useFieldArray, useFormContext, useWatch } from 'react-hook-
 import { CheckBoxField, InputField, SelectField, SwitchField } from '..';
 import DateRangePickerField from '../DateRangePickerField';
 import { ErrorMessage } from '@hookform/error-message';
+import AutoCompleteStoreSelect from '../common/AutocompleteStoreSelect/AutocompleteStoreSelect';
 
 interface Props {}
 
-const MenuForm = (props: Props) => {
+const MenuInStoreForm = (props: Props) => {
   const {
     control,
     watch,
@@ -35,7 +35,6 @@ const MenuForm = (props: Props) => {
 
   const renderTimeRangeForm = () => (
     <Grid item xs={12}>
-      <FormLabel component="p" title="Khung giờ" />
       {fields.map(({ id }, optIndex) => (
         <>
           <Box key={`variant-${id}`}>
@@ -118,17 +117,8 @@ const MenuForm = (props: Props) => {
   return (
     <div>
       <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <CheckBoxField
-            size="small"
-            fullWidth
-            name="is_brand_mode"
-            label="Áp dụng toàn cửa hàng"
-            value="true"
-          />
-        </Grid>
         <Grid item xs={12} md={6}>
-          <InputField size="small" fullWidth name="menu_name" label="Tên menu" />
+          <AutoCompleteStoreSelect name="store_id" label="Cửa hàng" />
         </Grid>
         <Grid item xs={12} md={6}>
           <InputField type="number" size="small" fullWidth name="priority" label="Cấp độ ưu tiên" />
@@ -166,4 +156,4 @@ const MenuForm = (props: Props) => {
   );
 };
 
-export default MenuForm;
+export default MenuInStoreForm;

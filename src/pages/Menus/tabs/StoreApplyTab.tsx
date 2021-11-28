@@ -1,17 +1,23 @@
+import { yupResolver } from '@hookform/resolvers/yup';
 import plusFill from '@iconify/icons-eva/plus-fill';
 import { Icon } from '@iconify/react';
-import { Box, Button, Card, Chip, DialogTitle, Stack } from '@mui/material';
-import { useRequest } from 'ahooks';
-import { DialogAnimate } from 'components/animate';
-import DeleteConfirmDialog from 'components/DelectConfirmDialog';
-import Label from 'components/Label';
+import { Box, Button, Card, Chip, Stack, Typography } from '@mui/material';
+import { amber } from '@mui/material/colors';
+import {
+  menuInStoreSchema,
+  normalizeMenuData,
+  transformMenuForm
+} from 'components/form/Menu/helper';
+import MenuInStoreForm from 'components/form/Menu/MenuInStoreForm';
+import confirm from 'components/Modal/confirm';
+import ModalForm from 'components/ModalForm/ModalForm';
 import ResoTable from 'components/ResoTable/ResoTable';
-import StoreInMenuForm from 'components/_dashboard/calendar/StoreInMenuForm';
 import { DAY_OF_WEEK } from 'constraints';
 import useLocales from 'hooks/useLocales';
 import { useSnackbar } from 'notistack';
 import { CardTitle } from 'pages/Products/components/Card';
-import React, { useState } from 'react';
+import React, { ReactNode, useRef } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 import { useParams } from 'react-router';
 import {
   addStoreApplyMenus,
@@ -19,142 +25,211 @@ import {
   getStoreApplyMenus,
   updateStoreApplyMenus
 } from 'redux/menu/api';
-import { TStoreApplyMenuRequest } from 'types/menu';
-import { StoreInMenu } from 'types/store';
+import { Menu } from 'types/menu';
+import { TTableColumn } from 'types/table';
+import { fDate } from 'utils/formatTime';
+
+export const menuInStoreColumns: TTableColumn<Menu>[] = [
+  {
+    title: 'Cửa hàng',
+    dataIndex: ['store', 'store_name'],
+    hideInSearch: true
+  },
+  {
+    title: 'Thời gian hiệu lực',
+    hideInSearch: true,
+    render: (_, data: Menu) =>
+      data.start_time && data.end_time ? (
+        <Typography>
+          {fDate(data.start_time)} - {fDate(data.end_time)}
+        </Typography>
+      ) : (
+        '-'
+      )
+  },
+  {
+    title: 'Khung giờ',
+    dataIndex: 'time_ranges',
+    hideInSearch: true,
+    render: (_: any, { time_ranges }: Menu) => (
+      <Stack direction="row" spacing={1}>
+        {time_ranges?.map(([from, to]) => (
+          <Chip size="small" key={`${from}-${to}`} label={`${from}-${to}`} />
+        ))}
+      </Stack>
+    )
+  },
+  {
+    title: 'Ngày hoạt động',
+    dataIndex: 'day_filters',
+    valueType: 'select',
+    valueEnum: DAY_OF_WEEK,
+    render: (_: any, { day_filters: dayFilters, menu_id }: Menu) =>
+      dayFilters.length === 7 ? (
+        <Chip label="Cả tuần" color="info" />
+      ) : (
+        <Stack direction="row" spacing={1}>
+          {dayFilters?.map((day) => (
+            <Chip
+              size="small"
+              key={`${menu_id}-${day}`}
+              label={DAY_OF_WEEK.find(({ value }) => value === day)?.label}
+            />
+          ))}
+        </Stack>
+      )
+  },
+  {
+    title: 'Độ ưu tiên',
+    dataIndex: 'priority',
+    hideInSearch: true
+  }
+];
 
 const StoreApplyTab = () => {
   const { id }: any = useParams();
   const { translate } = useLocales();
   const { enqueueSnackbar } = useSnackbar();
+  const tableRef = useRef<any>();
 
-  const { data: appliedStores, run }: { data: StoreInMenu[] } & any = useRequest(
-    () => getStoreApplyMenus(Number(id)),
-    {
-      formatResult: (res: any) => res.data.data
+  const createMenuForm = useForm({
+    resolver: yupResolver(menuInStoreSchema),
+    shouldUnregister: true,
+    defaultValues: {
+      time_ranges: [{ from: null, to: null }],
+      allDay: false,
+      priority: 0
     }
-  );
-  const [isOpenModal, setIsOpenModal] = useState(false);
-  const [updateStoreInMenu, setUpdateStoreInMenu] = useState<StoreInMenu | null>(null);
-  const [deleteStoreInMenu, setDeleteStoreInMenu] = useState<StoreInMenu | null>(null);
+  });
+  const updateForm = useForm({
+    resolver: yupResolver(menuInStoreSchema),
+    shouldUnregister: true
+  });
 
-  const handleSelect = (id: number) => {
-    const sInMenuId = id;
-
-    const storeInMenuIdx = appliedStores.findIndex(
-      ({ menu_in_store_id: id }: { menu_in_store_id: number }) => id === Number(sInMenuId)
-    );
-
-    if (storeInMenuIdx !== -1) {
-      setUpdateStoreInMenu(appliedStores[storeInMenuIdx]);
-      setIsOpenModal(true);
+  const handleAddStoreApply = async (values: any) => {
+    try {
+      await addStoreApplyMenus(+id, transformMenuForm(values));
+      enqueueSnackbar('Tạp bảng giá thành công', {
+        variant: 'success'
+      });
+      tableRef.current?.reload();
+      return true;
+    } catch (error) {
+      console.log(`error`, error);
+      enqueueSnackbar((error as any).message, {
+        variant: 'error'
+      });
+      return false;
     }
   };
 
-  const handleClose = () => {
-    setIsOpenModal(false);
-    setUpdateStoreInMenu(null);
+  const handleUpdate = async (values: any) => {
+    try {
+      await updateStoreApplyMenus(+id, values.store_id, transformMenuForm(values));
+      enqueueSnackbar(translate('common.success'), {
+        variant: 'success'
+      });
+      tableRef.current?.reload();
+    } catch (error) {
+      enqueueSnackbar((error as any).message, {
+        variant: 'error'
+      });
+    }
   };
 
-  const handleAddStoreApply = (values: any) => addStoreApplyMenus(+id, values).then(run);
-
-  const handleUpdate = (values: TStoreApplyMenuRequest) =>
-    updateStoreApplyMenus(+id, values.store_id, values).then(run);
-
-  const handleDelete = (data: StoreInMenu) =>
-    deleteStoreApplyMenus(+id, data?.store.id)
-      .then(() => setDeleteStoreInMenu(null))
-      .then(run)
-      .then(() =>
-        enqueueSnackbar(translate('common.deleteSuccess'), {
-          variant: 'success'
-        })
-      );
+  const onConfirmDelete = async (data: any) => {
+    confirm({
+      title: `Xác nhận không áp dụng bảng giá cho cửa hàng ${data.store?.store_name}`,
+      content: 'Xoá bảng giá áp dụng?',
+      onOk: async () => {
+        try {
+          await deleteStoreApplyMenus(+id, data?.store.id);
+          enqueueSnackbar(translate('common.deleteSuccess'), {
+            variant: 'success'
+          });
+          tableRef.current?.reload();
+        } catch (error) {
+          enqueueSnackbar((error as any).message, {
+            variant: 'error'
+          });
+        }
+      },
+      onCancle: () => {}
+    });
+  };
 
   return (
     <Box>
-      <DeleteConfirmDialog
-        open={Boolean(deleteStoreInMenu)}
-        onDelete={() => handleDelete(deleteStoreInMenu!)}
-        onClose={() => setDeleteStoreInMenu(null)}
-        title={translate('common.confirmDeleteTitle')}
-      />
       <Card>
         <Box display="flex" justifyContent="space-between">
           <CardTitle>{translate('pages.menus.storeApplyTab.title')}</CardTitle>
-          <Button
-            onClick={() => {
-              setIsOpenModal(true);
+
+          <ModalForm
+            key="create-menu"
+            onOk={async () => {
+              try {
+                await createMenuForm.handleSubmit(
+                  (data: any) => {
+                    return handleAddStoreApply(data);
+                  },
+                  (e) => {
+                    // throw e;
+                  }
+                )();
+                return true;
+              } catch (error) {
+                return false;
+              }
             }}
-            size="small"
-            startIcon={<Icon icon={plusFill} />}
+            title={translate('pages.menus.storeApplyTab.addStoreInMenu')}
+            trigger={
+              <Button size="small" startIcon={<Icon icon={plusFill} />}>
+                {translate('pages.menus.storeApplyTab.addStoreInMenu')}
+              </Button>
+            }
           >
-            {translate('pages.menus.storeApplyTab.addStoreInMenu')}
-          </Button>
+            <FormProvider {...createMenuForm}>
+              <MenuInStoreForm />
+            </FormProvider>
+          </ModalForm>
         </Box>
         <Box mt={2}>
-          <DialogAnimate open={isOpenModal} onClose={handleClose}>
-            <DialogTitle>
-              {updateStoreInMenu
-                ? translate('pages.menus.storeApplyTab.editStoreInMenu')
-                : translate('pages.menus.storeApplyTab.addStoreInMenu')}
-            </DialogTitle>
-
-            <StoreInMenuForm
-              storeInMenu={updateStoreInMenu}
-              onCancel={handleClose}
-              onUpdateEvent={handleUpdate}
-              onAddEvent={handleAddStoreApply}
-              onDelete={handleDelete}
-            />
-          </DialogAnimate>
           <ResoTable
+            ref={tableRef}
             pagination={false}
-            dataSource={appliedStores}
-            columns={[
-              {
-                title: '#',
-                dataIndex: 'index'
-              },
-              {
-                title: translate('pages.menus.table.storeName'),
-                dataIndex: 'store.store_name'
-              },
-              {
-                title: translate('pages.menus.table.timeRange'),
-                dataIndex: 'timeRange'
-                // render: (_: any, { time_range = [] }: StoreInMenu) => (
-                //   <>
-                //     {translate('pages.menus.table.fromTime')}{' '}
-                //     <Label color="success">{time_range[0]}</Label>{' '}
-                //     {translate('pages.menus.table.toTime')}{' '}
-                //     <Label color="success">{time_range[1]}</Label>
-                //   </>
-                // )
-              },
-              {
-                title: translate('pages.menus.table.dayFilter'),
-                dataIndex: 'day_filters',
-                render: (
-                  _: any,
-                  { day_filters: dayFilters, menu_in_store_id: menu_id }: StoreInMenu
-                ) => (
-                  <Stack direction="row" spacing={1}>
-                    {dayFilters?.map((day) => (
-                      <Chip
-                        size="small"
-                        key={`${menu_id}-${day}`}
-                        label={DAY_OF_WEEK.find(({ value }) => value === day)?.label}
-                      />
-                    ))}
-                  </Stack>
-                )
-              }
-            ]}
-            rowKey="menu_id"
-            onEdit={(data: StoreInMenu) => {
-              handleSelect(data.menu_in_store_id!);
-            }}
-            onDelete={setDeleteStoreInMenu}
+            getData={(params: any) => getStoreApplyMenus(Number(id), params)}
+            columns={menuInStoreColumns}
+            rowKey="menu_in_store_id"
+            onEdit={(values: any) =>
+              updateForm.reset(normalizeMenuData({ ...values, store_id: values.store?.id }))
+            }
+            onDelete={onConfirmDelete}
+            renderEdit={(dom: ReactNode, modifier: any) => (
+              <ModalForm
+                onOk={async () => {
+                  try {
+                    await updateForm.handleSubmit(
+                      (data) => {
+                        return handleUpdate(data);
+                      },
+                      (e) => {
+                        console.log(`e`, e);
+                        throw e;
+                      }
+                    )();
+                    return true;
+                  } catch (error) {
+                    return false;
+                  }
+                }}
+                title="Cập nhật bảng giá ở cửa hàng"
+                trigger={dom}
+              >
+                <FormProvider {...updateForm}>
+                  <MenuInStoreForm />
+                </FormProvider>
+              </ModalForm>
+            )}
           />
         </Box>
       </Card>

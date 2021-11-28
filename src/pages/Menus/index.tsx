@@ -7,6 +7,7 @@ import { Button, Card, Chip, Stack, Typography } from '@mui/material';
 import menuApi from 'api/menu';
 import { menuSchema, transformMenuForm } from 'components/form/Menu/helper';
 import MenuForm from 'components/form/Menu/MenuForm';
+import confirm from 'components/Modal/confirm';
 import ModalForm from 'components/ModalForm/ModalForm';
 import Page from 'components/Page';
 import ResoTable from 'components/ResoTable/ResoTable';
@@ -97,6 +98,33 @@ const MenusPage = () => {
     }
   });
 
+  const onDeleteMenu = async (menuId: number) => {
+    try {
+      await menuApi.delete(menuId);
+      enqueueSnackbar('Xoá thành công', {
+        variant: 'success'
+      });
+      console.log(`tableRef.current`, tableRef.current);
+      tableRef.current?.reload();
+    } catch (error) {
+      console.log(`error`, error);
+      enqueueSnackbar((error as any).message, {
+        variant: 'error'
+      });
+    }
+  };
+
+  const onConfirmDelete = async (menu: Menu) => {
+    confirm({
+      title: 'Xác nhận xoá',
+      content: 'Xoá nhóm menu này?',
+      onOk: async () => {
+        await onDeleteMenu(menu.menu_id);
+      },
+      onCancle: () => {}
+    });
+  };
+
   return (
     <Page
       title="Bảng giá"
@@ -142,7 +170,8 @@ const MenusPage = () => {
       <Card>
         <Stack spacing={2}>
           <ResoTable
-            actionRef={tableRef}
+            ref={tableRef}
+            onDelete={onConfirmDelete}
             rowKey="menu_id"
             onEdit={(menu: Menu) =>
               navigate(`${PATH_DASHBOARD.menus.root}/${menu.menu_id}`, { state: menu })

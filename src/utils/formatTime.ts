@@ -2,8 +2,8 @@ import { format, formatDistanceToNow } from 'date-fns';
 
 // ----------------------------------------------------------------------
 
-export function fDate(date: string | number | Date) {
-  return format(new Date(date), 'dd MMMM yyyy');
+export function fDate(date: string | number | Date, formatStr: string = 'dd/MM/yyy') {
+  return format(new Date(date), formatStr);
 }
 
 export function fDateTime(date: string | number | Date) {

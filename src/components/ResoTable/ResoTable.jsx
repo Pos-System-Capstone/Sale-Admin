@@ -155,6 +155,7 @@ const ResoTable = (
   } = useAntdTable(
     (params) => {
       if (dataSource) return Promise.resolve(dataSource);
+      if (!getData) return [];
       return getData({
         ...transformParamToHyphen({ ...params.filters, ..._filters }),
         page: params.current,
