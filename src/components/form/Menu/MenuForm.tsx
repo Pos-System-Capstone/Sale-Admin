@@ -123,7 +123,7 @@ const MenuForm = (props: Props) => {
             size="small"
             fullWidth
             name="is_brand_mode"
-            label="Áp dụng toàn cửa hàng"
+            label="Áp dụng toàn hệ thống"
             value="true"
           />
         </Grid>
@@ -147,6 +147,9 @@ const MenuForm = (props: Props) => {
           />
         </Grid>
         <Grid item xs={12} md={6}>
+          <Box>
+            <FormLabel>Khung giờ</FormLabel>
+          </Box>
           <SwitchField name="allDay" label="Cả ngày" fullWidth />
           <Box>
             <ErrorMessage

@@ -34,6 +34,7 @@ import {
 } from 'redux/menu/api';
 import { formatCurrency } from 'utils/utils';
 import ProductInMenuDialog from '../components/EditProductDialog';
+import AutocompleteCategory from 'components/form/common/Category/AutocompleteCategory';
 
 const ProductInMenuTab = ({ id }) => {
   const [currentCate, setCurrentCate] = React.useState(null);
@@ -152,107 +153,59 @@ const ProductInMenuTab = ({ id }) => {
             }
           />
         </Box>
-        <Grid container spacing={2}>
-          <Grid item xs={12} sm={3}>
-            <List
-              sx={{
-                width: '100%',
-                bgcolor: 'background.paper',
-                position: 'relative',
-                overflow: 'auto',
-                maxHeight: 450,
-                '& ul': { padding: 0 }
-              }}
-              component="nav"
-              aria-label="select category"
-              subheader={
-                <ListSubheader component="div" id="nested-list-subheader">
-                  Có {categories.length} Danh mục
-                </ListSubheader>
-              }
-            >
-              <ListItemButton
-                key="list-button-all"
-                selected={currentCate === ''}
-                onClick={() => setCurrentCate('')}
-              >
-                <ListItemText primary="Tất cả" />
-              </ListItemButton>
-              {categories?.map(({ cate_id, cate_name }) => (
-                <Controller
-                  control={form?.control}
-                  name="cat-id"
-                  key={`list-button-${cate_id}`}
-                  render={({ field }) => (
-                    <ListItemButton
-                      selected={field.value === cate_id}
-                      onClick={() => field.onChange(cate_id)}
-                    >
-                      <ListItemText primary={cate_name} />
-                    </ListItemButton>
-                  )}
+        <ResoTable
+          ref={ref}
+          filters={filters}
+          getData={(params) => getProductInMenus(id, params)}
+          rowKey="product_id"
+          onEdit={setCurrentProduct}
+          onDelete={setCurrentDeleteItem}
+          columns={[
+            {
+              title: 'Mã sản phẩm',
+              dataIndex: 'code'
+            },
+            {
+              title: 'Hình ảnh',
+              dataIndex: 'pic_url',
+              render: (src, { product_name }) => (
+                <Avatar
+                  alt={product_name}
+                  src={src}
+                  variant="square"
+                  style={{ width: '54px', height: '54px', zIndex: 1 }}
                 />
-              ))}
-            </List>
-          </Grid>
-          <Grid item xs={12} sm={9}>
-            <Box mt={2}>
-              <ResoTable
-                ref={ref}
-                filters={filters}
-                getData={(params) => getProductInMenus(id, params)}
-                rowKey="product_id"
-                onEdit={setCurrentProduct}
-                onDelete={setCurrentDeleteItem}
-                columns={[
-                  {
-                    title: 'Mã sản phẩm',
-                    dataIndex: 'code'
-                  },
-                  {
-                    title: 'Hình ảnh',
-                    dataIndex: 'pic_url',
-                    render: (src, { product_name }) => (
-                      <Avatar
-                        alt={product_name}
-                        src={src}
-                        variant="square"
-                        style={{ width: '54px', height: '54px', zIndex: 1 }}
-                      />
-                    ),
-                    hideInSearch: true
-                  },
-                  {
-                    title: 'Tên sản phẩm',
-                    dataIndex: 'product_name'
-                  },
-                  {
-                    title: 'Giá',
-                    dataIndex: 'price1',
-                    render: (value) => <Typography>{formatCurrency(value)}</Typography>,
-                    hideInSearch: true
-                  },
-                  {
-                    title: 'Danh mục',
-                    dataIndex: 'cate_name',
-                    render: (cate) => <Chip label={cate} />,
-                    hideInSearch: true
-                  },
-                  {
-                    title: 'Cố định giá',
-                    dataIndex: 'is_fixed_price',
-                    render: (isFixed) => (
-                      <Label color={isFixed ? 'success' : 'default'}>
-                        {isFixed ? 'Cố định' : 'Không'}
-                      </Label>
-                    ),
-                    hideInSearch: true
-                  }
-                ]}
-              />
-            </Box>
-          </Grid>
-        </Grid>
+              ),
+              hideInSearch: true
+            },
+            {
+              title: 'Tên sản phẩm',
+              dataIndex: 'product_name'
+            },
+            {
+              title: 'Giá',
+              dataIndex: 'price1',
+              render: (value) => <Typography>{formatCurrency(value)}</Typography>,
+              hideInSearch: true
+            },
+            {
+              title: 'Danh mục',
+              dataIndex: 'cate_name',
+              render: (cate) => <Chip label={cate} />,
+              renderFormItem: () => <AutocompleteCategory name="cat-id" label="Danh mục" />
+            },
+            {
+              title: 'Cố định giá',
+              dataIndex: 'is_fixed_price',
+              render: (isFixed) => (
+                <Label color={isFixed ? 'success' : 'default'}>
+                  {isFixed ? 'Cố định' : 'Không'}
+                </Label>
+              ),
+              hideInSearch: true
+            }
+          ]}
+        />
       </Box>
     </Box>
   );

@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Box, Button, Card, Container, Stack, Typography, useTheme } from '@mui/material';
+import { Box, Button, Card, Container, Stack } from '@mui/material';
 import categoryApi from 'api/category';
 import CategoryForm from 'components/form/common/Category/CategoryForm';
 import SeoForm from 'components/form/Seo/SeoForm';
@@ -8,11 +8,8 @@ import Page from 'components/Page';
 import useDashboard from 'hooks/useDashboard';
 import { DashboardNavLayout } from 'layouts/dashboard/DashboardNavbar';
 import { useSnackbar } from 'notistack';
-import {
-  transformDraftToStr,
-  normalizeProductData,
-  transformProductForm
-} from 'pages/Products/utils';
+import { CardTitle } from 'pages/Products/components/Card';
+import { transformDraftToStr, transformProductForm } from 'pages/Products/utils';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { useSearchParams } from 'react-router-dom';
@@ -29,7 +26,6 @@ const CreateCategory = (props: Props) => {
   const { enqueueSnackbar } = useSnackbar();
   const { setNavOpen } = useDashboard();
   const navigate = useNavigate();
-  const theme = useTheme();
   const [searchParams] = useSearchParams();
   const isExtra: boolean = Boolean(searchParams.get('isExtra'));
 
@@ -75,24 +71,22 @@ const CreateCategory = (props: Props) => {
           </LoadingAsyncButton>
         </Stack>
       </DashboardNavLayout>
-      <Page title="Tạo sản phẩm">
-        <Container maxWidth="lg" sx={{ mx: 'auto' }}>
-          <Stack spacing={2}>
-            <Card>
-              <Box>
-                <CategoryForm />
-              </Box>
-            </Card>
-            <Card>
-              <Box>
-                <Typography variant="h3" component="h4" gutterBottom>
-                  SEO
-                </Typography>
-                <SeoForm />
-              </Box>
-            </Card>
-          </Stack>
-        </Container>
+      <Page title="Tạo danh mục">
+        <Stack spacing={2}>
+          <Card>
+            <Box>
+              <CategoryForm />
+            </Box>
+          </Card>
+          <Card>
+            <Box>
+              <CardTitle mb={2} variant="subtitle1">
+                SEO
+              </CardTitle>
+              <SeoForm />
+            </Box>
+          </Card>
+        </Stack>
       </Page>
     </FormProvider>
   );

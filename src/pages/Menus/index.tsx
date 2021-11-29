@@ -21,6 +21,7 @@ import { getMenus } from 'redux/menu/api';
 import { PATH_DASHBOARD } from 'routes/paths';
 import { Menu } from 'types/menu';
 import { TTableColumn } from 'types/table';
+import { fDate } from 'utils/formatTime';
 
 export const menuColumns: TTableColumn<Menu>[] = [
   {
@@ -28,19 +29,31 @@ export const menuColumns: TTableColumn<Menu>[] = [
     dataIndex: 'menu_name'
   },
   {
-    title: 'Áp dụng cho nhãn hàng',
+    title: 'Áp dụng',
     dataIndex: 'is_brand_mode',
     valueType: 'select',
     valueEnum: [
       {
-        label: 'Có',
+        label: 'Toàn hệ thống',
         value: true
       },
       {
-        label: 'Không',
+        label: 'Theo cửa hàng',
         value: false
       }
     ]
+  },
+  {
+    title: 'Thời gian hiệu lực',
+    hideInSearch: true,
+    render: (_, data: Menu) =>
+      data.start_time && data.end_time ? (
+        <Typography>
+          {fDate(data.start_time)} - {fDate(data.end_time)}
+        </Typography>
+      ) : (
+        '-'
+      )
   },
   {
     title: 'Khung giờ',
@@ -117,7 +130,7 @@ const MenusPage = () => {
   const onConfirmDelete = async (menu: Menu) => {
     confirm({
       title: 'Xác nhận xoá',
-      content: 'Xoá nhóm menu này?',
+      content: `Bạn đồng ý xóa menu "${menu.menu_name}"?`,
       onOk: async () => {
         await onDeleteMenu(menu.menu_id);
       },

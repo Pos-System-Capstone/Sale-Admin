@@ -63,7 +63,7 @@ const MiddleForm: React.FC<Props> = ({ updateMode }) => {
             <Box>
               <Stack direction="row" justifyContent="space-between">
                 <Typography my={2} variant="subtitle2">
-                  Danh mục sản phẩm
+                  Danh mục chứa sản phẩm
                 </Typography>
               </Stack>
               <Grid container spacing={2}>
@@ -77,7 +77,7 @@ const MiddleForm: React.FC<Props> = ({ updateMode }) => {
                         <Stack direction="row" spacing={1}>
                           <CardTitle variant="subtitle1">Extra</CardTitle>
                           <Tooltip
-                            title="Các nhóm sản phẩm extra phụ thuộc vào Danh mục sản phẩm"
+                            title="Các nhóm sản phẩm extra phụ thuộc vào Danh mục chứa sản phẩm"
                             placement="right"
                             arrow
                           >
@@ -146,7 +146,7 @@ const MiddleForm: React.FC<Props> = ({ updateMode }) => {
           <Stack direction="row" spacing={1}>
             <CardTitle variant="subtitle1">Tuỳ chỉnh cho sản phẩm</CardTitle>
             <Tooltip
-              title="Các tuỳ chỉnh cho sản phẩm phụ thuộc vào Danh mục sản phẩm"
+              title="Các tuỳ chỉnh cho sản phẩm phụ thuộc vào Danh mục chứa sản phẩm"
               placement="right"
               arrow
             >

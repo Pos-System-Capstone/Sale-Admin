@@ -9,6 +9,7 @@ import useCategory from 'hooks/categories/useCategory';
 import useDashboard from 'hooks/useDashboard';
 import { DashboardNavLayout } from 'layouts/dashboard/DashboardNavbar';
 import { useSnackbar } from 'notistack';
+import { CardTitle } from 'pages/Products/components/Card';
 import { transformDraftToStr } from 'pages/Products/utils';
 import React, { useEffect } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
@@ -87,6 +88,9 @@ const CategoryInfoTab = ({ updateMode }: Props) => {
             </Box>
           </Card>
           <Card>
+            <CardTitle pb={2} variant="subtitle1">
+              SEO
+            </CardTitle>
             <Box>
               <SeoForm />
             </Box>

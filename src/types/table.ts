@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 
-export type TTableColumn<T extends any> = {
+export type TTableColumn<T = void> = {
   title: string | ReactElement;
   dataIndex?: keyof T | 'index' | string[];
   fixed?: 'left' | 'right' | undefined;
@@ -42,4 +42,5 @@ export type TableValueType =
 type TableValueEnum = {
   label: any;
   value: any;
+  color?: string;
 };

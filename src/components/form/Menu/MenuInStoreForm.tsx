@@ -3,6 +3,7 @@ import {
   Box,
   Button,
   Divider,
+  FormLabel,
   Grid,
   IconButton,
   Stack,
@@ -137,6 +138,9 @@ const MenuInStoreForm = (props: Props) => {
           />
         </Grid>
         <Grid item xs={12} md={6}>
+          <Box>
+            <FormLabel>Khung giờ</FormLabel>
+          </Box>
           <SwitchField name="allDay" label="Cả ngày" fullWidth />
           <Box>
             <ErrorMessage
