@@ -1,5 +1,4 @@
-import { EventResizeDoneArg } from '@fullcalendar/interaction';
-import { EventClickArg, EventDropArg, EventHoveringArg, EventInput } from '@fullcalendar/react'; // => request placed at the top
+import { EventClickArg, EventHoveringArg, EventInput } from '@fullcalendar/react'; // => request placed at the top
 import { Edit } from '@mui/icons-material';
 import {
   Box,
@@ -30,12 +29,10 @@ import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router';
-import { addStoreApplyMenus, getCurrentMenuByStoreId } from 'redux/menu/api';
+import { getCurrentMenuByStoreId } from 'redux/menu/api';
 import { COLOR_OPTIONS } from 'redux/slices/calendar';
-import { RootState, useSelector } from 'redux/store';
 import { PATH_DASHBOARD } from 'routes/paths';
-import { TStoreApplyMenuRequest } from 'types/menu';
-import { MenuInStoreAdmin, StoreInMenu } from 'types/store';
+import { StoreInMenu } from 'types/store';
 import { fDate, fDateTime } from 'utils/formatTime';
 import { CalendarView } from '../../@types/calendar';
 import MenuInStoreCalendar from './components/MenuInStoreCalendar';
@@ -155,18 +152,18 @@ const columns: ResoDescriptionColumnType<StoreInMenu>[] = [
 export default function MenuInStorePage() {
   const navigate = useNavigate();
   const isMobile = useMediaQuery((theme: any) => theme.breakpoints.down('lg'));
-  const { enqueueSnackbar } = useSnackbar();
   const { translate } = useLocales();
 
   const [view, setView] = useState<CalendarView>(isMobile ? 'listWeek' : 'timeGridWeek');
-  const [date, setDate] = useState(new Date());
+  const [date] = useState(new Date());
 
   const filterForm = useForm();
 
   const filteredStore = filterForm.watch();
   const selectedStoreId = filteredStore.store_id;
-  const { data, refetch } = useQuery(
-    ['stores', selectedStoreId],
+  console.log(`selectedStoreId`, selectedStoreId);
+  const { data } = useQuery(
+    ['stores', selectedStoreId, 'currentMenu'],
     () => getCurrentMenuByStoreId(selectedStoreId).then((res) => res.data),
     {
       enabled: Boolean(selectedStoreId)
@@ -208,8 +205,6 @@ export default function MenuInStorePage() {
   };
 
   const filteredEvents = data && transformSIMtoEvent([data]);
-
-  console.log(`filteredEvents`, filteredEvents);
 
   const popoverContent = popoverStoreInMenu && (
     <>
