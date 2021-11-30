@@ -6,7 +6,7 @@ import FullCalendar, {
   EventHoveringArg
 } from '@fullcalendar/react'; // => request placed at the top
 import dayGridPlugin from '@fullcalendar/daygrid';
-import interactionPlugin, { EventResizeDoneArg } from '@fullcalendar/interaction';
+import { EventResizeDoneArg } from '@fullcalendar/interaction';
 import listPlugin from '@fullcalendar/list';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import timelinePlugin from '@fullcalendar/timeline';
@@ -26,9 +26,9 @@ const callback = (cb: any, ...args: object[]) => {
 type Props = {
   onMouseEnter?: (event: EventHoveringArg) => void;
   onMouseLeave?: () => void;
-  onDrop: (event: EventDropArg) => void;
-  onClick: (event: EventClickArg) => void;
-  onEventResize: (event: EventResizeDoneArg) => void;
+  onDrop?: (event: EventDropArg) => void;
+  onClick?: (event: EventClickArg) => void;
+  onEventResize?: (event: EventResizeDoneArg) => void;
   onSelectRange?: (start: Date, end: Date) => void;
   popoverContent?: React.ReactElement | null;
   view?: CalendarView;
@@ -103,9 +103,10 @@ const MenuInStoreCalendar: React.FC<Props & CalendarOptions> = ({
     firstDay: 1,
     eventMaxStack: 2,
     height: isMobile ? 'auto' : 720,
-    plugins: [listPlugin, dayGridPlugin, timelinePlugin, timeGridPlugin, interactionPlugin]
+    plugins: [listPlugin, dayGridPlugin, timelinePlugin, timeGridPlugin /* interactionPlugin */]
   };
 
+  console.log(`events`, events);
   return (
     <CalendarStyle>
       <Popover
@@ -130,6 +131,10 @@ const MenuInStoreCalendar: React.FC<Props & CalendarOptions> = ({
       </Popover>
       <FullCalendar
         {...settings}
+        eventTimeFormat={{
+          hour: '2-digit',
+          minute: '2-digit'
+        }}
         eventMouseEnter={handlePopoverOpen}
         eventMouseLeave={handlePopoverClose}
         events={events}

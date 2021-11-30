@@ -30,6 +30,7 @@ import StoreInMenuForm from 'components/_dashboard/calendar/StoreInMenuForm';
 import { TStore, StoreInMenu } from 'types/store';
 import { convertDateToStr } from 'utils/utils';
 import { CalendarView } from '../../@types/calendar';
+import { get } from 'lodash';
 
 // ----------------------------------------------------------------------
 
@@ -39,10 +40,11 @@ const transformSIMtoEvent = (storeInMenus: StoreInMenu[] = []): EventInput[] =>
     title: sInMenu.menu_name ?? `Thực đơn ${sInMenu.menu_id}`,
     // start: moment(sInMenu.time_range[0], 'HH:mm').toDate(),
     // end: moment(sInMenu.time_range[1], 'HH:mm').toDate(),
-    startTime: moment(sInMenu.time_range[0], 'HH:mm').format('HH:mm:ss'),
-    endTime: moment(sInMenu.time_range[1], 'HH:mm').format('HH:mm:ss'),
+    startTime: moment(sInMenu.time_ranges[0], 'HH:mm').format('HH:mm:ss'),
+    endTime: moment(sInMenu.time_ranges[1], 'HH:mm').format('HH:mm:ss'),
     daysOfWeek: sInMenu.day_filters,
-    allDay: sInMenu.time_range[0] === '00:00' && sInMenu.time_range[1] === '24:00',
+    allDay:
+      get(sInMenu.time_ranges, [0, 0]) === '00:00' && get(sInMenu.time_ranges, [0, 1]) === '24:00',
     textColor: COLOR_OPTIONS[sInMenu.store.id % COLOR_OPTIONS.length],
     groupId: `menu_${sInMenu.menu_in_store_id}`,
     ...sInMenu
@@ -57,16 +59,7 @@ export default function MenuOfStorePage() {
   const [view, setView] = useState<CalendarView>(isMobile ? 'listWeek' : 'timeGridWeek');
   const [date, setDate] = useState(new Date());
 
-  const [appliedStores, setappliedStores] = useState<StoreInMenu[]>([
-    {
-      menu_id: 1,
-      menu_name: 'Thực đơn 1',
-      day_filters: [1, 2],
-      store: { id: 1161, store_name: 'store của tuấn' },
-      time_range: ['02:30', '03:30'],
-      menu_in_store_id: 0
-    }
-  ]);
+  const [appliedStores, setappliedStores] = useState<StoreInMenu[]>([]);
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [selectedStoreInMenu, setselectedStoreInMenu] = useState<StoreInMenu | null>(null);
   const [filteredStores, setFilteredStores] = useState<TStore[]>(stores ?? []);
@@ -113,8 +106,8 @@ export default function MenuOfStorePage() {
 
         const updateSInMens = [...appliedStores];
         updateSInMens[mInStoreIdx] = {
-          ...updateSInMens[mInStoreIdx],
-          time_range: [startTime, endTime]
+          ...updateSInMens[mInStoreIdx]
+          // time_ranges: [startTime, endTime]
         };
         setappliedStores(updateSInMens);
         enqueueSnackbar('Update event success', {
@@ -145,7 +138,7 @@ export default function MenuOfStorePage() {
         const updateSInMens = [...appliedStores];
         updateSInMens[mInStoreIdx] = {
           ...updateSInMens[mInStoreIdx],
-          time_range: [startTime, endTime],
+          // time_ranges: [startTime, endTime],
           day_filters: daysOfWeek
         };
         setappliedStores(updateSInMens);
@@ -220,9 +213,9 @@ export default function MenuOfStorePage() {
             <Typography variant="subtitle1">{translate('pages.menus.table.timeRange')}</Typography>
             <Box>
               {translate('pages.menus.table.fromTime')}{' '}
-              <Label color="success">{popoverStoreInMenu.time_range[0]}</Label>{' '}
+              <Label color="success">{popoverStoreInMenu.time_ranges[0]}</Label>{' '}
               {translate('pages.menus.table.toTime')}{' '}
-              <Label color="success">{popoverStoreInMenu.time_range[1]}</Label>
+              <Label color="success">{popoverStoreInMenu.time_ranges[1]}</Label>
             </Box>
           </Box>
           <Box>

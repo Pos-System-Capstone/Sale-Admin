@@ -1,7 +1,7 @@
 import roundAccountBox from '@iconify/icons-ic/round-account-box';
 import roundStore from '@iconify/icons-ic/round-store';
 import { Icon } from '@iconify/react';
-import { Box, Button, CircularProgress, Stack, Tab, Tabs } from '@mui/material';
+import { Box, Button, CircularProgress, Stack, Tab, Tabs, Typography } from '@mui/material';
 import menuApi from 'api/menu';
 import { normalizeMenuData, transformMenuForm } from 'components/form/Menu/helper';
 import Page from 'components/Page';
@@ -48,7 +48,8 @@ const UpdateMenuPage = () => {
   const {
     data: menu,
     isLoading,
-    refetch
+    refetch,
+    error
   } = useQuery(['products', Number(id)], () => menuApi.getById(id).then((res) => res.data), {
     onSuccess: (res) => form.reset(normalizeMenuData(res))
   });
@@ -106,6 +107,10 @@ const UpdateMenuPage = () => {
 
   if (isLoading) {
     return <CircularProgress />;
+  }
+
+  if (error) {
+    return <Typography>{get(error, 'message', 'Có lỗi vui lòng thử lại')}</Typography>;
   }
 
   return (

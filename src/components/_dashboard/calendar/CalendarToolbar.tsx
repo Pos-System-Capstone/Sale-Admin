@@ -8,7 +8,7 @@ import { styled } from '@mui/material/styles';
 import useLocales from 'hooks/useLocales';
 import { CalendarView } from '../../../@types/calendar';
 // utils
-import { fDate } from '../../../utils/formatTime';
+import { fDate, fDateTime } from '../../../utils/formatTime';
 //
 import { MHidden } from '../../@material-extend';
 
@@ -66,13 +66,13 @@ export default function CalendarToolbar({
       </MHidden>
 
       <Typography variant="h5" sx={{ my: { xs: 1, sm: 0 } }}>
-        {fDate(date)}
+        {fDateTime(date)}
       </Typography>
 
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        <Button onClick={setOpenModel} size="small" startIcon={<Icon icon={plusFill} />}>
+        {/* <Button onClick={setOpenModel} size="small" startIcon={<Icon icon={plusFill} />}>
           {translate('pages.stores.applyMenuStore')}
-        </Button>
+        </Button> */}
       </Box>
     </RootStyle>
   );

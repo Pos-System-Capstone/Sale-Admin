@@ -47,7 +47,7 @@ const getInitialValues = (
       ? new Date(range.end)
       : convertStrToDate(get(data, ['time_range', 1], moment().format('HH:mm')), 'HH:mm'),
     day_filters: get(data, ['day_filters'], []),
-    allDay: data?.time_range[0] === '00:00' && data?.time_range[1] === '24:00',
+    // allDay: data?.time_ranges[0] === '00:00' && data?.time_ranges[1] === '24:00',
     menu_id: get(data, ['menu_id'])
   };
 

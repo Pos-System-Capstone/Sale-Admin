@@ -4,11 +4,9 @@ export type Menu = {
   menu_name?: any;
   store_name: string;
   day_filters: number[];
-  time_range: string[];
   is_brand_mode: boolean;
   start_time?: any;
   end_time?: any;
-  hour_filter: number;
   time_ranges: string[][];
   priority: number;
   create_at?: any;

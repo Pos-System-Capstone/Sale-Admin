@@ -151,9 +151,9 @@ export default function StoreInMenuForm({
             id: values?.store?.id!,
             store_name: values?.store?.store_name!
           },
-          time_range: [
-            values.allDay ? '00:00' : convertDateToStr(values.start, 'HH:mm'),
-            values.allDay ? '24:00' : convertDateToStr(values.end, 'HH:mm')
+          time_ranges: [
+            // values.allDay ? '00:00' : convertDateToStr(values.start, 'HH:mm'),
+            // values.allDay ? '24:00' : convertDateToStr(values.end, 'HH:mm')
           ]
         };
         if (onUpdateEvent) {
@@ -169,9 +169,9 @@ export default function StoreInMenuForm({
             id: values?.store?.id!,
             store_name: values?.store?.store_name!
           },
-          time_range: [
-            values.allDay ? '00:00' : convertDateToStr(values.start, 'HH:mm'),
-            values.allDay ? '24:00' : convertDateToStr(values.end, 'HH:mm')
+          time_ranges: [
+            // values.allDay ? '00:00' : convertDateToStr(values.start, 'HH:mm'),
+            // values.allDay ? '24:00' : convertDateToStr(values.end, 'HH:mm')
           ]
         };
         if (onAddEvent) {

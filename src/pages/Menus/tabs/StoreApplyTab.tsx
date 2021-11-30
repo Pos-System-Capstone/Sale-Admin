@@ -139,8 +139,8 @@ const StoreApplyTab = () => {
 
   const onConfirmDelete = async (data: any) => {
     confirm({
-      title: `Xác nhận không áp dụng bảng giá cho cửa hàng ${data.store?.store_name}`,
-      content: 'Xoá bảng giá áp dụng?',
+      title: `Xác nhận huỷ áp dụng bảng giá `,
+      content: `Bạn đồng ý huỷ áp dụng bang giá cho cửa hàng ${data.store?.store_name}?`,
       onOk: async () => {
         try {
           await deleteStoreApplyMenus(+id, data?.store.id);
@@ -200,11 +200,11 @@ const StoreApplyTab = () => {
             getData={(params: any) => getStoreApplyMenus(Number(id), params)}
             columns={menuInStoreColumns}
             rowKey="menu_in_store_id"
-            onEdit={(values: any) =>
-              updateForm.reset(normalizeMenuData({ ...values, store_id: values.store?.id }))
-            }
+            onEdit={(values: any) => {
+              updateForm.reset(normalizeMenuData({ ...values, store_id: values.store?.id }));
+            }}
             onDelete={onConfirmDelete}
-            renderEdit={(dom: ReactNode, modifier: any) => (
+            renderEdit={(dom: ReactNode, data: any) => (
               <ModalForm
                 onOk={async () => {
                   try {

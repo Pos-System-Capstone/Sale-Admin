@@ -45,4 +45,7 @@ export const updateProdInMenuInfo = (menuId: number, productId: number, updateIn
 export const deleteProductInMenu = (menuId: number, prodId: number) =>
   request.delete(`/menus/${menuId}/products/${prodId}`);
 
-export const menuInStoreApi = generateAPI<MenuInStoreAdmin>('menu-in-stores');
+export const getCurrentMenuByStoreId = (storeId: number) =>
+  request.get<StoreInMenu>(`/stores/${storeId}/current-menu`);
+
+export const menuInStoreApi = generateAPI<StoreInMenu>('menu-in-stores');

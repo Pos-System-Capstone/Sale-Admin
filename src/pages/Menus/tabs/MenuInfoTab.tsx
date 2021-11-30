@@ -10,98 +10,99 @@ import { Menu } from 'types/menu';
 import { fDate, fDateTime } from 'utils/formatTime';
 import { Card, CardTitle } from '../../Products/components/Card';
 
-const MenuInfoTab = ({ onSubmit, menu }: { onSubmit: any; menu: Menu }) => {
-  const columns: ResoDescriptionColumnType<Menu>[] = [
-    {
-      title: 'Tên',
-      dataIndex: 'menu_name'
-    },
-    {
-      title: 'Áp dụng',
-      dataIndex: 'is_brand_mode',
-      valueType: 'select',
-      tooltip:
-        'Ở cùng 1 khung giờ nếu có BrandMenu và StoreMenu được apply thì sẽ ưu tiên StoreMenu.',
-      valueEnum: [
-        {
-          label: 'Toàn hệ thống',
-          value: true,
-          color: 'success'
-        },
-        {
-          label: 'Theo cửa hàng',
-          value: false
-        }
-      ]
-    },
-    {
-      title: 'Thời gian hiệu lực',
-      span: 2,
-      hideInSearch: true,
-      render: (_, data: Menu) =>
-        data.start_time && data.end_time ? (
-          <Typography>
-            {fDate(data.start_time)} - {fDate(data.end_time)}
-          </Typography>
-        ) : (
-          '-'
-        )
-    },
-    {
-      title: 'Khung giờ',
-      dataIndex: 'time_ranges',
-      hideInSearch: true,
-      render: (_: any, { time_ranges = [] }: Menu) => {
-        const isAllDay =
-          get(time_ranges, [0, 0]) === get(time_ranges, [0, 1]) &&
-          get(time_ranges, [0, 1]) === '00:00';
-
-        if (isAllDay) {
-          return <Chip label="Cả ngày" size="small" color="success" />;
-        }
-        return (
-          <Stack direction="row" spacing={1}>
-            {time_ranges?.map(([from, to]) => (
-              <Chip size="small" key={`${from}-${to}`} label={`${from}-${to}`} />
-            ))}
-          </Stack>
-        );
+const columns: ResoDescriptionColumnType<Menu>[] = [
+  {
+    title: 'Tên',
+    dataIndex: 'menu_name'
+  },
+  {
+    title: 'Áp dụng',
+    dataIndex: 'is_brand_mode',
+    valueType: 'select',
+    tooltip:
+      'Ở cùng 1 khung giờ nếu có BrandMenu và StoreMenu được apply thì sẽ ưu tiên StoreMenu.',
+    valueEnum: [
+      {
+        label: 'Toàn hệ thống',
+        value: true,
+        color: 'success'
+      },
+      {
+        label: 'Theo cửa hàng',
+        value: false
       }
-    },
-    {
-      title: 'Ngày hoạt động',
-      dataIndex: 'day_filters',
-      valueType: 'select',
-      valueEnum: DAY_OF_WEEK,
-      span: 2,
-      render: (_: any, { day_filters: dayFilters, menu_id }: Menu) => (
-        <Stack direction="row" spacing={1}>
-          {dayFilters?.length === 7 ? (
-            <Chip size="small" color="success" label="Cả tuần" />
-          ) : (
-            dayFilters?.map((day) => (
-              <Chip
-                size="small"
-                key={`${menu_id}-${day}`}
-                label={DAY_OF_WEEK.find(({ value }) => value === day)?.label}
-              />
-            ))
-          )}
-        </Stack>
+    ]
+  },
+  {
+    title: 'Thời gian hiệu lực',
+    span: 2,
+    hideInSearch: true,
+    render: (_, data: Menu) =>
+      data.start_time && data.end_time ? (
+        <Typography>
+          {fDate(data.start_time)} - {fDate(data.end_time)}
+        </Typography>
+      ) : (
+        '-'
       )
-    },
-    {
-      title: 'Độ ưu tiên',
-      dataIndex: 'priority',
-      hideInSearch: true
-    },
-    {
-      title: 'Ngày tạo',
-      dataIndex: 'create_at',
-      hideInSearch: true,
-      render: (value) => fDateTime(value)
+  },
+  {
+    title: 'Khung giờ',
+    dataIndex: 'time_ranges',
+    hideInSearch: true,
+    render: (_: any, { time_ranges = [] }: Menu) => {
+      const isAllDay =
+        get(time_ranges, [0, 0]) === get(time_ranges, [0, 1]) &&
+        get(time_ranges, [0, 1]) === '00:00';
+
+      if (isAllDay) {
+        return <Chip label="Cả ngày" size="small" color="success" />;
+      }
+      return (
+        <Stack direction="row" spacing={1}>
+          {time_ranges?.map(([from, to]) => (
+            <Chip size="small" key={`${from}-${to}`} label={`${from}-${to}`} />
+          ))}
+        </Stack>
+      );
     }
-  ];
+  },
+  {
+    title: 'Ngày hoạt động',
+    dataIndex: 'day_filters',
+    valueType: 'select',
+    valueEnum: DAY_OF_WEEK,
+    span: 2,
+    render: (_: any, { day_filters: dayFilters, menu_id }: Menu) => (
+      <Stack direction="row" spacing={1}>
+        {dayFilters?.length === 7 ? (
+          <Chip size="small" color="success" label="Cả tuần" />
+        ) : (
+          dayFilters?.map((day) => (
+            <Chip
+              size="small"
+              key={`${menu_id}-${day}`}
+              label={DAY_OF_WEEK.find(({ value }) => value === day)?.label}
+            />
+          ))
+        )}
+      </Stack>
+    )
+  },
+  {
+    title: 'Độ ưu tiên',
+    dataIndex: 'priority',
+    hideInSearch: true
+  },
+  {
+    title: 'Ngày tạo',
+    dataIndex: 'create_at',
+    hideInSearch: true,
+    render: (value) => fDateTime(value)
+  }
+];
+
+const MenuInfoTab = ({ onSubmit, menu }: { onSubmit: any; menu: Menu }) => {
   return (
     <Box>
       <Card>

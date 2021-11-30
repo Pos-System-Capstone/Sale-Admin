@@ -24,7 +24,14 @@ const ModalForm = ({ trigger, onOk: onSubmit, title, children, ...others }: Prop
 
   return (
     <>
-      <span onClick={() => setOpen(true)}>{trigger}</span>
+      <span
+        onClick={() => {
+          console.log(`TRIGGER`);
+          setOpen(true);
+        }}
+      >
+        {trigger}
+      </span>
       <Dialog {...others} fullWidth maxWidth="sm" open={open} onClose={() => setOpen(false)}>
         <DialogTitle>{title}</DialogTitle>
         <DialogContent dividers>{children}</DialogContent>
