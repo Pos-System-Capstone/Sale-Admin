@@ -474,23 +474,29 @@ const ResoTable = (
               key={`menu-edit-${data[rowKey]}`}
               id={`menu-edit-${data[rowKey]}`}
             >
-              <MenuItem onClick={() => handleDelete(data)} sx={{ color: 'red' }}>
-                {renderDelete(
-                  <>
-                    <ListItemIcon>
-                      <Icon icon={trashIcon} />
-                    </ListItemIcon>
-                    <ListItemText>Xóa</ListItemText>
-                  </>,
-                  data
-                )}
-              </MenuItem>
-              <MenuItem onClick={() => handleEdit(data)}>
-                <ListItemIcon>
-                  <Icon icon={editIcon} />
-                </ListItemIcon>
-                <ListItemText>Điều chỉnh</ListItemText>
-              </MenuItem>
+              {renderDelete(
+                <MenuItem onClick={() => handleDelete(data)} sx={{ color: 'red' }}>
+                  <ListItemIcon>
+                    <Icon icon={trashIcon} />
+                  </ListItemIcon>
+                  <ListItemText>Xóa</ListItemText>
+                </MenuItem>,
+                data
+              )}
+
+              {renderEdit(
+                <MenuItem
+                  onClick={() => {
+                    handleEdit(data);
+                  }}
+                >
+                  <ListItemIcon>
+                    <Icon icon={editIcon} />
+                  </ListItemIcon>
+                  <ListItemText>Điều chỉnh</ListItemText>
+                </MenuItem>,
+                data
+              )}
             </Menu>
           </StickyRightTableCell>
         );
