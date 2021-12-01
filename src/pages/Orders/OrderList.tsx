@@ -22,7 +22,8 @@ const OrderListPage = () => {
   const orderColumns: TTableColumn<TOrder>[] = [
     {
       title: 'STT',
-      dataIndex: 'index'
+      dataIndex: 'index',
+      hideInSearch: true
     },
     {
       title: translate('pages.orders.table.invoice'),
@@ -45,11 +46,12 @@ const OrderListPage = () => {
       hideInSearch: true,
       valueType: 'date'
     },
-    {
-      title: translate('pages.orders.table.orderType'),
-      dataIndex: 'order_type',
-      valueType: 'select'
-    },
+    // {
+    //   title: translate('pages.orders.table.orderType'),
+    //   dataIndex: 'order_type',
+    //   valueType: 'select',
+    //   hideInSearch: true
+    // },
     {
       title: translate('pages.orders.table.customerName'),
       dataIndex: 'customer_name'
@@ -60,7 +62,8 @@ const OrderListPage = () => {
     },
     {
       title: translate('pages.orders.table.note'),
-      dataIndex: 'notes'
+      dataIndex: 'notes',
+      hideInSearch: true
     },
     {
       title: translate('pages.orders.table.status'),
