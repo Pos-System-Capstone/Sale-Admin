@@ -1,4 +1,8 @@
 import { TableCell } from '@mui/material';
+import { TTableColumn } from 'types/table';
+import { fNumber } from 'utils/formatNumber';
+import { fDate, fDateTime } from 'utils/formatTime';
+import { formatCurrency } from 'utils/utils';
 
 export const getCellValue = (cell: any, ...args: any[]) => {
   switch (typeof cell) {
@@ -26,4 +30,25 @@ export const transformParamToHyphen = (params: any) => {
   }
 
   return removeEmptyField(transformParams);
+};
+
+export const renderText = (
+  valueType: TTableColumn['valueType'],
+  data: any,
+  formatProps: any = {}
+) => {
+  switch (valueType) {
+    case 'date':
+      return fDate(data);
+    case 'time':
+      return fDate(data, 'HH:mm');
+    case 'datetime':
+      return fDateTime(data);
+    case 'digit':
+      return fNumber(data);
+    case 'money':
+      return formatCurrency(data);
+    default:
+      return data;
+  }
 };

@@ -1,67 +1,77 @@
 /* eslint-disable camelcase */
-import plusFill from '@iconify/icons-eva/plus-fill';
-import { Icon } from '@iconify/react';
+import { FileDownload, Visibility } from '@mui/icons-material';
 // material
-import { Button, Card, Container, IconButton, Stack, Tooltip, Typography } from '@mui/material';
-import { Visibility } from '@mui/icons-material';
+import { Button, Card, IconButton, Stack, Tooltip } from '@mui/material';
+import orderApi from 'api/order';
 import Page from 'components/Page';
 import ResoTable from 'components/ResoTable/ResoTable';
 import useLocales from 'hooks/useLocales';
 import { useState } from 'react';
 // components
 import { useNavigate } from 'react-router-dom';
-import { getMenus } from 'redux/menu/api';
-import { TOrder } from 'types/order';
+import { ORDER_STATUS_OPTONS, TOrder } from 'types/order';
+import { TTableColumn } from 'types/table';
 import OrderDetailDialog from './components/OrderDetailDialog';
-import OrderSearchForm from './SearchOrderForm';
 
 const OrderListPage = () => {
   const navigate = useNavigate();
   const { translate } = useLocales();
-  const [filters, setFilters] = useState(null);
 
   const [detailOrder, setDetailOrder] = useState<number | null>(null);
 
-  const orderColumns = [
+  const orderColumns: TTableColumn<TOrder>[] = [
     {
       title: 'STT',
       dataIndex: 'index'
     },
     {
       title: translate('pages.orders.table.invoice'),
-      dataIndex: 'invoiceId'
+      dataIndex: 'invoice_id'
     },
-    {
-      title: translate('pages.orders.table.quantity'),
-      dataIndex: 'quantity'
-    },
+
     {
       title: translate('pages.orders.table.finalAmount'),
-      dataIndex: 'finalAmount'
+      dataIndex: 'final_amount',
+      hideInSearch: true,
+      valueType: 'money'
     },
-    {
-      title: translate('pages.orders.table.paymentType'),
-      dataIndex: 'paymentType'
-    },
+    // {
+    //   title: translate('pages.orders.table.paymentType'),
+    //   dataIndex: 'paymentType'
+    // },
     {
       title: translate('pages.orders.table.orderTime'),
-      dataIndex: 'orderTime'
+      dataIndex: 'check_in_date',
+      hideInSearch: true,
+      valueType: 'date'
     },
     {
       title: translate('pages.orders.table.orderType'),
-      dataIndex: 'orderType'
+      dataIndex: 'order_type',
+      valueType: 'select'
+    },
+    {
+      title: translate('pages.orders.table.customerName'),
+      dataIndex: 'customer_name'
+    },
+    {
+      title: translate('pages.orders.table.customerPhone'),
+      dataIndex: 'customer_phone'
+    },
+    {
+      title: translate('pages.orders.table.note'),
+      dataIndex: 'notes'
     },
     {
       title: translate('pages.orders.table.status'),
-      dataIndex: 'status'
-    },
-    {
-      title: translate('pages.orders.table.cashier'),
-      dataIndex: 'cashierName'
+      dataIndex: 'order_status',
+      valueType: 'select',
+      valueEnum: ORDER_STATUS_OPTONS
     },
     {
       title: translate('pages.orders.table.detail'),
       fixed: 'right',
+      hideInSearch: true,
       render: (_: any, order: TOrder) => (
         <Tooltip title="Chi tiết">
           <IconButton onClick={() => setDetailOrder(1)} size="large">
@@ -73,42 +83,36 @@ const OrderListPage = () => {
   ];
 
   return (
-    <Page title="Dashboard: Products | Minimal-UI">
-      {detailOrder && (
-        <OrderDetailDialog
-          orderId={detailOrder}
-          open={Boolean(detailOrder)}
-          onClose={() => setDetailOrder(null)}
-        />
-      )}
-      <Container>
-        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={2}>
-          <Typography variant="h4" gutterBottom>
-            Danh sách đơn hàng
-          </Typography>
-          <Button
-            onClick={() => {
-              //   navigate('/menus/create');
-            }}
-            variant="contained"
-            // startIcon={<Icon icon={plusFill} />}
-          >
-            Xuất file
-          </Button>
+    <Page
+      title="Danh sách đơn hàng"
+      actions={() => [
+        <Button
+          key="export-file"
+          onClick={() => {
+            //   navigate('/menus/create');
+          }}
+          variant="contained"
+          startIcon={<FileDownload />}
+        >
+          Xuất file
+        </Button>
+      ]}
+    >
+      <OrderDetailDialog
+        orderId={detailOrder}
+        open={Boolean(detailOrder)}
+        onClose={() => setDetailOrder(null)}
+      />
+      <Card>
+        <Stack spacing={2}>
+          <ResoTable
+            showAction={false}
+            rowKey="menu_id"
+            getData={(params: any) => orderApi.get(params)}
+            columns={orderColumns}
+          />
         </Stack>
-        <Card>
-          <Stack spacing={2}>
-            <OrderSearchForm />
-            <ResoTable
-              showAction={false}
-              filters={filters}
-              rowKey="menu_id"
-              getData={(params: any) => getMenus(params)}
-              columns={orderColumns}
-            />
-          </Stack>
-        </Card>
-      </Container>
+      </Card>
     </Page>
   );
 };

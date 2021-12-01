@@ -45,7 +45,7 @@ const transformSIMtoEvent = (storeInMenus: StoreInMenu[] = []): EventInput[] =>
     daysOfWeek: sInMenu.day_filters,
     allDay:
       get(sInMenu.time_ranges, [0, 0]) === '00:00' && get(sInMenu.time_ranges, [0, 1]) === '24:00',
-    textColor: COLOR_OPTIONS[sInMenu.store.id % COLOR_OPTIONS.length],
+    textColor: COLOR_OPTIONS[(sInMenu.store?.id ?? 0) % COLOR_OPTIONS.length],
     groupId: `menu_${sInMenu.menu_in_store_id}`,
     ...sInMenu
   }));
@@ -184,7 +184,7 @@ export default function MenuOfStorePage() {
 
   const filteredEvents = useMemo(() => {
     const viewMenuOfStores = appliedStores.filter(({ store }) =>
-      filteredStores.some(({ id }) => id === store.id)
+      filteredStores.some(({ id }) => id === store?.id)
     );
     return transformSIMtoEvent(viewMenuOfStores);
   }, [appliedStores, filteredStores]);

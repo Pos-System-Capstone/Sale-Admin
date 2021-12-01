@@ -1,3 +1,5 @@
+import closeFill from '@iconify/icons-eva/close-fill';
+import { Icon } from '@iconify/react';
 import {
   Box,
   Button,
@@ -8,24 +10,24 @@ import {
   DialogTitle,
   Grid,
   IconButton,
+  Stack,
   styled,
   Typography
 } from '@mui/material';
-import { useRequest } from 'ahooks';
+import orderApi from 'api/order';
+import EmptyContent from 'components/EmptyContent';
+import ResoDescriptions, { ResoDescriptionColumnType } from 'components/ResoDescriptions';
+import ResoTable from 'components/ResoTable/ResoTable';
 import useLocales from 'hooks/useLocales';
 import React from 'react';
-import { getOrderDetail } from 'redux/order/api';
-import { Icon } from '@iconify/react';
-import closeFill from '@iconify/icons-eva/close-fill';
-import { fDate } from 'utils/formatTime';
-import Label from 'components/Label';
-import ResoTable from 'components/ResoTable/ResoTable';
-import { formatCurrency } from 'utils/utils';
+import { useQuery } from 'react-query';
+import { ORDER_STATUS_OPTONS, TOrderDetail, TOrderDetailItem } from 'types/order';
+import { TTableColumn } from 'types/table';
 
 type Props = {
   open: boolean;
   onClose: VoidFunction;
-  orderId: number;
+  orderId?: number | null;
 };
 
 const OrderSummaryItem = styled(Grid)({
@@ -45,11 +47,89 @@ const OrderSummaryItem = styled(Grid)({
 const OrderDetailDialog: React.FC<Props> = ({ open, onClose, orderId }) => {
   const { translate } = useLocales();
 
-  const { data, loading } = useRequest(() => getOrderDetail(orderId), {
-    refreshDeps: [orderId]
-  });
+  const { data: order, isLoading } = useQuery(
+    ['orders', orderId],
+    () => orderApi.getOrderDetail(orderId!).then((res) => res.data),
+    {
+      enabled: Boolean(orderId)
+    }
+  );
 
-  const orderItemColumns = [
+  const custColumns: ResoDescriptionColumnType<TOrderDetail>[] = [
+    {
+      title: translate('pages.orders.table.customerName'),
+      dataIndex: 'customer_phone_receiver'
+    },
+    {
+      title: translate('pages.orders.table.customerPhone'),
+      dataIndex: 'customer_phone_receiver'
+    },
+    {
+      title: translate('pages.orders.table.address'),
+      dataIndex: 'delivery_address'
+    }
+  ];
+
+  const orderColumns: ResoDescriptionColumnType<TOrderDetail>[] = [
+    {
+      title: translate('pages.orders.table.invoice'),
+      dataIndex: 'invoice_id'
+    },
+    {
+      title: translate('pages.orders.table.status'),
+      dataIndex: 'status',
+      valueType: 'select',
+      valueEnum: ORDER_STATUS_OPTONS
+    },
+
+    {
+      title: translate('pages.orders.table.totalAmount'),
+      dataIndex: 'total_amount',
+      valueType: 'money'
+    },
+    {
+      title: translate('pages.orders.table.discount'),
+      dataIndex: 'discount'
+    },
+    {
+      title: translate('pages.orders.table.finalAmount'),
+      dataIndex: 'final_amount',
+      hideInSearch: true,
+      valueType: 'money'
+    },
+    {
+      title: translate('pages.orders.table.paymentType'),
+      dataIndex: 'payments',
+      render: (payments) => {
+        if (!payments) return '-';
+        return (
+          <Stack spacing={2}>
+            {(payments as TOrderDetail['payments'])?.map((payment) => (
+              <Typography key={`${payment.type}`}>
+                {payment.type}: {payment.amount}
+              </Typography>
+            ))}
+          </Stack>
+        );
+      }
+    },
+    {
+      title: translate('pages.orders.table.store'),
+      dataIndex: ['store', 'name']
+    },
+
+    {
+      title: translate('pages.orders.table.note'),
+      dataIndex: 'notes'
+    },
+    {
+      title: translate('pages.orders.table.orderTime'),
+      dataIndex: 'check_in_date',
+      valueType: 'datetime'
+    }
+  ];
+
+  const orderItemColumns: TTableColumn<TOrderDetailItem>[] = [
     {
       title: 'STT',
       dataIndex: 'index'
@@ -60,70 +140,74 @@ const OrderDetailDialog: React.FC<Props> = ({ open, onClose, orderId }) => {
     },
     {
       title: 'Giá',
-      dataIndex: 'price',
-      render: (price: any) => <Typography>{formatCurrency(price)}</Typography>
+      dataIndex: 'unit_price',
+      valueType: 'money'
     },
     {
       title: 'Số lượng',
-      dataIndex: 'quantity'
+      dataIndex: 'quantity',
+      valueType: 'digit'
     },
     {
       title: 'Giảm giá',
-      dataIndex: 'quantity'
+      dataIndex: 'discount',
+      valueType: 'money'
     },
     {
       title: 'Thanh toán',
-      dataIndex: 'quantity'
+      dataIndex: 'final_amount',
+      valueType: 'money'
     }
   ];
 
-  if (loading) return <CircularProgress />;
-
-  const buildSummaryItem = (title: any, value: any) => (
-    <OrderSummaryItem item xs={12} sm={6}>
-      <Typography variant="subtitle1">{title}:</Typography>
-      <Typography variant="body2">{value}</Typography>
-    </OrderSummaryItem>
-  );
   return (
     <Dialog maxWidth="lg" scroll="paper" open={open} onClose={onClose}>
-      <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <Typography variant="h4">Chi tiết đơn hàng</Typography>
-        <IconButton aria-label="close" onClick={onClose} size="large">
-          <Icon icon={closeFill} />
-        </IconButton>
-      </DialogTitle>
-      <DialogContent dividers>
-        <Grid container spacing={4} rowSpacing={2}>
-          {buildSummaryItem(translate('pages.orders.table.invoice'), 'Nguyen Van A')}
-          {buildSummaryItem(
-            translate('pages.orders.table.address'),
-            '854 Tạ Quang Bửu P5 Q8 TPHCM'
-          )}
-          {buildSummaryItem(translate('pages.orders.table.totalAmount'), formatCurrency(700000))}
-          {buildSummaryItem(translate('pages.orders.table.custPhone'), '01231231232')}
-          {buildSummaryItem(translate('pages.orders.table.discount'), `-${formatCurrency(20000)}`)}
-          {buildSummaryItem(translate('pages.orders.table.cashier'), `Ngan`)}
-          {buildSummaryItem(
-            translate('pages.orders.table.finalAmount'),
-            `${formatCurrency(680000)}`
-          )}
-          {buildSummaryItem(translate('pages.orders.table.store'), `Cua hang Quan 1`)}
-          {buildSummaryItem(translate('pages.orders.table.note'), `Da rieng`)}
-          {buildSummaryItem(translate('pages.orders.table.orderTime'), `${fDate(new Date())}`)}
-          {buildSummaryItem(
-            translate('pages.orders.table.orderType'),
-            <Label color="success">Giao hàng</Label>
-          )}
-        </Grid>
+      {isLoading ? (
+        <CircularProgress />
+      ) : !order ? (
+        <EmptyContent title="Không tìm thấy đơn hàng" />
+      ) : (
+        <>
+          <DialogTitle
+            sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+          >
+            <Typography variant="h4">Chi tiết đơn hàng</Typography>
+            <IconButton aria-label="close" onClick={onClose} size="large">
+              <Icon icon={closeFill} />
+            </IconButton>
+          </DialogTitle>
+          <DialogContent dividers>
+            <Stack spacing={2}>
+              <ResoDescriptions
+                title="Thông tin"
+                labelProps={{ width: '40%', fontWeight: 'bold' }}
+                columns={orderColumns as any}
+                datasource={order}
+                column={2}
+              />
+              <ResoDescriptions
+                title="Thông tin khách hàng"
+                labelProps={{ width: '40%', fontWeight: 'bold' }}
+                columns={custColumns as any}
+                datasource={order}
+                column={2}
+              />
 
-        <Box mt={2}>
-          <ResoTable columns={orderItemColumns} dataSource={[]} />
-        </Box>
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={onClose}>Đóng</Button>
-      </DialogActions>
+              <ResoTable
+                showFilter={false}
+                showSettings={false}
+                showAction={false}
+                pagination={false}
+                columns={orderItemColumns}
+                dataSource={order.order_detail}
+              />
+            </Stack>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={onClose}>Đóng</Button>
+          </DialogActions>
+        </>
+      )}
     </Dialog>
   );
 };

@@ -1,6 +1,7 @@
 import { InfoOutlined } from '@mui/icons-material';
-import { Box, Grid, Stack, Tooltip, Typography } from '@mui/material';
+import { Box, Grid, Stack, StackProps, Tooltip, Typography } from '@mui/material';
 import Label from 'components/Label';
+import { renderText } from 'components/ResoTable/utils';
 import { get } from 'lodash';
 import React, { ReactElement } from 'react';
 import { TTableColumn } from 'types/table';
@@ -20,6 +21,7 @@ export interface ResoDescriptionsProps<T extends object = {}> {
   colon?: boolean;
   columns: ResoDescriptionColumnType<T>[];
   datasource?: any;
+  labelProps?: StackProps;
 }
 
 const ResoDescriptions = ({
@@ -29,7 +31,8 @@ const ResoDescriptions = ({
   columns,
   colon = true,
   datasource = {},
-  layout = 'row'
+  layout = 'row',
+  labelProps = {}
 }: ResoDescriptionsProps) => {
   const renderRows = () => {
     const rows: ReactElement[] = [];
@@ -61,7 +64,13 @@ const ResoDescriptions = ({
         } else {
           cell = (
             <Typography variant="subtitle2" noWrap>
-              {dataIndex === 'index' ? idx + 1 : get(datasource, dataIndex, '-')}
+              {dataIndex === 'index'
+                ? idx + 1
+                : renderText(
+                    columnConfig.valueType,
+                    get(datasource, dataIndex) ?? '-',
+                    columnConfig.formatProps
+                  )}
             </Typography>
           );
         }
@@ -70,7 +79,7 @@ const ResoDescriptions = ({
       rows.push(
         <Grid item xs={gridSpan}>
           <Stack direction={layout} spacing={1}>
-            <Stack direction="row" alignItems="center">
+            <Stack direction="row" alignItems="center" {...labelProps}>
               {label}
               {columnConfig.tooltip && (
                 <Tooltip title={columnConfig.tooltip} placement="right" arrow>
@@ -88,10 +97,16 @@ const ResoDescriptions = ({
     return rows;
   };
 
+  const descriptionTitle = React.isValidElement(title) ? (
+    title
+  ) : (
+    <Typography variant="h5">{title}</Typography>
+  );
+
   return (
     <Box>
       <Stack spacing={1} pb={2}>
-        {title}
+        {descriptionTitle}
         {extra}
       </Stack>
       <Grid container spacing={2}>

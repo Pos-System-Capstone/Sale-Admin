@@ -46,7 +46,7 @@ const transformSIMtoEvent = (storeInMenus: StoreInMenu[] = []): EventInput[] => 
       title: sInMenu.menu_name ?? `Thực đơn ${sInMenu.menu_id}`,
       // start: moment(sInMenu.time_range[0], 'HH:mm').toDate(),
       // end: moment(sInMenu.time_range[1], 'HH:mm').toDate(),
-      textColor: COLOR_OPTIONS[sInMenu.store?.id % COLOR_OPTIONS.length]
+      textColor: COLOR_OPTIONS[(sInMenu.store?.id ?? 0) % COLOR_OPTIONS.length]
       // groupId: `menu_${sInMenu.menu_in_store_id}`
     };
     sInMenu.time_ranges.forEach((range) => {
@@ -226,11 +226,12 @@ export default function MenuInStorePage() {
                   mt: '2px'
                 }}
                 style={{
-                  backgroundColor: COLOR_OPTIONS[popoverStoreInMenu.store.id % COLOR_OPTIONS.length]
+                  backgroundColor:
+                    COLOR_OPTIONS[(popoverStoreInMenu.store?.id ?? 0) % COLOR_OPTIONS.length]
                 }}
               />
               <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                {popoverStoreInMenu.store.store_name}
+                {popoverStoreInMenu.store?.store_name}
               </Typography>
             </Stack>
           </Box>

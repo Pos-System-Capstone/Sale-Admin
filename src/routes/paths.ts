@@ -123,12 +123,17 @@ export const PATH_DASHBOARD = {
     new: path(ROOTS_DASHBOARD, '/combos/new')
   },
   group: {
-    root: path(ROOTS_DASHBOARD, '/groups'),
+    root: path(ROOTS_DASHBOARD, '/orders'),
     list: path(ROOTS_DASHBOARD, '/groups'),
     category: path(ROOTS_DASHBOARD, '/groups/category'),
     'extra-category': path(ROOTS_DASHBOARD, '/groups/extra-category'),
     editById: (id: any) => path(ROOTS_DASHBOARD, `/combos/${id}`),
     new: path(ROOTS_DASHBOARD, '/combos/new')
+  },
+  orders: {
+    root: path(ROOTS_DASHBOARD, '/orders'),
+    list: path(ROOTS_DASHBOARD, '/orders'),
+    editById: (id: any) => path(ROOTS_DASHBOARD, `/orders/${id}`)
   }
 };
 

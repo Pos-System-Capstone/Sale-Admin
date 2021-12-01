@@ -90,6 +90,15 @@ export default function Router() {
           element: <GeneralAnalytics />
         },
         {
+          path: 'orders',
+          children: [
+            { path: '', element: <OrderListPage /> },
+            { path: 'new', element: <CreateProduct /> },
+            { path: ':id', element: <UpdateProduct /> },
+            { path: 'master', element: <Products /> }
+          ]
+        },
+        {
           path: 'products',
           children: [
             { path: '', element: <Products /> },

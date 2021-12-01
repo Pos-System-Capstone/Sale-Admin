@@ -76,35 +76,33 @@ const StoreListPage = () => {
   ];
 
   return (
-    <Page title={`Dashboard ${translate('pages.stores.listTitle')} | Reso Sales`}>
-      <Container>
-        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={2}>
-          <Typography variant="h4" gutterBottom>
-            {translate('pages.stores.listTitle')}
-          </Typography>
-          <Button
-            onClick={() => {
-              navigate(PATH_DASHBOARD.stores.new);
-            }}
-            variant="contained"
-            startIcon={<Icon icon={plusFill} />}
-          >
-            {translate('pages.stores.addBtn')}
-          </Button>
+    <Page
+      title={`Dashboard ${translate('pages.stores.listTitle')}`}
+      actions={() => [
+        <Button
+          key="create-store"
+          onClick={() => {
+            navigate(PATH_DASHBOARD.stores.new);
+          }}
+          variant="contained"
+          startIcon={<Icon icon={plusFill} />}
+        >
+          {translate('pages.stores.addBtn')}
+        </Button>
+      ]}
+    >
+      <Card>
+        <Stack spacing={2}>
+          <ResoTable
+            rowKey="id"
+            onEdit={(stores) =>
+              navigate(`${PATH_DASHBOARD.stores.root}/${stores.id}`, { state: stores })
+            }
+            getData={getStores}
+            columns={columns}
+          />
         </Stack>
-        <Card>
-          <Stack spacing={2}>
-            <ResoTable
-              rowKey="id"
-              onEdit={(stores) =>
-                navigate(`${PATH_DASHBOARD.stores.root}/${stores.id}`, { state: stores })
-              }
-              getData={getStores}
-              columns={columns}
-            />
-          </Stack>
-        </Card>
-      </Container>
+      </Card>
     </Page>
   );
 };

@@ -47,7 +47,7 @@ import get from 'lodash/get';
 import { useSnackbar } from 'notistack';
 import React, { useCallback, useEffect } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
-import { getCellValue, transformParamToHyphen } from './utils';
+import { getCellValue, renderText, transformParamToHyphen } from './utils';
 
 const StickyLeftTableCell = withStyles((theme) => ({
   head: {
@@ -379,7 +379,13 @@ const ResoTable = (
           } else {
             cell = (
               <Typography variant="subtitle2" noWrap>
-                {column.dataIndex === 'index' ? idx + 1 : get(data, column.dataIndex, '-')}
+                {column.dataIndex === 'index'
+                  ? idx + 1
+                  : renderText(
+                      column.valueType,
+                      get(data, column.dataIndex) ?? '-',
+                      column.formatProps
+                    )}
               </Typography>
             );
           }

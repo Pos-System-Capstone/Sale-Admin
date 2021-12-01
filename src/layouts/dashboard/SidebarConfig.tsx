@@ -43,7 +43,7 @@ const sidebarConfig = [
       },
       {
         title: 'order',
-        path: PATH_DASHBOARD.chat.root,
+        path: PATH_DASHBOARD.orders.list,
         icon: ICONS.order
       }
     ]

@@ -96,7 +96,7 @@
         "finalAmount": "Thanh toán",
         "paymentType": "Hình thức thanh toán",
         "orderTime": "Thời gian",
-        "orderType": "Loại hóa đơn",
+        "orderType": "Hình thức đặt hàng",
         "status": "Trạng thái",
         "cashier": "Thu ngân",
         "detail": "Chi tiết",
@@ -104,7 +104,9 @@
         "custPhone": "Số điện thoại",
         "discount": "Giảm giá",
         "store": "Cửa hàng",
-        "note": "Ghi chú"
+        "note": "Ghi chú",
+        "customerName": "Tên khách hàng",
+        "customerPhone": "SDT khách hàng"
       }
     }
   },
