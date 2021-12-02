@@ -77,7 +77,7 @@ const OrderDetailDialog: React.FC<Props> = ({ open, onClose, orderId }) => {
     },
     {
       title: translate('pages.orders.table.status'),
-      dataIndex: 'status',
+      dataIndex: 'order_status',
       valueType: 'select',
       valueEnum: ORDER_STATUS_OPTONS
     },
@@ -180,17 +180,17 @@ const OrderDetailDialog: React.FC<Props> = ({ open, onClose, orderId }) => {
             <Stack spacing={2}>
               <ResoDescriptions
                 title="Thông tin"
-                labelProps={{ width: '40%', fontWeight: 'bold' }}
+                labelProps={{ fontWeight: 'bold' }}
                 columns={orderColumns as any}
                 datasource={order}
-                column={2}
+                column={3}
               />
               <ResoDescriptions
                 title="Thông tin khách hàng"
-                labelProps={{ width: '40%', fontWeight: 'bold' }}
+                labelProps={{ fontWeight: 'bold' }}
                 columns={custColumns as any}
                 datasource={order}
-                column={2}
+                column={3}
               />
 
               <ResoTable

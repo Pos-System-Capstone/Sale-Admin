@@ -29,7 +29,7 @@ const AutoCompleteStoreSelect = (props: Props) => {
         if (!option) return option;
         return option.value === getOpObj(value)?.value;
       }}
-      transformValue={(opt: any) => opt.value}
+      transformValue={(opt: any) => opt?.value}
       size="small"
       type="text"
       {...props}

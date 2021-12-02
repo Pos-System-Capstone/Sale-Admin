@@ -101,7 +101,8 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'right',
     width: '60px',
     position: 'sticky',
-    right: (props) => props.right ?? '0'
+    right: (props) => props.right ?? '0',
+    backgroundColor: '#fff'
     // borderLeft: `1px solid ${theme.palette.grey[400]}`
   },
   body: {}
@@ -367,12 +368,12 @@ const ResoTable = (
         } else {
           if (column.valueEnum) {
             const opt =
-              column.valueEnum?.find((opt) => opt.value === get(data, column.dataIndex))?.label ??
+              column.valueEnum?.find((opt) => opt.value === get(data, column.dataIndex)) ??
               get(data, column.dataIndex, '-');
             cell = (
-              <Label>
+              <Label {...opt}>
                 <Typography variant="subtitle2" noWrap>
-                  {opt}
+                  {opt.label}
                 </Typography>
               </Label>
             );

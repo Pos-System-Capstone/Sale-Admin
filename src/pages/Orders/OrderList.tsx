@@ -3,6 +3,7 @@ import { FileDownload, Visibility } from '@mui/icons-material';
 // material
 import { Button, Card, IconButton, Stack, Tooltip } from '@mui/material';
 import orderApi from 'api/order';
+import AutoCompleteStoreSelect from 'components/form/common/AutocompleteStoreSelect/AutocompleteStoreSelect';
 import Page from 'components/Page';
 import ResoTable from 'components/ResoTable/ResoTable';
 import useLocales from 'hooks/useLocales';
@@ -29,36 +30,34 @@ const OrderListPage = () => {
       title: translate('pages.orders.table.invoice'),
       dataIndex: 'invoice_id'
     },
-
+    {
+      title: translate('pages.orders.table.store'),
+      dataIndex: ['store', 'name'],
+      renderFormItem: () => <AutoCompleteStoreSelect name="store-id" label="Cửa hàng" />
+    },
+    {
+      title: translate('pages.orders.table.customerName'),
+      dataIndex: 'customer_name',
+      hideInSearch: true,
+      hideInTable: true
+    },
+    {
+      title: translate('pages.orders.table.customerPhone'),
+      dataIndex: 'customer_phone',
+      hideInSearch: true,
+      hideInTable: true
+    },
     {
       title: translate('pages.orders.table.finalAmount'),
       dataIndex: 'final_amount',
       hideInSearch: true,
       valueType: 'money'
     },
-    // {
-    //   title: translate('pages.orders.table.paymentType'),
-    //   dataIndex: 'paymentType'
-    // },
     {
       title: translate('pages.orders.table.orderTime'),
       dataIndex: 'check_in_date',
       hideInSearch: true,
-      valueType: 'date'
-    },
-    // {
-    //   title: translate('pages.orders.table.orderType'),
-    //   dataIndex: 'order_type',
-    //   valueType: 'select',
-    //   hideInSearch: true
-    // },
-    {
-      title: translate('pages.orders.table.customerName'),
-      dataIndex: 'customer_name'
-    },
-    {
-      title: translate('pages.orders.table.customerPhone'),
-      dataIndex: 'customer_phone'
+      valueType: 'datetime'
     },
     {
       title: translate('pages.orders.table.note'),
@@ -69,7 +68,8 @@ const OrderListPage = () => {
       title: translate('pages.orders.table.status'),
       dataIndex: 'order_status',
       valueType: 'select',
-      valueEnum: ORDER_STATUS_OPTONS
+      valueEnum: ORDER_STATUS_OPTONS,
+      fixed: 'right'
     },
     {
       title: translate('pages.orders.table.detail'),
