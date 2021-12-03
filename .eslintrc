@@ -1,5 +1,5 @@
 {
-  "plugins": ["prettier", "@typescript-eslint"],
+  "plugins": ["prettier", "@typescript-eslint", "unused-imports"],
   "extends": ["react-app", "prettier"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -47,6 +47,7 @@
     "import/no-named-as-default-member": 0,
     "import/extensions": 0,
     "object-curly-spacing": [1, "always"],
+    "unused-imports/no-unused-imports": 2,
     "@typescript-eslint/no-unused-vars": [
       1,
       {
