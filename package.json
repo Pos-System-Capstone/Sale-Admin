@@ -9,6 +9,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "format": "prettier -c --write \"src/**/*\"",
     "lint": "eslint --ext .ts,.tsx ./src",
     "lint:fix": "eslint --fix --ext .ts,.tsx ./src",
     "typecheck": "tsc --project tsconfig.json --noEmit",
@@ -17,7 +18,15 @@
     "start:qa": "env-cmd -f .env.qa npm run-script start",
     "build:development": "env-cmd -f .env.development npm run-script build",
     "build:qa": "env-cmd -f .env.qa npm run-script build",
-    "build:production": "env-cmd -f .env.production npm run-script build"
+    "build:production": "env-cmd -f .env.production npm run-script build",
+    "postinstall": "husky install"
+  },
+  "lint-staged": {
+    "src/**/*.{js,ts,jsx,tsx}": [
+      "npm run lint",
+      "npm run format",
+      "git add ."
+    ]
   },
   "eslintConfig": {
     "extends": [
@@ -183,6 +192,8 @@
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "4.2.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.1.2",
     "prettier": "^2.3.2"
   }
 }
