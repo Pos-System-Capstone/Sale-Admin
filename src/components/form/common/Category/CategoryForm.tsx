@@ -53,7 +53,7 @@ const CategoryForm = ({ updateMode }: Props) => {
     });
   };
 
-  const [, isRoot, is_container] = watch(['is_extra', 'is_root', 'is_container']);
+  const [isExtra, isRoot, is_container] = watch(['is_extra', 'is_root', 'is_container']);
 
   return (
     <Grid container spacing={2}>
@@ -94,10 +94,12 @@ const CategoryForm = ({ updateMode }: Props) => {
           }}
         />
       </Grid>
-      <Grid item xs={12}>
-        <CheckBoxField name="is_root" label="Đây là Danh mục gốc" />
-      </Grid>
-      {!isRoot && (
+      {!isExtra && (
+        <Grid item xs={12}>
+          <CheckBoxField name="is_root" label="Đây là Danh mục gốc" />
+        </Grid>
+      )}
+      {!isRoot && !isExtra && (
         <Grid item xs={12}>
           <Typography mb={2}>Danh mục cha</Typography>
           <Controller

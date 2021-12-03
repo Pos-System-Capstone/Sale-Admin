@@ -55,7 +55,7 @@ const CreateProduct = () => {
 
   const onSubmit = (values: UpdateProductForm) => {
     const data = transformDraftToStr(values);
-    data.product_type = data.hasVariant ? ProductTypeEnum.General : ProductTypeEnum.Single;
+    data.product_type = data.hasVariant ? ProductTypeEnum.General : values.product_type;
     return createMasterProd(transformProductForm(data))
       .then((res) => {
         enqueueSnackbar(`Tạo thành công ${values.product_name}`, {

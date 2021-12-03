@@ -102,7 +102,10 @@ const MiddleForm: React.FC<Props> = ({ updateMode }) => {
                               </Stack>
                               <ResoTable
                                 getData={(params: any) =>
-                                  categoryApi.getProductsInCategory(categoryExtra.cate_id, params)
+                                  categoryApi.getProductsInCategory(
+                                    categoryExtra.extra_cate.cate_id,
+                                    params
+                                  )
                                 }
                                 showFilter={false}
                                 pagination={false}

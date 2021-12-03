@@ -158,7 +158,7 @@ export default function TreeViewField({ data = [], value, onChange, multiple, on
       defaultExpandIcon={<PlusSquare />}
       defaultEndIcon={<CloseSquare />}
       onNodeToggle={handleToggle}
-      sx={{ height: 300, flexGrow: 1, overflowY: 'auto' }}
+      sx={{ maxHeight: 300, flexGrow: 1, overflowY: 'auto' }}
     >
       {data.map((d) => renderTree(d))}
     </TreeView>
