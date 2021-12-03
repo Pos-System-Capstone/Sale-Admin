@@ -2,7 +2,6 @@ import { Box, Button, Drawer, IconButton, Paper, Stack, Typography } from '@mui/
 import React from 'react';
 import { Icon } from '@iconify/react';
 import closeFill from '@iconify/icons-eva/close-fill';
-import { Card } from 'pages/Products/components/Card';
 import SeachProductForm from 'pages/Products/SeachProductForm';
 import { productColumns } from 'pages/Products/config';
 import { getAllProduct } from 'redux/product/api';

@@ -4,7 +4,6 @@ import {
   FormControlLabel,
   FormHelperText,
   FormLabel,
-  InputLabel,
   Radio,
   RadioGroup
 } from '@mui/material';

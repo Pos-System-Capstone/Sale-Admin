@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { FormControl, FormControlLabel, FormHelperText, Switch } from '@mui/material';
+import { FormControlLabel, Switch } from '@mui/material';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 

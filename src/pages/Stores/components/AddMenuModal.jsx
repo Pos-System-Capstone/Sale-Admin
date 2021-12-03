@@ -5,7 +5,6 @@ import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton
 import ResoTable from 'components/ResoTable/ResoTable';
 import useLocales from 'hooks/useLocales';
 import { menuColumns } from 'pages/Menus';
-import SeachProductForm from 'pages/Products/SeachProductForm';
 import React from 'react';
 import { getMenus } from 'redux/menu/api';
 import MenuSearchForm from 'pages/Menus/components/MenuSearchForm';
