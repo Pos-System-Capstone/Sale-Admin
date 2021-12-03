@@ -24,7 +24,6 @@ import { DAY_OF_WEEK } from 'constraints';
 import useLocales from 'hooks/useLocales';
 import { get } from 'lodash';
 import moment from 'moment';
-import { useSnackbar } from 'notistack';
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useQuery } from 'react-query';

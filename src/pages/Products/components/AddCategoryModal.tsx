@@ -6,7 +6,6 @@ import {
   DialogContent,
   DialogProps,
   DialogTitle,
-  ModalProps,
   TextField,
   Typography
 } from '@mui/material';

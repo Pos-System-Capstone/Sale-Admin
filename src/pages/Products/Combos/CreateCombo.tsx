@@ -19,7 +19,7 @@ import { useSnackbar } from 'notistack';
 import { useState } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { createMasterProd } from 'redux/product/api';
-import { CombinationModeEnum, ProductTypeEnum } from 'types/product';
+import { CombinationModeEnum } from 'types/product';
 import { CardTitle } from '../components/Card';
 import BasicProductInfoForm from '../components/form/BasicProductInfoForm';
 import CategoryTreeForm from '../components/form/CategoryTreeForm';

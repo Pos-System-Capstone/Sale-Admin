@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
 import { Avatar, Box, Button, Card, Stack } from '@mui/material';
-import DrawerProductForm from 'components/DrawerProductForm/DrawerProductForm';
 import confirm from 'components/Modal/confirm';
 import ModalProductForm from 'components/ModalProductForm/ModalProductForm';
 import ResoTable from 'components/ResoTable/ResoTable';

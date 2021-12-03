@@ -1,8 +1,7 @@
 /* eslint-disable react/prop-types */
-import { Box, Input, Stack, TextField, TextFieldProps } from '@mui/material';
+import { Box, Stack, TextField } from '@mui/material';
 import { DatePickerProps, DateRangePicker } from '@mui/lab';
 import useLocales from 'hooks/useLocales';
-import moment from 'moment';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 

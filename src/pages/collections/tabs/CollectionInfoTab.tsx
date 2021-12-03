@@ -1,9 +1,8 @@
-import { Box, Grid, MenuItem, Slider, Typography } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import React from 'react';
-import { Controller } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { RootState } from 'redux/store';
-import { InputField, SelectField, UploadImageField } from 'components/form';
+import { InputField, UploadImageField } from 'components/form';
 import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
 import useLocales from 'hooks/useLocales';
 import { Card, CardTitle } from '../../Products/components/Card';

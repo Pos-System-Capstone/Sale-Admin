@@ -1,7 +1,5 @@
-import categoryApi from 'api/category';
 import extraApi from 'api/extra';
 import { useMutation, useQueryClient } from 'react-query';
-import { TModifier } from 'types/Modifier';
 
 const useUpdateExtra = () => {
   const queryClient = useQueryClient();

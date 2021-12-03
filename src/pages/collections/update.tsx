@@ -1,7 +1,7 @@
 import roundAccountBox from '@iconify/icons-ic/round-account-box';
 import roundReceipt from '@iconify/icons-ic/round-receipt';
 import { Icon } from '@iconify/react';
-import { Box, Button, Stack, Tab, Tabs, Typography } from '@mui/material';
+import { Box, Button, Stack, Tab, Tabs } from '@mui/material';
 import Page from 'components/Page';
 import useLocales from 'hooks/useLocales';
 import { get } from 'lodash';

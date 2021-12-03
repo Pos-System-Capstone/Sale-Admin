@@ -2,17 +2,15 @@
 import plusFill from '@iconify/icons-eva/plus-fill';
 import { Icon } from '@iconify/react';
 // material
-import { Avatar, Button, Card, Container, Stack, Typography } from '@mui/material';
+import { Avatar, Button, Card, Stack } from '@mui/material';
 import CategoryModal from 'components/CategoryModal';
 import DeleteConfirmDialog from 'components/DelectConfirmDialog';
-import Label from 'components/Label';
 import Page from 'components/Page';
 import ResoTable from 'components/ResoTable/ResoTable';
 import useLocales from 'hooks/useLocales';
 import { get } from 'lodash';
 import { useSnackbar } from 'notistack';
 import { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
 // components
 import { useNavigate } from 'react-router-dom';
 import { addCategoy, deleteCategoyById, editCategory, getCategories } from 'redux/category/api';

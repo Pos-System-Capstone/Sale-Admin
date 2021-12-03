@@ -7,7 +7,6 @@ import {
   DialogProps,
   DialogTitle
 } from '@mui/material';
-import { render } from 'nprogress';
 import { ReactNode } from 'react';
 import ReactDOM from 'react-dom';
 

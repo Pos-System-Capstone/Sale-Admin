@@ -6,7 +6,6 @@ import {
   CardContent,
   Chip,
   DialogTitle,
-  Grid,
   Stack,
   Typography,
   useMediaQuery
@@ -26,7 +25,6 @@ import Label from 'components/Label';
 import { DAY_OF_WEEK } from 'constraints';
 // @types
 import MenuInStoreCalendar from 'components/MenuInStoreCalendar';
-import StoreInMenuForm from 'components/_dashboard/calendar/StoreInMenuForm';
 import { TStore, StoreInMenu } from 'types/store';
 import { convertDateToStr } from 'utils/utils';
 import { CalendarView } from '../../@types/calendar';

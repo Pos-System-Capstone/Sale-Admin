@@ -1,5 +1,5 @@
 import { Box, Grid } from '@mui/material';
-import { CheckBoxField, InputField, AutoCompleteField } from 'components/form';
+import { InputField, AutoCompleteField } from 'components/form';
 import React from 'react';
 
 interface Props {}

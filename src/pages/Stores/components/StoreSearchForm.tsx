@@ -1,10 +1,9 @@
-import { Box, Grid, Stack } from '@mui/material';
+import { Grid, Stack } from '@mui/material';
 import { useDebounceFn } from 'ahooks';
 import { InputField, SelectField } from 'components/form';
 import useLocales from 'hooks/useLocales';
 import React from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
-import { daysInWeek } from 'utils/utils';
 
 interface StoreSearchFormProps {
   onChange?: Function;

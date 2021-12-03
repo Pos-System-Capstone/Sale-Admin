@@ -1,5 +1,5 @@
 import trash2Fill from '@iconify/icons-eva/trash-2-fill';
-import { TStore, StoreInMenu } from 'types/store';
+import { StoreInMenu } from 'types/store';
 import { Icon } from '@iconify/react';
 import { useEffect } from 'react';
 import {
@@ -16,7 +16,7 @@ import {
 } from '@mui/material';
 import { MobileTimePicker } from '@mui/lab';
 import { useRequest } from 'ahooks';
-import { AutoCompleteField, InputField, SelectField, SwitchField } from 'components/form';
+import { InputField, SelectField, SwitchField } from 'components/form';
 import { DAY_OF_WEEK } from 'constraints';
 import useLocales from 'hooks/useLocales';
 import { get, union } from 'lodash';
@@ -25,13 +25,12 @@ import { useSnackbar } from 'notistack';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { getMenus } from 'redux/menu/api';
-import { convertDateToStr, convertStrToDate } from 'utils/utils';
+import { convertStrToDate } from 'utils/utils';
 // redux
 import { RootState, useDispatch } from 'redux/store';
 import * as yup from 'yup';
 import { Menu } from 'types/menu';
 import { yupResolver } from '@hookform/resolvers/yup';
-import SelectTimeSlot from 'components/form/common/SelectTimeSlot';
 
 // ----------------------------------------------------------------------
 

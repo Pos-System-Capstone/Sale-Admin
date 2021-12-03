@@ -16,7 +16,7 @@ import {
   DialogActions,
   FormControlLabel
 } from '@mui/material';
-import { LoadingButton, MobileDateTimePicker, MobileTimePicker } from '@mui/lab';
+import { LoadingButton, MobileTimePicker } from '@mui/lab';
 import { EventInput } from '@fullcalendar/common';
 // redux
 import { useDispatch } from '../../../redux/store';

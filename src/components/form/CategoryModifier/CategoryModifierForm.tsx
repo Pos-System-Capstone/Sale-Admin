@@ -1,8 +1,8 @@
 import trashIcon from '@iconify/icons-eva/trash-outline';
 import { Icon } from '@iconify/react';
-import { Grid, Box, Typography, Slider, IconButton, Button, Stack } from '@mui/material';
+import { Grid, Box, Typography, IconButton, Button, Stack } from '@mui/material';
 import useLocales from 'hooks/useLocales';
-import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
+import { useFieldArray, useFormContext } from 'react-hook-form';
 import { modifierSelectTypeOptions } from 'types/Modifier';
 import { ErrorMessage } from '@hookform/error-message';
 import { InputField, SelectField, CheckBoxField } from '..';

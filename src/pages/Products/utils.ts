@@ -1,4 +1,3 @@
-import { da } from 'date-fns/locale';
 import { ContentState, convertToRaw, EditorState } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
@@ -12,7 +11,6 @@ import {
   TProductCombo,
   TProductMaster
 } from 'types/product';
-import { getCbn } from 'utils/utils';
 import { UpdateProductForm } from './type';
 
 export const transformProductForm = (values: UpdateProductForm) => {

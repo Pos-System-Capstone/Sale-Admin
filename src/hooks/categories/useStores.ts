@@ -1,4 +1,3 @@
-import categoryApi from 'api/category';
 import storeApi from 'api/store';
 import { useQuery } from 'react-query';
 /** Get list root categories */

@@ -13,8 +13,8 @@ import {
 import { DAY_OF_WEEK } from 'constraints';
 import React from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Controller, useFieldArray, useFormContext, useWatch } from 'react-hook-form';
-import { CheckBoxField, InputField, SelectField, SwitchField } from '..';
+import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
+import { InputField, SelectField, SwitchField } from '..';
 import DateRangePickerField from '../DateRangePickerField';
 import { ErrorMessage } from '@hookform/error-message';
 import AutoCompleteStoreSelect from '../common/AutocompleteStoreSelect/AutocompleteStoreSelect';

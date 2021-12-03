@@ -1,14 +1,13 @@
-import plusFill from '@iconify/icons-eva/plus-fill';
 import roundViewAgenda from '@iconify/icons-ic/round-view-agenda';
 import roundViewWeek from '@iconify/icons-ic/round-view-week';
 import { Icon } from '@iconify/react';
-import { Box, Button, ToggleButton, Tooltip, Typography } from '@mui/material';
+import { Box, ToggleButton, Tooltip, Typography } from '@mui/material';
 // material
 import { styled } from '@mui/material/styles';
 import useLocales from 'hooks/useLocales';
 import { CalendarView } from '../../../@types/calendar';
 // utils
-import { fDate, fDateTime } from '../../../utils/formatTime';
+import { fDateTime } from '../../../utils/formatTime';
 //
 import { MHidden } from '../../@material-extend';
 

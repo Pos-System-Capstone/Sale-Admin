@@ -1,5 +1,4 @@
 import trashIcon from '@iconify/icons-eva/trash-outline';
-import closeIcon from '@iconify/icons-eva/close-outline';
 import { Icon } from '@iconify/react';
 import {
   Box,
@@ -24,7 +23,7 @@ import { CardTitle } from 'pages/Products/components/Card';
 import ModalCollectionForm from '../ModalCollectionForm';
 import { Add } from '@mui/icons-material';
 import productInCollectionApi from 'api/collection';
-import { differenceBy, unionBy } from 'lodash';
+import { differenceBy } from 'lodash';
 import { CombinationModeEnum } from 'types/product';
 import ModalProductForm from 'components/ModalProductForm/ModalProductForm';
 

@@ -13,7 +13,6 @@ import { Controller, useFormContext } from 'react-hook-form';
 import { CreateProductForm, ProductTypeEnum, TProductBase } from 'types/product';
 import { TTableColumn } from 'types/table';
 import VariantForm from '../VariantForm';
-import AddCategoryModal from './AddCategoryModal';
 import { Card, CardTitle } from './Card';
 import BasicProductInfoForm from './form/BasicProductInfoForm';
 import CategoryTreeForm from './form/CategoryTreeForm';

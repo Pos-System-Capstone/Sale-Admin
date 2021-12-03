@@ -1,7 +1,6 @@
 import closeFill from '@iconify/icons-eva/close-fill';
 import { Icon } from '@iconify/react';
 import {
-  Box,
   Button,
   CircularProgress,
   Dialog,

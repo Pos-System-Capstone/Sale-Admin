@@ -4,7 +4,7 @@ import axios from '../utils/axios';
 import { isValidToken, setSession } from '../utils/jwt';
 import { getUserInfo, setUserInfo } from '../utils/utils';
 // @types
-import { ActionMap, AuthState, AuthUser, JWTContextType, UserRole } from '../@types/authentication';
+import { ActionMap, AuthState, AuthUser, JWTContextType } from '../@types/authentication';
 
 // ----------------------------------------------------------------------
 

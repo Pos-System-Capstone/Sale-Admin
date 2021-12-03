@@ -1,8 +1,6 @@
-import { Avatar, Chip } from '@mui/material';
-import { AutoCompleteField } from 'components/form';
+import { Avatar } from '@mui/material';
 import AutocompleteCategory from 'components/form/common/Category/AutocompleteCategory';
 import Label from 'components/Label';
-import { PRODUCT_TYPE_DATA } from 'constraints';
 import React from 'react';
 import { TProductBase } from 'types/product';
 import { TTableColumn } from 'types/table';

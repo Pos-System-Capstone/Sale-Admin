@@ -1,5 +1,5 @@
 import { TabContext, TabList, TabPanel } from '@mui/lab';
-import { Box, Container, Stack, Tab } from '@mui/material';
+import { Box, Stack, Tab } from '@mui/material';
 import Page from 'components/Page';
 import useCategory from 'hooks/categories/useCategory';
 import { useState } from 'react';

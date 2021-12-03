@@ -18,7 +18,6 @@ import ModalForm from 'components/ModalForm/ModalForm';
 import ResoTable from 'components/ResoTable/ResoTable';
 import useAddExtra from 'hooks/extra-categories/useAddExtra';
 import useDeleteExtra from 'hooks/extra-categories/useDeleteExtra';
-import useExtraCategory from 'hooks/extra-categories/useExtraCategoy';
 import useUpdateExtra from 'hooks/extra-categories/useUpdateExtra';
 import { useSnackbar } from 'notistack';
 import React, { useRef, useState } from 'react';

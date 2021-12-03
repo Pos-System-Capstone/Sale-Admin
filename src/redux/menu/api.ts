@@ -1,5 +1,5 @@
 import { generateAPI } from 'redux/utils';
-import { MenuInStoreAdmin, StoreInMenu } from 'types/store';
+import { StoreInMenu } from 'types/store';
 import request from '../../utils/axios';
 
 export interface Menu {

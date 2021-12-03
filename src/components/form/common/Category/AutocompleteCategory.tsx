@@ -1,6 +1,5 @@
 import { AutoCompleteField } from 'components/form';
 import useCategories from 'hooks/categories/useCategories';
-import useExtras from 'hooks/extras/useExtras';
 import React from 'react';
 
 interface Props {
