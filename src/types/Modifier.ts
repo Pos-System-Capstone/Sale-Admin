@@ -27,6 +27,7 @@ export type TModifier = {
   display_index: number;
   cate_id: number;
   is_required: boolean;
+  options?: ModifierValue[];
 };
 
 export type ModifierValue = {

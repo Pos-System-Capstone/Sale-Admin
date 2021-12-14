@@ -43,9 +43,7 @@ const OrderListPage = () => {
     },
     {
       title: translate('pages.orders.table.customerPhone'),
-      dataIndex: 'customer_phone',
-      hideInSearch: true,
-      hideInTable: true
+      dataIndex: 'customer_phone'
     },
     {
       title: translate('pages.orders.table.finalAmount'),

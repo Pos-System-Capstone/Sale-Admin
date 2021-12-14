@@ -37,7 +37,6 @@ const CollectionInfoTab = ({ onSubmit }: { onSubmit: Function }) => {
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <InputField
-                  size="small"
                   fullWidth
                   name="name"
                   label={translate('collections.table.collectionName')}

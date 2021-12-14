@@ -68,9 +68,9 @@ const CategoryModifierTab = (props: Props) => {
     },
     {
       title: 'Giá trị',
-      dataIndex: 'json_value',
+      dataIndex: 'options',
       render: (_, data) => {
-        const values = normalizeModifier(data).modifiers?.map((m) => m.label);
+        const values = data.options?.map((m) => m.label);
         return <Typography>{values?.join(',') ?? 'N/A'}</Typography>;
       }
     },

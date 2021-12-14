@@ -14,7 +14,13 @@ const ProductInMenuDialog = ({ open, onClose, onSubmit, data = {}, updateMode = 
 
   const { reset } = form;
   useEffect(() => {
-    reset(data);
+    if (data) {
+      const priceData = { ...data };
+      for (let index = 0; index < 10; index++) {
+        priceData[`price${index + 1}`] = data.price;
+      }
+      reset(priceData);
+    }
   }, [reset, data]);
 
   const priceInputs = useMemo(() => {

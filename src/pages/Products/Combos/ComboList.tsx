@@ -1,52 +1,51 @@
 import plusFill from '@iconify/icons-eva/plus-fill';
 import { Icon } from '@iconify/react';
 import { Button, Card, Stack } from '@mui/material';
+import confirm from 'components/Modal/confirm';
 import Page from 'components/Page';
 import ResoTable from 'components/ResoTable/ResoTable';
 import useLocales from 'hooks/useLocales';
-import { useState } from 'react';
+import { useSnackbar } from 'notistack';
+import { useRef } from 'react';
 import { useNavigate } from 'react-router';
-import { getAllProduct } from 'redux/product/api';
+import { deleteProdById, getAllProduct } from 'redux/product/api';
 import { PATH_DASHBOARD } from 'routes/paths';
-import { CollectionTypeEnum, TCollection } from 'types/collection';
+import { CollectionTypeEnum } from 'types/collection';
 import { ProductTypeEnum, TProductBase } from 'types/product';
-import { TTableColumn } from 'types/table';
 import { comboColumns } from './components/columns';
 
 interface Props {}
 
 const ComboList = (props: Props) => {
-  const [activeTab, setActiveTab] = useState('1');
-  const { translate } = useLocales();
+  const { enqueueSnackbar } = useSnackbar();
+  const { t } = useLocales();
   const navigate = useNavigate();
-  const handleChangeTab = (event: React.SyntheticEvent, newValue: string) => {
-    setActiveTab(newValue);
-  };
+  const ref = useRef<any>();
 
-  const columns: TTableColumn<TCollection>[] = [
-    {
-      title: translate('combos.table.comboName'),
-      dataIndex: 'name',
-      fixed: 'left'
-    },
-    {
-      title: translate('combos.table.collectionNameEn'),
-      dataIndex: 'name_eng',
-      fixed: 'left',
-      hideInSearch: true
-    },
-    {
-      title: translate('combos.table.store'),
-      dataIndex: 'store_id',
-      fixed: 'left',
-      hideInSearch: true
-    },
-    {
-      title: translate('combos.table.position'),
-      dataIndex: 'position',
-      hideInSearch: true
-    }
-  ];
+  const onDelete = (currentDeleteItem: TProductBase) => {
+    confirm({
+      title: (
+        <>
+          Xác nhận xóa <strong>{currentDeleteItem?.product_name}</strong>
+        </>
+      ),
+      content: 'Sản phẩm này sẽ bị xoá khỏi hệ thống',
+      onOk: () => {
+        return deleteProdById(currentDeleteItem.product_id)
+          .then((res) => {
+            enqueueSnackbar(t('common.deleteSuccess'), {
+              variant: 'success'
+            });
+          })
+          .then(() => ref.current?.reload())
+          .catch((err) => {
+            enqueueSnackbar(t('common.error'), {
+              variant: 'error'
+            });
+          });
+      }
+    });
+  };
 
   return (
     <Page
@@ -79,6 +78,7 @@ const ComboList = (props: Props) => {
         <Stack spacing={2}>
           <ResoTable
             pagination
+            ref={ref}
             defaultFilters={{
               'product-type': ProductTypeEnum.Combo
             }}
@@ -86,7 +86,7 @@ const ComboList = (props: Props) => {
             onEdit={(data: TProductBase) =>
               navigate(`${PATH_DASHBOARD.combos.editById(data.product_id)}`)
             }
-            //   onDelete={setCurrentDeleteItem}
+            onDelete={onDelete}
             columns={comboColumns}
             rowKey="product_id"
           />

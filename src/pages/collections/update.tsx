@@ -65,7 +65,7 @@ const UpdateCollectionPage = () => {
   const MENU_TABS = [
     {
       value: TabType.COLLECTION_INFO,
-      label: translate('collections.createInfo'),
+      label: translate('collections.collectionInfoTab'),
       icon: <Icon icon={roundAccountBox} width={20} height={20} />,
       component: (
         <Stack>

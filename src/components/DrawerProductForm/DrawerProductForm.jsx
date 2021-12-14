@@ -1,16 +1,14 @@
+import closeFill from '@iconify/icons-eva/close-fill';
+import { Icon } from '@iconify/react';
 import { Box, Button, Drawer, IconButton, Paper, Stack, Typography } from '@mui/material';
 import React from 'react';
-import { Icon } from '@iconify/react';
-import closeFill from '@iconify/icons-eva/close-fill';
-import SeachProductForm from 'pages/Products/SeachProductForm';
 import { productColumns } from 'pages/Products/config';
 import { getAllProduct } from 'redux/product/api';
-import ResoTable from '../ResoTable/ResoTable';
 import LoadingAsyncButton from '../LoadingAsyncButton/LoadingAsyncButton';
+import ResoTable from '../ResoTable/ResoTable';
 
 const DrawerProductForm = ({ trigger, onSubmit, disabledSelections = [] }) => {
   const [open, setOpen] = React.useState(false);
-  const [filters, setFilters] = React.useState(null);
 
   const [selectedProductIds, setSelectedProductIds] = React.useState([]);
   const [selectedProducts, setSelectedProduct] = React.useState([]);
@@ -52,8 +50,6 @@ const DrawerProductForm = ({ trigger, onSubmit, disabledSelections = [] }) => {
           </Paper>
           <Box sx={{ padding: '1em', width: '740px', flex: 1, overflowY: 'auto' }}>
             <Stack spacing={2}>
-              <SeachProductForm onChange={setFilters} />
-
               <ResoTable
                 checkboxSelection={{
                   type: 'checkbox'
@@ -64,7 +60,6 @@ const DrawerProductForm = ({ trigger, onSubmit, disabledSelections = [] }) => {
                 rowKey="product_id"
                 getData={getAllProduct}
                 onChangeSelection={handleChangeSelection}
-                filters={filters}
                 columns={productColumns}
               />
             </Stack>

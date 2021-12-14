@@ -1,6 +1,5 @@
 export type TCollection = {
   id: number;
-  store_id: number;
   name: string;
   name_eng: string;
   description: string;

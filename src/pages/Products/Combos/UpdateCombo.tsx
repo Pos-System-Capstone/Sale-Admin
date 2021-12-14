@@ -20,8 +20,9 @@ import { DashboardNavLayout } from 'layouts/dashboard/DashboardNavbar';
 import { useSnackbar } from 'notistack';
 import { useState } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
-import { useParams } from 'react-router';
-import { createMasterProd } from 'redux/product/api';
+import { useNavigate, useParams } from 'react-router';
+import { updateProdById } from 'redux/product/api';
+import { PATH_DASHBOARD } from 'routes/paths';
 import { CombinationModeEnum, CreateComboForm } from 'types/product';
 import { CardTitle } from '../components/Card';
 import BasicProductInfoForm from '../components/form/BasicProductInfoForm';
@@ -38,6 +39,7 @@ const UpdateCombo = (props: Props) => {
   const { enqueueSnackbar } = useSnackbar();
   const { comboId } = useParams();
 
+  const navigate = useNavigate();
   const [activeStep, setActiveStep] = useState(0);
 
   const createComboForm = useForm({
@@ -65,7 +67,7 @@ const UpdateCombo = (props: Props) => {
   const { handleSubmit } = createComboForm;
 
   const onSubmit = (values: any) => {
-    return createMasterProd(transformComboForm(values, CombinationModeEnum.ChoiceCombo))
+    return updateProdById(comboId, transformComboForm(values, CombinationModeEnum.ChoiceCombo))
       .then((res) => {
         enqueueSnackbar(`Cập nhật thành công ${values.product_name}`, {
           variant: 'success'
@@ -86,6 +88,12 @@ const UpdateCombo = (props: Props) => {
     <FormProvider {...createComboForm}>
       <DashboardNavLayout>
         <Stack direction="row" spacing={2}>
+          <Button
+            onClick={() => navigate(`${PATH_DASHBOARD.combos.new}?cloneProductId=${comboId}`)}
+            variant="outlined"
+          >
+            Sao chép
+          </Button>
           {activeStep !== 0 && (
             <Button onClick={() => setActiveStep(activeStep - 1)}>Quay lại</Button>
           )}

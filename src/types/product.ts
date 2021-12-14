@@ -64,6 +64,10 @@ export type TProductBase = {
   price?: number;
 };
 
+export type TProductInCollection = TProductBase & {
+  position?: number;
+};
+
 export type TProductMaster = TProductBase & {
   child_products: TProductBase[];
 };

@@ -8,7 +8,7 @@ import { get } from 'lodash';
 import { useSnackbar } from 'notistack';
 import React, { useRef } from 'react';
 import { productCollectionApi } from 'redux/collections/api';
-import { TProductBase } from 'types/product';
+import { TProductBase, TProductInCollection } from 'types/product';
 import { TTableColumn } from 'types/table';
 
 // eslint-disable-next-line react/prop-types
@@ -55,7 +55,7 @@ const ProductInCollectionTab = ({ id, onAddProduct }: any) => {
     }
   };
 
-  const categoryExtraColumns: TTableColumn<TProductBase>[] = [
+  const categoryExtraColumns: TTableColumn<TProductInCollection>[] = [
     {
       title: 'STT',
       dataIndex: 'index',
@@ -85,7 +85,7 @@ const ProductInCollectionTab = ({ id, onAddProduct }: any) => {
     },
     {
       title: 'Thứ tự',
-      dataIndex: 'price',
+      dataIndex: 'position',
       hideInSearch: true
     }
   ];
@@ -101,7 +101,6 @@ const ProductInCollectionTab = ({ id, onAddProduct }: any) => {
         </Stack>
         <ResoTable
           ref={tableRef}
-          showFilter={false}
           showSettings={false}
           columns={categoryExtraColumns}
           rowKey="product_id"

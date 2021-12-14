@@ -55,12 +55,6 @@ const ModalCollectionForm = ({ trigger, onSubmit, selected = [] }: Props) => {
       hideInSearch: true
     },
     {
-      title: translate('combos.table.store'),
-      dataIndex: 'store_id',
-      fixed: 'left',
-      hideInSearch: true
-    },
-    {
       title: translate('combos.table.position'),
       dataIndex: 'position',
       hideInSearch: true

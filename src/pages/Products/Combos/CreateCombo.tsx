@@ -1,31 +1,23 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import {
-  Box,
-  Button,
-  Card,
-  Container,
-  Stack,
-  Step,
-  StepLabel,
-  Stepper,
-  Typography
-} from '@mui/material';
+import { Box, Button, Card, Stack, Step, StepLabel, Stepper, Typography } from '@mui/material';
 import { DraftEditorField } from 'components/form';
 import SeoForm from 'components/form/Seo/SeoForm';
 import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
 import Page from 'components/Page';
+import useProduct from 'hooks/products/useProduct';
 import { DashboardNavLayout } from 'layouts/dashboard/DashboardNavbar';
 import { useSnackbar } from 'notistack';
 import { useState } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
+import { useSearchParams } from 'react-router-dom';
 import { createMasterProd } from 'redux/product/api';
-import { CombinationModeEnum } from 'types/product';
+import { CombinationModeEnum, CreateComboForm } from 'types/product';
 import { CardTitle } from '../components/Card';
 import BasicProductInfoForm from '../components/form/BasicProductInfoForm';
 import CategoryTreeForm from '../components/form/CategoryTreeForm';
 import ProductImagesForm from '../components/form/ProductImagesForm';
 import { validationSchema } from '../type';
-import { transformComboForm } from '../utils';
+import { normalizeProductCombo, transformComboForm } from '../utils';
 import ChoiceGroupComboForm from './components/form/ChoiceGroupComboForm';
 
 interface Props {}
@@ -33,6 +25,9 @@ const STEPS = ['Thông tin', 'Nhóm sản phẩm'];
 
 const CreateCombo = (props: Props) => {
   const { enqueueSnackbar } = useSnackbar();
+
+  const [searchParams] = useSearchParams();
+  const cloneProductId: any = searchParams.get('cloneProductId');
 
   const [activeStep, setActiveStep] = useState(0);
 
@@ -49,6 +44,16 @@ const CreateCombo = (props: Props) => {
     },
     resolver: activeStep === 0 ? yupResolver(validationSchema) : undefined
   });
+
+  const { data, isLoading } = useProduct(Number(cloneProductId), {
+    select: (res) => normalizeProductCombo(res as any),
+    onSuccess: (res) => {
+      console.log(`res`, res);
+      createComboForm.reset(res as CreateComboForm);
+    },
+    enabled: Boolean(cloneProductId)
+  });
+
   const { handleSubmit } = createComboForm;
 
   const onSubmit = (values: any) => {
@@ -91,85 +96,80 @@ const CreateCombo = (props: Props) => {
           )}
         </Stack>
       </DashboardNavLayout>
-      <Page title="Tạo sản phẩm">
-        <Container maxWidth="lg" sx={{ mx: 'auto' }}>
-          <Typography px={1} variant="h3" component="h4" gutterBottom>
-            Tạo combo
-          </Typography>
-          <Box py={2}>
-            <Stepper alternativeLabel activeStep={activeStep}>
-              {STEPS.map((label) => (
-                <Step key={label}>
-                  <StepLabel
-                    sx={{
-                      '& .MuiStepLabel-label': {
-                        typography: 'subtitle2',
-                        color: 'text.disabled'
-                      }
-                    }}
-                  >
-                    {label}
-                  </StepLabel>
-                </Step>
-              ))}
-            </Stepper>
-          </Box>
+      <Page title="Tạo combo">
+        <Box py={2}>
+          <Stepper alternativeLabel activeStep={activeStep}>
+            {STEPS.map((label) => (
+              <Step key={label}>
+                <StepLabel
+                  sx={{
+                    '& .MuiStepLabel-label': {
+                      typography: 'subtitle2',
+                      color: 'text.disabled'
+                    }
+                  }}
+                >
+                  {label}
+                </StepLabel>
+              </Step>
+            ))}
+          </Stepper>
+        </Box>
 
-          <Box display="flex">
-            {activeStep === 0 && (
-              <Stack p={1} spacing={3}>
-                <Card id="product-detail">
-                  <Stack spacing={2} textAlign="left">
-                    <CardTitle mb={2} variant="subtitle1">
-                      Thông tin sản phẩm
-                    </CardTitle>
-                    <BasicProductInfoForm />
-                    <Box>
-                      <Stack direction="row" justifyContent="space-between">
-                        <Typography my={2} variant="subtitle2">
-                          Danh mục chứa sản phẩm
-                        </Typography>
-                      </Stack>
-                    </Box>
-                    <CategoryTreeForm />
-                  </Stack>
-                </Card>
-
-                <Card>
+        <Box display="flex">
+          {activeStep === 0 && (
+            <Stack p={1} spacing={3}>
+              <Card id="product-detail">
+                <Stack spacing={2} textAlign="left">
                   <CardTitle mb={2} variant="subtitle1">
-                    Mô tả
+                    Thông tin sản phẩm
                   </CardTitle>
-                  <Controller
-                    name="description"
-                    render={({ field }) => (
-                      <DraftEditorField value={field.value} onChange={field.onChange} />
-                    )}
-                  />
-                </Card>
-
-                <Card>
-                  <ProductImagesForm />
-                </Card>
-
-                <Card id="seo">
-                  <CardTitle mb={2} variant="subtitle1">
-                    SEO
-                  </CardTitle>
-                  <Box textAlign="left">
-                    <SeoForm />
+                  <BasicProductInfoForm />
+                  <Box>
+                    <Stack direction="row" justifyContent="space-between">
+                      <Typography my={2} variant="subtitle2">
+                        Danh mục chứa sản phẩm
+                      </Typography>
+                    </Stack>
                   </Box>
-                </Card>
-              </Stack>
-            )}
-            {activeStep === 1 && (
-              <Stack width="100%">
-                <Card>
-                  <ChoiceGroupComboForm />
-                </Card>
-              </Stack>
-            )}
-          </Box>
-        </Container>
+                  <CategoryTreeForm />
+                </Stack>
+              </Card>
+
+              <Card>
+                <CardTitle mb={2} variant="subtitle1">
+                  Mô tả
+                </CardTitle>
+                <Controller
+                  name="description"
+                  render={({ field }) => (
+                    <DraftEditorField value={field.value} onChange={field.onChange} />
+                  )}
+                />
+              </Card>
+
+              <Card>
+                <ProductImagesForm />
+              </Card>
+
+              <Card id="seo">
+                <CardTitle mb={2} variant="subtitle1">
+                  SEO
+                </CardTitle>
+                <Box textAlign="left">
+                  <SeoForm />
+                </Box>
+              </Card>
+            </Stack>
+          )}
+          {activeStep === 1 && (
+            <Stack width="100%">
+              <Card>
+                <ChoiceGroupComboForm />
+              </Card>
+            </Stack>
+          )}
+        </Box>
       </Page>
     </FormProvider>
   );
