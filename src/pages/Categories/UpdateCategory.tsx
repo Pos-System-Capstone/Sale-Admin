@@ -1,5 +1,6 @@
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { Box, Stack, Tab } from '@mui/material';
+import EmptyContent from 'components/EmptyContent';
 import Page from 'components/Page';
 import useCategory from 'hooks/categories/useCategory';
 import { useState } from 'react';
@@ -19,9 +20,14 @@ const UpdateCategory = (props: Props) => {
 
   const { id } = useParams();
 
-  const { data: category } = useCategory(Number(id));
+  const { data: category, error } = useCategory(Number(id));
   const isExtra = category?.is_extra;
   const isContainer = category?.is_container;
+
+  if (error) {
+    return <EmptyContent title="Không tìm thấy danh mục này" />;
+  }
+
   return (
     <>
       <Page title="Cập nhật Danh mục">

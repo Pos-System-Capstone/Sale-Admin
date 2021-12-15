@@ -52,7 +52,7 @@ const DrawerProductForm = ({ trigger, onSubmit, disabledSelections = [] }) => {
             <Stack spacing={2}>
               <ResoTable
                 checkboxSelection={{
-                  type: 'checkbox'
+                  type: 'radio'
                 }}
                 disabledSelections={disabledSelections}
                 showAction={false}

@@ -2,12 +2,13 @@
 /* eslint-disable no-plusplus */
 /* eslint-disable react/prop-types */
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Box, Button, Card, Container, Stack, Typography } from '@mui/material';
+import { Button, Card, Stack } from '@mui/material';
 import { useTheme } from '@mui/styles';
 import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
 import Page from 'components/Page';
 import useDashboard from 'hooks/useDashboard';
 import useLocales from 'hooks/useLocales';
+import { DashboardNavLayout } from 'layouts/dashboard/DashboardNavbar';
 import { useSnackbar } from 'notistack';
 import { CardTitle } from 'pages/Products/components/Card';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -46,31 +47,20 @@ const CreateStorePage = () => {
   return (
     <FormProvider {...methods}>
       <Page title="Tạo cửa hàng">
-        <Container maxWidth="lg">
-          <Box px={2} mx="auto">
-            <Typography px={1} variant="h3" component="h4" gutterBottom>
-              {translate('pages.stores.addBtn')}
-            </Typography>
-            <Box display="flex">
-              <Card>
-                <CardTitle>{translate('pages.stores.storeInfoTitle')}</CardTitle>
-                <StoreForm />
-                <Stack direction="row" spacing={2} justifyContent="flex-end">
-                  <Button onClick={() => navigate(-1)} variant="outlined">
-                    {translate('common.cancel')}
-                  </Button>
-                  <LoadingAsyncButton
-                    onClick={handleSubmit(onSubmit)}
-                    type="submit"
-                    variant="contained"
-                  >
-                    {translate('common.save')}
-                  </LoadingAsyncButton>
-                </Stack>
-              </Card>
-            </Box>
-          </Box>
-        </Container>
+        <DashboardNavLayout onOpenSidebar={() => setNavOpen(true)}>
+          <Stack direction="row" spacing={2} justifyContent="flex-end">
+            <Button onClick={() => navigate(-1)} variant="outlined">
+              {translate('common.cancel')}
+            </Button>
+            <LoadingAsyncButton onClick={handleSubmit(onSubmit)} type="submit" variant="contained">
+              {translate('common.save')}
+            </LoadingAsyncButton>
+          </Stack>
+        </DashboardNavLayout>
+        <Card>
+          <CardTitle>{translate('pages.stores.storeInfoTitle')}</CardTitle>
+          <StoreForm />
+        </Card>
       </Page>
     </FormProvider>
   );

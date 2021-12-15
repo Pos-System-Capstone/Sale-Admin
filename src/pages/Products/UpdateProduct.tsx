@@ -3,6 +3,7 @@
 /* eslint-disable react/prop-types */
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Button, CircularProgress, Stack } from '@mui/material';
+import EmptyContent from 'components/EmptyContent';
 import { useSnackbar } from 'notistack';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -24,7 +25,7 @@ const UpdateProduct = () => {
   const { setNavOpen } = useDashboard();
   const navigate = useNavigate();
 
-  const { data, isLoading } = useQuery(['products', Number(id)], () => getProdById(id), {
+  const { data, isLoading, error } = useQuery(['products', Number(id)], () => getProdById(id), {
     select: (res) => res.data
   });
 
@@ -76,6 +77,25 @@ const UpdateProduct = () => {
         display="flex"
       >
         <CircularProgress />
+      </Box>
+    );
+  }
+  if (error) {
+    return (
+      <Box
+        sx={{
+          width: '100%',
+          height: '100%'
+        }}
+        minHeight="40vh"
+        borderRadius="1px"
+        flexDirection="column"
+        zIndex={999}
+        justifyContent="center"
+        alignItems="center"
+        display="flex"
+      >
+        <EmptyContent title="Không tìm thấy sản phẩm" />
       </Box>
     );
   }

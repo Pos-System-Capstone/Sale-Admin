@@ -58,7 +58,8 @@ const CreateCollectionPage = () => {
       banner_url: '',
       description: '',
       products: [],
-      type
+      type,
+      position: 0
     },
     resolver: yupResolver(collectionSchema(translate))
   });
@@ -97,9 +98,9 @@ const CreateCollectionPage = () => {
 
   const handleAddProd = (ids: number[], selectedProds: any[]) => {
     const allSelectedProds = unionBy(products, selectedProds, 'product_id');
-    const updateSelectedProds = allSelectedProds.filter(({ product_id }: { product_id: number }) =>
-      ids.includes(product_id)
-    );
+    const updateSelectedProds = allSelectedProds
+      .filter(({ product_id }: { product_id: number }) => ids.includes(product_id))
+      .map((p, idx) => ({ ...p, position: idx }));
     setProducts([...updateSelectedProds]);
   };
 

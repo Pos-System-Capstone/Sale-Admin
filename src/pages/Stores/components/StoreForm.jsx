@@ -57,6 +57,13 @@ const StoreForm = () => {
           label={translate('pages.stores.table.closeTime')}
         />
       </Grid>
+      <Grid item xs={12}>
+        <InputField
+          {...fieldSetting}
+          name="address"
+          label={translate('pages.stores.table.address')}
+        />
+      </Grid>
     </Grid>
   );
 };

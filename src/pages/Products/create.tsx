@@ -31,7 +31,6 @@ const CreateProduct = () => {
     resolver: yupResolver(validationSchema),
     defaultValues: {
       tags: [],
-      category: '5',
       description: '',
       product_type: productType
     }
@@ -43,7 +42,8 @@ const CreateProduct = () => {
     () => getProdById(cloneProductId),
     {
       select: (res) => res.data,
-      enabled: Boolean(cloneProductId)
+      enabled: Boolean(cloneProductId),
+      staleTime: Infinity
     }
   );
 

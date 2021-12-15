@@ -24,6 +24,11 @@ export default function App() {
   const [queryClient] = useState(
     () =>
       new QueryClient({
+        defaultOptions: {
+          queries: {
+            retry: 2
+          }
+        },
         queryCache: new QueryCache({
           // onSuccess: (data) => console.log(data)
         })

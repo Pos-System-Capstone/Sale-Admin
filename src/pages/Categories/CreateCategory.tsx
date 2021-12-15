@@ -27,12 +27,11 @@ const CreateCategory = (props: Props) => {
   const { setNavOpen } = useDashboard();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const isExtra: boolean = Boolean(searchParams.get('isExtra'));
-
+  const isExtra: boolean = searchParams.get('isExtra') === 'true';
   const createCategoryForm = useForm<TCategory>({
     resolver: yupResolver(schema),
     defaultValues: {
-      is_container: !isExtra,
+      // is_container: !isExtra,
       is_extra: isExtra
     },
     shouldUnregister: false

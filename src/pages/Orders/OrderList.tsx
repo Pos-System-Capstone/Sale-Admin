@@ -75,7 +75,7 @@ const OrderListPage = () => {
       hideInSearch: true,
       render: (_: any, order: TOrder) => (
         <Tooltip title="Chi tiết">
-          <IconButton onClick={() => setDetailOrder(1)} size="large">
+          <IconButton onClick={() => setDetailOrder(order.order_id)} size="large">
             <Visibility />
           </IconButton>
         </Tooltip>

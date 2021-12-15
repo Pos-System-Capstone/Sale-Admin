@@ -368,8 +368,9 @@ const ResoTable = (
         } else {
           if (column.valueEnum) {
             const opt =
-              column.valueEnum?.find((opt) => opt.value === get(data, column.dataIndex)) ??
-              get(data, column.dataIndex, '-');
+              column.valueEnum?.find(
+                (opt) => `${opt.value}` === `${get(data, column.dataIndex)}`
+              ) ?? get(data, column.dataIndex, '-');
             cell = (
               <Label {...opt}>
                 <Typography variant="subtitle2" noWrap>

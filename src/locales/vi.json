@@ -48,7 +48,8 @@
         "storeCode": "Mã cửa hàng",
         "openTime": "Mở cửa",
         "closeTime": "Đóng cửa",
-        "type": "Loại cửa hàng"
+        "type": "Loại cửa hàng",
+        "address": "Địa chỉ"
       },
       "storeInfoTitle": "Thông tin cửa hàng",
       "storeMenu": "Bảng giá",

@@ -77,7 +77,7 @@ const StoreListPage = () => {
 
   return (
     <Page
-      title={`Dashboard ${translate('pages.stores.listTitle')}`}
+      title={`${translate('pages.stores.listTitle')}`}
       actions={() => [
         <Button
           key="create-store"

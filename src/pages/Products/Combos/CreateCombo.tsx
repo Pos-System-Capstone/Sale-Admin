@@ -51,7 +51,8 @@ const CreateCombo = (props: Props) => {
       console.log(`res`, res);
       createComboForm.reset(res as CreateComboForm);
     },
-    enabled: Boolean(cloneProductId)
+    enabled: Boolean(cloneProductId),
+    staleTime: Infinity
   });
 
   const { handleSubmit } = createComboForm;
