@@ -63,8 +63,8 @@ const ChoiceGroupComboForm = (props: Props) => {
     ...fixedProductsFieldArray[idx]
   }));
 
-  const handleAddGroup = async (ids: number[], selectedProds: any[]) => {
-    const differentGroups = differenceBy(selectedProds, controlledFields, 'id');
+  const handleAddGroup = async (ids: number[], selectedCollections: any[]) => {
+    const differentGroups = differenceBy(selectedCollections, controlledFields, 'id');
     const productInCollections = await Promise.all(
       differentGroups.map((group: TCollection) =>
         productInCollectionApi.getProductsInCollection(group.id)
@@ -73,7 +73,7 @@ const ChoiceGroupComboForm = (props: Props) => {
 
     console.log(`productInCollections`, productInCollections);
 
-    const newGroups = [...differentGroups];
+    const newGroups = [...differentGroups.map(({ id, ...c }) => ({ ...c, collection_id: id }))];
     productInCollections.forEach((productData, idx) => {
       if (newGroups[idx]) {
         newGroups[idx].combination_mode = CombinationModeEnum.ChoiceCombo;
@@ -85,6 +85,8 @@ const ChoiceGroupComboForm = (props: Props) => {
         }));
       }
     });
+
+    console.log(`newGroups`, newGroups);
 
     appendGroup([...newGroups]);
   };
@@ -151,6 +153,12 @@ const ChoiceGroupComboForm = (props: Props) => {
                   type="number"
                   label="Số sản phẩm tối thiểu được chọn trong nhóm"
                   name={`groups.${idx}.min`}
+                />
+                <InputField name={`groups.${idx}.id`} style={{ display: 'none' }} hidden />
+                <InputField
+                  name={`groups.${idx}.base_product_id`}
+                  style={{ display: 'none' }}
+                  hidden
                 />
               </Grid>
               <Grid item xs={6}>
@@ -293,6 +301,18 @@ const ProductGroupTable = ({ groupIdx, control }: { groupIdx: number; control: a
                 />
               </TableCell>
               <TableCell align="center">
+                <InputField
+                  key={`product-baseproduct-${data[idx]?.id}`}
+                  name={`${arrName}.${idx}.base_product_id`}
+                  style={{ display: 'none' }}
+                  hidden
+                />
+                <InputField
+                  key={`product-id-${data[idx]?.id}`}
+                  name={`${arrName}.${idx}.id`}
+                  style={{ display: 'none' }}
+                  hidden
+                />
                 <InputField
                   type="number"
                   size="small"

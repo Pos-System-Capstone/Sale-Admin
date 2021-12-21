@@ -2,18 +2,19 @@
 /* eslint-disable no-plusplus */
 /* eslint-disable react/prop-types */
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Box, Button, Stack } from '@mui/material';
+import { Box, Button, CircularProgress, Stack } from '@mui/material';
+import productApi from 'api/product';
 import { useSnackbar } from 'notistack';
 import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useQuery } from 'react-query';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { ProductTypeEnum } from 'types/product';
+import { PATH_DASHBOARD } from 'routes/paths';
+import { ProductTypeEnum, TProductMaster } from 'types/product';
 import LoadingAsyncButton from '../../components/LoadingAsyncButton/LoadingAsyncButton';
 import Page from '../../components/Page';
 import useDashboard from '../../hooks/useDashboard';
 import { DashboardNavLayout } from '../../layouts/dashboard/DashboardNavbar';
-import { createMasterProd, getProdById } from '../../redux/product/api';
 import MiddleForm from './components/MiddleForm';
 import { UpdateProductForm, validationSchema } from './type';
 import { normalizeProductData, transformDraftToStr, transformProductForm } from './utils';
@@ -39,9 +40,8 @@ const CreateProduct = () => {
 
   const { data, isLoading } = useQuery(
     ['products', Number(cloneProductId)],
-    () => getProdById(cloneProductId),
+    () => productApi.getById(cloneProductId).then((res) => res.data as TProductMaster),
     {
-      select: (res) => res.data,
       enabled: Boolean(cloneProductId),
       staleTime: Infinity
     }
@@ -56,11 +56,13 @@ const CreateProduct = () => {
   const onSubmit = (values: UpdateProductForm) => {
     const data = transformDraftToStr(values);
     data.product_type = data.hasVariant ? ProductTypeEnum.General : values.product_type;
-    return createMasterProd(transformProductForm(data))
+    return productApi
+      .create(transformProductForm(data))
       .then((res) => {
         enqueueSnackbar(`Tạo thành công ${values.product_name}`, {
           variant: 'success'
         });
+        navigate(PATH_DASHBOARD.products.editById(res.data as number));
       })
       .catch((err) => {
         enqueueSnackbar(`Có lỗi xảy ra. Vui lòng thử lại`, {
@@ -68,6 +70,26 @@ const CreateProduct = () => {
         });
       });
   };
+
+  if (isLoading) {
+    return (
+      <Box
+        sx={{
+          width: '100%',
+          height: '100%'
+        }}
+        minHeight="40vh"
+        borderRadius="1px"
+        flexDirection="column"
+        zIndex={999}
+        justifyContent="center"
+        alignItems="center"
+        display="flex"
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   return (
     <FormProvider {...methods}>

@@ -30,6 +30,7 @@ export type TProductInGroup = {
 };
 
 export type TGroupProduct = {
+  id: number;
   base_product_id: number;
   collection_id?: number;
   combination_mode?: CombinationModeEnum;
@@ -136,6 +137,8 @@ export type CreateComboForm = TProductBase & {
   groups: {
     // collection id
     id?: number;
+    base_product_id?: number;
+    collection_id?: number;
     default?: number;
     min?: number;
     max?: number;
@@ -147,6 +150,8 @@ export type CreateComboForm = TProductBase & {
 };
 
 export type ComboProductType = {
+  id?: number;
+  base_product_id?: number;
   product_id: number;
   default?: number;
   min: number;

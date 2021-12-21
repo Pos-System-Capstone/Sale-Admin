@@ -51,6 +51,8 @@ const VariantForm = ({ name, updateMode: defaultMode = true }) => {
     name: 'variants'
   });
 
+  console.log(`variantsWatch`, variantsWatch);
+
   const arrStr = variantsWatch
     ?.filter(({ values }) => values && values?.length !== 0)
     .map(({ values = [] }) => values.join('-'))

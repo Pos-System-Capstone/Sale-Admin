@@ -8,7 +8,7 @@ import Label from 'components/Label';
 import ModalForm from 'components/ModalForm/ModalForm';
 import ResoTable from 'components/ResoTable/ResoTable';
 import useExtraCategory from 'hooks/extra-categories/useExtraCategoy';
-import React, { useState } from 'react';
+import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { CreateProductForm, ProductTypeEnum, TProductBase } from 'types/product';
 import { TTableColumn } from 'types/table';
@@ -25,7 +25,6 @@ type Props = {
 // eslint-disable-next-line arrow-body-style
 const MiddleForm: React.FC<Props> = ({ updateMode }) => {
   const { watch } = useFormContext<CreateProductForm>();
-  const [showAddCategoryModal, setShowAddCategoryModal] = useState(false);
 
   const [hasExtra, hasVariant] = watch(['has_extra', 'hasVariant']);
   const cateId = watch('cat_id');

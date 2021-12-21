@@ -11,7 +11,7 @@ export interface BaseApi<T> {
 }
 export interface BaseApiWithPaging<T, Q extends TRequestPaging = TRequestPaging> {
   get: (params?: Q) => Promise<AxiosResponse<BaseReponse<T>>>;
-  create: (data: Partial<T>) => Promise<AxiosResponse<BaseReponse<T>>>;
+  create: (data: Partial<T>) => Promise<AxiosResponse<any>>;
   getById: (id: any, params?: any) => Promise<AxiosResponse<T>>;
   delete: (id: any) => Promise<AxiosResponse<any>>;
   update: (id: any, data: T) => Promise<AxiosResponse<any>>;
