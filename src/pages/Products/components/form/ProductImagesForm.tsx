@@ -1,18 +1,26 @@
 import trashIcon from '@iconify/icons-eva/trash-outline';
 import { Icon } from '@iconify/react';
 import { UploadFileOutlined } from '@mui/icons-material';
+import { Avatar, Button, IconButton, Radio, Stack, TextField } from '@mui/material';
+import { exchangeToken, refreshToken } from 'api/google-oauth';
+import axios from 'axios';
 import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
 import ResoTable from 'components/ResoTable/ResoTable';
+import { useFirebaseAuth } from 'hooks/useAuth';
+import { useSnackbar } from 'notistack';
+import GoogleLogin, { GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login';
 import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
 import { CreateProductForm, ProductImage } from 'types/product';
 import { TTableColumn } from 'types/table';
+import { setGoogleAccessToken, setGoogleRefreshToken } from 'utils/utils';
 import { CardTitle } from '../Card';
-import { TextField, Avatar, IconButton, Radio, Stack } from '@mui/material';
 
 interface Props {}
 
 const ProductImagesForm = (props: Props) => {
   const { control } = useFormContext<CreateProductForm>();
+  const { enqueueSnackbar } = useSnackbar();
+  const { loginWithGoogle } = useFirebaseAuth();
   const {
     fields: productImages,
     append: appendProductImage,
@@ -21,6 +29,50 @@ const ProductImagesForm = (props: Props) => {
     control,
     name: 'product_image'
   });
+
+  const handleGetAlbums = async () => {
+    const token = localStorage.getItem('GOOGLE_TOKEN');
+    axios
+      .get('https://photoslibrary.googleapis.com/v1/mediaItems', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .then((res) => {
+        console.log('GOOGLE_PHOTOS', res);
+      });
+  };
+
+  const onLoginGoogle = (res: GoogleLoginResponse | GoogleLoginResponseOffline) => {
+    console.log(res.code);
+    if (res.code) {
+      exchangeToken(res.code)
+        .then((res: any) => {
+          setGoogleAccessToken(res.data.access_token);
+          setGoogleRefreshToken(res.data.refresh_token);
+        })
+        .catch((err: any) => {
+          console.log(err);
+          enqueueSnackbar('Có lỗi khi kết nối', {
+            variant: 'error'
+          });
+        });
+    }
+  };
+
+  const onRefreshToken = () => {
+    refreshToken()
+      .then((res: any) => {
+        setGoogleAccessToken(res.data.access_token);
+        setGoogleRefreshToken(res.data.refresh_token);
+      })
+      .catch((err: any) => {
+        console.log(err);
+        enqueueSnackbar('Có lỗi khi kết nối', {
+          variant: 'error'
+        });
+      });
+  };
 
   const onUploadProductImg = async () => {
     const data: CreateProductForm['product_image'] = [
@@ -100,6 +152,18 @@ const ProductImagesForm = (props: Props) => {
         <CardTitle mb={2} variant="subtitle1">
           Hình ảnh
         </CardTitle>
+        <GoogleLogin
+          clientId="82989037673-sko26m075o1bm199u59ci9d85eub3oi9.apps.googleusercontent.com"
+          buttonText="Login"
+          onSuccess={onLoginGoogle}
+          onFailure={console.log}
+          cookiePolicy={'single_host_origin'}
+          accessType="offline"
+          responseType="code"
+          // approvalPrompt="force"
+          prompt="consent"
+        />
+        <Button onClick={onRefreshToken}>Test refresh</Button>
         <LoadingAsyncButton
           onClick={onUploadProductImg}
           size="small"
@@ -109,6 +173,7 @@ const ProductImagesForm = (props: Props) => {
           Thêm ảnh
         </LoadingAsyncButton>
       </Stack>
+      <Button onClick={handleGetAlbums}>Get albums</Button>
       <ResoTable
         showFilter={false}
         pagination={false}

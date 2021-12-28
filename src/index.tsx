@@ -48,7 +48,7 @@ import LoadingScreen from './components/LoadingScreen';
 import { AuthProvider } from './contexts/JWTContext';
 // import { AuthProvider } from './contexts/AwsCognitoContext';
 // import { AuthProvider } from './contexts/Auth0Context';
-// import { AuthProvider } from './contexts/FirebaseContext';
+import { AuthProvider as FirebaseProvider } from './contexts/FirebaseContext';
 
 //
 import App from './App';
@@ -65,9 +65,11 @@ ReactDOM.render(
           <SettingsProvider>
             <CollapseDrawerProvider>
               <BrowserRouter>
-                <AuthProvider>
-                  <App />
-                </AuthProvider>
+                <FirebaseProvider>
+                  <AuthProvider>
+                    <App />
+                  </AuthProvider>
+                </FirebaseProvider>
               </BrowserRouter>
             </CollapseDrawerProvider>
           </SettingsProvider>

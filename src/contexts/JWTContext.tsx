@@ -155,7 +155,9 @@ function AuthProvider({ children }: { children: ReactNode }) {
     const user = {
       name: 'Admin',
       displayName: 'Admin',
-      roles: apps?.find(({ name }: { name: string }) => name === 'sale').role
+      roles: apps?.find(
+        ({ name }: { name: string }) => name === process.env.REACT_APP_IDENTITY_API_NAME
+      ).role
     };
     setSession(accessToken);
     setUserInfo(user);

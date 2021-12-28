@@ -417,3 +417,19 @@ export const getCbn = (...args) => {
   helper([], 0);
   return r;
 };
+
+export const setGoogleAccessToken = (accessToken) => {
+  localStorage.setItem('GOOGLE_ACCESS_TOKEN', accessToken);
+};
+
+export const getGoogleAccessToken = () => {
+  return localStorage.getItem('GOOGLE_ACCESS_TOKEN');
+};
+
+export const setGoogleRefreshToken = (refreshToken) => {
+  localStorage.setItem('GOOGLE_REFRESH_TOKEN', refreshToken);
+};
+
+export const getGoogleRefreshToken = () => {
+  return localStorage.getItem('GOOGLE_REFRESH_TOKEN');
+};

@@ -14,7 +14,7 @@ const ADMIN_EMAILS = ['demo@minimals.cc'];
 
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
-  firebase.firestore();
+  // firebase.firestore();
 }
 
 const initialState: AuthState = {
@@ -91,6 +91,8 @@ function AuthProvider({ children }: { children: ReactNode }) {
 
   const loginWithGoogle = () => {
     const provider = new firebase.auth.GoogleAuthProvider();
+    provider.addScope('https://www.googleapis.com/auth/photoslibrary.readonly');
+    provider.addScope('https://www.googleapis.com/auth/photoslibrary');
     return firebase.auth().signInWithPopup(provider);
   };
 
