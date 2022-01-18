@@ -324,10 +324,7 @@ const ResoTable = (
 
     if (showAction) {
       tableHeaders.push(
-        <StickyRightTableCell
-          className={[classes.root, classes.actionColumn].join(' ')}
-          key="column-action"
-        >
+        <StickyRightTableCell className={[classes.root, classes.actionColumn].join(' ')}>
           <TableSortLabel hideSortIcon>
             <span />
           </TableSortLabel>
@@ -517,6 +514,7 @@ const ResoTable = (
           hover
           onClick={(event) => checkboxSelection && handleClick(event, data[rowKey])}
           role="checkbox"
+          key={`rows-${data[rowKey]}`}
         >
           {bodyRow}
         </TableRow>
@@ -530,15 +528,17 @@ const ResoTable = (
     disabledSelections,
     checkboxSelection,
     showAction,
+    rowKey,
     classes.stickyLeft,
     classes.body,
     classes.stickyRight,
-    rowKey,
+    renderEdit,
+    renderDelete,
     mdUp,
     _anchorEl,
     _openMenu,
-    handleDelete,
     handleEdit,
+    handleDelete,
     handleClick
   ]);
 

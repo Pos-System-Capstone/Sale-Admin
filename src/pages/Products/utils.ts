@@ -26,12 +26,16 @@ export const transformProductForm = (values: UpdateProductForm) => {
     // }));
   }
 
+  // TODO: fix bug when create product, auto create empty field for image
+
+  transformData.product_image = transformData.product_image?.filter(({ image_url }) =>
+    Boolean(image_url)
+  );
+
   transformData.child_products = transformData.child_products?.map((c) => ({
     ...c,
     is_default_child: c.product_id === transformData.defaultChildProduct
   }));
-
-  console.log(`transformData`, transformData);
 
   return transformData;
 };

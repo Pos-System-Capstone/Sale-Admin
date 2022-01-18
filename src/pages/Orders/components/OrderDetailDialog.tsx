@@ -57,11 +57,11 @@ const OrderDetailDialog: React.FC<Props> = ({ open, onClose, orderId }) => {
   const custColumns: ResoDescriptionColumnType<TOrderDetail>[] = [
     {
       title: translate('pages.orders.table.customerName'),
-      dataIndex: 'customer_phone_receiver'
+      dataIndex: 'delivery_receiver'
     },
     {
       title: translate('pages.orders.table.customerPhone'),
-      dataIndex: 'customer_phone_receiver'
+      dataIndex: 'delivery_phone'
     },
     {
       title: translate('pages.orders.table.address'),

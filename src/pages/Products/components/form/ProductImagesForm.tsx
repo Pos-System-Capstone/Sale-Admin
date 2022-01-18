@@ -1,96 +1,67 @@
 import trashIcon from '@iconify/icons-eva/trash-outline';
 import { Icon } from '@iconify/react';
 import { UploadFileOutlined } from '@mui/icons-material';
-import { Avatar, Button, IconButton, Radio, Stack, TextField } from '@mui/material';
-import { exchangeToken, refreshToken } from 'api/google-oauth';
-import axios from 'axios';
-import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
+import { LoadingButton } from '@mui/lab';
+import { Avatar, IconButton, Radio, Stack, TextField } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import ResoTable from 'components/ResoTable/ResoTable';
-import { useFirebaseAuth } from 'hooks/useAuth';
 import { useSnackbar } from 'notistack';
-import GoogleLogin, { GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login';
-import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
-import { CreateProductForm, ProductImage } from 'types/product';
+import { useState } from 'react';
+import { Controller, useFieldArray, useFormContext, useWatch } from 'react-hook-form';
+import { uploadfile } from 'redux/file/api';
+import { ProductImage } from 'types/product';
 import { TTableColumn } from 'types/table';
-import { setGoogleAccessToken, setGoogleRefreshToken } from 'utils/utils';
 import { CardTitle } from '../Card';
 
 interface Props {}
 
+const Input = styled('input')({
+  display: 'none'
+});
+
 const ProductImagesForm = (props: Props) => {
-  const { control } = useFormContext<CreateProductForm>();
+  const { control } = useFormContext<any>();
+  const [isUploadImage, setUploadImage] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
-  const { loginWithGoogle } = useFirebaseAuth();
+  const watchFieldArr = useWatch({ control, name: 'product_image' });
   const {
-    fields: productImages,
+    fields,
     append: appendProductImage,
     remove: removeProductImage
   } = useFieldArray({
     control,
-    name: 'product_image'
+    name: 'product_image',
+    keyName: 'id'
   });
 
-  const handleGetAlbums = async () => {
-    const token = localStorage.getItem('GOOGLE_TOKEN');
-    axios
-      .get('https://photoslibrary.googleapis.com/v1/mediaItems', {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-      .then((res) => {
-        console.log('GOOGLE_PHOTOS', res);
-      });
+  const productImages = (fields ?? [])?.map((f, idx) => ({
+    ...f
+    // ...(watchFieldArr && watchFieldArr[idx])
+  }));
+
+  const onUpload = async (e: { target: { files: FileList } }) => {
+    setUploadImage(true);
+    const files = e.target.files;
+    const requests = Array.from(files).map((file: any) => {
+      const formData = new FormData();
+      formData.append('file', file);
+      return uploadfile(formData).then((res) => res.data);
+    });
+    const listURL = await Promise.all(requests);
+
+    const newOrderMedias = listURL.map((url) => ({
+      image_url: url,
+      description: ''
+    }));
+
+    setUploadImage(false);
+    enqueueSnackbar('Upload thành công', {
+      variant: 'success'
+    });
+    appendProductImage(newOrderMedias);
   };
 
-  const onLoginGoogle = (res: GoogleLoginResponse | GoogleLoginResponseOffline) => {
-    console.log(res.code);
-    if (res.code) {
-      exchangeToken(res.code)
-        .then((res: any) => {
-          setGoogleAccessToken(res.data.access_token);
-          setGoogleRefreshToken(res.data.refresh_token);
-        })
-        .catch((err: any) => {
-          console.log(err);
-          enqueueSnackbar('Có lỗi khi kết nối', {
-            variant: 'error'
-          });
-        });
-    }
-  };
-
-  const onRefreshToken = () => {
-    refreshToken()
-      .then((res: any) => {
-        setGoogleAccessToken(res.data.access_token);
-        setGoogleRefreshToken(res.data.refresh_token);
-      })
-      .catch((err: any) => {
-        console.log(err);
-        enqueueSnackbar('Có lỗi khi kết nối', {
-          variant: 'error'
-        });
-      });
-  };
-
-  const onUploadProductImg = async () => {
-    const data: CreateProductForm['product_image'] = [
-      {
-        image_url:
-          'https://images.unsplash.com/photo-1517142089942-ba376ce32a2e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80',
-        description: 'Product'
-      },
-      {
-        image_url:
-          'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2832&q=80',
-        description: 'Product'
-      }
-    ];
-    appendProductImage(data);
-  };
-
-  const productImgColumns: TTableColumn<ProductImage>[] = [
+  const productImgColumns: TTableColumn<ProductImage & { id: string }>[] = [
     {
       title: 'Hình ảnh',
       dataIndex: 'image_url',
@@ -138,13 +109,20 @@ const ProductImagesForm = (props: Props) => {
     },
     {
       title: '',
-      render: (_, __, idx) => (
-        <IconButton onClick={() => removeProductImage(idx)} sx={{ color: 'red' }} size="large">
+      render: (_, data, idx) => (
+        <IconButton
+          key={`remove-${data.id}`}
+          onClick={() => removeProductImage(idx)}
+          sx={{ color: 'red' }}
+          size="large"
+        >
           <Icon icon={trashIcon} />
         </IconButton>
       )
     }
   ];
+
+  console.log(`productImages`, productImages, fields, watchFieldArr);
 
   return (
     <>
@@ -152,35 +130,32 @@ const ProductImagesForm = (props: Props) => {
         <CardTitle mb={2} variant="subtitle1">
           Hình ảnh
         </CardTitle>
-        <GoogleLogin
-          clientId="82989037673-sko26m075o1bm199u59ci9d85eub3oi9.apps.googleusercontent.com"
-          buttonText="Login"
-          onSuccess={onLoginGoogle}
-          onFailure={console.log}
-          cookiePolicy={'single_host_origin'}
-          accessType="offline"
-          responseType="code"
-          // approvalPrompt="force"
-          prompt="consent"
-        />
-        <Button onClick={onRefreshToken}>Test refresh</Button>
-        <LoadingAsyncButton
-          onClick={onUploadProductImg}
-          size="small"
-          variant="outlined"
-          startIcon={<UploadFileOutlined />}
-        >
-          Thêm ảnh
-        </LoadingAsyncButton>
+        <label htmlFor="contained-button-file">
+          <Input
+            onChange={(e: any) => onUpload(e)}
+            accept="image/*"
+            id="contained-button-file"
+            multiple
+            type="file"
+          />
+          <LoadingButton
+            loading={isUploadImage}
+            component="span"
+            size="small"
+            variant="outlined"
+            startIcon={<UploadFileOutlined />}
+          >
+            Upload
+          </LoadingButton>
+        </label>
       </Stack>
-      <Button onClick={handleGetAlbums}>Get albums</Button>
       <ResoTable
         showFilter={false}
         pagination={false}
         showSettings={false}
         showAction={false}
         columns={productImgColumns}
-        rowKey="description"
+        rowKey="id"
         dataSource={productImages}
       />
     </>

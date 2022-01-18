@@ -36,7 +36,7 @@ const CreateProduct = () => {
       product_type: productType
     }
   });
-  const { handleSubmit, reset } = methods;
+  const { handleSubmit, reset, watch } = methods;
 
   const { data, isLoading } = useQuery(
     ['products', Number(cloneProductId)],
@@ -70,6 +70,8 @@ const CreateProduct = () => {
         });
       });
   };
+
+  console.log(`watch()`, watch());
 
   if (isLoading) {
     return (

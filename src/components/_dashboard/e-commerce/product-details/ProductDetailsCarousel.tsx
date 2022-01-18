@@ -130,6 +130,11 @@ export default function ProductDetailsCarousel({ product }: ProductDetailsCarous
   useEffect(() => {
     setNav1(slider1.current || undefined);
     setNav2(slider2.current || undefined);
+  }, []);
+
+  useEffect(() => {
+    setNav1(slider1.current || undefined);
+    setNav2(slider2.current || undefined);
   }, [currentIndex]);
 
   const handlePrevious = () => {
