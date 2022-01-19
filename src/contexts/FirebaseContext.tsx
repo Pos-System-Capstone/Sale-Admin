@@ -6,14 +6,13 @@ import 'firebase/firestore';
 // @types
 import { ActionMap, AuthState, AuthUser, FirebaseContextType } from '../@types/authentication';
 //
-import { firebaseConfig } from '../config';
 
 // ----------------------------------------------------------------------
 
 const ADMIN_EMAILS = ['demo@minimals.cc'];
 
 if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
+  // firebase.initializeApp(firebaseConfig);
   // firebase.firestore();
 }
 

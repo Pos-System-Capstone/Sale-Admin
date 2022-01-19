@@ -1,59 +1,46 @@
 // mock api
-import './_apis_';
-
-// i18n
-import './locales/i18n';
-
-// highlight
-import './utils/highlight';
-
-// scroll bar
-import 'simplebar/src/simplebar.css';
-// lightbox
-import 'react-image-lightbox/style.css';
-
-// editor
-import 'react-quill/dist/quill.snow.css';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-
-// slick-carousel
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-
+// material
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
 // lazy image
 import 'lazysizes';
 import 'lazysizes/plugins/attrchange/ls.attrchange';
 import 'lazysizes/plugins/object-fit/ls.object-fit';
 import 'lazysizes/plugins/parent-fit/ls.parent-fit';
-
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { HelmetProvider } from 'react-helmet-async';
+// lightbox
+import 'react-image-lightbox/style.css';
+// editor
+import 'react-quill/dist/quill.snow.css';
 import { Provider as ReduxProvider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
 import { PersistGate } from 'redux-persist/lib/integration/react';
-// material
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
-// redux
-import { store, persistor } from './redux/store';
-// contexts
-import { SettingsProvider } from './contexts/SettingsContext';
-import { CollapseDrawerProvider } from './contexts/CollapseDrawerContext';
-// components
-import LoadingScreen from './components/LoadingScreen';
-
-// Check our docs
-// https://docs-minimals.vercel.app/authentication/ts-version
-
-import { AuthProvider } from './contexts/JWTContext';
-// import { AuthProvider } from './contexts/AwsCognitoContext';
-// import { AuthProvider } from './contexts/Auth0Context';
-import { AuthProvider as FirebaseProvider } from './contexts/FirebaseContext';
-
+// scroll bar
+import 'simplebar/src/simplebar.css';
+import 'slick-carousel/slick/slick-theme.css';
+// slick-carousel
+import 'slick-carousel/slick/slick.css';
 //
 import App from './App';
-import * as serviceWorkerRegistration from './serviceWorkerRegistration';
+// components
+import LoadingScreen from './components/LoadingScreen';
+import { CollapseDrawerProvider } from './contexts/CollapseDrawerContext';
+// Check our docs
+// https://docs-minimals.vercel.app/authentication/ts-version
+import { AuthProvider } from './contexts/JWTContext';
+// contexts
+import { SettingsProvider } from './contexts/SettingsContext';
+// i18n
+import './locales/i18n';
+// redux
+import { persistor, store } from './redux/store';
 import reportWebVitals from './reportWebVitals';
+import * as serviceWorkerRegistration from './serviceWorkerRegistration';
+// highlight
+import './utils/highlight';
+import './_apis_';
 
 // ----------------------------------------------------------------------
 
@@ -65,11 +52,9 @@ ReactDOM.render(
           <SettingsProvider>
             <CollapseDrawerProvider>
               <BrowserRouter>
-                <FirebaseProvider>
-                  <AuthProvider>
-                    <App />
-                  </AuthProvider>
-                </FirebaseProvider>
+                <AuthProvider>
+                  <App />
+                </AuthProvider>
               </BrowserRouter>
             </CollapseDrawerProvider>
           </SettingsProvider>
