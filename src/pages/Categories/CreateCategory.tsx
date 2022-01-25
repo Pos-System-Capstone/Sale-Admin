@@ -15,6 +15,7 @@ import { useNavigate } from 'react-router';
 import { useSearchParams } from 'react-router-dom';
 import { TCategory } from 'types/category';
 import * as yup from 'yup';
+import { PATH_DASHBOARD } from 'routes/paths';
 
 interface Props {}
 
@@ -46,6 +47,7 @@ const CreateCategory = (props: Props) => {
         enqueueSnackbar(`Tạo thành công`, {
           variant: 'success'
         });
+        navigate(`${PATH_DASHBOARD.categories.root}/${values.parent_cate_id}`);
       })
       .catch((err) => {
         enqueueSnackbar(`Có lỗi xảy ra. Vui lòng thử lại`, {

@@ -22,7 +22,6 @@ import { storeSchemaBuilder } from './utils';
 
 const tranform = (input) => {
   const output = [];
-
   input.forEach((mInStore) => {
     if (mInStore.menus && mInStore.menus.length !== 0) {
       output.push(

@@ -16,6 +16,7 @@ import { useNavigate } from 'react-router-dom';
 import storeApi from 'redux/store/api';
 import StoreForm from './components/StoreForm';
 import { storeSchemaBuilder } from './utils';
+import { PATH_DASHBOARD } from 'routes/paths';
 
 const CreateStorePage = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -34,9 +35,10 @@ const CreateStorePage = () => {
     storeApi
       .create(values)
       .then((res) => {
-        enqueueSnackbar(`Tạo thành công ${values.product_name}`, {
+        enqueueSnackbar(`Tạo thành công ${res.data.name}`, {
           variant: 'success'
         });
+        navigate(`${PATH_DASHBOARD.stores.root}/${res.data.id}`, { state: res.data });
       })
       .catch((err) => {
         enqueueSnackbar(`Có lỗi xảy ra. Vui lòng thử lại`, {

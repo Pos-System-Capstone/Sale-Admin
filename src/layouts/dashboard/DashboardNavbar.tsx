@@ -96,7 +96,6 @@ export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps)
 
   const handleSelectStore = (store: TStore) => {
     const token = getAppToken();
-
     window.open(
       `${process.env.REACT_APP_STORE_MANAGEMENT_APP_URL}/auth/login?accessToken=${token}`,
       '_blank'
