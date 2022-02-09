@@ -26,11 +26,14 @@ const CreateStorePage = () => {
 
   const methods = useForm({
     resolver: yupResolver(storeSchemaBuilder(translate)),
-    defaultValues: {}
+    defaultValues: {
+      open_time: null,
+      close_time: null
+    }
   });
   const { handleSubmit } = methods;
 
-  const onSubmit = (values) =>
+  const onSubmit = (values: any) =>
     storeApi
       .create(values)
       .then((res) => {

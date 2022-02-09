@@ -1,6 +1,6 @@
-import useLocales from 'hooks/useLocales';
-import { InputField, SelectField, SwitchField, TimePickerField } from 'components/form';
 import { Grid, Typography } from '@mui/material';
+import { InputField, SwitchField, TimePickerField } from 'components/form';
+import useLocales from 'hooks/useLocales';
 
 const StoreForm = () => {
   const fieldSetting = {
@@ -10,13 +10,12 @@ const StoreForm = () => {
   const { translate } = useLocales();
   return (
     <Grid container spacing={2}>
-      <Grid item xs={12} sm={6}>
+      <Grid item xs={12}>
         <SwitchField
           name="is_available"
           label={<Typography variant="caption">{translate('common.available')}</Typography>}
         />
       </Grid>
-      <Grid item xs={12} sm={6} />
       <Grid item xs={12} sm={6}>
         <InputField
           {...fieldSetting}
@@ -25,7 +24,7 @@ const StoreForm = () => {
           label={translate('pages.stores.table.storeCode')}
         />
       </Grid>
-      <Grid item xs={12} sm={6}>
+      <Grid item xs={12} sm={3}>
         <InputField
           {...fieldSetting}
           name="name"
@@ -33,15 +32,12 @@ const StoreForm = () => {
           label={translate('pages.stores.table.name')}
         />
       </Grid>
-      <Grid item xs={12} sm={6}>
+      <Grid item xs={12} sm={3}>
         <InputField
           {...fieldSetting}
           name="short_name"
           label={translate('pages.stores.table.shortName')}
         />
-      </Grid>
-      <Grid item xs={12} sm={6}>
-        <SelectField {...fieldSetting} name="type" label={translate('pages.stores.table.type')} />
       </Grid>
       <Grid item xs={12} sm={6}>
         <TimePickerField
