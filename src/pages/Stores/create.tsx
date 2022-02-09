@@ -14,6 +14,7 @@ import { CardTitle } from 'pages/Products/components/Card';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import storeApi from 'redux/store/api';
+import { PATH_DASHBOARD } from 'routes/paths';
 import StoreForm from './components/StoreForm';
 import { storeSchemaBuilder } from './utils';
 
@@ -40,6 +41,7 @@ const CreateStorePage = () => {
         enqueueSnackbar(`Tạo thành công ${values.product_name}`, {
           variant: 'success'
         });
+        navigate(`${PATH_DASHBOARD.stores.root}/${values.id}`);
       })
       .catch((err) => {
         enqueueSnackbar(`Có lỗi xảy ra. Vui lòng thử lại`, {

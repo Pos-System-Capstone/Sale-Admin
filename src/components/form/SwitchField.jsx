@@ -7,7 +7,7 @@ const SwitchField = ({
   name,
   label,
   size = 'small',
-  fullWidth,
+  fullWidth = false,
   rules = null,
   defaultValue = false,
   className = null,
