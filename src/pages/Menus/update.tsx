@@ -6,14 +6,17 @@ import menuApi from 'api/menu';
 import { normalizeMenuData, transformMenuForm } from 'components/form/Menu/helper';
 import Page from 'components/Page';
 import { get } from 'lodash-es';
+import confirm from 'components/Modal/confirm';
 import { useSnackbar } from 'notistack';
-import React from 'react';
+import React, { useRef } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useQuery } from 'react-query';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import MenuInfoTab from './tabs/MenuInfoTab';
 import ProductInMenuTab from './tabs/ProductInMenuTab';
 import StoreApplyTab from './tabs/StoreApplyTab';
+import { Menu } from 'types/menu';
+import { PATH_DASHBOARD } from 'routes/paths';
 
 enum TabType {
   MENU_INFO = 'MENUINFO',
@@ -42,7 +45,8 @@ const UpdateMenuPage = () => {
   const { id } = useParams();
   const [currentTab, setCurrentTab] = React.useState<TabType>(TabType.MENU_INFO);
   const { enqueueSnackbar } = useSnackbar();
-
+  const tableRef = useRef<any>();
+  const navigate = useNavigate();
   const form = useForm({});
 
   const {
@@ -70,6 +74,33 @@ const UpdateMenuPage = () => {
         });
       });
 
+  const onDeleteMenu = async (menuId: number) => {
+    try {
+      await menuApi.delete(menuId);
+      enqueueSnackbar('Xoá thành công', {
+        variant: 'success'
+      });
+      console.log(`tableRef.current`, tableRef.current);
+      tableRef.current?.reload();
+      navigate(`${PATH_DASHBOARD.menus.root}`);
+    } catch (error) {
+      console.log(`error`, error);
+      enqueueSnackbar((error as any).message, {
+        variant: 'error'
+      });
+    }
+  };
+
+  const onConfirmDelete = async (menu: Menu) => {
+    confirm({
+      title: 'Xác nhận xoá',
+      content: `Bạn đồng ý xóa menu "${menu.menu_name}"?`,
+      onOk: async () => {
+        await onDeleteMenu(menu.menu_id);
+      },
+      onCancle: () => {}
+    });
+  };
   const MENU_TABS = [
     {
       value: TabType.MENU_INFO,
@@ -118,7 +149,13 @@ const UpdateMenuPage = () => {
       <Page
         title={`Chi tiết bảng giá ${menu?.menu_name}`}
         actions={() => [
-          <Button key="delete-menu" size="small" color="error" variant="outlined">
+          <Button
+            onClick={() => onConfirmDelete(menu!)}
+            key="delete-menu"
+            size="small"
+            color="error"
+            variant="outlined"
+          >
             Xóa
           </Button>
         ]}
