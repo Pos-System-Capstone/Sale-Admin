@@ -86,21 +86,13 @@ export const ORDER_STATUS_OPTONS = [
   },
   {
     label: 'Đang xử lý',
-    value: OrderStatus.PROCESSING,
+    value: `${OrderStatus.PROCESSING}`,
     color: 'warning'
   },
   {
     label: 'Hoàn thành',
     value: OrderStatus.COMPLETE,
     color: 'success'
-  },
-  {
-    label: OrderStatus.CANCEL_AFTER_COOK,
-    value: OrderStatus.CANCEL_AFTER_COOK
-  },
-  {
-    label: OrderStatus.CANCEL_BEFORE_COOK,
-    value: OrderStatus.CANCEL_BEFORE_COOK
   }
 ];
 export const PAYMENT_TYPE_OPTONS = [
