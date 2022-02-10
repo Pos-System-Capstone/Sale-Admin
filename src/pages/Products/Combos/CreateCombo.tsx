@@ -9,8 +9,9 @@ import { DashboardNavLayout } from 'layouts/dashboard/DashboardNavbar';
 import { useSnackbar } from 'notistack';
 import { useState } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { createMasterProd } from 'redux/product/api';
+import { PATH_DASHBOARD } from 'routes/paths';
 import { CombinationModeEnum, CreateComboForm } from 'types/product';
 import { CardTitle } from '../components/Card';
 import BasicProductInfoForm from '../components/form/BasicProductInfoForm';
@@ -25,6 +26,8 @@ const STEPS = ['Thông tin', 'Nhóm sản phẩm'];
 
 const CreateCombo = (props: Props) => {
   const { enqueueSnackbar } = useSnackbar();
+
+  const navigate = useNavigate();
 
   const [searchParams] = useSearchParams();
   const cloneProductId: any = searchParams.get('cloneProductId');
@@ -63,6 +66,7 @@ const CreateCombo = (props: Props) => {
         enqueueSnackbar(`Tạo thành công ${values.product_name}`, {
           variant: 'success'
         });
+        navigate(`${PATH_DASHBOARD.combos.editById(res.data)}`);
       })
       .catch((err) => {
         enqueueSnackbar(`Có lỗi xảy ra. Vui lòng thử lại`, {

@@ -18,6 +18,7 @@ import { useNavigate } from 'react-router';
 import { useSearchParams } from 'react-router-dom';
 import { createCollection } from 'redux/collections/api';
 import { RootState } from 'redux/store';
+import { PATH_DASHBOARD } from 'routes/paths';
 import { CollectionTypeEnum, TCollection } from 'types/collection';
 import * as yup from 'yup';
 import AddProductTable from './AddProductTable';
@@ -84,11 +85,12 @@ const CreateCollectionPage = () => {
 
   const onSubmit = (values: any) =>
     createCollection(values)
-      .then(() =>
+      .then((res) => {
         enqueueSnackbar(`Thêm thành công`, {
           variant: 'success'
-        })
-      )
+        });
+        navigate(`${PATH_DASHBOARD.collections.root}/${res.data}`);
+      })
       .catch((err) => {
         const errMsg = get(err.response, ['data', 'message'], `Có lỗi xảy ra. Vui lòng thử lại`);
         enqueueSnackbar(errMsg, {

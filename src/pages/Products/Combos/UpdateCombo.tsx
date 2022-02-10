@@ -18,6 +18,7 @@ import Page from 'components/Page';
 import useProduct from 'hooks/products/useProduct';
 import { DashboardNavLayout } from 'layouts/dashboard/DashboardNavbar';
 import { useSnackbar } from 'notistack';
+import React from 'react';
 import { useState } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router';
@@ -63,6 +64,12 @@ const UpdateCombo = (props: Props) => {
     },
     staleTime: Infinity
   });
+
+  React.useEffect(() => {
+    if (product) {
+      createComboForm.reset(product as CreateComboForm);
+    }
+  }, [product]);
 
   const { handleSubmit } = createComboForm;
 

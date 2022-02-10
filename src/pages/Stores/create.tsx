@@ -15,6 +15,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import storeApi from 'redux/store/api';
 import { PATH_DASHBOARD } from 'routes/paths';
+import { TStore } from 'types/store';
 import StoreForm from './components/StoreForm';
 import { storeSchemaBuilder } from './utils';
 
@@ -34,11 +35,11 @@ const CreateStorePage = () => {
   });
   const { handleSubmit } = methods;
 
-  const onSubmit = (values: any) =>
+  const onSubmit = (values: TStore) =>
     storeApi
       .create(values)
       .then((res) => {
-        enqueueSnackbar(`Tạo thành công ${values.product_name}`, {
+        enqueueSnackbar(`Tạo thành công ${values.name}`, {
           variant: 'success'
         });
         navigate(`${PATH_DASHBOARD.stores.root}/${values.id}`);

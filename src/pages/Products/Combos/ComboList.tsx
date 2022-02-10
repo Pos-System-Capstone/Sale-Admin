@@ -22,6 +22,9 @@ const ComboList = (props: Props) => {
   const navigate = useNavigate();
   const ref = useRef<any>();
 
+  const editProuct = ({ product_id }: any) =>
+    navigate(`${PATH_DASHBOARD.products.root}/${product_id}`);
+
   const onDelete = (currentDeleteItem: TProductBase) => {
     confirm({
       title: (
