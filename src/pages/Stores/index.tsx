@@ -129,10 +129,12 @@ const StoreListPage = () => {
         <Stack spacing={2}>
           <ResoTable
             rowKey="id"
+            ref={tableRef}
             onEdit={(stores: any) =>
               navigate(`${PATH_DASHBOARD.stores.root}/${stores.id}`, { state: stores })
             }
             getData={getStores}
+            onDelete={setCurrentDeleteItem}
             columns={columns}
           />
         </Stack>
