@@ -1,9 +1,9 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Button, Card, Chip, Stack } from '@mui/material';
 import { useRequest } from 'ahooks';
-import DeleteConfirmDialog from 'components/DelectConfirmDialog';
 import Label from 'components/Label';
 import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
+import confirm from 'components/Modal/confirm';
 import Page from 'components/Page';
 import ResoTable from 'components/ResoTable/ResoTable';
 import { DAY_OF_WEEK } from 'constraints';
@@ -13,6 +13,7 @@ import { useSnackbar } from 'notistack';
 import { CardTitle } from 'pages/Products/components/Card';
 import { useRef, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useQuery } from 'react-query';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { menuInStoreApi } from 'redux/menu/api';
 import storeApi from 'redux/store/api';
@@ -49,7 +50,6 @@ const UpdateStorePage = () => {
   const navigate = useNavigate();
   const tableRef = useRef<any>();
   const [currentDeleteItem, setCurrentDeleteItem] = useState<TStore | null>(null);
-
   const form = useForm({
     resolver: yupResolver(storeSchemaBuilder(translate)),
     defaultValues: {
@@ -59,6 +59,10 @@ const UpdateStorePage = () => {
     }
   });
   console.log(id);
+  const { data: store } = useQuery(['stores', Number(id)], () =>
+    storeApi.getById(id).then((res) => res.data)
+  );
+  console.log(store);
   const {
     data: menuInStores,
     mutate: setappliedStores,
@@ -71,7 +75,7 @@ const UpdateStorePage = () => {
     onError: (error) => console.log(error)
     // debounceInterval: 500
   });
-
+  console.log(menuInStores);
   const onUpdateStore = (storeData: any) =>
     storeApi
       .update(+id!, storeData)
@@ -87,40 +91,47 @@ const UpdateStorePage = () => {
         });
       });
 
-  const deleteStoreHandler = () =>
-    storeApi
-      .delete(currentDeleteItem?.id!)
-      .then(() => setCurrentDeleteItem(null))
-      .then(tableRef.current?.reload)
-      .then(() =>
-        enqueueSnackbar(`Xóa thành công`, {
-          variant: 'success'
-        })
-      )
-      .catch((err: any) => {
-        const errMsg = get(err.response, ['data', 'message'], `Có lỗi xảy ra. Vui lòng thử lại`);
-        enqueueSnackbar(errMsg, {
-          variant: 'error'
-        });
+  const onDeleteStore = async (storeId: number) => {
+    try {
+      await storeApi.delete(storeId);
+      enqueueSnackbar('Xoá thành công', {
+        variant: 'success'
       });
+      console.log(`tableRef.current`, tableRef.current);
+      tableRef.current?.reload();
+      navigate(`${PATH_DASHBOARD.stores.root}`);
+    } catch (error) {
+      console.log(`error`, error);
+      enqueueSnackbar((error as any).message, {
+        variant: 'error'
+      });
+    }
+  };
+
+  const onConfirmDelete = async (store: TStore) => {
+    confirm({
+      title: 'Xác nhận xoá',
+      content: `Bạn đồng ý xóa menu "${store.name}"?`,
+      onOk: async () => {
+        await onDeleteStore(store.id);
+      },
+      onCancle: () => {}
+    });
+  };
 
   return (
     <FormProvider {...form}>
-      <DeleteConfirmDialog
-        open={Boolean(currentDeleteItem)}
-        onClose={() => setCurrentDeleteItem(null)}
-        onDelete={deleteStoreHandler}
-        title={
-          <>
-            {translate('common.confirmDeleteTitle')} <strong>{currentDeleteItem?.name!}</strong>?
-          </>
-        }
-      />
       <Page
         title={translate('pages.stores.updateTitle')}
         actions={() => {
           return [
-            <Button key="delete" size="small" color="error" variant="outlined">
+            <Button
+              onClick={() => onConfirmDelete(store!)}
+              key="delete"
+              size="small"
+              color="error"
+              variant="outlined"
+            >
               {translate('common.delete')}
             </Button>
           ];
