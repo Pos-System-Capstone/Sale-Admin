@@ -35,14 +35,15 @@ const CreateStorePage = () => {
   });
   const { handleSubmit } = methods;
 
-  const onSubmit = (values: TStore) =>
+  const onSubmit = (values: Omit<TStore, 'id'>) =>
     storeApi
       .create(values)
       .then((res) => {
         enqueueSnackbar(`Tạo thành công ${values.name}`, {
           variant: 'success'
         });
-        navigate(`${PATH_DASHBOARD.stores.root}/${values.id}`);
+        navigate(`${PATH_DASHBOARD.stores.root}/${res.data.id}`);
+        console.log(res);
       })
       .catch((err) => {
         enqueueSnackbar(`Có lỗi xảy ra. Vui lòng thử lại`, {
