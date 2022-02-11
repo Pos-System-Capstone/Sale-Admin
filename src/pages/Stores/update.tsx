@@ -62,7 +62,6 @@ const UpdateStorePage = () => {
   const { data: store } = useQuery(['stores', Number(id)], () =>
     storeApi.getById(id).then((res) => res.data)
   );
-  console.log(store);
   const {
     data: menuInStores,
     mutate: setappliedStores,

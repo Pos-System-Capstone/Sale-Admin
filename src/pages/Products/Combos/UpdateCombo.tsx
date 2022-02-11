@@ -21,8 +21,9 @@ import { useSnackbar } from 'notistack';
 import React from 'react';
 import { useState } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
+import { useQuery } from 'react-query';
 import { useNavigate, useParams } from 'react-router';
-import { updateProdById } from 'redux/product/api';
+import { getComboById, updateProdById } from 'redux/product/api';
 import { PATH_DASHBOARD } from 'routes/paths';
 import { CombinationModeEnum, CreateComboForm } from 'types/product';
 import { CardTitle } from '../components/Card';
@@ -43,16 +44,15 @@ const UpdateCombo = (props: Props) => {
   const navigate = useNavigate();
   const [activeStep, setActiveStep] = useState(0);
 
+  const { data: combo } = useQuery(['combo', Number(comboId)], () =>
+    getComboById(Number(comboId)).then((res) => res.data)
+  );
+
+  console.log(combo);
+
   const createComboForm = useForm({
     defaultValues: {
-      groups: [
-        {
-          id: 0,
-          name: 'Test',
-          min: 1,
-          max: 2
-        }
-      ]
+      ...combo
     },
     resolver: activeStep === 0 ? yupResolver(validationSchema) : undefined
   });

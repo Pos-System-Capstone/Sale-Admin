@@ -43,17 +43,20 @@ const UpdateCollectionPage = () => {
   const [currentTab, setCurrentTab] = React.useState<TabType>(TabType.COLLECTION_INFO);
   const { enqueueSnackbar } = useSnackbar();
 
+  const { data: collection } = useQuery(['colections', Number(id)], () =>
+    getCollectionById(Number(id)).then((res) => res.data)
+  );
   const form = useForm<Partial<TCollection>>({
     defaultValues: {
-      ...state
+      ...collection
     }
   });
 
-  const { data } = useQuery(['colections', Number(id)], () =>
-    getCollectionById(Number(id)).then((res) => res.data)
-  );
-
-  console.log(data);
+  React.useEffect(() => {
+    if (collection) {
+      form.reset(collection as TCollection);
+    }
+  }, [collection]);
 
   const onUpdateCollection = (values: TCollection) =>
     updateCollection(+id!, values)

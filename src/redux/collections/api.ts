@@ -18,4 +18,4 @@ export const productCollectionApi = (collectionId: number) =>
   generateAPIWithPaging<TProductBase>(`admin/collections/${collectionId}/products`);
 
 export const getCollectionById = (collectionId: number) =>
-  request.get<TCollection>(`/collections/${collectionId}/products`);
+  request.get<TCollection>(`/collections/${collectionId}`);

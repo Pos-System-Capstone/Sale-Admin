@@ -1,3 +1,4 @@
+import { CreateComboForm } from 'types/product';
 import request from '../../utils/axios';
 
 export const createMasterProd = (data: any) => request.post<number>(`/admin/products`, data);
@@ -12,3 +13,6 @@ export const getAllProduct = (params: any = {}) =>
   request.get('/admin/products', {
     params
   });
+
+export const getComboById = (comboId: number) =>
+  request.get<CreateComboForm>(`/collections/${comboId}`);
