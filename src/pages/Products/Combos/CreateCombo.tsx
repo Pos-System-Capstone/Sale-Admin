@@ -63,7 +63,7 @@ const CreateCombo = (props: Props) => {
         enqueueSnackbar(`Tạo thành công ${values.product_name}`, {
           variant: 'success'
         });
-        navigate(`${PATH_DASHBOARD.combos.editById(res.data.product_id)}`);
+        navigate(`${PATH_DASHBOARD.combos.editById(res.data)}`);
       })
       .catch((err) => {
         enqueueSnackbar(`Có lỗi xảy ra. Vui lòng thử lại`, {

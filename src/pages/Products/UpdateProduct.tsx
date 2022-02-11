@@ -25,9 +25,13 @@ const UpdateProduct = () => {
   const { setNavOpen } = useDashboard();
   const navigate = useNavigate();
 
-  const { data, isLoading, error } = useQuery(['products', Number(id)], () => getProdById(id), {
-    select: (res) => res.data
-  });
+  const { data, isLoading, error } = useQuery(
+    ['products', Number(id)],
+    () => getProdById(Number(id)),
+    {
+      select: (res) => res.data
+    }
+  );
 
   const defaultValues = {
     ...DEFAULT_VALUES,
@@ -48,7 +52,7 @@ const UpdateProduct = () => {
 
   const onSubmit = (values: UpdateProductForm) => {
     const data = transformDraftToStr(values);
-    return updateProdById(id, transformProductForm(data))
+    return updateProdById(Number(id), transformProductForm(data))
       .then((res) => {
         enqueueSnackbar(`Cập nhật thành công ${values.product_name}`, {
           variant: 'success'

@@ -73,7 +73,10 @@ const UpdateCombo = (props: Props) => {
 
   const onSubmit = (values: any) => {
     const data = transformDraftToStr(values);
-    return updateProdById(comboId, transformComboForm(data, CombinationModeEnum.ChoiceCombo))
+    return updateProdById(
+      Number(comboId),
+      transformComboForm(data, CombinationModeEnum.ChoiceCombo)
+    )
       .then((res) => {
         enqueueSnackbar(`Cập nhật thành công ${values.product_name}`, {
           variant: 'success'

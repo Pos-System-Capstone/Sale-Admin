@@ -48,7 +48,7 @@ export default function EcommerceShop() {
       ),
       content: 'Sản phẩm này sẽ bị xoá khỏi hệ thống',
       onOk: () => {
-        return deleteProdById(currentDeleteItem.product_id)
+        return deleteProdById(currentDeleteItem.product_id!)
           .then((res) => {
             enqueueSnackbar(t('common.deleteSuccess'), {
               variant: 'success'
