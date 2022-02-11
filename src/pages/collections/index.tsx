@@ -62,6 +62,7 @@ const CollectionListPage = () => {
           variant: 'success'
         })
       )
+      .then(() => tableRef.current?.reload())
       .catch((err) => {
         const errMsg = get(err.response, ['data', 'message'], `Có lỗi xảy ra. Vui lòng thử lại`);
         enqueueSnackbar(errMsg, {

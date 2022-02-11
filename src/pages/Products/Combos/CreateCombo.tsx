@@ -11,6 +11,7 @@ import { useState } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { useSearchParams } from 'react-router-dom';
 import { createMasterProd } from 'redux/product/api';
+import { PATH_DASHBOARD } from 'routes/paths';
 import { CombinationModeEnum, CreateComboForm } from 'types/product';
 import { CardTitle } from '../components/Card';
 import BasicProductInfoForm from '../components/form/BasicProductInfoForm';
@@ -19,13 +20,13 @@ import ProductImagesForm from '../components/form/ProductImagesForm';
 import { validationSchema } from '../type';
 import { normalizeProductCombo, transformComboForm } from '../utils';
 import ChoiceGroupComboForm from './components/form/ChoiceGroupComboForm';
-
+import { useNavigate } from 'react-router-dom';
 interface Props {}
 const STEPS = ['Thông tin', 'Nhóm sản phẩm'];
 
 const CreateCombo = (props: Props) => {
   const { enqueueSnackbar } = useSnackbar();
-
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const cloneProductId: any = searchParams.get('cloneProductId');
 
@@ -63,6 +64,7 @@ const CreateCombo = (props: Props) => {
         enqueueSnackbar(`Tạo thành công ${values.product_name}`, {
           variant: 'success'
         });
+        navigate(`${PATH_DASHBOARD.combos.editById(res.data.product_id)}`);
       })
       .catch((err) => {
         enqueueSnackbar(`Có lỗi xảy ra. Vui lòng thử lại`, {

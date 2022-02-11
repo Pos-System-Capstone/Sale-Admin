@@ -38,7 +38,7 @@ const CreateStorePage = () => {
         enqueueSnackbar(`Tạo thành công ${res.data.name}`, {
           variant: 'success'
         });
-        navigate(`${PATH_DASHBOARD.stores.root}/${res.data.id}`, { state: res.data });
+        navigate(`${PATH_DASHBOARD.stores.root}/${res.data.id}`);
       })
       .catch((err) => {
         enqueueSnackbar(`Có lỗi xảy ra. Vui lòng thử lại`, {

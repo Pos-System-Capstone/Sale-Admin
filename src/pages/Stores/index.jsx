@@ -95,9 +95,7 @@ const StoreListPage = () => {
         <Stack spacing={2}>
           <ResoTable
             rowKey="id"
-            onEdit={(stores) =>
-              navigate(`${PATH_DASHBOARD.stores.root}/${stores.id}`, { state: stores })
-            }
+            onEdit={(stores) => navigate(`${PATH_DASHBOARD.stores.root}/${stores.id}`)}
             getData={getStores}
             columns={columns}
           />
