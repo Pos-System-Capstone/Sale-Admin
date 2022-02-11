@@ -47,7 +47,7 @@ const CreateCategory = (props: Props) => {
         enqueueSnackbar(`Tạo thành công`, {
           variant: 'success'
         });
-        navigate(`${PATH_DASHBOARD.categories.root}/${values.parent_cate_id}`);
+        navigate(`${PATH_DASHBOARD.categories.root}/${res.data}`);
       })
       .catch((err) => {
         enqueueSnackbar(`Có lỗi xảy ra. Vui lòng thử lại`, {

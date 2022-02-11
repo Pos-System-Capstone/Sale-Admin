@@ -20,15 +20,12 @@ import ProductImagesForm from '../components/form/ProductImagesForm';
 import { validationSchema } from '../type';
 import { normalizeProductCombo, transformComboForm } from '../utils';
 import ChoiceGroupComboForm from './components/form/ChoiceGroupComboForm';
-
 interface Props {}
 const STEPS = ['Thông tin', 'Nhóm sản phẩm'];
 
 const CreateCombo = (props: Props) => {
   const { enqueueSnackbar } = useSnackbar();
-
   const navigate = useNavigate();
-
   const [searchParams] = useSearchParams();
   const cloneProductId: any = searchParams.get('cloneProductId');
 
@@ -66,7 +63,7 @@ const CreateCombo = (props: Props) => {
         enqueueSnackbar(`Tạo thành công ${values.product_name}`, {
           variant: 'success'
         });
-        navigate(`${PATH_DASHBOARD.combos.editById(res.data)}`);
+        navigate(`${PATH_DASHBOARD.combos.editById(res.data.product_id)}`);
       })
       .catch((err) => {
         enqueueSnackbar(`Có lỗi xảy ra. Vui lòng thử lại`, {

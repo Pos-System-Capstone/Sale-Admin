@@ -193,6 +193,7 @@ const CreateCollectionPage = () => {
               <CardTitle mb={2} variant="subtitle1">
                 {translate('collections.productInCollection')}
               </CardTitle>
+              y
               <ModalProductForm
                 selected={products?.map(({ product_id }) => product_id)}
                 onSubmit={handleAddProd}
