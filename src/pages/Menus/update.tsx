@@ -167,9 +167,13 @@ const UpdateMenuPage = () => {
           allowScrollButtonsMobile
           onChange={(e, value) => setCurrentTab(value)}
         >
-          {MENU_TABS.map((tab) => (
-            <Tab key={tab.value} label={tab.label} icon={tab.icon} value={tab.value} />
-          ))}
+          {MENU_TABS.map((tab) =>
+            menu?.is_brand_mode ? (
+              <Tab disabled key={tab.value} label={tab.label} icon={tab.icon} value={tab.value} />
+            ) : (
+              <Tab key={tab.value} label={tab.label} icon={tab.icon} value={tab.value} />
+            )
+          )}
         </Tabs>
         <Box mt={2}>
           {MENU_TABS.map((tab, index) => {
