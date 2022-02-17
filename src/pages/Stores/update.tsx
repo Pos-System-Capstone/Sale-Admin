@@ -1,9 +1,10 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Box, Button, Card, Chip, Stack, Typography } from '@mui/material';
+import { Box, Button, Card, Chip, Stack } from '@mui/material';
 import { useRequest } from 'ahooks';
-import DeleteConfirmDialog from 'components/DelectConfirmDialog';
+import menuApi from 'api/menu';
 import Label from 'components/Label';
 import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
+import confirm from 'components/Modal/confirm';
 import Page from 'components/Page';
 import ResoTable from 'components/ResoTable/ResoTable';
 import { DAY_OF_WEEK } from 'constraints';
@@ -11,69 +12,47 @@ import useLocales from 'hooks/useLocales';
 import { get } from 'lodash-es';
 import { useSnackbar } from 'notistack';
 import { CardTitle } from 'pages/Products/components/Card';
-import { useState } from 'react';
+import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { menuInStoreApi } from 'redux/menu/api';
+import { useQuery } from 'react-query';
+import { useNavigate, useParams } from 'react-router-dom';
 import storeApi from 'redux/store/api';
 import { PATH_DASHBOARD } from 'routes/paths';
+import { Menu } from 'types/menu';
+import { TStore } from 'types/store';
 import StoreForm from './components/StoreForm';
 import { storeSchemaBuilder } from './utils';
 
-const tranform = (input) => {
-  const output = [];
-
-  input.forEach((mInStore) => {
-    if (mInStore.menus && mInStore.menus.length !== 0) {
-      output.push(
-        ...mInStore.menus.map((menu) => ({
-          menu_in_store_id: mInStore.id,
-          store: { id: mInStore.id, store_name: mInStore.name },
-          dayFilters: menu.day_filters,
-          time_range: menu.time_range,
-          menu_id: menu.menu_id,
-          menu_name: menu.menu_name
-        }))
-      );
-    }
-  });
-
-  return output;
-};
-
 const UpdateStorePage = () => {
-  const { state } = useLocation();
   const { id } = useParams();
   const { translate } = useLocales();
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
 
-  const [currentDeleteItem, setCurrentDeleteItem] = useState(null);
-
+  const { data: store } = useQuery(['stores', Number(id)], () =>
+    storeApi.getById(id).then((res) => res.data)
+  );
+  useEffect(() => {
+    if (store) {
+      form.reset(store);
+    }
+  }, [store]);
   const form = useForm({
     resolver: yupResolver(storeSchemaBuilder(translate)),
     defaultValues: {
-      ...state
-      //   from: convertStrToDate(get(state, ['time_from_to', '0'], null), 'HH:mm').toDate(),
-      //   to: convertStrToDate(get(state, ['time_from_to', '1'], null), 'HH:mm').toDate()
+      ...store
     }
   });
-
-  const {
-    data: menuInStores,
-    mutate: setappliedStores,
-    run
-  } = useRequest(() => menuInStoreApi.get({ 'store-id': [id] }), {
-    formatResult: (res) => {
-      console.log(`tranform(res.data)`, tranform(res.data));
-      return tranform(res.data);
+  const { data: menuInStores, refresh } = useRequest(
+    () => storeApi.getMenusByStoreId(Number(id)).then((res) => res.data),
+    {
+      onError: (error) => console.log(error)
+      // debounceInterval: 500
     }
-    // debounceInterval: 500
-  });
-
-  const onUpdateStore = (storeData) =>
+  );
+  const onUpdateStore = (storeData: any) =>
     storeApi
-      .update(+id, storeData)
+      .update(+id!, storeData)
       .then(() =>
         enqueueSnackbar(`Cập nhật thành công`, {
           variant: 'success'
@@ -86,42 +65,75 @@ const UpdateStorePage = () => {
         });
       });
 
-  const handleDelete = () =>
-    new Promise((res) =>
-      setTimeout(() => {
-        res();
-      }, 2000)
-    )
-      .then(() => setCurrentDeleteItem(null))
-      .then(() =>
-        enqueueSnackbar(translate('common.deleteSuccess'), {
-          variant: 'success'
-        })
-      );
+  const onDeleteStore = async (storeId: number) => {
+    try {
+      await storeApi.delete(storeId);
+      enqueueSnackbar('Xoá thành công', {
+        variant: 'success'
+      });
+      navigate(`${PATH_DASHBOARD.stores.root}`);
+    } catch (error) {
+      console.log(`error`, error);
+      enqueueSnackbar((error as any).message, {
+        variant: 'error'
+      });
+    }
+  };
+  const onDeleteMenu = async (menuId: number) => {
+    try {
+      await menuApi.delete(menuId);
+      enqueueSnackbar('Xoá thành công', {
+        variant: 'success'
+      });
+      refresh();
+    } catch (error) {
+      console.log(`error`, error);
+      enqueueSnackbar((error as any).message, {
+        variant: 'error'
+      });
+    }
+  };
+
+  const onConfirmDeleteMenu = async (menu: Menu) => {
+    confirm({
+      title: 'Xác nhận xoá',
+      content: `Bạn đồng ý xóa menu "${menu.menu_name}"?`,
+      onOk: async () => {
+        await onDeleteMenu(menu.menu_id);
+      },
+      onCancle: () => {}
+    });
+  };
+  const onConfirmDelete = async (store: TStore) => {
+    confirm({
+      title: 'Xác nhận xoá',
+      content: `Bạn đồng ý xóa "${store.name}"?`,
+      onOk: async () => {
+        await onDeleteStore(store.id);
+      },
+      onCancle: () => {}
+    });
+  };
 
   return (
     <FormProvider {...form}>
-      <DeleteConfirmDialog
-        open={Boolean(currentDeleteItem)}
-        onClose={() => setCurrentDeleteItem(null)}
-        onDelete={handleDelete}
-        title={
-          <>
-            {translate('common.confirmDeleteTitle')} <strong>{currentDeleteItem?.menu_name}</strong>
-            ?
-          </>
-        }
-      />
-      <Page title={translate('pages.stores.updateTitle')}>
-        <Box px={2} mx="auto">
-          <Stack mb={2} direction="row" justifyContent="space-between">
-            <Typography px={1} variant="h3" component="h4" gutterBottom>
-              {translate('pages.stores.updateTitle')}
-            </Typography>
-            <Button size="small" color="error" variant="outlined">
+      <Page
+        title={translate('pages.stores.updateTitle')}
+        actions={() => {
+          return [
+            <Button
+              onClick={() => onConfirmDelete(store!)}
+              key="delete"
+              size="small"
+              color="error"
+              variant="outlined"
+            >
               {translate('common.delete')}
             </Button>
-          </Stack>
+          ];
+        }}
+      >
+        <Box px={2} mx="auto">
           <Stack direction="column" mt={2} spacing={2}>
             <Card>
               <CardTitle>{translate('pages.stores.storeInfoTitle')}</CardTitle>
@@ -145,35 +157,35 @@ const UpdateStorePage = () => {
               <Box flex={1}>
                 <Stack spacing={2}>
                   <ResoTable
-                    dataSource={menuInStores}
+                    dataSource={menuInStores ?? []}
                     rowKey="menu_id"
-                    onDelete={setCurrentDeleteItem}
-                    onEdit={(menu) =>
+                    onDelete={onConfirmDeleteMenu}
+                    onEdit={(menu: any) =>
                       navigate(`${PATH_DASHBOARD.menus.root}/${menu.menu_id}`, { state: menu })
                     }
                     columns={[
                       {
-                        title: translate('pages.menus.table.dayFilter'),
-                        dataIndex: 'nenu_name'
+                        title: translate('pages.menus.table.menuName'),
+                        dataIndex: 'menu_name'
                       },
                       {
                         title: translate('pages.menus.table.timeRange'),
-                        dataIndex: 'time_range',
-                        render: (range) => (
+                        dataIndex: 'time_ranges',
+                        render: (range: any) => (
                           <>
                             {translate('pages.menus.table.fromTime')}{' '}
-                            <Label color="success">{range[0]}</Label>{' '}
+                            <Label color="success">{range[0][0]}</Label>{' '}
                             {translate('pages.menus.table.toTime')}{' '}
-                            <Label color="success">{range[1]}</Label>
+                            <Label color="success">{range[0][1]}</Label>
                           </>
                         )
                       },
                       {
                         title: translate('pages.menus.table.dayFilter'),
-                        dataIndex: 'dayFilters',
-                        render: (dayFilters) => (
+                        dataIndex: 'day_filters',
+                        render: (dayFilters: any) => (
                           <Stack direction="row" spacing={1}>
-                            {dayFilters?.map((day) => (
+                            {dayFilters?.map((day: any) => (
                               <Chip
                                 size="small"
                                 key={`${day}`}

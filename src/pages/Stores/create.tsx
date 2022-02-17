@@ -14,6 +14,8 @@ import { CardTitle } from 'pages/Products/components/Card';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import storeApi from 'redux/store/api';
+import { PATH_DASHBOARD } from 'routes/paths';
+import { TStore } from 'types/store';
 import StoreForm from './components/StoreForm';
 import { storeSchemaBuilder } from './utils';
 
@@ -26,17 +28,22 @@ const CreateStorePage = () => {
 
   const methods = useForm({
     resolver: yupResolver(storeSchemaBuilder(translate)),
-    defaultValues: {}
+    defaultValues: {
+      open_time: null,
+      close_time: null
+    }
   });
   const { handleSubmit } = methods;
 
-  const onSubmit = (values) =>
+  const onSubmit = (values: Omit<TStore, 'id'>) =>
     storeApi
       .create(values)
       .then((res) => {
-        enqueueSnackbar(`Tạo thành công ${values.product_name}`, {
+        enqueueSnackbar(`Tạo thành công ${values.name}`, {
           variant: 'success'
         });
+        navigate(`${PATH_DASHBOARD.stores.root}/${res.data.id}`);
+        console.log(res);
       })
       .catch((err) => {
         enqueueSnackbar(`Có lỗi xảy ra. Vui lòng thử lại`, {

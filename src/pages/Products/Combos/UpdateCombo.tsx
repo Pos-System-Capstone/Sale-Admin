@@ -18,6 +18,7 @@ import Page from 'components/Page';
 import useProduct from 'hooks/products/useProduct';
 import { DashboardNavLayout } from 'layouts/dashboard/DashboardNavbar';
 import { useSnackbar } from 'notistack';
+import React from 'react';
 import { useState } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router';
@@ -29,7 +30,7 @@ import BasicProductInfoForm from '../components/form/BasicProductInfoForm';
 import CategoryTreeForm from '../components/form/CategoryTreeForm';
 import ProductImagesForm from '../components/form/ProductImagesForm';
 import { validationSchema } from '../type';
-import { normalizeProductCombo, transformComboForm } from '../utils';
+import { normalizeProductCombo, transformComboForm, transformDraftToStr } from '../utils';
 import ChoiceGroupComboForm from './components/form/ChoiceGroupComboForm';
 
 interface Props {}
@@ -63,11 +64,19 @@ const UpdateCombo = (props: Props) => {
     },
     staleTime: Infinity
   });
-
+  React.useEffect(() => {
+    if (product) {
+      createComboForm.reset(product as CreateComboForm);
+    }
+  }, [product]);
   const { handleSubmit } = createComboForm;
 
   const onSubmit = (values: any) => {
-    return updateProdById(comboId, transformComboForm(values, CombinationModeEnum.ChoiceCombo))
+    const data = transformDraftToStr(values);
+    return updateProdById(
+      Number(comboId),
+      transformComboForm(data, CombinationModeEnum.ChoiceCombo)
+    )
       .then((res) => {
         enqueueSnackbar(`Cập nhật thành công ${values.product_name}`, {
           variant: 'success'

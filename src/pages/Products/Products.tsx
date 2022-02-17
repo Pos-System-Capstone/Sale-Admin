@@ -31,8 +31,13 @@ export default function EcommerceShop() {
   const navigate = useNavigate();
   const { t } = useLocales();
 
-  const editProuct = ({ product_id }: any) =>
-    navigate(`${PATH_DASHBOARD.products.root}/${product_id}`);
+  const editProuct = (data: TProductBase) => {
+    if (data.product_type === 1) {
+      navigate(`${PATH_DASHBOARD.combos.editById(data.product_id)}`);
+    } else {
+      navigate(`${PATH_DASHBOARD.products.root}/${data.product_id}`);
+    }
+  };
 
   const onDelete = (currentDeleteItem: TProductBase) => {
     confirm({
@@ -43,12 +48,13 @@ export default function EcommerceShop() {
       ),
       content: 'Sản phẩm này sẽ bị xoá khỏi hệ thống',
       onOk: () => {
-        return deleteProdById(currentDeleteItem.product_id)
+        return deleteProdById(currentDeleteItem.product_id!)
           .then((res) => {
             enqueueSnackbar(t('common.deleteSuccess'), {
               variant: 'success'
             });
           })
+          .then(() => ref.current?.reload())
           .catch((err) => {
             enqueueSnackbar(t('common.error'), {
               variant: 'error'

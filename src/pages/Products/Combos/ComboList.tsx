@@ -22,6 +22,9 @@ const ComboList = (props: Props) => {
   const navigate = useNavigate();
   const ref = useRef<any>();
 
+  const editProuct = ({ product_id }: any) =>
+    navigate(`${PATH_DASHBOARD.products.root}/${product_id}`);
+
   const onDelete = (currentDeleteItem: TProductBase) => {
     confirm({
       title: (
@@ -31,7 +34,7 @@ const ComboList = (props: Props) => {
       ),
       content: 'Sản phẩm này sẽ bị xoá khỏi hệ thống',
       onOk: () => {
-        return deleteProdById(currentDeleteItem.product_id)
+        return deleteProdById(currentDeleteItem.product_id!)
           .then((res) => {
             enqueueSnackbar(t('common.deleteSuccess'), {
               variant: 'success'

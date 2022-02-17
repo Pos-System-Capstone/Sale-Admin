@@ -8,8 +8,9 @@ import { get } from 'lodash';
 import { useSnackbar } from 'notistack';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useQuery } from 'react-query';
 import { useLocation, useParams } from 'react-router-dom';
-import { updateCollection } from 'redux/collections/api';
+import { getCollectionById, updateCollection } from 'redux/collections/api';
 import { TCollection } from 'types/collection';
 import CollectionInfoTab from './tabs/CollectionInfoTab';
 import ProductInCollectionTab from './tabs/ProductInCollectionTab';
@@ -47,6 +48,12 @@ const UpdateCollectionPage = () => {
       ...state
     }
   });
+
+  const { data } = useQuery(['colections', Number(id)], () =>
+    getCollectionById(Number(id)).then((res) => res.data)
+  );
+
+  console.log(data);
 
   const onUpdateCollection = (values: TCollection) =>
     updateCollection(+id!, values)
