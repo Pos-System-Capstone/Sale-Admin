@@ -58,6 +58,7 @@
     },
     "menus": {
       "table": {
+        "menuName": "Tên bảng giá",
         "storeName": "Cửa hàng",
         "timeRange": "Khung giờ",
         "dayFilter": "Ngày áp dụng",

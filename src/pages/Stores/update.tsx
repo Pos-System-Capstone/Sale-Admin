@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Button, Card, Chip, Stack } from '@mui/material';
 import { useRequest } from 'ahooks';
+import menuApi from 'api/menu';
 import Label from 'components/Label';
 import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
 import confirm from 'components/Modal/confirm';
@@ -11,70 +12,44 @@ import useLocales from 'hooks/useLocales';
 import { get } from 'lodash-es';
 import { useSnackbar } from 'notistack';
 import { CardTitle } from 'pages/Products/components/Card';
-import { useRef, useState } from 'react';
+import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useQuery } from 'react-query';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { menuInStoreApi } from 'redux/menu/api';
+import { useNavigate, useParams } from 'react-router-dom';
 import storeApi from 'redux/store/api';
 import { PATH_DASHBOARD } from 'routes/paths';
+import { Menu } from 'types/menu';
 import { TStore } from 'types/store';
 import StoreForm from './components/StoreForm';
 import { storeSchemaBuilder } from './utils';
 
-const tranform = (input: any) => {
-  const output: any[] = [];
-  input?.forEach((mInStore: any) => {
-    if (mInStore.menus && mInStore.menus.length !== 0) {
-      output.push(
-        ...mInStore.menus.map((menu: any) => ({
-          menu_in_store_id: mInStore.id,
-          store: { id: mInStore.id, store_name: mInStore.name },
-          dayFilters: menu.day_filters,
-          time_range: menu.time_range,
-          menu_id: menu.menu_id,
-          menu_name: menu.menu_name
-        }))
-      );
-    }
-  });
-
-  return output;
-};
-
 const UpdateStorePage = () => {
-  const { state } = useLocation();
   const { id } = useParams();
   const { translate } = useLocales();
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
-  const tableRef = useRef<any>();
-  const [currentDeleteItem, setCurrentDeleteItem] = useState<TStore | null>(null);
-  const form = useForm({
-    resolver: yupResolver(storeSchemaBuilder(translate)),
-    defaultValues: {
-      ...state
-      //   from: convertStrToDate(get(state, ['time_from_to', '0'], null), 'HH:mm').toDate(),
-      //   to: convertStrToDate(get(state, ['time_from_to', '1'], null), 'HH:mm').toDate()
-    }
-  });
-  console.log(id);
+
   const { data: store } = useQuery(['stores', Number(id)], () =>
     storeApi.getById(id).then((res) => res.data)
   );
-  const {
-    data: menuInStores,
-    mutate: setappliedStores,
-    run
-  } = useRequest(() => menuInStoreApi.get({ 'store-id': [id] }), {
-    formatResult: (res) => {
-      console.log(`tranform(res.data)`, tranform(res.data));
-      return tranform(res.data);
-    },
-    onError: (error) => console.log(error)
-    // debounceInterval: 500
+  useEffect(() => {
+    if (store) {
+      form.reset(store);
+    }
+  }, [store]);
+  const form = useForm({
+    resolver: yupResolver(storeSchemaBuilder(translate)),
+    defaultValues: {
+      ...store
+    }
   });
-  console.log(menuInStores);
+  const { data: menuInStores, refresh } = useRequest(
+    () => storeApi.getMenusByStoreId(Number(id)).then((res) => res.data),
+    {
+      onError: (error) => console.log(error)
+      // debounceInterval: 500
+    }
+  );
   const onUpdateStore = (storeData: any) =>
     storeApi
       .update(+id!, storeData)
@@ -96,8 +71,6 @@ const UpdateStorePage = () => {
       enqueueSnackbar('Xoá thành công', {
         variant: 'success'
       });
-      console.log(`tableRef.current`, tableRef.current);
-      tableRef.current?.reload();
       navigate(`${PATH_DASHBOARD.stores.root}`);
     } catch (error) {
       console.log(`error`, error);
@@ -106,11 +79,35 @@ const UpdateStorePage = () => {
       });
     }
   };
+  const onDeleteMenu = async (menuId: number) => {
+    try {
+      await menuApi.delete(menuId);
+      enqueueSnackbar('Xoá thành công', {
+        variant: 'success'
+      });
+      refresh();
+    } catch (error) {
+      console.log(`error`, error);
+      enqueueSnackbar((error as any).message, {
+        variant: 'error'
+      });
+    }
+  };
 
+  const onConfirmDeleteMenu = async (menu: Menu) => {
+    confirm({
+      title: 'Xác nhận xoá',
+      content: `Bạn đồng ý xóa menu "${menu.menu_name}"?`,
+      onOk: async () => {
+        await onDeleteMenu(menu.menu_id);
+      },
+      onCancle: () => {}
+    });
+  };
   const onConfirmDelete = async (store: TStore) => {
     confirm({
       title: 'Xác nhận xoá',
-      content: `Bạn đồng ý xóa menu "${store.name}"?`,
+      content: `Bạn đồng ý xóa "${store.name}"?`,
       onOk: async () => {
         await onDeleteStore(store.id);
       },
@@ -162,30 +159,30 @@ const UpdateStorePage = () => {
                   <ResoTable
                     dataSource={menuInStores ?? []}
                     rowKey="menu_id"
-                    onDelete={setCurrentDeleteItem}
+                    onDelete={onConfirmDeleteMenu}
                     onEdit={(menu: any) =>
                       navigate(`${PATH_DASHBOARD.menus.root}/${menu.menu_id}`, { state: menu })
                     }
                     columns={[
                       {
-                        title: translate('pages.menus.table.dayFilter'),
-                        dataIndex: 'nenu_name'
+                        title: translate('pages.menus.table.menuName'),
+                        dataIndex: 'menu_name'
                       },
                       {
                         title: translate('pages.menus.table.timeRange'),
-                        dataIndex: 'time_range',
+                        dataIndex: 'time_ranges',
                         render: (range: any) => (
                           <>
                             {translate('pages.menus.table.fromTime')}{' '}
-                            <Label color="success">{range[0]}</Label>{' '}
+                            <Label color="success">{range[0][0]}</Label>{' '}
                             {translate('pages.menus.table.toTime')}{' '}
-                            <Label color="success">{range[1]}</Label>
+                            <Label color="success">{range[0][1]}</Label>
                           </>
                         )
                       },
                       {
                         title: translate('pages.menus.table.dayFilter'),
-                        dataIndex: 'dayFilters',
+                        dataIndex: 'day_filters',
                         render: (dayFilters: any) => (
                           <Stack direction="row" spacing={1}>
                             {dayFilters?.map((day: any) => (
