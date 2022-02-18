@@ -22,13 +22,15 @@ const CategoryTreeForm = ({ isExtraCate = false }: Props) => {
         return {
           id: category.cate_id,
           name: category.cate_name,
-          children: []
+          children: [],
+          isContainer: category.is_container
         };
       }
       return {
         id: category.cate_id,
         name: category.cate_name,
-        children: category.childs.map(generateTree)
+        children: category.childs.map(generateTree),
+        isContainer: category.is_container
       };
     };
 
@@ -36,10 +38,20 @@ const CategoryTreeForm = ({ isExtraCate = false }: Props) => {
       categories?.map((c) => ({
         id: `${c.cate_id}`,
         name: c.cate_name,
+        isContainer: c.is_container,
         children: c?.childs.map(generateTree)
       })) ?? []
     );
   }, [categories]);
+
+  // async function getChilds(cateId?: number) {
+  //   let results = await getCategoryChilds(Number(cateId));
+  //   return results;
+  // }
+  // let getChilds = (cateId?: number) =>
+  //   await getCategoryChilds(Number(cateId)).then((res) => {
+  //     res.cate_id, res.cate_name, res.is_container, res.childs;
+  //   });
 
   const checkIsRootCategory = (id: string, cates: TCategory[]): boolean => {
     return cates?.some((c) => {
