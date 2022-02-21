@@ -110,9 +110,6 @@ const CategoryForm = ({ updateMode }: Props) => {
           <UploadImageField.Avatar name="pic_url" label={translate('categories.table.thumbnail')} />
         </Box>
       </Grid>
-      {/* <Grid item xs={12} sm={6}>
-        <InputField fullWidth label="Thứ tự" name="position" />
-      </Grid> */}
 
       <Grid item xs={12} sm={6}>
         <InputField fullWidth name="cate_name" label={translate('categories.table.cateName')} />

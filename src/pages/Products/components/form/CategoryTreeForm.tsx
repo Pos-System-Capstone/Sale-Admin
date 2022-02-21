@@ -44,15 +44,6 @@ const CategoryTreeForm = ({ isExtraCate = false }: Props) => {
     );
   }, [categories]);
 
-  // async function getChilds(cateId?: number) {
-  //   let results = await getCategoryChilds(Number(cateId));
-  //   return results;
-  // }
-  // let getChilds = (cateId?: number) =>
-  //   await getCategoryChilds(Number(cateId)).then((res) => {
-  //     res.cate_id, res.cate_name, res.is_container, res.childs;
-  //   });
-
   const checkIsRootCategory = (id: string, cates: TCategory[]): boolean => {
     return cates?.some((c) => {
       if (c.cate_id === Number(id)) {

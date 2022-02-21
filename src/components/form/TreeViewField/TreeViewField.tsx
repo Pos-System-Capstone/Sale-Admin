@@ -110,7 +110,7 @@ export default function TreeViewField({
     return getAllChild(getNodeById(node, id));
   }
 
-  function getOnChange(checked: boolean, nodes: RenderTree) {
+  function onChangeHandler(checked: boolean, nodes: RenderTree) {
     if (!multiple) {
       onChangeValue(checked ? nodes.id : null);
       return;
@@ -177,7 +177,7 @@ export default function TreeViewField({
                     defaultChecked={checked}
                     checked={checked}
                     onChange={(event) => {
-                      getOnChange(event.currentTarget.checked, nodes);
+                      onChangeHandler(event.currentTarget.checked, nodes);
                     }}
                   />
                 }

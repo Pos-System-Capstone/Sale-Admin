@@ -13,7 +13,7 @@ const getProductsInCategory = (catId: number, params?: any) => {
   return request.get<BaseReponse<TProductBase>>(`/categories/${catId}/products`, { params });
 };
 
-const getChildByCategoriId = (catId: number) => {
+const getChildByCategoryId = (catId: number) => {
   return request.get<TCategory[]>(`/categories/${catId}/childs`);
 };
 
@@ -37,7 +37,7 @@ const categoryApi = {
   getExtraCategoriesFromCateId,
   getModifiersOfCategory,
   addModifiersOfCategory,
-  getChildByCategoriId,
+  getChildByCategoryId,
   updateModifiersOfCategory,
   deleteModifiersOfCategory,
   getProductsInCategory
