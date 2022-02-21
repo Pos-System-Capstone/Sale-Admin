@@ -8,6 +8,7 @@ import useCategories from 'hooks/categories/useCategories';
 import { TCategory } from 'types/category';
 import getCategoryChilds from 'hooks/categories/useCategoryChild';
 import { useState } from 'react';
+import { cloneDeep } from 'lodash';
 
 interface Props {
   updateMode?: boolean;
@@ -54,10 +55,11 @@ const CategoryForm = ({ updateMode }: Props) => {
 
   const getChilds = async (cateId?: number) => {
     let results = await getCategoryChilds(Number(cateId));
-    const updateCategories = [...categories];
+    const updateCategories = cloneDeep([...categories]);
     let foundedParent = null;
     for (const childCate of updateCategories) {
       foundedParent = findParentCateFromCate(childCate, cateId!);
+      if (foundedParent) break;
     }
     if (foundedParent) {
       foundedParent.childs = results;

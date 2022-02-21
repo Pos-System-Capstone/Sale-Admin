@@ -115,7 +115,6 @@ export default function TreeViewField({
       onChangeValue(checked ? nodes.id : null);
       return;
     }
-
     let array = checked
       ? [...controlledValue, nodes.id]
       : controlledValue.filter((value: any) => value !== nodes.id);
