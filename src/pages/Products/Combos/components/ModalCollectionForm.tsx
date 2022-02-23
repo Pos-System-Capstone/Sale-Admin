@@ -83,14 +83,15 @@ const ModalCollectionForm = ({ trigger, onSubmit, selected = [] }: Props) => {
               </IconButton>
             </Box>
           </Paper>
-          <Box p={1} sx={{ flex: 1, overflowY: 'auto' }}>
+          <Box p={1} sx={{ padding: '1em', width: '740px', flex: 1, overflowY: 'auto' }}>
             <Stack spacing={2}>
               <ResoTable
                 defaultFilters={{
                   type: CollectionTypeEnum.GroupCollection
                 }}
                 checkboxSelection={{
-                  selection: selectedProductIds
+                  selection: selectedProductIds,
+                  type: 'radio'
                 }}
                 showAction={false}
                 scroll={{ y: '50%', x: '100%' }}

@@ -26,6 +26,7 @@ import productInCollectionApi from 'api/collection';
 import { differenceBy } from 'lodash';
 import { CombinationModeEnum } from 'types/product';
 import ModalProductForm from 'components/ModalProductForm/ModalProductForm';
+import { Card } from '@mui/material';
 
 interface Props {}
 
@@ -107,94 +108,102 @@ const ChoiceGroupComboForm = (props: Props) => {
   const selectedProdIds = fixedProductsControlledFields?.map(({ product_id }) => product_id);
 
   return (
-    <Stack spacing={2}>
-      <Stack alignItems="center" direction="row" justifyContent="space-between">
-        <CardTitle mb={2} variant="subtitle1">
-          Nhóm sản phẩm
-        </CardTitle>
-        <Stack spacing={2} direction="row">
-          <ModalProductForm
-            selected={selectedProdIds}
-            onSubmit={handleAddFixedProduct}
-            trigger={
-              <Button size="small" variant="outlined">
-                Thêm sản phẩm
-              </Button>
-            }
-          />
-          <ModalCollectionForm
-            selected={selectedGroupIds}
-            onSubmit={handleAddGroup}
-            trigger={
-              <Button size="small" variant="outlined" startIcon={<Add />}>
-                Thêm nhóm sản phẩm
-              </Button>
-            }
-          />
-        </Stack>
-      </Stack>
-
-      {controlledFields.map((group: TCollection, idx) => (
-        <Stack spacing={2} key={`extra-product-group-${group.id}`}>
-          <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-between">
-            <Stack direction="row" spacing={1} alignItems="center" mb={1}>
-              <Label color="default">{idx + 1}</Label>
-              <Typography variant="h6">{group.name}</Typography>
+    <>
+      <Card>
+        <Stack spacing={2}>
+          <Stack alignItems="center" direction="row" justifyContent="space-between">
+            <CardTitle mb={2} variant="subtitle1">
+              Nhóm sản phẩm
+            </CardTitle>
+            <Stack spacing={2} direction="row">
+              <ModalProductForm
+                selected={selectedProdIds}
+                onSubmit={handleAddFixedProduct}
+                trigger={
+                  <Button size="small" variant="outlined">
+                    Thêm sản phẩm
+                  </Button>
+                }
+              />
+              <ModalCollectionForm
+                selected={selectedGroupIds}
+                onSubmit={handleAddGroup}
+                trigger={
+                  <Button size="small" variant="outlined" startIcon={<Add />}>
+                    Thêm nhóm sản phẩm
+                  </Button>
+                }
+              />
             </Stack>
-            <IconButton onClick={() => removeGroup(idx)} sx={{ color: 'red' }} size="large">
-              <Icon icon={trashIcon} />
-            </IconButton>
           </Stack>
-          <Stack spacing={2} pl={2}>
-            <Grid container spacing={2}>
-              <Grid item xs={6}>
-                <InputField
-                  fullWidth
-                  type="number"
-                  label="Số sản phẩm tối thiểu được chọn trong nhóm"
-                  name={`groups.${idx}.min`}
-                />
-                <InputField name={`groups.${idx}.id`} style={{ display: 'none' }} hidden />
-                <InputField
-                  name={`groups.${idx}.base_product_id`}
-                  style={{ display: 'none' }}
-                  hidden
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <InputField
-                  fullWidth
-                  type="number"
-                  label="Số sản phẩm tối đa được chọn trong nhóm"
-                  name={`groups.${idx}.max`}
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <InputField
-                  fullWidth
-                  type="number"
-                  label="Thứ tự"
-                  name={`groups.${idx}.position`}
-                />
-              </Grid>
-            </Grid>
-            <ProductGroupTable groupIdx={idx} control={control} />
-          </Stack>
+
+          {controlledFields.map((group: TCollection, idx) => (
+            <Stack spacing={2} key={`extra-product-group-${group.id}`}>
+              <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-between">
+                <Stack direction="row" spacing={1} alignItems="center" mb={1}>
+                  <Label color="default">{idx + 1}</Label>
+                  <Typography variant="h6">{group.name}</Typography>
+                </Stack>
+                <IconButton onClick={() => removeGroup(idx)} sx={{ color: 'red' }} size="large">
+                  <Icon icon={trashIcon} />
+                </IconButton>
+              </Stack>
+              <Stack spacing={2} pl={2}>
+                <Grid container spacing={2}>
+                  <Grid item xs={6}>
+                    <InputField
+                      fullWidth
+                      type="number"
+                      label="Số sản phẩm tối thiểu được chọn trong nhóm"
+                      name={`groups.${idx}.min`}
+                    />
+                    <InputField name={`groups.${idx}.id`} style={{ display: 'none' }} hidden />
+                    <InputField
+                      name={`groups.${idx}.base_product_id`}
+                      style={{ display: 'none' }}
+                      hidden
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <InputField
+                      fullWidth
+                      type="number"
+                      label="Số sản phẩm tối đa được chọn trong nhóm"
+                      name={`groups.${idx}.max`}
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <InputField
+                      fullWidth
+                      type="number"
+                      label="Thứ tự"
+                      name={`groups.${idx}.position`}
+                    />
+                  </Grid>
+                </Grid>
+                <ProductGroupTable groupIdx={idx} control={control} />
+              </Stack>
+            </Stack>
+          ))}
         </Stack>
-      ))}
+      </Card>
 
       {Boolean(fixedProductsControlledFields?.length) && (
-        <Stack spacing={2}>
-          <CardTitle mb={2} variant="subtitle1">
-            Sản phẩm
-          </CardTitle>
-          <FixedProductTable
-            products={fixedProductsControlledFields}
-            onRemove={removeFixedProduct}
-          />
+        <Stack spacing={2} pt={2}>
+          <Card>
+            <Stack spacing={2}>
+              <CardTitle mb={2} variant="subtitle1">
+                Sản phẩm
+              </CardTitle>
+              <FixedProductTable
+                products={fixedProductsControlledFields}
+                onRemove={removeFixedProduct}
+              />
+            </Stack>
+          </Card>
         </Stack>
       )}
-    </Stack>
+    </>
   );
 };
 

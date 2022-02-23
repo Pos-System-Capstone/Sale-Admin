@@ -618,7 +618,7 @@ const ResoTable = (
     <FormProvider {...form}>
       <Container style={{ padding: 0 }}>
         {showFilter && (
-          <Box py={2}>
+          <Box py={0}>
             <TableFilterForm controls={columns} />
           </Box>
         )}
