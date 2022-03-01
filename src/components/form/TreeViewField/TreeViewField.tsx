@@ -1,7 +1,16 @@
 /* eslint-disable eqeqeq */
 import { Folder } from '@mui/icons-material';
 import { TreeView } from '@mui/lab';
-import { Checkbox, FormControlLabel, Radio, Box, Typography } from '@mui/material';
+import {
+  Checkbox,
+  FormControlLabel,
+  Radio,
+  Box,
+  Typography,
+  CircularProgress,
+  Stack
+} from '@mui/material';
+
 import { union } from 'lodash';
 import {
   MinusSquare,
@@ -13,19 +22,29 @@ import { useEffect, useState } from 'react';
 
 type Props = {
   multiple?: boolean;
+
   data?: RenderTree[];
   value?: any[] | any;
   onChange?: (updatedValue: any[] | any) => any;
   onDisabled?: (id: string) => boolean;
+  onClickContainer?: (cateId: number) => Promise<any>;
 };
 
-export default function TreeViewField({ data = [], value, onChange, multiple, onDisabled }: Props) {
+export default function TreeViewField({
+  data = [],
+  value,
+  onChange,
+  multiple,
+  onDisabled,
+  onClickContainer
+}: Props) {
   const [selected, setSelected] = useState<any[] | any>(() => {
     if (value) return value;
     return multiple ? [] : null;
   });
   const [expanded, setExpanded] = useState<string[]>([]);
-
+  const [isLoading, setLoading] = useState(false);
+  const [currentCateId, setCurrentCateId] = useState<number>();
   const controlledValue = value ?? selected;
 
   const onChangeValue = (updateValue: any) => {
@@ -36,13 +55,14 @@ export default function TreeViewField({ data = [], value, onChange, multiple, on
     }
   };
 
-  const handleToggle = (event: React.SyntheticEvent, nodeIds: string[]) => {
+  const handleToggle = async (event: React.SyntheticEvent, nodeIds: string[]) => {
+    const lastNodeId = nodeIds[0];
+    await clickContainerHandler(Number(lastNodeId));
     setExpanded(nodeIds);
   };
 
   useEffect(() => {
     let array: string[] = [];
-
     for (let index = 0; index < data?.length; index++) {
       const node = data[index];
       const childs = getChildById(node, node.id);
@@ -58,10 +78,10 @@ export default function TreeViewField({ data = [], value, onChange, multiple, on
 
   function getChildById(node: RenderTree, id: string) {
     let array: string[] = [];
-
     function getAllChild(nodes: RenderTree | null) {
       if (nodes === null) return [];
       array.push(nodes.id);
+
       if (Array.isArray(nodes.children)) {
         nodes.children.forEach((node) => {
           array = [...array, ...getAllChild(node)];
@@ -74,7 +94,7 @@ export default function TreeViewField({ data = [], value, onChange, multiple, on
     function getNodeById(nodes: RenderTree, id: string) {
       if (nodes.id === id) {
         return nodes;
-      } else if (Array.isArray(nodes.children)) {
+      } else if (nodes.isContainer) {
         let result = null;
         nodes.children.forEach((node) => {
           if (!!getNodeById(node, id)) {
@@ -90,18 +110,26 @@ export default function TreeViewField({ data = [], value, onChange, multiple, on
     return getAllChild(getNodeById(node, id));
   }
 
-  function getOnChange(checked: boolean, nodes: RenderTree) {
+  function onChangeHandler(checked: boolean, nodes: RenderTree) {
     if (!multiple) {
       onChangeValue(checked ? nodes.id : null);
       return;
     }
-
     let array = checked
       ? [...controlledValue, nodes.id]
       : controlledValue.filter((value: any) => value !== nodes.id);
-
     onChangeValue(array);
   }
+  const clickContainerHandler = async (cateId?: number) => {
+    setLoading(true);
+    setCurrentCateId(cateId);
+    if (onClickContainer) {
+      await onClickContainer(Number(cateId));
+      setLoading(false);
+    } else {
+      setLoading(false);
+    }
+  };
 
   const renderTree = (nodes: RenderTree) => {
     const checked = multiple
@@ -115,16 +143,28 @@ export default function TreeViewField({ data = [], value, onChange, multiple, on
       : childs.some((v) => v === controlledValue);
 
     const disabled = onDisabled && onDisabled(nodes.id);
-    const isContainer = Boolean(nodes.children?.length);
-    // console.log(`nodes.id, disabled`, nodes.id, disabled);
+    const isContainer = Boolean(nodes.isContainer);
+
     return (
       <StyledTreeItem
         key={`${nodes.id}`}
         defaultChecked={childHasSelected}
         nodeId={`${nodes.id}`}
         label={
-          <Box sx={{ display: 'flex', alignItems: 'center', p: 0.5, pr: 0 }}>
-            {isContainer && <Folder sx={{ color: 'primary.main', pr: 1 }} />}
+          <Box
+            onClick={() => {
+              clickContainerHandler(Number(nodes.id));
+            }}
+            sx={{ display: 'flex', alignItems: 'center', p: 0.5, pr: 0 }}
+          >
+            {isContainer && (
+              <Stack direction="row" spacing={1} alignItems="center">
+                <Folder sx={{ color: 'primary.main', pr: 1 }} />
+                {isLoading && currentCateId == Number(nodes.id) && (
+                  <CircularProgress size={25} color="success" />
+                )}
+              </Stack>
+            )}
             {disabled ? (
               <>
                 <Typography>{nodes.name}</Typography>
@@ -136,8 +176,9 @@ export default function TreeViewField({ data = [], value, onChange, multiple, on
                   <Control
                     defaultChecked={checked}
                     checked={checked}
-                    onChange={(event) => getOnChange(event.currentTarget.checked, nodes)}
-                    // onClick={(e) => e.stopPropagation()}
+                    onChange={(event) => {
+                      onChangeHandler(event.currentTarget.checked, nodes);
+                    }}
                   />
                 }
                 label={<>{nodes.name}</>}
@@ -168,5 +209,6 @@ export default function TreeViewField({ data = [], value, onChange, multiple, on
 export type RenderTree = {
   id: string;
   name: string;
-  children?: RenderTree[];
+  isContainer: boolean;
+  children: RenderTree[];
 };

@@ -86,7 +86,11 @@ const CategoryExtraTab = (props: Props) => {
 
   const onDeleteExtra = (extra: TCategoryExtra) => {
     confirm({
-      title: 'Xác nhận xoá',
+      title: (
+        <>
+          Xác nhận xóa <strong>{extra.extra_cate.cate_name}</strong>
+        </>
+      ),
       content: 'Xoá nhóm extra này?',
       onOk: async () => {
         try {

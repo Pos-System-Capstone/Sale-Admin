@@ -22,13 +22,15 @@ const CategoryTreeForm = ({ isExtraCate = false }: Props) => {
         return {
           id: category.cate_id,
           name: category.cate_name,
-          children: []
+          children: [],
+          isContainer: category.is_container
         };
       }
       return {
         id: category.cate_id,
         name: category.cate_name,
-        children: category.childs.map(generateTree)
+        children: category.childs.map(generateTree),
+        isContainer: category.is_container
       };
     };
 
@@ -36,6 +38,7 @@ const CategoryTreeForm = ({ isExtraCate = false }: Props) => {
       categories?.map((c) => ({
         id: `${c.cate_id}`,
         name: c.cate_name,
+        isContainer: c.is_container,
         children: c?.childs.map(generateTree)
       })) ?? []
     );

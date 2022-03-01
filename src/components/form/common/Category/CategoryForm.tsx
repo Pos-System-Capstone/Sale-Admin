@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { Box, Grid, Typography } from '@mui/material';
 import { CheckBoxField, DraftEditorField, InputField, UploadImageField } from 'components/form';
 import useLocales from 'hooks/useLocales';
@@ -6,6 +6,9 @@ import { Controller, useFormContext } from 'react-hook-form';
 import TreeViewField, { RenderTree } from 'components/form/TreeViewField/TreeViewField';
 import useCategories from 'hooks/categories/useCategories';
 import { TCategory } from 'types/category';
+import getCategoryChilds from 'hooks/categories/useCategoryChild';
+import { useState } from 'react';
+import { cloneDeep } from 'lodash';
 
 interface Props {
   updateMode?: boolean;
@@ -14,21 +17,29 @@ interface Props {
 const CategoryForm = ({ updateMode }: Props) => {
   const { translate } = useLocales();
   const { watch } = useFormContext();
-  const { data: categories } = useCategories({ 'only-root': true });
+  const [categories, setCategories] = useState<TCategory[]>([]);
+
+  const { data } = useCategories({ 'only-root': true });
+
+  useEffect(() => {
+    setCategories(data ?? []);
+  }, [data]);
 
   const categoryTreeData = useMemo<RenderTree[]>(() => {
     const generateTree: any = (category: TCategory) => {
-      if (!category.childs || category.childs.length === 0) {
+      if (!category.is_container) {
         return {
           id: category.cate_id,
           name: category.cate_name,
-          children: []
+          children: [],
+          isContainer: category.is_container
         };
       }
       return {
         id: category.cate_id,
         name: category.cate_name,
-        children: category.childs.map(generateTree)
+        isContainer: category.is_container,
+        children: category.childs?.length ? category.childs.map(generateTree) : [<div key="stub" />]
       };
     };
 
@@ -36,10 +47,37 @@ const CategoryForm = ({ updateMode }: Props) => {
       categories?.map((c) => ({
         id: `${c.cate_id}`,
         name: c.cate_name,
+        isContainer: c.is_container,
         children: c?.childs.map(generateTree)
       })) ?? []
     );
   }, [categories]);
+
+  const getChilds = async (cateId?: number) => {
+    let results = await getCategoryChilds(Number(cateId));
+    const updateCategories = cloneDeep([...categories]);
+    let foundedParent = null;
+    for (const childCate of updateCategories) {
+      foundedParent = findParentCateFromCate(childCate, cateId!);
+      if (foundedParent) break;
+    }
+    if (foundedParent) {
+      foundedParent.childs = results;
+    }
+    setCategories(updateCategories);
+  };
+
+  const findParentCateFromCate = (cate: TCategory, parentCateId: number): TCategory | null => {
+    if (cate.cate_id === parentCateId) {
+      return cate;
+    }
+    if (!cate.childs) return null;
+    for (const childCate of cate.childs) {
+      const foundedParent = findParentCateFromCate(childCate, parentCateId!);
+      if (foundedParent) return foundedParent;
+    }
+    return null;
+  };
 
   const checkIsRootCategory = (id: string, cates: TCategory[]): boolean => {
     return cates?.some((c) => {
@@ -72,9 +110,6 @@ const CategoryForm = ({ updateMode }: Props) => {
           <UploadImageField.Avatar name="pic_url" label={translate('categories.table.thumbnail')} />
         </Box>
       </Grid>
-      {/* <Grid item xs={12} sm={6}>
-        <InputField fullWidth label="Thứ tự" name="position" />
-      </Grid> */}
 
       <Grid item xs={12} sm={6}>
         <InputField fullWidth name="cate_name" label={translate('categories.table.cateName')} />
@@ -109,7 +144,10 @@ const CategoryForm = ({ updateMode }: Props) => {
                 onDisabled={(id) => !checkIsRootCategory(id, categories ?? [])}
                 data={categoryTreeData}
                 value={field.value}
-                onChange={field.onChange}
+                onClickContainer={getChilds}
+                onChange={(e: any) => {
+                  field.onChange(e);
+                }}
               />
             )}
           />

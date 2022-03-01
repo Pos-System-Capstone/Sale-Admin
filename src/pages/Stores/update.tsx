@@ -47,7 +47,6 @@ const UpdateStorePage = () => {
     () => storeApi.getMenusByStoreId(Number(id)).then((res) => res.data),
     {
       onError: (error) => console.log(error)
-      // debounceInterval: 500
     }
   );
   const onUpdateStore = (storeData: any) =>

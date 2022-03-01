@@ -32,16 +32,6 @@ const CreateCombo = (props: Props) => {
   const [activeStep, setActiveStep] = useState(0);
 
   const createComboForm = useForm({
-    defaultValues: {
-      groups: [
-        {
-          id: 0,
-          name: 'Test',
-          min: 1,
-          max: 2
-        }
-      ]
-    },
     resolver: activeStep === 0 ? yupResolver(validationSchema) : undefined
   });
 
@@ -166,9 +156,7 @@ const CreateCombo = (props: Props) => {
           )}
           {activeStep === 1 && (
             <Stack width="100%">
-              <Card>
-                <ChoiceGroupComboForm />
-              </Card>
+              <ChoiceGroupComboForm />
             </Stack>
           )}
         </Box>

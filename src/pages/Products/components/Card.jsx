@@ -22,5 +22,6 @@ export const Card = styled((props) => (
 export const CardTitle = styled(Typography)({
   display: 'inline-block',
   textAlign: 'left',
-  marginBottom: '0px'
+  marginBottom: '0px',
+  fontSize: '24px'
 });
