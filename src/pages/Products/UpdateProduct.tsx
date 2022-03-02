@@ -1,12 +1,23 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable camelcase */
 /* eslint-disable no-plusplus */
 /* eslint-disable react/prop-types */
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Box, Button, CircularProgress, MenuItem, Stack, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  CircularProgress,
+  DialogContent,
+  DialogTitle,
+  Grid,
+  MenuItem,
+  Stack,
+  Typography
+} from '@mui/material';
 import plusFill from '@iconify/icons-eva/plus-fill';
 import EmptyContent from 'components/EmptyContent';
 import { useSnackbar } from 'notistack';
-import React from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useQuery } from 'react-query';
 import { Icon } from '@iconify/react';
@@ -21,27 +32,29 @@ import MiddleForm from './components/MiddleForm';
 import { DEFAULT_VALUES, UpdateProductForm, validationSchema } from './type';
 import { transformDraftToStr, normalizeProductData, transformProductForm } from './utils';
 import ModalForm from 'components/ModalForm/ModalForm';
-import { SelectField } from 'components/form';
+import { CheckBoxField, InputField, SelectField } from 'components/form';
 import { useRequest } from 'ahooks';
 import { getMenus } from 'redux/menu/api';
-import ProductInMenuDialog from '../Menus/components/EditProductDialog';
+// import ProductInMenuDialog from '../Menus/components/EditProductDialog';
 import { addProductInMenus, updateProdInMenuInfo } from 'redux/menu/api';
 import { get } from 'lodash';
 import { TProductBase } from 'types/product';
+import useLocales from 'hooks/useLocales';
 
 const UpdateProduct = () => {
   const { data: menus } = useRequest<any>(getMenus, { formatResult: (res) => res.data.data });
-  console.log(menus);
 
   const [currentProduct, setCurrentProduct] = React.useState<TProductBase | null>(null);
   const [isAddProduct, setIsAddProduct] = React.useState(false);
+  const [menuId, setMenuId] = React.useState(0);
 
   const ref = React.useRef<any>();
 
   const run = ref.current?.reload;
 
-  const addProductToMenuHandler = (datas: any) =>
-    addProductInMenus(+id!, datas)
+  const addProductToMenuHandler = (datas: any) => {
+    console.log(datas.id);
+    addProductInMenus(+datas.id!, datas)
       .then(() =>
         enqueueSnackbar(`Thêm thành công`, {
           variant: 'success'
@@ -58,6 +71,7 @@ const UpdateProduct = () => {
           variant: 'error'
         });
       });
+  };
 
   const updateProdInMenu = (values: any) =>
     updateProdInMenuInfo(Number(id)!, currentProduct?.product_id!, values)
@@ -80,6 +94,8 @@ const UpdateProduct = () => {
   const { setNavOpen } = useDashboard();
   const navigate = useNavigate();
 
+  const { translate } = useLocales();
+
   const { data, isLoading, error } = useQuery(
     ['products', Number(id)],
     () => getProdById(Number(id)),
@@ -88,7 +104,42 @@ const UpdateProduct = () => {
     }
   );
 
-  console.log(data);
+  const menuForm = useForm({
+    defaultValues: data
+  });
+
+  const { reset: menuReset, handleSubmit: handleSubmitMenuForm, setValue } = menuForm;
+  useEffect(() => {
+    if (data) {
+      const priceData = { ...data };
+      for (let index = 0; index < 10; index++) {
+        priceData[`price${index + 1}`] = data.price;
+      }
+      menuReset(priceData);
+    }
+  }, [menuReset, data]);
+
+  const priceInputs = useMemo(() => {
+    const inputs = [];
+
+    // eslint-disable-next-line no-plusplus
+    for (let index = 0; index < 10; index++) {
+      inputs.push(
+        <Grid key={`price_${index}`} item xs={6}>
+          <InputField
+            autoFocus
+            type="number"
+            name={`price${index + 1}`}
+            label={`Giá ${index + 1}`}
+            fullWidth
+            variant="outlined"
+            size="small"
+          />
+        </Grid>
+      );
+    }
+    return inputs;
+  }, []);
 
   const defaultValues = {
     ...DEFAULT_VALUES,
@@ -121,8 +172,6 @@ const UpdateProduct = () => {
         });
       });
   };
-
-  console.log(currentProduct);
 
   if (isLoading) {
     return (
@@ -192,22 +241,13 @@ const UpdateProduct = () => {
                 Thêm vào menu
               </Button>
             }
-            onOk={function (): Promise<any> {
-              throw new Error('Function not implemented.');
-            }}
+            onOk={handleSubmitMenuForm(addProductToMenuHandler)}
             maxWidth="lg"
           >
             <Stack spacing={4}>
-              <Box>
+              <FormProvider {...menuForm}>
                 <SelectField
                   required
-                  // onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  //   const selectStore: any = menus?.find(
-                  //     ({ menu_id }: any) => menu_id === e.target.value
-                  //   );
-                  //   setValue('store.id', Number(e.target.value));
-                  //   setValue('store.store_name', selectStore?.name);
-                  // }}
                   fullWidth
                   name="id"
                   label="Chọn menu"
@@ -220,16 +260,17 @@ const UpdateProduct = () => {
                     </MenuItem>
                   ))}
                 </SelectField>
-              </Box>
-              <Box>
-                <ProductInMenuDialog
-                  updateMode={!isAddProduct}
-                  open={data}
-                  onClose={() => setCurrentProduct(null)}
-                  data={data}
-                  onSubmit={isAddProduct ? addProductToMenuHandler : updateProdInMenu}
-                />
-              </Box>
+                <DialogTitle>
+                  {translate('common.create')} {data?.product_name} {translate('menu.store-menu')}
+                </DialogTitle>
+                <DialogContent>
+                  <InputField name="product_id" sx={{ display: 'none' }} />
+                  <CheckBoxField name="is_fixed_price" label="Giá cố định" />
+                  <Grid container py={2} spacing={2}>
+                    {priceInputs}
+                  </Grid>
+                </DialogContent>
+              </FormProvider>
             </Stack>
           </ModalForm>
         ]}
