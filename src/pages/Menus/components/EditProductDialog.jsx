@@ -17,7 +17,7 @@ const ProductInMenuDialog = ({ open, onClose, onSubmit, data = {}, updateMode = 
     if (data) {
       const priceData = { ...data };
       for (let index = 0; index < 10; index++) {
-        priceData[`price${index + 1}`] = data.price;
+        priceData[`price${index + 1}`] = data[`price${index + 1}`];
       }
       reset(priceData);
     }

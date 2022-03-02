@@ -122,7 +122,7 @@ const ProductImagesForm = (props: Props) => {
     }
   ];
 
-  console.log(`productImages`, productImages, fields, watchFieldArr);
+  // console.log(`productImages`, productImages, fields, watchFieldArr);
 
   return (
     <>

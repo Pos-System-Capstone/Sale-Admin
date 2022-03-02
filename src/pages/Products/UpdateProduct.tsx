@@ -53,7 +53,6 @@ const UpdateProduct = () => {
   const run = ref.current?.reload;
 
   const addProductToMenuHandler = (datas: any) => {
-    console.log(datas.id);
     addProductInMenus(+datas.id!, datas)
       .then(() =>
         enqueueSnackbar(`Thêm thành công`, {
@@ -80,7 +79,10 @@ const UpdateProduct = () => {
           variant: 'success'
         })
       )
-      .then(() => setCurrentProduct(null))
+      .then(() => {
+        setIsAddProduct(false);
+        setCurrentProduct(null);
+      })
       .then(run)
       .catch((err: { response: any }) => {
         const errMsg = get(err.response, ['data', 'message'], `Có lỗi xảy ra. Vui lòng thử lại`);
@@ -108,7 +110,7 @@ const UpdateProduct = () => {
     defaultValues: data
   });
 
-  const { reset: menuReset, handleSubmit: handleSubmitMenuForm, setValue } = menuForm;
+  const { reset: menuReset, handleSubmit: handleSubmitMenuForm } = menuForm;
   useEffect(() => {
     if (data) {
       const priceData = { ...data };
@@ -241,7 +243,17 @@ const UpdateProduct = () => {
                 Thêm vào menu
               </Button>
             }
-            onOk={handleSubmitMenuForm(addProductToMenuHandler)}
+            onOk={async () => {
+              try {
+                await handleSubmitMenuForm(addProductToMenuHandler, (e) => {
+                  throw e;
+                })();
+                console.log(`success`);
+                return true;
+              } catch (error) {
+                return false;
+              }
+            }}
             maxWidth="lg"
           >
             <Stack spacing={4}>

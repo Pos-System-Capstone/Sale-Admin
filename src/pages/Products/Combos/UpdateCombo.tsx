@@ -1,28 +1,39 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import plusFill from '@iconify/icons-eva/plus-fill';
+import { Icon } from '@iconify/react';
 import {
   Box,
   Button,
   Card,
   CircularProgress,
   Container,
+  DialogContent,
+  DialogTitle,
+  Grid,
+  MenuItem,
   Stack,
   Step,
   StepLabel,
   Stepper,
   Typography
 } from '@mui/material';
-import { DraftEditorField } from 'components/form';
+import { useRequest } from 'ahooks';
+import { CheckBoxField, DraftEditorField, InputField, SelectField } from 'components/form';
 import SeoForm from 'components/form/Seo/SeoForm';
 import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
+import ModalForm from 'components/ModalForm/ModalForm';
 import Page from 'components/Page';
 import useProduct from 'hooks/products/useProduct';
+import useLocales from 'hooks/useLocales';
 import { DashboardNavLayout } from 'layouts/dashboard/DashboardNavbar';
+import { get } from 'lodash';
 import { useSnackbar } from 'notistack';
-import React from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useState } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { useQuery } from 'react-query';
 import { useNavigate, useParams } from 'react-router';
+import { addProductInMenus, getMenus } from 'redux/menu/api';
 import { getComboById, updateProdById } from 'redux/product/api';
 import { PATH_DASHBOARD } from 'routes/paths';
 import { CombinationModeEnum, CreateComboForm } from 'types/product';
@@ -48,22 +59,79 @@ const UpdateCombo = (props: Props) => {
     getComboById(Number(comboId)).then((res) => res.data)
   );
 
-  console.log(combo);
-
   const createComboForm = useForm({
     defaultValues: {
       ...combo
     },
     resolver: activeStep === 0 ? yupResolver(validationSchema) : undefined
   });
+
   const { data: product, isLoading } = useProduct(Number(comboId), {
     select: (res) => normalizeProductCombo(res as any),
     onSuccess: (res) => {
-      console.log(`res`, res);
       createComboForm.reset(res as CreateComboForm);
     },
     staleTime: Infinity
   });
+
+  const { data: menus } = useRequest<any>(getMenus, { formatResult: (res) => res.data.data });
+  const { translate } = useLocales();
+  const menuForm = useForm({
+    defaultValues: product
+  });
+
+  const ref = React.useRef<any>();
+  const run = ref.current?.reload;
+
+  const { reset: menuReset, handleSubmit: handleSubmitMenuForm } = menuForm;
+  useEffect(() => {
+    if (product) {
+      const priceData = { ...product };
+      for (let index = 0; index < 10; index++) {
+        priceData[`price${index + 1}`] = product.price;
+      }
+      menuReset(priceData);
+    }
+  }, [menuReset, product]);
+
+  const priceInputs = useMemo(() => {
+    const inputs = [];
+
+    // eslint-disable-next-line no-plusplus
+    for (let index = 0; index < 10; index++) {
+      inputs.push(
+        <Grid key={`price_${index}`} item xs={6}>
+          <InputField
+            autoFocus
+            type="number"
+            name={`price${index + 1}`}
+            label={`Giá ${index + 1}`}
+            fullWidth
+            variant="outlined"
+            size="small"
+          />
+        </Grid>
+      );
+    }
+    return inputs;
+  }, []);
+
+  const addProductToMenuHandler = (datas: any) => {
+    addProductInMenus(+datas.id!, datas)
+      .then(() => {
+        enqueueSnackbar(`Thêm thành công`, {
+          variant: 'success'
+        });
+        return true;
+      })
+      .catch((err: { response: any }) => {
+        const errMsg = get(err.response, ['data', 'message'], `Có lỗi xảy ra. Vui lòng thử lại`);
+        enqueueSnackbar(errMsg, {
+          variant: 'error'
+        });
+      });
+  };
+
   React.useEffect(() => {
     if (product) {
       createComboForm.reset(product as CreateComboForm);
@@ -111,7 +179,6 @@ const UpdateCombo = (props: Props) => {
               variant="contained"
               onClick={async () => {
                 const valid = await createComboForm.trigger();
-                console.log(`valid`, valid);
                 if (valid) setActiveStep((prev) => prev + 1);
               }}
             >
@@ -125,7 +192,62 @@ const UpdateCombo = (props: Props) => {
           )}
         </Stack>
       </DashboardNavLayout>
-      <Page title="Cập nhật combo">
+      <Page
+        title="Cập nhật combo"
+        actions={() => [
+          <ModalForm
+            key="create-menu"
+            title={<Typography variant="h3">Thêm Vào Menu</Typography>}
+            trigger={
+              <Button variant="contained" startIcon={<Icon icon={plusFill} />}>
+                Thêm vào menu
+              </Button>
+            }
+            onOk={async () => {
+              try {
+                await handleSubmitMenuForm(addProductToMenuHandler, (e) => {
+                  throw e;
+                })();
+                console.log(`success`);
+                return true;
+              } catch (error) {
+                return false;
+              }
+            }}
+            maxWidth="lg"
+          >
+            <Stack spacing={4}>
+              <FormProvider {...menuForm}>
+                <SelectField
+                  required
+                  fullWidth
+                  name="id"
+                  label="Chọn menu"
+                  defaultValue=""
+                  size="small"
+                >
+                  {menus?.map(({ menu_id, menu_name }: any) => (
+                    <MenuItem value={Number(menu_id)} key={`cate_select_${menu_id}`}>
+                      {menu_name}
+                    </MenuItem>
+                  ))}
+                </SelectField>
+                <DialogTitle>
+                  {translate('common.create')} {product?.product_name}{' '}
+                  {translate('menu.store-menu')}
+                </DialogTitle>
+                <DialogContent>
+                  <InputField name="product_id" sx={{ display: 'none' }} />
+                  <CheckBoxField name="is_fixed_price" label="Giá cố định" />
+                  <Grid container py={2} spacing={2}>
+                    {priceInputs}
+                  </Grid>
+                </DialogContent>
+              </FormProvider>
+            </Stack>
+          </ModalForm>
+        ]}
+      >
         <Container maxWidth="lg" sx={{ mx: 'auto' }}>
           <Box py={2}>
             <Stepper alternativeLabel activeStep={activeStep}>
