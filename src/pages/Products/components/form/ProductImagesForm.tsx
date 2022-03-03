@@ -122,8 +122,6 @@ const ProductImagesForm = (props: Props) => {
     }
   ];
 
-  // console.log(`productImages`, productImages, fields, watchFieldArr);
-
   return (
     <>
       <Stack direction="row" justifyContent="space-between" alignItems="center">

@@ -103,7 +103,6 @@ const ProductInMenuTab = ({ id }) => {
         });
       })
       .finally(() => setCurrentDeleteItem(null));
-  console.log(currentProduct);
   return (
     <Box flex={1}>
       <ProductInMenuDialog

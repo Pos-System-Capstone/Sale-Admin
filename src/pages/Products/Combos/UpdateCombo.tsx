@@ -208,7 +208,6 @@ const UpdateCombo = (props: Props) => {
                 await handleSubmitMenuForm(addProductToMenuHandler, (e) => {
                   throw e;
                 })();
-                console.log(`success`);
                 return true;
               } catch (error) {
                 return false;
