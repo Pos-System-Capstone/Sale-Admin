@@ -113,7 +113,7 @@ export const normalizeProductCombo = (values: TProductCombo): CreateComboForm =>
     .filter((g) => g.combination_mode === CombinationModeEnum.FixedCombo)
     .reduce((current, g) => [...current, ...g.products], [] as ComboProductType[]);
 
-  console.log(`data`, data);
+  // console.log(`data`, data);
 
   return data as CreateComboForm;
 };
