@@ -1,4 +1,5 @@
 // routes
+import { PATH_REPORT_APP } from 'routes/reportAppPaths';
 import { PATH_STORE_APP } from 'routes/storeAppPaths';
 import SvgIconStyle from '../../components/SvgIconStyle';
 import { PATH_DASHBOARD } from '../../routes/paths';
@@ -135,6 +136,35 @@ export const storeAppSidebarConfig = [
         title: 'store-menu',
         path: PATH_STORE_APP.menus.list,
         icon: ICONS.menu
+      }
+    ]
+  }
+];
+
+export const reportAppSidebarConfig = [
+  // GENERAL
+  // ----------------------------------------------------------------------
+  {
+    subheader: 'general',
+    items: [
+      {
+        title: 'app',
+        path: PATH_REPORT_APP.general.app,
+        icon: ICONS.dashboard
+      }
+    ]
+  },
+
+  // MANAGEMENT
+  // ----------------------------------------------------------------------
+  {
+    subheader: 'management',
+    items: [
+      // MANAGEMENT : PRODUCt
+      {
+        title: 'sample',
+        path: PATH_REPORT_APP.sample.root,
+        icon: ICONS.order
       }
     ]
   }

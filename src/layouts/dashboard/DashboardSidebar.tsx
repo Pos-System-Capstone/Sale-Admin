@@ -15,7 +15,7 @@ import useCollapseDrawer from '../../hooks/useCollapseDrawer';
 // routes
 import { PATH_DASHBOARD } from '../../routes/paths';
 //
-import adminSidebarConfig, { storeAppSidebarConfig } from './SidebarConfig';
+import { reportAppSidebarConfig, storeAppSidebarConfig } from './SidebarConfig';
 
 // ----------------------------------------------------------------------
 
@@ -104,7 +104,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }: Dash
 
   const sidebarConfig = useMemo(() => {
     if (user?.roles.includes('admin')) {
-      return adminSidebarConfig;
+      return reportAppSidebarConfig;
       // eslint-disable-next-line no-else-return
     } else if (user?.roles.includes('store-admin')) {
       return storeAppSidebarConfig;

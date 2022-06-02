@@ -14,6 +14,9 @@ import GuestGuard from '../guards/GuestGuard';
 // components
 import LoadingScreen from '../components/LoadingScreen';
 import RoleBasedGuard from '../guards/RoleBasedGuard';
+import DashBoardReport from 'pages/report/DashBoardReport';
+import Sample from 'pages/report/SampleReport/sampleReport';
+import ReportGeneralApp from 'pages/report/GeneralReport/GeneralApp';
 
 // ----------------------------------------------------------------------
 
@@ -161,6 +164,25 @@ export default function Router() {
         }
       ]
     },
+    {
+      path: 'report',
+      element: (
+        <AuthGuard>
+          <RoleBasedGuard accessibleRoles={['admin']}>
+            <DashBoardReport />
+          </RoleBasedGuard>
+        </AuthGuard>
+      ),
+      children: [
+        { path: '', element: <Navigate to="/report/app" replace /> },
+        { path: 'app', element: <ReportGeneralApp /> },
+        {
+          path: 'sample',
+          element: <Sample />
+        }
+      ]
+    },
+
     // FOR STORE ADMIN
     {
       path: 'store-admin',
