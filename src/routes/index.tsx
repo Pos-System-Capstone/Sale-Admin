@@ -1,22 +1,22 @@
-import { Suspense, lazy } from 'react';
-import { Navigate, useRoutes, useLocation } from 'react-router-dom';
-// layouts
-import BlogPosts from 'pages/dashboard/BlogPosts';
-import DashboardLayout from '../layouts/dashboard';
-import LogoOnlyLayout from '../layouts/LogoOnlyLayout';
+import BlogNewPost from 'pages/dashboard/BlogNewPost';
 // static
 import BlogPost from 'pages/dashboard/BlogPost';
-import BlogNewPost from 'pages/dashboard/BlogNewPost';
-// guards
-import AuthGuard from '../guards/AuthGuard';
-import GuestGuard from '../guards/GuestGuard';
+// layouts
+import BlogPosts from 'pages/dashboard/BlogPosts';
+import DashBoardReport from 'pages/report/DashBoardReport';
+import ReportGeneralApp from 'pages/report/GeneralReport/GeneralApp';
+import Sample from 'pages/report/SampleReport/sampleReport';
+import { lazy, Suspense } from 'react';
+import { Navigate, useLocation, useRoutes } from 'react-router-dom';
 // import RoleBasedGuard from '../guards/RoleBasedGuard';
 // components
 import LoadingScreen from '../components/LoadingScreen';
+// guards
+import AuthGuard from '../guards/AuthGuard';
+import GuestGuard from '../guards/GuestGuard';
 import RoleBasedGuard from '../guards/RoleBasedGuard';
-import DashBoardReport from 'pages/report/DashBoardReport';
-import Sample from 'pages/report/SampleReport/sampleReport';
-import ReportGeneralApp from 'pages/report/GeneralReport/GeneralApp';
+import DashboardLayout from '../layouts/dashboard';
+import LogoOnlyLayout from '../layouts/LogoOnlyLayout';
 
 // ----------------------------------------------------------------------
 
@@ -179,6 +179,26 @@ export default function Router() {
         {
           path: 'sample',
           element: <Sample />
+        },
+        {
+          path: 'overview-date',
+          element: <OverviewDate />
+        },
+        {
+          path: 'overview-month',
+          element: <OverviewMonth />
+        },
+        {
+          path: 'payment',
+          children: [{ path: '', element: <PaymentReport /> }]
+        },
+        {
+          path: 'product-progress',
+          children: [{ path: '', element: <ProductProgressReport /> }]
+        },
+        {
+          path: 'product-sale',
+          children: [{ path: '', element: <ProductSaleReport /> }]
         }
       ]
     },
@@ -295,3 +315,14 @@ const CustomerListPage = Loadable(lazy(() => import('../pages/Customer/CustomerL
 const ComboListPage = Loadable(lazy(() => import('../pages/Products/Combos/ComboList')));
 const CreateComboPage = Loadable(lazy(() => import('../pages/Products/Combos/CreateCombo')));
 const UpdateComboPage = Loadable(lazy(() => import('../pages/Products/Combos/UpdateCombo')));
+
+// report
+const OverviewDate = Loadable(lazy(() => import('../pages/report/Overview/OverviewDate')));
+const OverviewMonth = Loadable(lazy(() => import('../pages/report/Overview/OverviewMonth')));
+const ProductSaleReport = Loadable(
+  lazy(() => import('../pages/report/ProductReport/ProductSaleReport'))
+);
+const ProductProgressReport = Loadable(
+  lazy(() => import('../pages/report/ProductReport/ProductProgressReport'))
+);
+const PaymentReport = Loadable(lazy(() => import('../pages/report/PaymentReport')));

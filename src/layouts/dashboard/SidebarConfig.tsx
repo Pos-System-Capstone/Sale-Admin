@@ -165,6 +165,23 @@ export const reportAppSidebarConfig = [
         title: 'sample',
         path: PATH_REPORT_APP.sample.root,
         icon: ICONS.order
+      },
+      { title: 'report.overviewDate', path: PATH_REPORT_APP.overviewDate, icon: ICONS.calendar },
+      { title: 'report.overviewMonth', path: PATH_REPORT_APP.overviewMonth, icon: ICONS.calendar },
+      {
+        title: 'report.productSaleReport',
+        path: PATH_REPORT_APP.productSaleReport,
+        icon: ICONS.product
+      },
+      {
+        title: 'report.productProgressReport',
+        path: PATH_REPORT_APP.productProgressReport,
+        icon: ICONS.analytics
+      },
+      {
+        title: 'report.paymentReport',
+        path: PATH_REPORT_APP.paymentReport,
+        icon: ICONS.ecommerce
       }
     ]
   }

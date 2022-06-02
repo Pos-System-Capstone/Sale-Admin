@@ -34,7 +34,14 @@
     "menu-subheader": "Bảng giá",
     "store-subheader": "Cửa hàng",
     "customer-subheader": "Khách hàng",
-    "group-subheader": "Danh mục"
+    "group-subheader": "Danh mục",
+    "report": {
+      "overviewDate": "Tổng quan theo ngày",
+      "overviewMonth": "Tổng quan theo tháng",
+      "paymentReport": "Báo cáo thanh toán",
+      "productSaleReport": "Báo cáo doanh thu sản phẩm",
+      "productProgressReport": "Báo cáo diễn tiến sản phẩm"
+    }
   },
   "pages": {
     "stores": {

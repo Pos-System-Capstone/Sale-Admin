@@ -48,5 +48,10 @@ export const PATH_REPORT_APP = {
   },
   sample: {
     root: path(ROOTS_DASHBOARD, '/sample')
-  }
+  },
+  overviewDate: path(ROOTS_DASHBOARD, '/overview-date'),
+  overviewMonth: path(ROOTS_DASHBOARD, '/overview-month'),
+  paymentReport: path(ROOTS_DASHBOARD, '/payment'),
+  productSaleReport: path(ROOTS_DASHBOARD, '/product-sale'),
+  productProgressReport: path(ROOTS_DASHBOARD, '/product-progress')
 };
