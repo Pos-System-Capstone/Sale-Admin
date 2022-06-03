@@ -187,7 +187,7 @@ const MenusPage = () => {
             onDelete={onConfirmDelete}
             rowKey="menu_id"
             onEdit={(menu: Menu) =>
-              navigate(`${PATH_DASHBOARD.menus.root}/${menu.menu_id}`, { state: menu })
+              navigate(`${PATH_DASHBOARD.tradingReport.root}/${menu.menu_id}`, { state: menu })
             }
             getData={getMenus}
             columns={menuColumns}

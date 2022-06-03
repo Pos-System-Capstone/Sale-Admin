@@ -4,7 +4,6 @@ import BlogPost from 'pages/dashboard/BlogPost';
 // layouts
 import BlogPosts from 'pages/dashboard/BlogPosts';
 import DashBoardReport from 'pages/report/DashBoardReport';
-import ReportGeneralApp from 'pages/report/GeneralReport/GeneralApp';
 import Sample from 'pages/report/SampleReport/sampleReport';
 import { lazy, Suspense } from 'react';
 import { Navigate, useLocation, useRoutes } from 'react-router-dom';
@@ -17,6 +16,8 @@ import GuestGuard from '../guards/GuestGuard';
 import RoleBasedGuard from '../guards/RoleBasedGuard';
 import DashboardLayout from '../layouts/dashboard';
 import LogoOnlyLayout from '../layouts/LogoOnlyLayout';
+
+// import ReportGeneralApp from 'pages/report/GeneralReport/GeneralApp';
 
 // ----------------------------------------------------------------------
 
@@ -85,8 +86,8 @@ export default function Router() {
         </AuthGuard>
       ),
       children: [
-        { path: '', element: <Navigate to="/dashboard/app" replace /> },
-        { path: 'app', element: <GeneralApp /> },
+        { path: '', element: <Navigate to="/dashboard/reportDashboard" replace /> },
+        { path: 'reportDashboard', element: <ReportDashboard /> },
         { path: 'ecommerce', element: <GeneralEcommerce /> },
         {
           path: 'analytics',
@@ -137,9 +138,9 @@ export default function Router() {
           ]
         },
         {
-          path: 'menus',
+          path: 'tradingReport',
           children: [
-            { path: '', element: <MenusPage /> },
+            { path: '', element: <TradingReport /> },
             { path: ':id', element: <UpdateMenuPage /> }
           ]
         },
@@ -152,9 +153,9 @@ export default function Router() {
           ]
         },
         {
-          path: 'stores',
+          path: 'promotion',
           children: [
-            { path: '', element: <StoreListPage /> },
+            { path: '', element: <PromotionReport /> },
             {
               path: 'new',
               element: <CreateStorePage />
@@ -174,8 +175,8 @@ export default function Router() {
         </AuthGuard>
       ),
       children: [
-        { path: '', element: <Navigate to="/report/app" replace /> },
-        { path: 'app', element: <ReportGeneralApp /> },
+        { path: '', element: <Navigate to="/report/reportDashboard" replace /> },
+        { path: 'reportDashboard', element: <ReportDashboard /> },
         {
           path: 'sample',
           element: <Sample />
@@ -215,7 +216,7 @@ export default function Router() {
       ),
       children: [
         { path: '', element: <Navigate to="/store-admin/orders" replace /> },
-        { path: 'app', element: <GeneralApp /> },
+        { path: 'reportDashboard', element: <ReportDashboard /> },
 
         {
           path: 'orders',
@@ -271,7 +272,7 @@ const Register = Loadable(lazy(() => import('../pages/authentication/Register'))
 const ResetPassword = Loadable(lazy(() => import('../pages/authentication/ResetPassword')));
 const VerifyCode = Loadable(lazy(() => import('../pages/authentication/VerifyCode')));
 // Dashboard
-const GeneralApp = Loadable(lazy(() => import('../pages/dashboard/GeneralApp')));
+const ReportDashboard = Loadable(lazy(() => import('../pages/dashboard/ReportDashboard')));
 const GeneralEcommerce = Loadable(lazy(() => import('../pages/dashboard/GeneralEcommerce')));
 const GeneralAnalytics = Loadable(lazy(() => import('../pages/dashboard/GeneralAnalytics')));
 
@@ -285,7 +286,7 @@ const UpdateProduct = Loadable(lazy(() => import('../pages/Products/UpdateProduc
 const CreateProduct = Loadable(lazy(() => import('../pages/Products/create')));
 
 // Menu
-const MenusPage = Loadable(lazy(() => import('../pages/Menus')));
+const TradingReport = Loadable(lazy(() => import('../pages/TradingReport')));
 const UpdateMenuPage = Loadable(lazy(() => import('../pages/Menus/update')));
 const MenuInStorePage = Loadable(lazy(() => import('../pages/Menus/MenuInStore')));
 
@@ -295,7 +296,7 @@ const UpdateCollectionPage = Loadable(lazy(() => import('../pages/collections/up
 const CreateCollectionPage = Loadable(lazy(() => import('../pages/collections/create')));
 
 // Store
-const StoreListPage = Loadable(lazy(() => import('../pages/Stores')));
+const PromotionReport = Loadable(lazy(() => import('../pages/PromotionReport')));
 const CreateStorePage = Loadable(lazy(() => import('../pages/Stores/create')));
 const UpdateStorePage = Loadable(lazy(() => import('../pages/Stores/update')));
 

@@ -16,7 +16,9 @@
     "store": "Cửa hàng",
     "menu-list": "Bảng giá",
     "store-menu-apply": "Cửa hàng áp dụng",
-    "app": "Bảng điều khiển",
+    "dashboard": "Bảng điều khiển",
+    "tradingReport": "Báo cáo kinh doanh",
+    "promotionReport": "Báo cáo khuyến mãi",
     "general": "Tổng quan",
     "customer": {
       "root": "Khách hàng",

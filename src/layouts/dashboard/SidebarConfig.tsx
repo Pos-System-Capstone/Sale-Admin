@@ -38,8 +38,8 @@ const sidebarConfig = [
     subheader: 'general',
     items: [
       {
-        title: 'app',
-        path: PATH_DASHBOARD.general.app,
+        title: 'reportDashboard',
+        path: PATH_DASHBOARD.general.reportDashboard,
         icon: ICONS.dashboard
       },
       {
@@ -52,8 +52,12 @@ const sidebarConfig = [
   {
     subheader: 'menu-subheader',
     items: [
-      { title: 'menu-list', path: PATH_DASHBOARD.menus.list, icon: ICONS.menu },
-      { title: 'store-menu-apply', path: PATH_DASHBOARD.menus.storeMenu, icon: ICONS.storeApply }
+      { title: 'menu-list', path: PATH_DASHBOARD.tradingReport.list, icon: ICONS.menu },
+      {
+        title: 'store-menu-apply',
+        path: PATH_DASHBOARD.tradingReport.storeMenu,
+        icon: ICONS.storeApply
+      }
     ]
   },
   {
@@ -99,7 +103,7 @@ const sidebarConfig = [
     items: [
       {
         title: 'store',
-        path: PATH_DASHBOARD.stores.list,
+        path: PATH_DASHBOARD.promotion.list,
         icon: ICONS.store
       }
     ]
@@ -113,8 +117,8 @@ export const storeAppSidebarConfig = [
     subheader: 'general',
     items: [
       {
-        title: 'app',
-        path: PATH_STORE_APP.general.app,
+        title: 'reportDashboard',
+        path: PATH_STORE_APP.general.reportDashboard,
         icon: ICONS.dashboard
       }
     ]
@@ -134,7 +138,7 @@ export const storeAppSidebarConfig = [
       },
       {
         title: 'store-menu',
-        path: PATH_STORE_APP.menus.list,
+        path: PATH_STORE_APP.tradingReport.list,
         icon: ICONS.menu
       }
     ]
@@ -148,8 +152,8 @@ export const reportAppSidebarConfig = [
     subheader: 'general',
     items: [
       {
-        title: 'app',
-        path: PATH_REPORT_APP.general.app,
+        title: 'dashboard',
+        path: PATH_REPORT_APP.general.reportDashboard,
         icon: ICONS.dashboard
       }
     ]
@@ -161,11 +165,6 @@ export const reportAppSidebarConfig = [
     subheader: 'management',
     items: [
       // MANAGEMENT : PRODUCt
-      {
-        title: 'sample',
-        path: PATH_REPORT_APP.sample.root,
-        icon: ICONS.order
-      },
       { title: 'report.overviewDate', path: PATH_REPORT_APP.overviewDate, icon: ICONS.calendar },
       { title: 'report.overviewMonth', path: PATH_REPORT_APP.overviewMonth, icon: ICONS.calendar },
       {
@@ -182,6 +181,16 @@ export const reportAppSidebarConfig = [
         title: 'report.paymentReport',
         path: PATH_REPORT_APP.paymentReport,
         icon: ICONS.ecommerce
+      },
+      {
+        title: 'tradingReport',
+        path: PATH_DASHBOARD.tradingReport.root,
+        icon: ICONS.menu
+      },
+      {
+        title: 'promotionReport',
+        path: PATH_DASHBOARD.promotion.root,
+        icon: ICONS.kanban
       }
     ]
   }

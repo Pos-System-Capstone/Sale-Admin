@@ -68,3 +68,34 @@ export const DAY_OF_WEEK = [
     value: 0
   }
 ];
+
+export const STORE_NAME = [
+  {
+    label: 'HCM.PA.SH.15FNTMK',
+    value: 1
+  },
+  {
+    label: 'HCM.PA.SH.53CND',
+    value: 2
+  },
+  {
+    label: 'HCM.GF.SH.102HVB',
+    value: 3
+  },
+  {
+    label: 'HCM.PA.SH.47TCV',
+    value: 4
+  },
+  {
+    label: 'HCM.PA.SH.97LVD',
+    value: 5
+  },
+  {
+    label: 'HCM.PA.SH.213NVC',
+    value: 6
+  },
+  {
+    label: 'HCM.PA.SH.91ND',
+    value: 0
+  }
+];

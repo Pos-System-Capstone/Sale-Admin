@@ -22,7 +22,7 @@ export const PATH_AUTH = {
 export const PATH_REPORT_APP = {
   root: ROOTS_DASHBOARD,
   general: {
-    app: path(ROOTS_DASHBOARD, '/app'),
+    reportDashboard: path(ROOTS_DASHBOARD, '/reportDashboard'),
     ecommerce: path(ROOTS_DASHBOARD, '/ecommerce'),
     analytics: path(ROOTS_DASHBOARD, '/analytics')
   },
@@ -33,12 +33,12 @@ export const PATH_REPORT_APP = {
     master: path(ROOTS_DASHBOARD, '/products/master'),
     newProduct: path(ROOTS_DASHBOARD, '/products/new')
   },
-  menus: {
-    root: path(ROOTS_DASHBOARD, '/menus'),
-    list: path(ROOTS_DASHBOARD, '/menus'),
-    editById: path(ROOTS_DASHBOARD, '/menus/:id'),
-    newProduct: path(ROOTS_DASHBOARD, '/menus/new'),
-    storeMenu: path(ROOTS_DASHBOARD, '/menus/stores')
+  tradingReport: {
+    root: path(ROOTS_DASHBOARD, '/tradingReport'),
+    list: path(ROOTS_DASHBOARD, '/tradingReport'),
+    editById: path(ROOTS_DASHBOARD, '/tradingReport/:id'),
+    newProduct: path(ROOTS_DASHBOARD, '/tradingReport/new'),
+    storeMenu: path(ROOTS_DASHBOARD, '/tradingReport/stores')
   },
   orders: {
     root: path(ROOTS_DASHBOARD, '/orders'),
