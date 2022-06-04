@@ -9,37 +9,43 @@ import clockOuline from '@iconify/icons-eva/clock-outline';
 import castFill from '@iconify/icons-eva/cast-fill';
 import pantoneFill from '@iconify/icons-eva/pantone-fill';
 import DashboarWidgets from 'components/_dashboard/general-app/DashboarWidgets';
+import { PATH_REPORT_APP } from 'routes/reportAppPaths';
 // ----------------------------------------------------------------------
 const Widgets = [
   {
     title: 'TỔNG QUAN',
     icon: archiveFill,
     color: '#18A558',
-    hoverColor: '#4CAF50'
+    hoverColor: '#4CAF50',
+    path: PATH_REPORT_APP.overviewDate
   },
   {
     title: 'THỜI GIAN',
     icon: clockOuline,
     color: '#116530',
-    hoverColor: 'green'
+    hoverColor: 'green',
+    path: PATH_REPORT_APP.tradingReport
   },
   {
     title: 'SẢN PHẨM',
     icon: castFill,
     color: '#E1C340',
-    hoverColor: '#FAD02C'
+    hoverColor: '#FAD02C',
+    path: PATH_REPORT_APP.productSaleReport
   },
   {
     title: 'DIỄN TIẾN NGÀY',
     icon: calendarFill,
     color: '#E4021B',
-    hoverColor: '#bb0909'
+    hoverColor: '#bb0909',
+    path: PATH_REPORT_APP.productProgressReport
   },
   {
     title: 'SO SÁNH SẢN PHẨM',
     icon: pantoneFill,
     color: '#2E8BC0',
-    hoverColor: '#009688'
+    hoverColor: '#009688',
+    path: PATH_REPORT_APP.productProgressReport
   }
 ];
 

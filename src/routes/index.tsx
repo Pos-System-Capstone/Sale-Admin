@@ -138,9 +138,9 @@ export default function Router() {
           ]
         },
         {
-          path: 'tradingReport',
+          path: 'menus',
           children: [
-            { path: '', element: <TradingReport /> },
+            { path: '', element: <MenusPage /> },
             { path: ':id', element: <UpdateMenuPage /> }
           ]
         },
@@ -153,9 +153,9 @@ export default function Router() {
           ]
         },
         {
-          path: 'promotion',
+          path: 'stores',
           children: [
-            { path: '', element: <PromotionReport /> },
+            { path: '', element: <StoreListPage /> },
             {
               path: 'new',
               element: <CreateStorePage />
@@ -200,6 +200,17 @@ export default function Router() {
         {
           path: 'product-sale',
           children: [{ path: '', element: <ProductSaleReport /> }]
+        },
+        {
+          path: 'trading-report',
+          children: [
+            { path: '', element: <TradingReport /> },
+            { path: ':id', element: <UpdateMenuPage /> }
+          ]
+        },
+        {
+          path: 'promotion',
+          children: [{ path: '', element: <PromotionReport /> }]
         }
       ]
     },
@@ -287,6 +298,7 @@ const CreateProduct = Loadable(lazy(() => import('../pages/Products/create')));
 
 // Menu
 const TradingReport = Loadable(lazy(() => import('../pages/TradingReport')));
+const MenusPage = Loadable(lazy(() => import('../pages/Menus')));
 const UpdateMenuPage = Loadable(lazy(() => import('../pages/Menus/update')));
 const MenuInStorePage = Loadable(lazy(() => import('../pages/Menus/MenuInStore')));
 
@@ -297,6 +309,7 @@ const CreateCollectionPage = Loadable(lazy(() => import('../pages/collections/cr
 
 // Store
 const PromotionReport = Loadable(lazy(() => import('../pages/PromotionReport')));
+const StoreListPage = Loadable(lazy(() => import('../pages/Stores')));
 const CreateStorePage = Loadable(lazy(() => import('../pages/Stores/create')));
 const UpdateStorePage = Loadable(lazy(() => import('../pages/Stores/update')));
 

@@ -135,11 +135,6 @@ export const storeAppSidebarConfig = [
         title: 'order',
         path: PATH_STORE_APP.orders.list,
         icon: ICONS.order
-      },
-      {
-        title: 'store-menu',
-        path: PATH_STORE_APP.tradingReport.list,
-        icon: ICONS.menu
       }
     ]
   }
@@ -184,12 +179,12 @@ export const reportAppSidebarConfig = [
       },
       {
         title: 'tradingReport',
-        path: PATH_DASHBOARD.tradingReport.root,
+        path: PATH_REPORT_APP.tradingReport,
         icon: ICONS.menu
       },
       {
         title: 'promotionReport',
-        path: PATH_DASHBOARD.promotion.root,
+        path: PATH_REPORT_APP.promotion,
         icon: ICONS.kanban
       }
     ]

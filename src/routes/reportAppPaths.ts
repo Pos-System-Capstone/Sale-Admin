@@ -33,13 +33,13 @@ export const PATH_REPORT_APP = {
     master: path(ROOTS_DASHBOARD, '/products/master'),
     newProduct: path(ROOTS_DASHBOARD, '/products/new')
   },
-  tradingReport: {
-    root: path(ROOTS_DASHBOARD, '/tradingReport'),
-    list: path(ROOTS_DASHBOARD, '/tradingReport'),
-    editById: path(ROOTS_DASHBOARD, '/tradingReport/:id'),
-    newProduct: path(ROOTS_DASHBOARD, '/tradingReport/new'),
-    storeMenu: path(ROOTS_DASHBOARD, '/tradingReport/stores')
-  },
+  // tradingReport: {
+  //   root: path(ROOTS_DASHBOARD, '/trading-report'),
+  //   list: path(ROOTS_DASHBOARD, '/trading-report'),
+  //   editById: path(ROOTS_DASHBOARD, '/trading-report/:id'),
+  //   newProduct: path(ROOTS_DASHBOARD, '/trading-report/new'),
+  //   storeMenu: path(ROOTS_DASHBOARD, '/trading-report/stores')
+  // },
   orders: {
     root: path(ROOTS_DASHBOARD, '/orders'),
     list: path(ROOTS_DASHBOARD, '/orders'),
@@ -53,5 +53,7 @@ export const PATH_REPORT_APP = {
   overviewMonth: path(ROOTS_DASHBOARD, '/overview-month'),
   paymentReport: path(ROOTS_DASHBOARD, '/payment'),
   productSaleReport: path(ROOTS_DASHBOARD, '/product-sale'),
-  productProgressReport: path(ROOTS_DASHBOARD, '/product-progress')
+  productProgressReport: path(ROOTS_DASHBOARD, '/product-progress'),
+  promotion: path(ROOTS_DASHBOARD, '/promotion'),
+  tradingReport: path(ROOTS_DASHBOARD, '/trading-report')
 };

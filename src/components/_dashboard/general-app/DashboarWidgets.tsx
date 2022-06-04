@@ -2,7 +2,8 @@ import { Icon } from '@iconify/react';
 
 // material
 import { useTheme, styled } from '@mui/material/styles';
-import { Card, Typography, Box } from '@mui/material';
+import { Card, Typography, Box, Link } from '@mui/material';
+import { Link as RouterLink } from 'react-router-dom';
 
 // ----------------------------------------------------------------------
 type DashboarWidgetsProp = {
@@ -11,6 +12,7 @@ type DashboarWidgetsProp = {
     icon: any;
     color: any;
     hoverColor: any;
+    path: any;
   };
 };
 
@@ -36,23 +38,27 @@ export default function DashboarWidgets({ Widget }: DashboarWidgetsProp) {
   const theme = useTheme();
 
   return (
-    <RootStyle
-      sx={{
-        backgroundColor: `${Widget.color}`,
-        cursor: 'pointer',
-        '&:hover': { backgroundColor: `${Widget.hoverColor}` },
-        padding: '48px'
-      }}
-    >
-      <Box sx={{ ml: 3, color: 'common.white', cursor: 'pointer' }}>
-        <Typography variant="h4" sx={{ marginLeft: '-48px' }}>
-          {Widget.title}
-        </Typography>
-        {/* <Typography variant="body2" sx={{ opacity: 0.72, marginLeft: '-110px' }}>
-          Tổng quan
-        </Typography> */}
-      </Box>
-      <IconStyle icon={Widget.icon} />
-    </RootStyle>
+    <>
+      <Link underline="none" component={RouterLink} to={Widget.path}>
+        <RootStyle
+          sx={{
+            backgroundColor: `${Widget.color}`,
+            cursor: 'pointer',
+            '&:hover': { backgroundColor: `${Widget.hoverColor}` },
+            padding: '48px'
+          }}
+        >
+          <Box sx={{ ml: 3, color: 'common.white', cursor: 'pointer' }}>
+            <Typography variant="h4" sx={{ marginLeft: '-48px' }}>
+              {Widget.title}
+            </Typography>
+            {/* <Typography variant="body2" sx={{ opacity: 0.72, marginLeft: '-110px' }}>
+      Tổng quan
+    </Typography> */}
+          </Box>
+          <IconStyle icon={Widget.icon} />
+        </RootStyle>
+      </Link>
+    </>
   );
 }

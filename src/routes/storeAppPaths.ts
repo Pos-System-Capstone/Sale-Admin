@@ -33,12 +33,12 @@ export const PATH_STORE_APP = {
     master: path(ROOTS_DASHBOARD, '/products/master'),
     newProduct: path(ROOTS_DASHBOARD, '/products/new')
   },
-  tradingReport: {
-    root: path(ROOTS_DASHBOARD, '/tradingReport'),
-    list: path(ROOTS_DASHBOARD, '/tradingReport'),
-    editById: path(ROOTS_DASHBOARD, '/tradingReport/:id'),
-    newProduct: path(ROOTS_DASHBOARD, '/tradingReport/new'),
-    storeMenu: path(ROOTS_DASHBOARD, '/tradingReport/stores')
+  menus: {
+    root: path(ROOTS_DASHBOARD, '/menus'),
+    list: path(ROOTS_DASHBOARD, '/menus'),
+    editById: path(ROOTS_DASHBOARD, '/menus/:id'),
+    newProduct: path(ROOTS_DASHBOARD, '/menus/new'),
+    storeMenu: path(ROOTS_DASHBOARD, '/menus/stores')
   },
   orders: {
     root: path(ROOTS_DASHBOARD, '/orders'),

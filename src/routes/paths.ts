@@ -84,18 +84,25 @@ export const PATH_DASHBOARD = {
     editById: path(ROOTS_DASHBOARD, '/collections/:id'),
     new: path(ROOTS_DASHBOARD, '/collections/new')
   },
+  menus: {
+    root: path(ROOTS_DASHBOARD, '/menus'),
+    list: path(ROOTS_DASHBOARD, '/menus'),
+    editById: (id: any) => path(ROOTS_DASHBOARD, `/menus/${id}`),
+    new: path(ROOTS_DASHBOARD, '/menus/new'),
+    storeMenu: path(ROOTS_DASHBOARD, '/menu-in-store')
+  },
   tradingReport: {
-    root: path(ROOTS_DASHBOARD, '/tradingReport'),
-    list: path(ROOTS_DASHBOARD, '/tradingReport'),
-    editById: (id: any) => path(ROOTS_DASHBOARD, `/tradingReport/${id}`),
-    new: path(ROOTS_DASHBOARD, '/tradingReport/new'),
+    root: path(ROOTS_DASHBOARD, '/trading-report'),
+    list: path(ROOTS_DASHBOARD, '/trading-report'),
+    editById: (id: any) => path(ROOTS_DASHBOARD, `/trading-report/${id}`),
+    new: path(ROOTS_DASHBOARD, '/trading-report/new'),
     storeMenu: path(ROOTS_DASHBOARD, '/menu-in-store')
   },
   promotion: {
-    root: path(ROOTS_DASHBOARD, '/promotion'),
-    list: path(ROOTS_DASHBOARD, '/promotion'),
-    editById: path(ROOTS_DASHBOARD, '/promotion/:id'),
-    new: path(ROOTS_DASHBOARD, '/promotion/new')
+    root: path(ROOTS_DASHBOARD, '/promotion-report'),
+    list: path(ROOTS_DASHBOARD, '/promotion-report'),
+    editById: path(ROOTS_DASHBOARD, '/promotion-report/:id'),
+    new: path(ROOTS_DASHBOARD, '/promotion-report/new')
   },
   blog: {
     root: path(ROOTS_DASHBOARD, '/blog'),
