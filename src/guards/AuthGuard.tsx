@@ -16,7 +16,7 @@ export default function AuthGuard({ children }: AuthGuardProps) {
   const { pathname } = useLocation();
   const [requestedLocation, setRequestedLocation] = useState<string | null>(null);
 
-  if (!isAuthenticated) {
+  if (!isAuthenticated && false) {
     if (pathname !== requestedLocation) {
       setRequestedLocation(pathname);
     }

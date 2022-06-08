@@ -60,6 +60,7 @@ declare module '@mui/material' {
 
 // SETUP COLORS
 const PRIMARY = {
+  lighter1: '#81C784',
   lighter: '#C8FACD',
   light: '#5BE584',
   main: '#00AB55',
@@ -101,7 +102,11 @@ const ERROR = {
   dark: '#B72136',
   darker: '#7A0C2E'
 };
-
+const PURPLE = {
+  light: '#98BAE7',
+  main: '#7267CB',
+  dark: '#6E3CBC'
+};
 const GREY = {
   0: '#FFFFFF',
   100: '#F9FAFB',
@@ -148,6 +153,7 @@ const COMMON = {
   warning: { ...WARNING, contrastText: GREY[800] },
   error: { ...ERROR, contrastText: '#fff' },
   grey: GREY,
+  purple: PURPLE,
   gradients: GRADIENTS,
   chart: CHART_COLORS,
   divider: GREY[500_24],

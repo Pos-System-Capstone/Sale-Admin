@@ -15,7 +15,7 @@ import { CalendarStyle } from 'components/_dashboard/calendar';
 import useLocales from 'hooks/useLocales';
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
-import { CalendarView } from '../../../@types/calendar';
+import { CalendarView } from '../../../../@types/calendar';
 
 const callback = (cb: any, ...args: object[]) => {
   if (typeof cb === 'function') {

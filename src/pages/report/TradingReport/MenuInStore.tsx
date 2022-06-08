@@ -33,7 +33,7 @@ import { COLOR_OPTIONS } from 'redux/slices/calendar';
 import { PATH_DASHBOARD } from 'routes/paths';
 import { StoreInMenu } from 'types/store';
 import { fDate, fDateTime } from 'utils/formatTime';
-import { CalendarView } from '../../@types/calendar';
+import { CalendarView } from '../../../@types/calendar';
 import MenuInStoreCalendar from './components/MenuInStoreCalendar';
 
 // ----------------------------------------------------------------------

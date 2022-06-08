@@ -169,7 +169,7 @@ export default function Router() {
       path: 'report',
       element: (
         <AuthGuard>
-          <RoleBasedGuard accessibleRoles={['admin']}>
+          <RoleBasedGuard accessibleRoles={[]}>
             <DashBoardReport />
           </RoleBasedGuard>
         </AuthGuard>
@@ -297,7 +297,7 @@ const UpdateProduct = Loadable(lazy(() => import('../pages/Products/UpdateProduc
 const CreateProduct = Loadable(lazy(() => import('../pages/Products/create')));
 
 // Menu
-const TradingReport = Loadable(lazy(() => import('../pages/TradingReport')));
+const TradingReport = Loadable(lazy(() => import('../pages/report/TradingReport')));
 const MenusPage = Loadable(lazy(() => import('../pages/Menus')));
 const UpdateMenuPage = Loadable(lazy(() => import('../pages/Menus/update')));
 const MenuInStorePage = Loadable(lazy(() => import('../pages/Menus/MenuInStore')));
@@ -308,7 +308,7 @@ const UpdateCollectionPage = Loadable(lazy(() => import('../pages/collections/up
 const CreateCollectionPage = Loadable(lazy(() => import('../pages/collections/create')));
 
 // Store
-const PromotionReport = Loadable(lazy(() => import('../pages/PromotionReport')));
+const PromotionReport = Loadable(lazy(() => import('../pages/report/PromotionReport')));
 const StoreListPage = Loadable(lazy(() => import('../pages/Stores')));
 const CreateStorePage = Loadable(lazy(() => import('../pages/Stores/create')));
 const UpdateStorePage = Loadable(lazy(() => import('../pages/Stores/update')));

@@ -8,7 +8,7 @@ import { DAY_OF_WEEK } from 'constraints';
 import { get } from 'lodash';
 import { Menu } from 'types/menu';
 import { fDate, fDateTime } from 'utils/formatTime';
-import { Card, CardTitle } from '../../Products/components/Card';
+import { Card, CardTitle } from '../../../Products/components/Card';
 
 const columns: ResoDescriptionColumnType<Menu>[] = [
   {
