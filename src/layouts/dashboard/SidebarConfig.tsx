@@ -118,7 +118,7 @@ export const storeAppSidebarConfig = [
     items: [
       {
         title: 'reportDashboard',
-        path: PATH_STORE_APP.general.reportDashboard,
+        path: PATH_STORE_APP.general.app,
         icon: ICONS.dashboard
       }
     ]

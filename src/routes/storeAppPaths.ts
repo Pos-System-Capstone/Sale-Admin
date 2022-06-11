@@ -22,7 +22,7 @@ export const PATH_AUTH = {
 export const PATH_STORE_APP = {
   root: ROOTS_DASHBOARD,
   general: {
-    reportDashboard: path(ROOTS_DASHBOARD, '/reportDashboard'),
+    app: path(ROOTS_DASHBOARD, '/app'),
     ecommerce: path(ROOTS_DASHBOARD, '/ecommerce'),
     analytics: path(ROOTS_DASHBOARD, '/analytics')
   },

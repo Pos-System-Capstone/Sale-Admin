@@ -80,14 +80,14 @@ export default function Router() {
       path: 'dashboard',
       element: (
         <AuthGuard>
-          <RoleBasedGuard accessibleRoles={['admin']}>
+          <RoleBasedGuard accessibleRoles={[]}>
             <DashboardLayout />
           </RoleBasedGuard>
         </AuthGuard>
       ),
       children: [
-        { path: '', element: <Navigate to="/dashboard/reportDashboard" replace /> },
-        { path: 'reportDashboard', element: <ReportDashboard /> },
+        { path: '', element: <Navigate to="/dashboard/app" replace /> },
+        { path: 'app', element: <GeneralApp /> },
         { path: 'ecommerce', element: <GeneralEcommerce /> },
         {
           path: 'analytics',
@@ -284,6 +284,7 @@ const ResetPassword = Loadable(lazy(() => import('../pages/authentication/ResetP
 const VerifyCode = Loadable(lazy(() => import('../pages/authentication/VerifyCode')));
 // Dashboard
 const ReportDashboard = Loadable(lazy(() => import('../pages/dashboard/ReportDashboard')));
+const GeneralApp = Loadable(lazy(() => import('../pages/dashboard/GeneralApp')));
 const GeneralEcommerce = Loadable(lazy(() => import('../pages/dashboard/GeneralEcommerce')));
 const GeneralAnalytics = Loadable(lazy(() => import('../pages/dashboard/GeneralAnalytics')));
 
