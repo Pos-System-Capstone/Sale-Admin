@@ -147,43 +147,39 @@ export const reportAppSidebarConfig = [
     subheader: 'general',
     items: [
       {
-        title: 'dashboard',
+        title: 'report.dashboard',
         path: PATH_REPORT_APP.general.reportDashboard,
         icon: ICONS.dashboard
       }
     ]
   },
-
-  // MANAGEMENT
-  // ----------------------------------------------------------------------
   {
-    subheader: 'management',
+    subheader: 'report.management',
     items: [
-      // MANAGEMENT : PRODUCt
       { title: 'report.overviewDate', path: PATH_REPORT_APP.overviewDate, icon: ICONS.calendar },
       { title: 'report.overviewMonth', path: PATH_REPORT_APP.overviewMonth, icon: ICONS.calendar },
       {
-        title: 'report.productSaleReport',
-        path: PATH_REPORT_APP.productSaleReport,
+        title: 'report.productSale',
+        path: PATH_REPORT_APP.productSale,
         icon: ICONS.product
       },
       {
-        title: 'report.productProgressReport',
-        path: PATH_REPORT_APP.productProgressReport,
+        title: 'report.productProgress',
+        path: PATH_REPORT_APP.productProgress,
         icon: ICONS.analytics
       },
       {
-        title: 'report.paymentReport',
-        path: PATH_REPORT_APP.paymentReport,
+        title: 'report.payment',
+        path: PATH_REPORT_APP.payment,
         icon: ICONS.ecommerce
       },
       {
-        title: 'tradingReport',
-        path: PATH_REPORT_APP.tradingReport,
+        title: 'report.trading',
+        path: PATH_REPORT_APP.trading,
         icon: ICONS.menu
       },
       {
-        title: 'promotionReport',
+        title: 'report.promotion',
         path: PATH_REPORT_APP.promotion,
         icon: ICONS.kanban
       }

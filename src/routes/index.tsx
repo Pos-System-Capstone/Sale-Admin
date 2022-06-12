@@ -4,7 +4,6 @@ import BlogPost from 'pages/dashboard/BlogPost';
 // layouts
 import BlogPosts from 'pages/dashboard/BlogPosts';
 import DashBoardReport from 'pages/report/DashBoardReport';
-import Sample from 'pages/report/SampleReport/sampleReport';
 import { lazy, Suspense } from 'react';
 import { Navigate, useLocation, useRoutes } from 'react-router-dom';
 // import RoleBasedGuard from '../guards/RoleBasedGuard';
@@ -165,6 +164,7 @@ export default function Router() {
         }
       ]
     },
+    // Report system Routes
     {
       path: 'report',
       element: (
@@ -175,12 +175,8 @@ export default function Router() {
         </AuthGuard>
       ),
       children: [
-        { path: '', element: <Navigate to="/report/reportDashboard" replace /> },
-        { path: 'reportDashboard', element: <ReportDashboard /> },
-        {
-          path: 'sample',
-          element: <Sample />
-        },
+        { path: '', element: <Navigate to="/report/dashboard" replace /> },
+        { path: 'dashboard', element: <ReportDashboard /> },
         {
           path: 'overview-date',
           element: <OverviewDate />
@@ -202,7 +198,7 @@ export default function Router() {
           children: [{ path: '', element: <ProductSaleReport /> }]
         },
         {
-          path: 'trading-report',
+          path: 'trading',
           children: [
             { path: '', element: <TradingReport /> },
             { path: ':id', element: <UpdateMenuPage /> }

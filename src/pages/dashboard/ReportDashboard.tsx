@@ -24,28 +24,28 @@ const Widgets = [
     icon: clockOuline,
     color: '#116530',
     hoverColor: 'green',
-    path: PATH_REPORT_APP.tradingReport
+    path: PATH_REPORT_APP.trading
   },
   {
     title: 'SẢN PHẨM',
     icon: castFill,
     color: '#E1C340',
     hoverColor: '#FAD02C',
-    path: PATH_REPORT_APP.productSaleReport
+    path: PATH_REPORT_APP.productSale
   },
   {
     title: 'DIỄN TIẾN NGÀY',
     icon: calendarFill,
     color: '#E4021B',
     hoverColor: '#bb0909',
-    path: PATH_REPORT_APP.productProgressReport
+    path: PATH_REPORT_APP.productProgress
   },
   {
     title: 'SO SÁNH SẢN PHẨM',
     icon: pantoneFill,
     color: '#2E8BC0',
     hoverColor: '#009688',
-    path: PATH_REPORT_APP.productProgressReport
+    path: PATH_REPORT_APP.productProgress
   }
 ];
 

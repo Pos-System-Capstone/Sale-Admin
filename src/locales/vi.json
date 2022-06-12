@@ -16,9 +16,6 @@
     "store": "Cửa hàng",
     "menu-list": "Bảng giá",
     "store-menu-apply": "Cửa hàng áp dụng",
-    "dashboard": "Bảng điều khiển",
-    "tradingReport": "Báo cáo kinh doanh",
-    "promotionReport": "Báo cáo khuyến mãi",
     "general": "Tổng quan",
     "customer": {
       "root": "Khách hàng",
@@ -38,11 +35,15 @@
     "customer-subheader": "Khách hàng",
     "group-subheader": "Danh mục",
     "report": {
+      "dashboard": "Bảng điều khiển",
+      "management": "Quản lý",
+      "trading": "Báo cáo kinh doanh",
+      "promotion": "Báo cáo khuyến mãi",
       "overviewDate": "Tổng quan theo ngày",
       "overviewMonth": "Tổng quan theo tháng",
-      "paymentReport": "Báo cáo thanh toán",
-      "productSaleReport": "Báo cáo doanh thu sản phẩm",
-      "productProgressReport": "Báo cáo diễn tiến sản phẩm"
+      "payment": "Báo cáo thanh toán",
+      "productSale": "Báo cáo doanh thu sản phẩm",
+      "productProgress": "Báo cáo diễn tiến sản phẩm"
     }
   },
   "pages": {
