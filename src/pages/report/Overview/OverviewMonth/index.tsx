@@ -46,8 +46,6 @@ const list: any = [
     highlight: true
   }
 ];
-const list1: any = [];
-//
 
 export default function OverviewMonth() {
   const [activeTab, setActiveTab] = useState('1');
@@ -101,6 +99,7 @@ export default function OverviewMonth() {
     }
   ];
   useEffect(() => {
+    console.log(today.getDate());
     console.log(
       'date',
       date.toLocaleDateString('zh-Hans-CN', {
@@ -134,18 +133,23 @@ export default function OverviewMonth() {
   return (
     <OverviewPage
       // title={`Tổng quan ngày: ${moment().format('DD/MM/YYYY')}`}
-      title={`Tổng quan tháng: ${date.toLocaleDateString('vi-VI', {
+      title={`Tổng quan tháng ${date.toLocaleDateString('vi-VI', {
         year: 'numeric',
-        month: '2-digit',
-        day: '2-digit'
+        month: 'numeric'
       })}`}
-      content={date.getDate() === today.getDate() ? `Tính đến: ${moment().format('hh:mm:ss')}` : ''}
+      // cung thang se sai
+      content={
+        date.toDateString() === today.toDateString()
+          ? `Tính đến: ${moment().format('hh:mm:ss')}`
+          : ''
+      }
       actions={[
         <LocalizationProvider key="choose-day" dateAdapter={AdapterDateFns}>
           <DatePicker
+            views={['year', 'month']}
             disableFuture
-            inputFormat="dd/MM/yyyy"
-            label="Tổng quan ngày"
+            inputFormat="MM/yyyy"
+            label="Tổng quan tháng"
             value={date}
             onChange={(newValue) => {
               setDate(newValue || new Date());

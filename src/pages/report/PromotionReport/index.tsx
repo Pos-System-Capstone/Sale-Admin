@@ -9,17 +9,16 @@ import ResoTable from 'components/ResoTable/ResoTable';
 import useLocales from 'hooks/useLocales';
 import { get } from 'lodash';
 import { useSnackbar } from 'notistack';
-import React from 'react';
 import { useRef, useState } from 'react';
 // components
+import { SelectField } from 'components/form';
+import Label from 'components/Label';
 import { useNavigate } from 'react-router-dom';
 import { PATH_DASHBOARD } from 'routes/paths';
-import { TStore } from 'types/store';
-import Label from 'components/Label';
-import { SelectField } from 'components/form';
-import { getAllPromotion } from 'redux/report/promotion/api';
 import { TPromotionBase } from 'types/report/promotion';
+import { TStore } from 'types/store';
 import { TTableColumn } from 'types/table';
+import promotionApi from 'api/report/promotion';
 const PromotionReport = () => {
   const navigate = useNavigate();
   const { translate } = useLocales();
@@ -155,9 +154,7 @@ const PromotionReport = () => {
           <ResoTable
             rowKey="id"
             ref={tableRef}
-            onEdit={(stores: any) => navigate(`${PATH_DASHBOARD.promotion.root}/${stores.id}`)}
-            getData={getAllPromotion}
-            onDelete={setCurrentDeleteItem}
+            getData={promotionApi.getPromotion}
             columns={columns}
           />
         </Stack>

@@ -13,28 +13,23 @@ import Grid from '@mui/material/Grid';
 import { Box } from '@mui/system';
 // import { TTradingBase } from '@types/report/trading';
 import menuApi from 'api/menu';
+import tradingApi from 'api/report/trading';
 import AutocompleteTrading from 'components/form/common/Category/AutocompleteTrading';
 import { menuSchema, transformMenuForm } from 'components/form/Menu/helper';
 import confirm from 'components/Modal/confirm';
 import ModalForm from 'components/ModalForm/ModalForm';
 import ResoTable from 'components/ResoTable/ResoTable';
 import MenuWidgets from 'components/_dashboard/general-app/MenuWidgets';
-// import { STORE_NAME } from 'constraints';
 import moment from 'moment';
 import { useSnackbar } from 'notistack';
 import React, { useRef, useState } from 'react';
 import Chart from 'react-apexcharts';
 import { useForm } from 'react-hook-form';
-// components
 import { useNavigate } from 'react-router-dom';
-import { getAllTrading } from 'redux/report/trading/api';
-// import { getMenus } from 'redux/menu/api';
-import { PATH_DASHBOARD } from 'routes/paths';
 import { Menu } from 'types/menu';
 import { TTradingBase } from 'types/report/trading';
 import { TTableColumn } from 'types/table';
 import Page from './components/Page';
-
 export const menuColumns: TTableColumn<TTradingBase>[] = [
   {
     title: 'STT',
@@ -44,9 +39,7 @@ export const menuColumns: TTableColumn<TTradingBase>[] = [
   {
     fixed: 'left',
     title: 'Ngày',
-    // dataIndex: 'is_brand_mode',
     valueType: 'select',
-    // hideInSearch: true,zz
     valueEnum: [
       {
         label: 'Tháng này',
@@ -66,26 +59,11 @@ export const menuColumns: TTableColumn<TTradingBase>[] = [
     title: 'Mang đi',
     dataIndex: 'totalOrderTakeAway',
     hideInSearch: true
-    // render: (_, data: Menu) =>
-    //   data.start_time && data.end_time ? (
-    //     <Typography>
-    //       {fDate(data.start_time)} - {fDate(data.end_time)}
-    //     </Typography>
-    //   ) : (
-    //     '-'
-    //   )
   },
   {
     title: 'Tại store',
     dataIndex: 'totalOrderAtStore',
     hideInSearch: true
-    // render: (_: any, { time_ranges }: Menu) => (
-    //   <Stack direction="row" spacing={1}>
-    //     {time_ranges?.map(([from, to]) => (
-    //       <Chip size="small" key={`${from}-${to}`} label={`${from}-${to}`} />
-    //     ))}
-    //   </Stack>
-    // )
   },
   {
     title: 'Giao hàng',
@@ -97,24 +75,10 @@ export const menuColumns: TTableColumn<TTradingBase>[] = [
     dataIndex: 'storeName',
     valueType: 'select',
     renderFormItem: () => <AutocompleteTrading name="storeName" label="Cửa hàng" />
-    // hideInSearch: true,
-    // valueEnum: STORE_NAME
-    // render: (_: any, { day_filters: dayFilters, menu_id }: Menu) => (
-    //   <Stack direction="row" spacing={1}>
-    //     {dayFilters?.map((day) => (
-    //       <Chip
-    //         size="small"
-    //         key={`${menu_id}-${day}`}
-    //         label={DAY_OF_WEEK.find(({ value }) => value === day)?.label}
-    //       />
-    //     ))}
-    //   </Stack>
-    // )
   },
   {
     title: 'Tổng số bill',
     dataIndex: 'totalBills',
-    // dataIndex: 'priority',
     hideInSearch: true
   },
   {
@@ -133,16 +97,7 @@ export const menuColumns: TTableColumn<TTradingBase>[] = [
     hideInSearch: true
   }
 ];
-// const columns: TTableColumn<TTradingBase>[] = [
-//   {
-//     title: 'Teb sab oagb',
-//     dataIndex: 'storeName'
-//   },
-//   {
-//     title: 'eqweqw',
-//     dataIndex: 'totalOrderAtStore'
-//   }
-// ];
+
 const TradingReport = () => {
   const navigate = useNavigate();
   const tableRef = useRef<any>();
@@ -237,11 +192,7 @@ const TradingReport = () => {
   const current = new Date();
   const firstDay = `${'1'}/${current.getMonth() + 1}/${current.getFullYear()}`;
   const date = `${current.getDate()}/${current.getMonth() + 1}/${current.getFullYear()}`;
-  // const date = current.toLocaleDateString('vi-VI', {
-  //   year: 'numeric',
-  //   month: '2-digit',
-  //   day: '2-digit'
-  // });
+
   const [day, setDay] = useState<Date>(current);
 
   return (
@@ -302,9 +253,6 @@ const TradingReport = () => {
         </LocalizationProvider>
       ]}
     >
-      {/* <p style={{ marginTop: '-45px', paddingBottom: '50px' }}>
-        ({firstDay} - {date})
-      </p> */}
       <Box sx={{ width: '100%', paddingBottom: '20px' }}>
         <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
           {Feature.map((item) => (
@@ -326,15 +274,9 @@ const TradingReport = () => {
             <Stack spacing={2}>
               <Box sx={{ paddingTop: '40px' }}>
                 <ResoTable
+                  rowKey="trading_id"
                   ref={tableRef}
-                  onDelete={onConfirmDelete}
-                  rowKey="menu_id"
-                  onEdit={(menu: Menu) =>
-                    navigate(`${PATH_DASHBOARD.tradingReport.root}/${menu.menu_id}`, {
-                      state: menu
-                    })
-                  }
-                  getData={getAllTrading}
+                  getData={tradingApi.getTrading}
                   columns={menuColumns}
                 />
               </Box>

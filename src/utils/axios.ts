@@ -30,9 +30,11 @@ const parseParams = (params: any) => {
 
   return options ? options.slice(0, -1) : options;
 };
+const report = `${process.env.REACT_APP_REPORT_BASE_URL}`;
+const sale = `${process.env.REACT_APP_BASE_URL}`;
 
 const request = axios.create({
-  baseURL: process.env.REACT_APP_BASE_URL,
+  baseURL: sale,
   paramsSerializer: parseParams
 });
 
@@ -49,6 +51,28 @@ request.interceptors.request.use((options) => {
 });
 
 request.interceptors.response.use(
+  (response) => response,
+  (error) => Promise.reject((error.response && error.response.data) || 'Có lỗi xảy ra')
+);
+
+const requestReport = axios.create({
+  baseURL: report,
+  paramsSerializer: parseParams
+});
+
+requestReport.interceptors.request.use((options) => {
+  const { method } = options;
+
+  if (method === 'put' || method === 'post') {
+    Object.assign(options.headers, {
+      'Content-Type': 'application/json;charset=UTF-8'
+    });
+  }
+
+  return options;
+});
+
+requestReport.interceptors.response.use(
   (response) => response,
   (error) => Promise.reject((error.response && error.response.data) || 'Có lỗi xảy ra')
 );
@@ -73,28 +97,18 @@ class AxiosClientFactory {
    *
    */
   getAxiosClient(type?: AxiosClientFactoryEnum, config: AxiosRequestConfig = {}) {
-    const requestReport = { ...request };
     switch (type) {
       case 'report':
-        requestReport.defaults = {
-          ...config,
-          baseURL: process.env.REACT_APP_REPORT_BASE_URL
-        };
         return requestReport;
       case 'sale':
-        requestReport.defaults = {
-          ...config,
-          baseURL: process.env.REACT_APP_BASE_URL
-        };
-        return requestReport;
+        return request;
       default:
-        return requestReport;
+        return request;
     }
   }
 }
 
 const axiosClientFactory = new AxiosClientFactory();
-
 /**
  * Singleton Pattern for Axios Request
  */

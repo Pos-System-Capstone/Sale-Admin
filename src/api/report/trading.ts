@@ -4,7 +4,8 @@ import { axiosInstances } from 'utils/axios';
 
 const request = axiosInstances.report;
 
-const getTrading = (params?: any) => request.get<BaseReponse<TTradingBase>>('/system-report/');
+const getTrading = (params: any = {}) =>
+  request.get<BaseReponse<TTradingBase>>('/system-report', params);
 
 const tradingApi = { getTrading };
 

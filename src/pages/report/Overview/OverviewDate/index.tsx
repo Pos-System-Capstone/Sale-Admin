@@ -4,6 +4,7 @@ import { DatePicker, LocalizationProvider, TabContext, TabList, TabPanel } from 
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 // material
 import { Box, Button, Card, Grid, Stack, Tab, TextField, Typography } from '@mui/material';
+import tradingApi from 'api/report/trading';
 import ResoTable from 'components/ResoTable/ResoTable';
 import useLocales from 'hooks/useLocales';
 import moment from 'moment';
@@ -44,13 +45,14 @@ const list: any = [
     highlight: true
   }
 ];
-const list1: any = [];
-//
 
 export default function OverviewDate() {
+  useEffect(() => {
+    tradingApi.getTrading();
+  }, []);
+
   const [activeTab, setActiveTab] = useState('1');
   const ref = useRef<any>();
-  console.log('ref', ref);
   const today = new Date();
   const [date, setDate] = useState<Date>(today);
   const handleChangeTab = (event: React.SyntheticEvent, newValue: string) => {
@@ -99,14 +101,6 @@ export default function OverviewDate() {
     }
   ];
   useEffect(() => {
-    console.log(
-      'date',
-      date.toLocaleDateString('zh-Hans-CN', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit'
-      })
-    );
     if (ref.current) {
       ref.current.formControl.setValue(
         'create_at',
@@ -121,7 +115,6 @@ export default function OverviewDate() {
   // Chart
   const chart = {
     series: [25, 25, 50],
-
     chartOptions: {
       legend: { show: true, fontSize: '14px' },
       labels: ['Tại cửa hàng', 'Giao hàng', 'Mang về'],
@@ -137,7 +130,11 @@ export default function OverviewDate() {
         month: '2-digit',
         day: '2-digit'
       })}`}
-      content={date.getDate() === today.getDate() ? `Tính đến: ${moment().format('hh:mm:ss')}` : ''}
+      content={
+        date.toDateString() === today.toDateString()
+          ? `Tính đến: ${moment().format('hh:mm:ss')}`
+          : ''
+      }
       actions={[
         <LocalizationProvider key="choose-day" dateAdapter={AdapterDateFns}>
           <DatePicker
