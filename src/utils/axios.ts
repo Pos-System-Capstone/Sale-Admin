@@ -65,7 +65,7 @@ class AxiosClientFactory {
    * ```javascript
    *
    * // Get the Axios Instance
-   * import {axiosClientFactory} from 'utils/axios';
+   * import { axiosClientFactory, axiosInstance } from 'utils/axios';
    * var axiosInstance = axiosClientFactory.getAxiosClient(AxiosClientFactoryEnum.SALE);
    *
    *
@@ -78,14 +78,13 @@ class AxiosClientFactory {
       case 'report':
         requestReport.defaults = {
           ...config,
-          // TODO: Change this baseurl
           baseURL: process.env.REACT_APP_REPORT_BASE_URL
         };
         return requestReport;
       case 'sale':
         requestReport.defaults = {
           ...config,
-          baseURL: process.env.REACT_APP_REPORT_BASE_URL
+          baseURL: process.env.REACT_APP_BASE_URL
         };
         return requestReport;
       default:
@@ -96,6 +95,14 @@ class AxiosClientFactory {
 
 const axiosClientFactory = new AxiosClientFactory();
 
-export { axiosClientFactory };
+/**
+ * Singleton Pattern for Axios Request
+ */
+const axiosInstances = {
+  report: axiosClientFactory.getAxiosClient(AxiosClientFactoryEnum.REPORT),
+  sale: axiosClientFactory.getAxiosClient(AxiosClientFactoryEnum.SALE)
+};
 
-export default axiosClientFactory.getAxiosClient(AxiosClientFactoryEnum.SALE);
+export { axiosClientFactory, axiosInstances };
+
+export default axiosInstances.sale;

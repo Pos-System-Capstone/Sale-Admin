@@ -1,8 +1,11 @@
-import { axiosClientFactory, AxiosClientFactoryEnum } from 'utils/axios';
+import { TTradingBase } from 'types/report/trading';
+import { BaseReponse } from 'types/response';
+import { axiosInstances } from 'utils/axios';
 
-axiosClientFactory.getAxiosClient(AxiosClientFactoryEnum.TRADING);
+const request = axiosInstances.report;
 
-const getTrading = (collectionId: number, params?: any) =>
-  request.get<BaseReponse<TProductCollection>>(`/admin/collections/${collectionId}/products`);
+const getTrading = (params?: any) => request.get<BaseReponse<TTradingBase>>('/system-report/');
 
-const tradingApi = {};
+const tradingApi = { getTrading };
+
+export default tradingApi;
