@@ -60,6 +60,8 @@ export type TProductBase = {
   atts?: string[];
   product_in_menu?: TProductInMenu[];
   has_extra?: boolean;
+  storeName?: string;
+  totalOrderAtStore?: number;
 
   /** Giá của sản phẩm sẽ được sử dụng khi sản phẩm này không được cấu hình giá ở bảng `ProductInMenu` */
   price?: number;

@@ -1,39 +1,41 @@
 /* eslint-disable camelcase */
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Icon } from '@iconify/react';
-// material
-import { Button, Card, Stack, Tab } from '@mui/material';
-import { Box } from '@mui/system';
-import menuApi from 'api/menu';
-import { menuSchema, transformMenuForm } from 'components/form/Menu/helper';
-import confirm from 'components/Modal/confirm';
-import ModalForm from 'components/ModalForm/ModalForm';
-import Page from 'components/Page';
-import { useSnackbar } from 'notistack';
-import { useRef, useState } from 'react';
-import { useForm } from 'react-hook-form';
-// components
-import { useNavigate } from 'react-router-dom';
-import { getMenus } from 'redux/menu/api';
-import { PATH_DASHBOARD } from 'routes/paths';
-import Grid from '@mui/material/Grid';
-import { Menu } from 'types/menu';
-import { TTableColumn } from 'types/table';
-import React from 'react';
-
-import MenuWidgets from 'components/_dashboard/general-app/MenuWidgets';
-import { Typography } from '@mui/material';
-import { TabContext, TabList, TabPanel } from '@mui/lab';
-import Chart from 'react-apexcharts';
-
-import clockIcon from '@iconify/icons-eva/clock-fill';
 import activityFill from '@iconify/icons-eva/activity-fill';
 import alertCircleFill from '@iconify/icons-eva/alert-circle-fill';
 import alertTriangleFill from '@iconify/icons-eva/alert-triangle-fill';
-import { STORE_NAME } from 'constraints';
+import clockIcon from '@iconify/icons-eva/clock-fill';
+import { Icon } from '@iconify/react';
+import { DatePicker, LocalizationProvider, TabContext, TabList, TabPanel } from '@mui/lab';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+// material
+import { Button, Card, Stack, Tab, TextField, Typography } from '@mui/material';
+import Grid from '@mui/material/Grid';
+import { Box } from '@mui/system';
+// import { TTradingBase } from '@types/report/trading';
+import menuApi from 'api/menu';
+import AutocompleteTrading from 'components/form/common/Category/AutocompleteTrading';
+import { menuSchema, transformMenuForm } from 'components/form/Menu/helper';
+import confirm from 'components/Modal/confirm';
+import ModalForm from 'components/ModalForm/ModalForm';
 import ResoTable from 'components/ResoTable/ResoTable';
+import MenuWidgets from 'components/_dashboard/general-app/MenuWidgets';
+// import { STORE_NAME } from 'constraints';
+import moment from 'moment';
+import { useSnackbar } from 'notistack';
+import React, { useRef, useState } from 'react';
+import Chart from 'react-apexcharts';
+import { useForm } from 'react-hook-form';
+// components
+import { useNavigate } from 'react-router-dom';
+import { getAllTrading } from 'redux/report/trading/api';
+// import { getMenus } from 'redux/menu/api';
+import { PATH_DASHBOARD } from 'routes/paths';
+import { Menu } from 'types/menu';
+import { TTradingBase } from 'types/report/trading';
+import { TTableColumn } from 'types/table';
+import Page from './components/Page';
 
-export const menuColumns: TTableColumn<Menu>[] = [
+export const menuColumns: TTableColumn<TTradingBase>[] = [
   {
     title: 'STT',
     dataIndex: 'index',
@@ -41,10 +43,10 @@ export const menuColumns: TTableColumn<Menu>[] = [
   },
   {
     fixed: 'left',
-    title: 'Tháng',
+    title: 'Ngày',
     // dataIndex: 'is_brand_mode',
     valueType: 'select',
-    // hideInSearch: true,
+    // hideInSearch: true,zz
     valueEnum: [
       {
         label: 'Tháng này',
@@ -62,6 +64,7 @@ export const menuColumns: TTableColumn<Menu>[] = [
   },
   {
     title: 'Mang đi',
+    dataIndex: 'totalOrderTakeAway',
     hideInSearch: true
     // render: (_, data: Menu) =>
     //   data.start_time && data.end_time ? (
@@ -74,7 +77,7 @@ export const menuColumns: TTableColumn<Menu>[] = [
   },
   {
     title: 'Tại store',
-    // dataIndex: 'time_ranges',
+    dataIndex: 'totalOrderAtStore',
     hideInSearch: true
     // render: (_: any, { time_ranges }: Menu) => (
     //   <Stack direction="row" spacing={1}>
@@ -85,11 +88,17 @@ export const menuColumns: TTableColumn<Menu>[] = [
     // )
   },
   {
+    title: 'Giao hàng',
+    dataIndex: 'totalOrderDelivery',
+    hideInSearch: true
+  },
+  {
     title: 'Cửa hàng',
-    // dataIndex: 'day_filters',
+    dataIndex: 'storeName',
     valueType: 'select',
+    renderFormItem: () => <AutocompleteTrading name="storeName" label="Cửa hàng" />
     // hideInSearch: true,
-    valueEnum: STORE_NAME
+    // valueEnum: STORE_NAME
     // render: (_: any, { day_filters: dayFilters, menu_id }: Menu) => (
     //   <Stack direction="row" spacing={1}>
     //     {dayFilters?.map((day) => (
@@ -104,26 +113,36 @@ export const menuColumns: TTableColumn<Menu>[] = [
   },
   {
     title: 'Tổng số bill',
+    dataIndex: 'totalBills',
     // dataIndex: 'priority',
     hideInSearch: true
   },
   {
     title: 'Tổng doanh thu',
-    // dataIndex: 'create_at',
+    dataIndex: 'totalSales',
     hideInSearch: true
   },
   {
     title: 'Tiền giảm giá',
-    // dataIndex: 'create_at',
+    dataIndex: 'totalDiscount',
     hideInSearch: true
   },
   {
-    title: 'Tổng doang thu sau giảm giá',
-    // dataIndex: 'create_at',
+    title: 'Tổng doanh thu sau giảm giá',
+    dataIndex: 'totalSalesAfterDiscount',
     hideInSearch: true
   }
 ];
-
+// const columns: TTableColumn<TTradingBase>[] = [
+//   {
+//     title: 'Teb sab oagb',
+//     dataIndex: 'storeName'
+//   },
+//   {
+//     title: 'eqweqw',
+//     dataIndex: 'totalOrderAtStore'
+//   }
+// ];
 const TradingReport = () => {
   const navigate = useNavigate();
   const tableRef = useRef<any>();
@@ -223,11 +242,20 @@ const TradingReport = () => {
   //   month: '2-digit',
   //   day: '2-digit'
   // });
+  const [day, setDay] = useState<Date>(current);
 
   return (
     <Page
-      title="Báo cáo doanh thu theo ngày"
-      actions={() => [
+      // title="Báo cáo doanh thu theo ngày"
+      title={`Báo cáo doanh thu theo ngày: ${day.toLocaleDateString('vi-VI', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+      })}`}
+      content={
+        day.getDate() === current.getDate() ? `Tính đến: ${moment().format('hh:mm:ss')}` : ''
+      }
+      actions={[
         <ModalForm
           key="create-menu"
           onOk={async () => {
@@ -259,12 +287,24 @@ const TradingReport = () => {
               Xuất file Excel
             </Button>
           }
-        ></ModalForm>
+        ></ModalForm>,
+        <LocalizationProvider key="choose-day" dateAdapter={AdapterDateFns}>
+          <DatePicker
+            disableFuture
+            inputFormat="dd/MM/yyyy"
+            label="Tổng quan ngày"
+            value={day}
+            onChange={(newValue) => {
+              setDay(newValue || new Date());
+            }}
+            renderInput={(params) => <TextField {...params} />}
+          />
+        </LocalizationProvider>
       ]}
     >
-      <p style={{ marginTop: '-45px', paddingBottom: '50px' }}>
+      {/* <p style={{ marginTop: '-45px', paddingBottom: '50px' }}>
         ({firstDay} - {date})
-      </p>
+      </p> */}
       <Box sx={{ width: '100%', paddingBottom: '20px' }}>
         <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
           {Feature.map((item) => (
@@ -294,7 +334,7 @@ const TradingReport = () => {
                       state: menu
                     })
                   }
-                  getData={getMenus}
+                  getData={getAllTrading}
                   columns={menuColumns}
                 />
               </Box>
