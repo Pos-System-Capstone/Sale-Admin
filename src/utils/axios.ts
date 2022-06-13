@@ -1,4 +1,10 @@
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
+
+// Custom Axios Type
+export enum AxiosClientFactoryEnum {
+  REPORT = 'report',
+  SALE = 'sale'
+}
 
 // ----------------------------------------------------------------------
 
@@ -47,4 +53,49 @@ request.interceptors.response.use(
   (error) => Promise.reject((error.response && error.response.data) || 'Có lỗi xảy ra')
 );
 
-export default request;
+// ----------------------------------------------------------------------
+class AxiosClientFactory {
+  /**
+   * Use to get instance of AxiosClientFactory
+   * @param type AxiosClientFactoryEnum
+   * @param config AxiosRequestConfig
+   * @returns AxiosInstance
+   *
+   * @example
+   * ```javascript
+   *
+   * // Get the Axios Instance
+   * import {axiosClientFactory} from 'utils/axios';
+   * var axiosInstance = axiosClientFactory.getAxiosClient(AxiosClientFactoryEnum.SALE);
+   *
+   *
+   * ```
+   *
+   */
+  getAxiosClient(type?: AxiosClientFactoryEnum, config: AxiosRequestConfig = {}) {
+    const requestReport = { ...request };
+    switch (type) {
+      case 'report':
+        requestReport.defaults = {
+          ...config,
+          // TODO: Change this baseurl
+          baseURL: process.env.REACT_APP_REPORT_BASE_URL
+        };
+        return requestReport;
+      case 'sale':
+        requestReport.defaults = {
+          ...config,
+          baseURL: process.env.REACT_APP_REPORT_BASE_URL
+        };
+        return requestReport;
+      default:
+        return requestReport;
+    }
+  }
+}
+
+const axiosClientFactory = new AxiosClientFactory();
+
+export { axiosClientFactory };
+
+export default axiosClientFactory.getAxiosClient(AxiosClientFactoryEnum.SALE);
