@@ -21,7 +21,7 @@ import {
 } from 'redux/menu/api';
 import { formatCurrency } from 'utils/utils';
 import ProductInMenuDialog from '../components/EditProductDialog';
-import AutocompleteCategory from 'components/form/common/Category/AutocompleteCategory';
+import AutocompleteTrading from 'components/form/common/Category/AutocompleteTrading';
 
 const ProductInMenuTab = ({ id }) => {
   const [currentCate, setCurrentCate] = React.useState(null);
@@ -178,7 +178,7 @@ const ProductInMenuTab = ({ id }) => {
               title: 'Danh mục',
               dataIndex: 'cate_name',
               render: (cate) => <Chip label={cate} />,
-              renderFormItem: () => <AutocompleteCategory name="cat-id" label="Danh mục" />
+              renderFormItem: () => <AutocompleteTrading name="cat-id" label="Danh mục" />
             },
             {
               title: 'Cố định giá',

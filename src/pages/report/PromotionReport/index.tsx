@@ -13,11 +13,13 @@ import React from 'react';
 import { useRef, useState } from 'react';
 // components
 import { useNavigate } from 'react-router-dom';
-import { getStores } from 'redux/store/api';
 import { PATH_DASHBOARD } from 'routes/paths';
 import { TStore } from 'types/store';
 import Label from 'components/Label';
 import { SelectField } from 'components/form';
+import { getAllPromotion } from 'redux/report/promotion/api';
+import { TPromotionBase } from 'types/report/promotion';
+import { TTableColumn } from 'types/table';
 const PromotionReport = () => {
   const navigate = useNavigate();
   const { translate } = useLocales();
@@ -41,20 +43,20 @@ const PromotionReport = () => {
           variant: 'error'
         });
       });
-  const columns = [
+  const columns: TTableColumn<TPromotionBase>[] = [
     {
       title: 'Chương trình khuyên mãi',
-      dataIndex: 'store_code'
+      dataIndex: 'customerName'
       // hideInSearch: true
     },
     {
       title: 'Doanh số trước giảm giá',
-      // dataIndex: 'name',
+      dataIndex: 'sumAmount',
       hideInSearch: true
     },
     {
       title: 'Giảm giá',
-      // dataIndex: 'short_name',
+      dataIndex: 'storeName',
       hideInSearch: true
     },
     {
@@ -62,13 +64,13 @@ const PromotionReport = () => {
       // dataIndex: 'open_time',
       hideInSearch: true
     },
+    // {
+    //   title: translate('pages.stores.table.closeTime'),
+    //   dataIndex: 'close_time',
+    //   hideInSearch: true
+    // },
     {
-      title: translate('pages.stores.table.closeTime'),
-      // dataIndex: 'close_time',
-      hideInSearch: true
-    },
-    {
-      title: translate('Hôm nay'),
+      title: 'Xem các hóa đơn',
       // dataIndex: 'is_available',
       // hideInSearch: true,
       render: (isAvai: any) => (
@@ -154,7 +156,7 @@ const PromotionReport = () => {
             rowKey="id"
             ref={tableRef}
             onEdit={(stores: any) => navigate(`${PATH_DASHBOARD.promotion.root}/${stores.id}`)}
-            getData={getStores}
+            getData={getAllPromotion}
             onDelete={setCurrentDeleteItem}
             columns={columns}
           />
