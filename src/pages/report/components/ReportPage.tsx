@@ -1,6 +1,6 @@
+import { forwardRef, ReactNode, useCallback, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useLocation } from 'react-router-dom';
-import { forwardRef, useEffect, useCallback, ReactNode } from 'react';
 // material
 import { Box, BoxProps, Container, Stack, Typography } from '@mui/material';
 import track from 'utils/analytics';
@@ -15,7 +15,7 @@ interface PageProps extends BoxProps {
   actions?: ReactNode[];
 }
 
-const OverviewPage = forwardRef<HTMLDivElement, PageProps>(
+const ReportPage = forwardRef<HTMLDivElement, PageProps>(
   ({ children, title = '', content, actions, ...other }, ref) => {
     const { pathname } = useLocation();
 
@@ -52,4 +52,4 @@ const OverviewPage = forwardRef<HTMLDivElement, PageProps>(
   }
 );
 
-export default OverviewPage;
+export default ReportPage;

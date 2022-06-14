@@ -1,20 +1,20 @@
 /* eslint-disable camelcase */
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
-import { DatePicker, LocalizationProvider, TabContext, TabList, TabPanel } from '@mui/lab';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import { TabContext, TabList, TabPanel } from '@mui/lab';
 // material
-import { Box, Button, Card, Grid, Stack, Tab, TextField, Typography } from '@mui/material';
+import { Box, Button, Card, Grid, Stack, Tab, Typography } from '@mui/material';
 import ResoTable from 'components/ResoTable/ResoTable';
 import useLocales from 'hooks/useLocales';
 import moment from 'moment';
 import { useSnackbar } from 'notistack';
+import ReportDatePicker from 'pages/report/components/ReportDatePicker';
+import ReportPage from 'pages/report/components/ReportPage';
 import React, { useEffect, useRef, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 // components
 import { useNavigate } from 'react-router-dom';
 import { Menu } from 'types/menu';
 import { TTableColumn } from 'types/table';
-import OverviewPage from '../components/OverviewPage';
 import TableCard, { fakeData, MiniTableCard } from '../components/TableCard';
 
 const list: any = [
@@ -118,7 +118,7 @@ export default function OverviewDate() {
   };
 
   return (
-    <OverviewPage
+    <ReportPage
       title={`Tổng quan ngày: ${date.toLocaleDateString('vi-VI', {
         year: 'numeric',
         month: '2-digit',
@@ -130,18 +130,13 @@ export default function OverviewDate() {
           : ''
       }
       actions={[
-        <LocalizationProvider key="choose-day" dateAdapter={AdapterDateFns}>
-          <DatePicker
-            disableFuture
-            inputFormat="dd/MM/yyyy"
-            label="Tổng quan ngày"
-            value={date}
-            onChange={(newValue) => {
-              setDate(newValue || new Date());
-            }}
-            renderInput={(params) => <TextField {...params} />}
-          />
-        </LocalizationProvider>,
+        <ReportDatePicker
+          key="choose-day"
+          value={date}
+          onChange={(newValue) => {
+            setDate(newValue || new Date());
+          }}
+        />,
         <Button
           key="export-excel"
           onClick={() => {
@@ -371,6 +366,6 @@ export default function OverviewDate() {
           </TabPanel>
         </TabContext>
       </Card>
-    </OverviewPage>
+    </ReportPage>
   );
 }

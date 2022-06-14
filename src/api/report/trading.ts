@@ -1,3 +1,4 @@
+import { generateAPIWithPaging } from 'api/utils';
 import { TTradingBase } from 'types/report/trading';
 import { BaseReponse } from 'types/response';
 import { axiosInstances } from 'utils/axios';
@@ -10,3 +11,7 @@ const getTrading = (params: any = {}) =>
 const tradingApi = { getTrading };
 
 export default tradingApi;
+
+export const testApi = {
+  ...generateAPIWithPaging<TTradingBase>('system-reports')
+};

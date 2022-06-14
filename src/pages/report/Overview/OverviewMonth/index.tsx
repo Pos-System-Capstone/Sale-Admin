@@ -1,20 +1,20 @@
 /* eslint-disable camelcase */
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
-import { DatePicker, LocalizationProvider, TabContext, TabList, TabPanel } from '@mui/lab';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import { TabContext, TabList, TabPanel } from '@mui/lab';
 // material
-import { Box, Button, Card, Grid, Stack, Tab, TextField, Typography } from '@mui/material';
+import { Box, Button, Card, Grid, Stack, Tab, Typography } from '@mui/material';
 import ResoTable from 'components/ResoTable/ResoTable';
 import useLocales from 'hooks/useLocales';
 import moment from 'moment';
 import { useSnackbar } from 'notistack';
+import ReportDatePicker from 'pages/report/components/ReportDatePicker';
+import ReportPage from 'pages/report/components/ReportPage';
 import React, { useEffect, useRef, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 // components
 import { useNavigate } from 'react-router-dom';
 import { Menu } from 'types/menu';
 import { TTableColumn } from 'types/table';
-import OverviewPage from '../components/OverviewPage';
 import TableCard, { fakeData, MiniTableCard } from '../components/TableCard';
 // import OverviewPage from '././components/OverviewPage';
 // import TableCard, { fakeData, MiniTableCard } from '././components/TableCard';
@@ -131,32 +131,24 @@ export default function OverviewMonth() {
   };
 
   return (
-    <OverviewPage
-      // title={`Tổng quan ngày: ${moment().format('DD/MM/YYYY')}`}
+    <ReportPage
       title={`Tổng quan tháng ${date.toLocaleDateString('vi-VI', {
         year: 'numeric',
         month: 'numeric'
       })}`}
-      // cung thang se sai
       content={
         date.toDateString() === today.toDateString()
           ? `Tính đến: ${moment().format('hh:mm:ss')}`
           : ''
       }
       actions={[
-        <LocalizationProvider key="choose-day" dateAdapter={AdapterDateFns}>
-          <DatePicker
-            views={['year', 'month']}
-            disableFuture
-            inputFormat="MM/yyyy"
-            label="Tổng quan tháng"
-            value={date}
-            onChange={(newValue) => {
-              setDate(newValue || new Date());
-            }}
-            renderInput={(params) => <TextField {...params} />}
-          />
-        </LocalizationProvider>,
+        <ReportDatePicker
+          key="month-date-picker"
+          value={date}
+          onChange={(newValue) => {
+            setDate(newValue || new Date());
+          }}
+        />,
         <Button
           key="export-excel"
           onClick={() => {
@@ -388,6 +380,6 @@ export default function OverviewMonth() {
           </TabPanel>
         </TabContext>
       </Card>
-    </OverviewPage>
+    </ReportPage>
   );
 }
