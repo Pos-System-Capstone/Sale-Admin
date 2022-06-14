@@ -152,7 +152,7 @@ export const promotionAppSidebarConfig = [
     items: [
       {
         title: 'promotion.dashboard',
-        path: PATH_PROMOTION_APP.promotion.root,
+        path: PATH_PROMOTION_APP.general.app,
         icon: ICONS.dashboard
       }
     ]
@@ -167,22 +167,22 @@ export const promotionAppSidebarConfig = [
       },
       {
         title: 'promotion.voucher',
-        path: PATH_PROMOTION_APP.promotion.root,
+        path: PATH_PROMOTION_APP.voucher.root,
         icon: ICONS.calendar
       },
       {
         title: 'promotion.condition',
-        path: PATH_PROMOTION_APP.promotion.root,
+        path: PATH_PROMOTION_APP.condition.root,
         icon: ICONS.product
       },
       {
         title: 'promotion.action',
-        path: PATH_PROMOTION_APP.promotion.root,
+        path: PATH_PROMOTION_APP.action.root,
         icon: ICONS.analytics
       },
       {
         title: 'promotion.gift',
-        path: PATH_PROMOTION_APP.promotion.root,
+        path: PATH_PROMOTION_APP.gift.root,
         icon: ICONS.ecommerce
       }
     ]
@@ -192,12 +192,12 @@ export const promotionAppSidebarConfig = [
     items: [
       {
         title: 'promotion.setting',
-        path: PATH_PROMOTION_APP.promotion.root,
+        path: PATH_PROMOTION_APP.setting.root,
         icon: ICONS.menu
       },
       {
         title: 'promotion.profile',
-        path: PATH_PROMOTION_APP.promotion.root,
+        path: PATH_PROMOTION_APP.profile.root,
         icon: ICONS.kanban
       }
     ]

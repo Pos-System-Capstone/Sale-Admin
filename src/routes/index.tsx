@@ -176,7 +176,7 @@ export default function Router() {
       ),
       children: [
         { path: '', element: <Navigate to="/report/dashboard" replace /> },
-        { path: 'dashboard', element: <ReportDashboard /> },
+        { path: 'dashboard', element: <></> },
         {
           path: 'overview-date',
           element: <OverviewDate />
@@ -222,10 +222,13 @@ export default function Router() {
       ),
       children: [
         { path: '', element: <Navigate to="/promotion-system/dashboard" replace /> },
-        { path: 'dashboard', element: <></> },
+        { path: 'app', element: <GeneralApp /> },
         {
           path: 'promotion',
-          children: [{ path: '', element: <></> }]
+          children: [
+            { path: '', element: <PromotionPage /> },
+            { path: 'new', element: <NewPromotionPage /> }
+          ]
         },
         {
           path: 'voucher',
@@ -265,7 +268,7 @@ export default function Router() {
       ),
       children: [
         { path: '', element: <Navigate to="/store-admin/orders" replace /> },
-        { path: 'reportDashboard', element: <ReportDashboard /> },
+        { path: 'reportDashboard', element: <></> },
 
         {
           path: 'orders',
@@ -321,7 +324,7 @@ const Register = Loadable(lazy(() => import('../pages/authentication/Register'))
 const ResetPassword = Loadable(lazy(() => import('../pages/authentication/ResetPassword')));
 const VerifyCode = Loadable(lazy(() => import('../pages/authentication/VerifyCode')));
 // Dashboard
-const ReportDashboard = Loadable(lazy(() => import('../pages/dashboard/ReportDashboard')));
+// const ReportDashboard = Loadable(lazy(() => import('../pages/dashboard/ReportDashboard')));
 const GeneralApp = Loadable(lazy(() => import('../pages/dashboard/GeneralApp')));
 const GeneralEcommerce = Loadable(lazy(() => import('../pages/dashboard/GeneralEcommerce')));
 const GeneralAnalytics = Loadable(lazy(() => import('../pages/dashboard/GeneralAnalytics')));
@@ -381,7 +384,10 @@ const ProductProgressReport = Loadable(
 const PaymentReport = Loadable(lazy(() => import('../pages/report/PaymentReport')));
 
 // Promotion system
-// const PromotionPage = Loadable(lazy(() => import('../pages/promotionEngine/Promotion')));
+const PromotionPage = Loadable(lazy(() => import('../pages/promotionEngine/Promotion')));
+const NewPromotionPage = Loadable(
+  lazy(() => import('../pages/promotionEngine//Promotion/CreatePromotion'))
+);
 // const VoucherPage = Loadable(lazy(() => import('../pages/promotionEngine/Voucher')));
 // const ConditionPage = Loadable(lazy(() => import('../pages/promotionEngine/Condition')));
 // const ActionPage = Loadable(lazy(() => import('../pages/promotionEngine/Action')));

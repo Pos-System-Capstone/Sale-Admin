@@ -8,8 +8,8 @@ import archiveFill from '@iconify/icons-eva/archive-fill';
 import clockOuline from '@iconify/icons-eva/clock-outline';
 import castFill from '@iconify/icons-eva/cast-fill';
 import pantoneFill from '@iconify/icons-eva/pantone-fill';
-import DashboarWidgets from 'components/_dashboard/general-app/DashboarWidgets';
 import { PATH_REPORT_APP } from 'routes/reportAppPaths';
+import DashboarWidgets from 'components/_dashboard/general-app/DashboarWidgets';
 // ----------------------------------------------------------------------
 const Widgets = [
   {
