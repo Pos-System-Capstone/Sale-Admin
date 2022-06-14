@@ -19,6 +19,7 @@ import { productColumns } from './config';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { deleteProdById, getAllProduct } from 'redux/product/api';
+import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
 
 // ----------------------------------------------------------------------
 
@@ -89,7 +90,7 @@ export default function Voucher() {
         <Button
           key="add-product"
           onClick={() => {
-            navigate(PATH_DASHBOARD.products.newProduct);
+            navigate(PATH_PROMOTION_APP.voucher.new);
           }}
           variant="contained"
           startIcon={<Icon icon={plusFill} />}

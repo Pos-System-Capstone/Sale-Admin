@@ -221,7 +221,7 @@ export default function Router() {
         </AuthGuard>
       ),
       children: [
-        { path: '', element: <Navigate to="/promotion-system/dashboard" replace /> },
+        { path: '', element: <Navigate to="/promotion-system/app" replace /> },
         { path: 'app', element: <GeneralApp /> },
         {
           path: 'promotion',
@@ -232,7 +232,10 @@ export default function Router() {
         },
         {
           path: 'voucher',
-          children: [{ path: '', element: <></> }]
+          children: [
+            { path: '', element: <VoucherPage /> },
+            { path: 'new', element: <NewVoucherPage /> }
+          ]
         },
         {
           path: 'condition',
@@ -388,7 +391,10 @@ const PromotionPage = Loadable(lazy(() => import('../pages/promotionEngine/Promo
 const NewPromotionPage = Loadable(
   lazy(() => import('../pages/promotionEngine//Promotion/CreatePromotion'))
 );
-// const VoucherPage = Loadable(lazy(() => import('../pages/promotionEngine/Voucher')));
+const VoucherPage = Loadable(lazy(() => import('../pages/promotionEngine/Voucher')));
+const NewVoucherPage = Loadable(
+  lazy(() => import('../pages/promotionEngine/Voucher/createVoucher'))
+);
 // const ConditionPage = Loadable(lazy(() => import('../pages/promotionEngine/Condition')));
 // const ActionPage = Loadable(lazy(() => import('../pages/promotionEngine/Action')));
 // const GiftPage = Loadable(lazy(() => import('../pages/promotionEngine/Gift')));
