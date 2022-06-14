@@ -239,23 +239,32 @@ export default function Router() {
         },
         {
           path: 'condition',
-          children: [{ path: '', element: <></> }]
+          children: [
+            { path: '', element: <ConditionPage /> },
+            { path: 'new', element: <NewConditon /> }
+          ]
         },
         {
           path: 'action',
-          children: [{ path: '', element: <></> }]
+          children: [
+            { path: '', element: <ActionPage /> },
+            { path: 'new', element: <NewActionPage /> }
+          ]
         },
         {
           path: 'gift',
-          children: [{ path: '', element: <></> }]
+          children: [
+            { path: '', element: <GiftPage /> },
+            { path: 'new', element: <NewGiftPage /> }
+          ]
         },
         {
           path: 'setting',
-          children: [{ path: '', element: <></> }]
+          children: [{ path: '', element: <SettingPage /> }]
         },
         {
           path: 'profile',
-          children: [{ path: '', element: <></> }]
+          children: [{ path: '', element: <ProfilePage /> }]
         }
       ]
     },
@@ -396,8 +405,11 @@ const VoucherPage = Loadable(lazy(() => import('../pages/promotionEngine/Voucher
 const NewVoucherPage = Loadable(
   lazy(() => import('../pages/promotionEngine/Voucher/createVoucher'))
 );
-// const ConditionPage = Loadable(lazy(() => import('../pages/promotionEngine/Condition')));
-// const ActionPage = Loadable(lazy(() => import('../pages/promotionEngine/Action')));
-// const GiftPage = Loadable(lazy(() => import('../pages/promotionEngine/Gift')));
-// const SettingPage = Loadable(lazy(() => import('../pages/promotionEngine/Setting')));
-// const ProfilePage = Loadable(lazy(() => import('../pages/promotionEngine/Profile')));
+const ConditionPage = Loadable(lazy(() => import('../pages/promotionEngine/Condition')));
+const NewConditon = Loadable(lazy(() => import('../pages/promotionEngine/Condition/NewCondition')));
+const ActionPage = Loadable(lazy(() => import('../pages/promotionEngine/Action')));
+const NewActionPage = Loadable(lazy(() => import('../pages/promotionEngine/Action/create')));
+const GiftPage = Loadable(lazy(() => import('../pages/promotionEngine/Gift')));
+const NewGiftPage = Loadable(lazy(() => import('../pages/promotionEngine/Gift/create')));
+const SettingPage = Loadable(lazy(() => import('../pages/promotionEngine/Configuration/settings')));
+const ProfilePage = Loadable(lazy(() => import('../pages/promotionEngine/Configuration/profile')));

@@ -13,6 +13,21 @@
       "customerList": "Customer list",
       "addNewCustomer": "Add customer"
     },
+    "promotion": {
+      "general": "General",
+      "dashboard": "Dashboard",
+      "campaign": "Campaign",
+      "promotion": "Promotion",
+      "voucher": "Voucher",
+      "condition": "Condition",
+      "action": "Action",
+      "gift": "Gift",
+      "configuration": "Configuration",
+      "setting": "Settings",
+      "profile": "My Profile",
+      "actionBtn": "New Action",
+      "giftBtn": "New Gift"
+    },
     "order": "Orders",
     "store-menu": "Menu",
     "product-subheader": "Product",

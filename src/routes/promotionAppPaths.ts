@@ -44,6 +44,11 @@ export const PATH_PROMOTION_APP = {
     root: path(ROOTS_DASHBOARD, '/gift'),
     new: path(ROOTS_DASHBOARD, '/gift/new')
   },
+  store: {
+    root: path(ROOTS_DASHBOARD, '/store'),
+    new: path(ROOTS_DASHBOARD, '/store/new'),
+    list: path(ROOTS_DASHBOARD, '/store/list')
+  },
   setting: {
     root: path(ROOTS_DASHBOARD, '/setting')
   },

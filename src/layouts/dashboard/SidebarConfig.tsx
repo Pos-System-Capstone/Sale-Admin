@@ -163,22 +163,22 @@ export const promotionAppSidebarConfig = [
       {
         title: 'promotion.promotion',
         path: PATH_PROMOTION_APP.promotion.root,
-        icon: ICONS.calendar
+        icon: ICONS.category
       },
       {
         title: 'promotion.voucher',
         path: PATH_PROMOTION_APP.voucher.root,
-        icon: ICONS.calendar
+        icon: ICONS.tag
       },
       {
         title: 'promotion.condition',
         path: PATH_PROMOTION_APP.condition.root,
-        icon: ICONS.product
+        icon: ICONS.extraCategory
       },
       {
         title: 'promotion.action',
         path: PATH_PROMOTION_APP.action.root,
-        icon: ICONS.analytics
+        icon: ICONS.storeApply
       },
       {
         title: 'promotion.gift',
@@ -198,7 +198,7 @@ export const promotionAppSidebarConfig = [
       {
         title: 'promotion.profile',
         path: PATH_PROMOTION_APP.profile.root,
-        icon: ICONS.kanban
+        icon: ICONS.user
       }
     ]
   }

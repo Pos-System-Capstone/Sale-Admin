@@ -50,13 +50,15 @@
       "dashboard": "Bảng điều khiển",
       "campaign": "Chiến dịch",
       "promotion": "Khuyến mãi",
-      "voucher": "Voucher",
+      "voucher": "Mã khuyến mãi",
       "condition": "Điều kiện",
       "action": "Hành động",
       "gift": "Quà tặng",
       "configuration": "Cấu hình",
       "setting": "Cài đặt",
-      "profile": "Hồ sơ"
+      "profile": "Hồ sơ của tôi",
+      "actionBtn": "New Action",
+      "giftBtn": "New Gift"
     }
   },
   "pages": {
