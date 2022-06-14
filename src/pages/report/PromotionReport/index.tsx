@@ -1,26 +1,27 @@
 /* eslint-disable camelcase */
-import { Icon } from '@iconify/react';
 // material
-import { Button, Card, Stack } from '@mui/material';
+import { Card, Stack } from '@mui/material';
 import storeApi from 'api/store';
 import DeleteConfirmDialog from 'components/DelectConfirmDialog';
-import Page from 'components/Page';
 import ResoTable from 'components/ResoTable/ResoTable';
 import useLocales from 'hooks/useLocales';
 import { get } from 'lodash';
 import { useSnackbar } from 'notistack';
 import { useRef, useState } from 'react';
 // components
+import promotionApi from 'api/report/promotion';
 import { SelectField } from 'components/form';
 import Label from 'components/Label';
-import { useNavigate } from 'react-router-dom';
-import { PATH_DASHBOARD } from 'routes/paths';
 import { TPromotionBase } from 'types/report/promotion';
 import { TStore } from 'types/store';
 import { TTableColumn } from 'types/table';
-import promotionApi from 'api/report/promotion';
+// import { DatePicker, LocalizationProvider } from '@mui/lab';
+// import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import ReportBtn from '../components/ReportBtn';
+import ReportDatePicker from '../components/ReportDatePicker';
+import ReportPage from '../components/ReportPage';
 const PromotionReport = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { translate } = useLocales();
   const { enqueueSnackbar } = useSnackbar();
   const [currentDeleteItem, setCurrentDeleteItem] = useState<TStore | null>(null);
@@ -116,29 +117,22 @@ const PromotionReport = () => {
   ];
 
   const current = new Date();
-  const date = current.toLocaleDateString('vi-VI', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit'
-  });
+  const [day, setDay] = useState<Date>(current);
 
   return (
-    <Page
+    <ReportPage
       title="Báo cáo theo khuyến mãi"
-      actions={() => [
-        <Button
-          key="create-store"
-          onClick={() => {
-            navigate(PATH_DASHBOARD.promotion.new);
+      actions={[
+        <ReportDatePicker
+          key="choose-day"
+          value={day}
+          onChange={(newValue) => {
+            setDay(newValue || new Date());
           }}
-          variant="contained"
-          startIcon={<Icon icon="fa-solid:file-export" />}
-        >
-          {translate('Xuất file Excel')}
-        </Button>
+        />,
+        <ReportBtn key="export-excel" onClick={() => console.log('Export excel')} />
       ]}
     >
-      <p style={{ marginTop: '-45px', paddingBottom: '50px' }}>({date})</p>
       <DeleteConfirmDialog
         open={Boolean(currentDeleteItem)}
         onClose={() => setCurrentDeleteItem(null)}
@@ -154,12 +148,12 @@ const PromotionReport = () => {
           <ResoTable
             rowKey="promotion-id"
             ref={tableRef}
-            getData={() => promotionApi.getPromotion(13)}
+            getData={promotionApi.getPromotion(13)}
             columns={columns}
           />
         </Stack>
       </Card>
-    </Page>
+    </ReportPage>
   );
 };
 

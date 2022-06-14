@@ -4,20 +4,20 @@ import activityFill from '@iconify/icons-eva/activity-fill';
 import alertCircleFill from '@iconify/icons-eva/alert-circle-fill';
 import alertTriangleFill from '@iconify/icons-eva/alert-triangle-fill';
 import clockIcon from '@iconify/icons-eva/clock-fill';
-import { Icon } from '@iconify/react';
-import { DatePicker, LocalizationProvider, TabContext, TabList, TabPanel } from '@mui/lab';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
+// import { Icon } from '@iconify/react';
+import { TabContext, TabList, TabPanel } from '@mui/lab';
+// import AdapterDateFns from '@mui/lab/AdapterDateFns';
 // material
-import { Button, Card, Stack, Tab, TextField, Typography } from '@mui/material';
+import { Card, Stack, Tab } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { Box } from '@mui/system';
 // import { TTradingBase } from '@types/report/trading';
 import menuApi from 'api/menu';
 import tradingApi from 'api/report/trading';
 import AutocompleteTrading from 'components/form/common/Category/AutocompleteTrading';
-import { menuSchema, transformMenuForm } from 'components/form/Menu/helper';
+import { menuSchema } from 'components/form/Menu/helper';
 import confirm from 'components/Modal/confirm';
-import ModalForm from 'components/ModalForm/ModalForm';
+// import ModalForm from 'components/ModalForm/ModalForm';
 import ResoTable from 'components/ResoTable/ResoTable';
 import MenuWidgets from 'components/_dashboard/general-app/MenuWidgets';
 import moment from 'moment';
@@ -29,7 +29,10 @@ import { useNavigate } from 'react-router-dom';
 import { Menu } from 'types/menu';
 import { TTradingBase } from 'types/report/trading';
 import { TTableColumn } from 'types/table';
-import Page from './components/Page';
+import ReportBtn from '../components/ReportBtn';
+import ReportDatePicker from '../components/ReportDatePicker';
+import ReportPage from '../components/ReportPage';
+// import Page from './components/Page';
 export const menuColumns: TTableColumn<TTradingBase>[] = [
   {
     title: 'STT',
@@ -190,13 +193,10 @@ const TradingReport = () => {
   ];
 
   const current = new Date();
-  const firstDay = `${'1'}/${current.getMonth() + 1}/${current.getFullYear()}`;
-  const date = `${current.getDate()}/${current.getMonth() + 1}/${current.getFullYear()}`;
-
   const [day, setDay] = useState<Date>(current);
 
   return (
-    <Page
+    <ReportPage
       // title="Báo cáo doanh thu theo ngày"
       title={`Báo cáo doanh thu theo ngày: ${day.toLocaleDateString('vi-VI', {
         year: 'numeric',
@@ -207,50 +207,14 @@ const TradingReport = () => {
         day.getDate() === current.getDate() ? `Tính đến: ${moment().format('hh:mm:ss')}` : ''
       }
       actions={[
-        <ModalForm
-          key="create-menu"
-          onOk={async () => {
-            try {
-              await createMenuForm.handleSubmit(
-                (data: any) => {
-                  return menuApi.create(transformMenuForm(data));
-                },
-                (e) => {
-                  throw e;
-                }
-              )();
-              enqueueSnackbar('Tạp bảng giá thành công', {
-                variant: 'success'
-              });
-              tableRef.current?.reload();
-              return true;
-            } catch (error) {
-              console.log(`error`, error);
-              enqueueSnackbar((error as any).message, {
-                variant: 'error'
-              });
-              return false;
-            }
+        <ReportDatePicker
+          key="choose-day"
+          value={day}
+          onChange={(newValue) => {
+            setDay(newValue || new Date());
           }}
-          title={<Typography variant="h3">Xuất file Excel</Typography>}
-          trigger={
-            <Button variant="contained" startIcon={<Icon icon="fa-solid:file-export" />}>
-              Xuất file Excel
-            </Button>
-          }
-        ></ModalForm>,
-        <LocalizationProvider key="choose-day" dateAdapter={AdapterDateFns}>
-          <DatePicker
-            disableFuture
-            inputFormat="dd/MM/yyyy"
-            label="Tổng quan ngày"
-            value={day}
-            onChange={(newValue) => {
-              setDay(newValue || new Date());
-            }}
-            renderInput={(params) => <TextField {...params} />}
-          />
-        </LocalizationProvider>
+        />,
+        <ReportBtn key="export-excel" onClick={() => console.log('Export excel')} />
       ]}
     >
       <Box sx={{ width: '100%', paddingBottom: '20px' }}>
@@ -310,7 +274,7 @@ const TradingReport = () => {
           </TabPanel>
         </TabContext>
       </Card>
-    </Page>
+    </ReportPage>
   );
 };
 
