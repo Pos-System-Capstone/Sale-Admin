@@ -1,4 +1,5 @@
 // routes
+import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
 import { PATH_REPORT_APP } from 'routes/reportAppPaths';
 import { PATH_STORE_APP } from 'routes/storeAppPaths';
 import SvgIconStyle from '../../components/SvgIconStyle';
@@ -52,7 +53,11 @@ const sidebarConfig = [
   {
     subheader: 'menu-subheader',
     items: [
-      { title: 'menu-list', path: PATH_DASHBOARD.tradingReport.list, icon: ICONS.menu },
+      {
+        title: 'menu-list',
+        path: PATH_DASHBOARD.tradingReport.list,
+        icon: ICONS.menu
+      },
       {
         title: 'store-menu-apply',
         path: PATH_DASHBOARD.tradingReport.storeMenu,
@@ -139,7 +144,65 @@ export const storeAppSidebarConfig = [
     ]
   }
 ];
-
+export const promotionAppSidebarConfig = [
+  // GENERAL
+  // ----------------------------------------------------------------------
+  {
+    subheader: 'promotion.general',
+    items: [
+      {
+        title: 'promotion.dashboard',
+        path: PATH_PROMOTION_APP.promotion.root,
+        icon: ICONS.dashboard
+      }
+    ]
+  },
+  {
+    subheader: 'promotion.campaign',
+    items: [
+      {
+        title: 'promotion.promotion',
+        path: PATH_PROMOTION_APP.promotion.root,
+        icon: ICONS.calendar
+      },
+      {
+        title: 'promotion.voucher',
+        path: PATH_PROMOTION_APP.promotion.root,
+        icon: ICONS.calendar
+      },
+      {
+        title: 'promotion.condition',
+        path: PATH_PROMOTION_APP.promotion.root,
+        icon: ICONS.product
+      },
+      {
+        title: 'promotion.action',
+        path: PATH_PROMOTION_APP.promotion.root,
+        icon: ICONS.analytics
+      },
+      {
+        title: 'promotion.gift',
+        path: PATH_PROMOTION_APP.promotion.root,
+        icon: ICONS.ecommerce
+      }
+    ]
+  },
+  {
+    subheader: 'promotion.configuration',
+    items: [
+      {
+        title: 'promotion.setting',
+        path: PATH_PROMOTION_APP.promotion.root,
+        icon: ICONS.menu
+      },
+      {
+        title: 'promotion.profile',
+        path: PATH_PROMOTION_APP.promotion.root,
+        icon: ICONS.kanban
+      }
+    ]
+  }
+];
 export const reportAppSidebarConfig = [
   // GENERAL
   // ----------------------------------------------------------------------
@@ -156,8 +219,16 @@ export const reportAppSidebarConfig = [
   {
     subheader: 'report.management',
     items: [
-      { title: 'report.overviewDate', path: PATH_REPORT_APP.overviewDate, icon: ICONS.calendar },
-      { title: 'report.overviewMonth', path: PATH_REPORT_APP.overviewMonth, icon: ICONS.calendar },
+      {
+        title: 'report.overviewDate',
+        path: PATH_REPORT_APP.overviewDate,
+        icon: ICONS.calendar
+      },
+      {
+        title: 'report.overviewMonth',
+        path: PATH_REPORT_APP.overviewMonth,
+        icon: ICONS.calendar
+      },
       {
         title: 'report.productSale',
         path: PATH_REPORT_APP.productSale,

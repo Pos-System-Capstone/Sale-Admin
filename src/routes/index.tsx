@@ -210,7 +210,49 @@ export default function Router() {
         }
       ]
     },
-
+    // Promotion system Routes
+    {
+      path: 'promotion-system',
+      element: (
+        <AuthGuard>
+          <RoleBasedGuard accessibleRoles={[]}>
+            <DashBoardReport />
+          </RoleBasedGuard>
+        </AuthGuard>
+      ),
+      children: [
+        { path: '', element: <Navigate to="/promotion-system/dashboard" replace /> },
+        { path: 'dashboard', element: <></> },
+        {
+          path: 'promotion',
+          children: [{ path: '', element: <></> }]
+        },
+        {
+          path: 'voucher',
+          children: [{ path: '', element: <></> }]
+        },
+        {
+          path: 'condition',
+          children: [{ path: '', element: <></> }]
+        },
+        {
+          path: 'action',
+          children: [{ path: '', element: <></> }]
+        },
+        {
+          path: 'gift',
+          children: [{ path: '', element: <></> }]
+        },
+        {
+          path: 'setting',
+          children: [{ path: '', element: <></> }]
+        },
+        {
+          path: 'profile',
+          children: [{ path: '', element: <></> }]
+        }
+      ]
+    },
     // FOR STORE ADMIN
     {
       path: 'store-admin',
@@ -337,3 +379,12 @@ const ProductProgressReport = Loadable(
   lazy(() => import('../pages/report/ProductReport/ProductProgressReport'))
 );
 const PaymentReport = Loadable(lazy(() => import('../pages/report/PaymentReport')));
+
+// Promotion system
+// const PromotionPage = Loadable(lazy(() => import('../pages/promotionEngine/Promotion')));
+// const VoucherPage = Loadable(lazy(() => import('../pages/promotionEngine/Voucher')));
+// const ConditionPage = Loadable(lazy(() => import('../pages/promotionEngine/Condition')));
+// const ActionPage = Loadable(lazy(() => import('../pages/promotionEngine/Action')));
+// const GiftPage = Loadable(lazy(() => import('../pages/promotionEngine/Gift')));
+// const SettingPage = Loadable(lazy(() => import('../pages/promotionEngine/Setting')));
+// const ProfilePage = Loadable(lazy(() => import('../pages/promotionEngine/Profile')));

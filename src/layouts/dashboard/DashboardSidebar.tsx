@@ -15,9 +15,7 @@ import useCollapseDrawer from '../../hooks/useCollapseDrawer';
 // routes
 import { PATH_DASHBOARD } from '../../routes/paths';
 //
-import { reportAppSidebarConfig, storeAppSidebarConfig } from './SidebarConfig';
-
-// ----------------------------------------------------------------------
+import { promotionAppSidebarConfig, storeAppSidebarConfig } from './SidebarConfig';
 
 const DRAWER_WIDTH = 280;
 const COLLAPSE_WIDTH = 102;
@@ -104,12 +102,12 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }: Dash
 
   const sidebarConfig = useMemo(() => {
     if (user?.roles.includes('admin')) {
-      return reportAppSidebarConfig;
+      return promotionAppSidebarConfig;
       // eslint-disable-next-line no-else-return
     } else if (user?.roles.includes('store-admin')) {
       return storeAppSidebarConfig;
     }
-    return reportAppSidebarConfig;
+    return promotionAppSidebarConfig;
   }, [user?.roles]);
 
   const { isCollapse, collapseClick, collapseHover, onToggleCollapse, onHoverEnter, onHoverLeave } =

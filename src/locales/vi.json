@@ -44,6 +44,19 @@
       "payment": "Báo cáo thanh toán",
       "productSale": "Báo cáo doanh thu sản phẩm",
       "productProgress": "Báo cáo diễn tiến sản phẩm"
+    },
+    "promotion": {
+      "general": "Tổng quan",
+      "dashboard": "Bảng điều khiển",
+      "campaign": "Chiến dịch",
+      "promotion": "Khuyến mãi",
+      "voucher": "Voucher",
+      "condition": "Điều kiện",
+      "action": "Hành động",
+      "gift": "Quà tặng",
+      "configuration": "Cấu hình",
+      "setting": "Cài đặt",
+      "profile": "Hồ sơ"
     }
   },
   "pages": {
