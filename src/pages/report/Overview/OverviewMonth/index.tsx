@@ -1,12 +1,12 @@
 /* eslint-disable camelcase */
-import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 // material
-import { Box, Button, Card, Grid, Stack, Tab, Typography } from '@mui/material';
+import { Box, Card, Grid, Stack, Tab, Typography } from '@mui/material';
 import ResoTable from 'components/ResoTable/ResoTable';
 import useLocales from 'hooks/useLocales';
 import moment from 'moment';
 import { useSnackbar } from 'notistack';
+import ReportBtn from 'pages/report/components/ReportBtn';
 import ReportDatePicker from 'pages/report/components/ReportDatePicker';
 import ReportPage from 'pages/report/components/ReportPage';
 import React, { useEffect, useRef, useState } from 'react';
@@ -149,16 +149,7 @@ export default function OverviewMonth() {
             setDate(newValue || new Date());
           }}
         />,
-        <Button
-          key="export-excel"
-          onClick={() => {
-            console.log('XUẤT RA FILE EXCEL');
-          }}
-          variant="contained"
-          startIcon={<FileDownloadIcon />}
-        >
-          XUẤT RA FILE EXCEL
-        </Button>
+        <ReportBtn key="export-excel" onClick={() => console.log('Export excel')} />
       ]}
     >
       <Card>
