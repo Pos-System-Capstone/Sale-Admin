@@ -1,12 +1,12 @@
 import { merge } from 'lodash';
 import { Icon } from '@iconify/react';
 import ReactApexChart from 'react-apexcharts';
-import personFill from '@iconify/icons-eva/person-fill';
+import calendarFill from '@iconify/icons-eva/calendar-fill';
 // material
 import { useTheme, styled } from '@mui/material/styles';
 import { Card, Typography, Box } from '@mui/material';
 // utils
-import { fNumber } from '../../../utils/formatNumber';
+// import { fNumber } from '../../../utils/formatNumber';
 import { BaseOptionChart } from '../../charts';
 
 // ----------------------------------------------------------------------
@@ -16,7 +16,7 @@ const RootStyle = styled(Card)(({ theme }) => ({
   position: 'relative',
   alignItems: 'center',
   padding: theme.spacing(3),
-  backgroundColor: theme.palette.primary.darker
+  backgroundColor: '#aa0a0a'
 }));
 
 const IconStyle = styled(Icon)(({ theme }) => ({
@@ -56,21 +56,17 @@ export default function AppWidgets1() {
   });
 
   return (
-    <RootStyle>
-      <ReactApexChart
-        type="radialBar"
-        series={CHART_DATA}
-        options={chartOptions}
-        width={86}
-        height={86}
-      />
-      <Box sx={{ ml: 3, color: 'common.white' }}>
-        <Typography variant="h4"> {fNumber(TOTAL)}</Typography>
-        <Typography variant="body2" sx={{ opacity: 0.72 }}>
-          Conversion
+    <RootStyle sx={{ cursor: 'pointer', '&:hover': { backgroundColor: '#F51720' } }}>
+      <ReactApexChart type="radialBar" options={chartOptions} width={86} height={86} />
+      <Box sx={{ ml: 3, color: 'common.white', cursor: 'pointer' }}>
+        <Typography variant="h6" sx={{ opacity: 0.72, marginLeft: '-110px' }}>
+          TOTAL PROMOTION
+        </Typography>
+        <Typography variant="h3" sx={{ marginLeft: '-110px', p: '20px' }}>
+          2
         </Typography>
       </Box>
-      <IconStyle icon={personFill} />
+      <IconStyle icon={calendarFill} />
     </RootStyle>
   );
 }

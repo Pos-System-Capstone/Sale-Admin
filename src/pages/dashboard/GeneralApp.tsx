@@ -4,22 +4,10 @@ import { Grid } from '@mui/material';
 import useAuth from '../../hooks/useAuth';
 import useSettings from '../../hooks/useSettings';
 // components
+import { AppWidgets1, AppWidgets2 } from 'components/_dashboard/general-app';
 import Page from '../../components/Page';
-import {
-  AppWelcome,
-  AppWidgets1,
-  AppWidgets2,
-  AppFeatured,
-  AppNewInvoice,
-  AppTopAuthors,
-  AppTopRelated,
-  AppAreaInstalled,
-  AppTotalDownloads,
-  AppTotalInstalled,
-  AppCurrentDownload,
-  AppTotalActiveUsers,
-  AppTopInstalledCountries
-} from '../../components/_dashboard/general-app';
+import AppWidgets3 from 'components/_dashboard/general-app/AppWidgets3';
+import AppWidgets4 from 'components/_dashboard/general-app/AppWidgets4';
 
 // ----------------------------------------------------------------------
 
@@ -30,11 +18,11 @@ export default function GeneralApp() {
   return (
     <Page title="Dashboard">
       <Grid container spacing={3}>
-        <Grid item xs={12} md={8}>
+        {/* <Grid item xs={12} md={8}>
           <AppWelcome displayName={user?.displayName} />
-        </Grid>
+        </Grid> */}
 
-        <Grid item xs={12} md={4}>
+        {/* <Grid item xs={12} md={4}>
           <AppFeatured />
         </Grid>
 
@@ -72,15 +60,21 @@ export default function GeneralApp() {
 
         <Grid item xs={12} md={6} lg={4}>
           <AppTopAuthors />
-        </Grid>
+        </Grid> */}
 
-        <Grid item xs={12} md={6} lg={4}>
-          <Grid container spacing={3}>
-            <Grid item xs={12}>
+        <Grid item xs={12}>
+          <Grid container spacing={2} columns={16}>
+            <Grid item xs={4}>
               <AppWidgets1 />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={4}>
               <AppWidgets2 />
+            </Grid>
+            <Grid item xs={4}>
+              <AppWidgets3 />
+            </Grid>
+            <Grid item xs={4}>
+              <AppWidgets4 />
             </Grid>
           </Grid>
         </Grid>

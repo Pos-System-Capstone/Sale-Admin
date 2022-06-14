@@ -8,7 +8,7 @@ import { Card, Typography, Box } from '@mui/material';
 // utils
 // import { fNumber } from '../../../utils/formatNumber';
 import { BaseOptionChart } from '../../charts';
-// import AutoAwesomeMosaicIcon from '@mui/icons-material/AutoAwesomeMosaic';
+
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Card)(({ theme }) => ({
@@ -16,7 +16,7 @@ const RootStyle = styled(Card)(({ theme }) => ({
   position: 'relative',
   alignItems: 'center',
   padding: theme.spacing(3),
-  backgroundColor: '#E1C340'
+  backgroundColor: '#00bcd4'
 }));
 
 const IconStyle = styled(Icon)(({ theme }) => ({
@@ -33,7 +33,7 @@ const IconStyle = styled(Icon)(({ theme }) => ({
 // const TOTAL = 'GIỜ';
 // const CHART_DATA = [44];
 
-export default function AppWidgets2() {
+export default function AppWidgets4() {
   const theme = useTheme();
 
   const chartOptions = merge(BaseOptionChart(), {
@@ -56,12 +56,12 @@ export default function AppWidgets2() {
   });
 
   return (
-    <RootStyle sx={{ cursor: 'pointer', '&:hover': { backgroundColor: '#fbc02d' } }}>
+    <RootStyle sx={{ cursor: 'pointer', '&:hover': { backgroundColor: '#4dd0e1' } }}>
       <ReactApexChart type="radialBar" options={chartOptions} width={86} height={86} />
       <Box sx={{ ml: 3, color: 'common.white', cursor: 'pointer' }}>
-        {/* <Typography variant="h4" sx={{ marginLeft: '-110px' }}></Typography> */}
+        {/* <Typography variant="h4" sx={{ marginLeft: '-110px' }}></Typography>   */}
         <Typography variant="h6" sx={{ opacity: 0.72, marginLeft: '-110px' }}>
-          RUNNING PROMOTION
+          DRAFT PROMOTION
         </Typography>
         <Typography variant="h3" sx={{ marginLeft: '-110px', p: '20px' }}>
           1
