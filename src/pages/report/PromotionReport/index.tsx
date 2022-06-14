@@ -152,9 +152,9 @@ const PromotionReport = () => {
       <Card>
         <Stack spacing={2}>
           <ResoTable
-            rowKey="id"
+            rowKey="promotion-id"
             ref={tableRef}
-            getData={promotionApi.getPromotion}
+            getData={() => promotionApi.getPromotion(13)}
             columns={columns}
           />
         </Stack>

@@ -4,7 +4,6 @@ import { DatePicker, LocalizationProvider, TabContext, TabList, TabPanel } from 
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 // material
 import { Box, Button, Card, Grid, Stack, Tab, TextField, Typography } from '@mui/material';
-import tradingApi from 'api/report/trading';
 import ResoTable from 'components/ResoTable/ResoTable';
 import useLocales from 'hooks/useLocales';
 import moment from 'moment';
@@ -47,10 +46,6 @@ const list: any = [
 ];
 
 export default function OverviewDate() {
-  useEffect(() => {
-    tradingApi.getTrading();
-  }, []);
-
   const [activeTab, setActiveTab] = useState('1');
   const ref = useRef<any>();
   const today = new Date();
@@ -124,7 +119,6 @@ export default function OverviewDate() {
 
   return (
     <OverviewPage
-      // title={`Tổng quan ngày: ${moment().format('DD/MM/YYYY')}`}
       title={`Tổng quan ngày: ${date.toLocaleDateString('vi-VI', {
         year: 'numeric',
         month: '2-digit',
@@ -208,7 +202,6 @@ export default function OverviewDate() {
               {/* II. Nạp thẻ */}
               <Stack spacing={2}>
                 <Typography variant="h4">II. Nạp thẻ</Typography>
-
                 <Box>
                   <Grid container spacing={2}>
                     <Grid item xs={6}>
@@ -261,7 +254,6 @@ export default function OverviewDate() {
                         type="pie"
                       />
                     </Grid>
-
                     <Grid item xs={6}>
                       <ReactApexChart
                         options={chart.chartOptions}
