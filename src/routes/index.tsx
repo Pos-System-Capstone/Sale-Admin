@@ -222,7 +222,7 @@ export default function Router() {
       ),
       children: [
         { path: '', element: <Navigate to="/promotion-system/app" replace /> },
-        { path: 'app', element: <GeneralApp /> },
+        { path: 'app', element: <PromotionDash /> },
         {
           path: 'promotion',
           children: [
@@ -387,6 +387,7 @@ const ProductProgressReport = Loadable(
 const PaymentReport = Loadable(lazy(() => import('../pages/report/PaymentReport')));
 
 // Promotion system
+const PromotionDash = Loadable(lazy(() => import('../pages/dashboard/PromotionSystemDashboard')));
 const PromotionPage = Loadable(lazy(() => import('../pages/promotionEngine/Promotion')));
 const NewPromotionPage = Loadable(
   lazy(() => import('../pages/promotionEngine//Promotion/CreatePromotion'))
