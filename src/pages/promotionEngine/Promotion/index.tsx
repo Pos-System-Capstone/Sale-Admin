@@ -8,7 +8,7 @@ import { useSnackbar } from 'notistack';
 import { useRef } from 'react';
 import { useNavigate } from 'react-router';
 import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
-import { promotionColumn } from './components/columns';
+import { TTableColumn } from 'types/table';
 // import { CollectionTypeEnum } from 'types/collection';
 
 interface Props {}
@@ -18,6 +18,58 @@ const Promotion = (props: Props) => {
   const { translate } = useLocales();
   const navigate = useNavigate();
   const ref = useRef<any>();
+
+  const promotionColumn: TTableColumn[] = [
+    {
+      title: `${translate('promotionSystem.promotion.table.no')}`,
+      hideInSearch: true
+    },
+
+    {
+      title: `${translate('promotionSystem.promotion.table.name')}`
+    },
+    {
+      title: `${translate('promotionSystem.promotion.table.type')}`,
+      hideInSearch: true
+    },
+    {
+      title: `${translate('promotionSystem.promotion.table.action')}`,
+      hideInSearch: true
+    },
+    {
+      title: `${translate('promotionSystem.promotion.table.startDate')}`,
+      hideInSearch: true
+    },
+    {
+      title: `${translate('promotionSystem.promotion.table.status')}`,
+      valueEnum: [
+        {
+          label: `${translate('promotionSystem.promotion.table.statusType.all')}`,
+          value: 'true'
+        },
+        {
+          label: `${translate('promotionSystem.promotion.table.statusType.draft')}`,
+          value: 'false'
+        },
+        {
+          label: `${translate('promotionSystem.promotion.table.statusType.published')}`,
+          value: 'true'
+        },
+        {
+          label: `${translate('promotionSystem.promotion.table.statusType.unpublished')}`,
+          value: 'false'
+        },
+        {
+          label: `${translate('promotionSystem.promotion.table.statusType.expired')}`,
+          value: 'false'
+        }
+      ],
+      valueType: 'select',
+      formProps: {
+        fullWidth: true
+      }
+    }
+  ];
 
   return (
     <Page
@@ -32,7 +84,7 @@ const Promotion = (props: Props) => {
           variant="contained"
           startIcon={<Icon icon={plusFill} />}
         >
-          {translate('promotionSystem.promotion.addPromotion.addPromotion')}
+          {translate('promotionSystem.promotion.createPromotion.createPromotion')}
         </Button>
       ]}
     >

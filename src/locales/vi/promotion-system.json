@@ -22,7 +22,14 @@
       "type": "Loại",
       "action": "Hành động",
       "startDate": "Ngày bắt đầu",
-      "status": "Trạng thái"
+      "status": "Trạng thái",
+      "statusType": {
+        "all": "Tất cả",
+        "draft": "Nháp",
+        "published": "Đã xuất bản",
+        "unpublished:": "Chưa xuất bản",
+        "expired": "Đã hết hạn"
+      }
     },
     "createPromotion": {
       "createPromotion": "Thêm khuyến mãi",
@@ -36,7 +43,24 @@
       "actionType": "Hình thức khuyến mãi",
       "questionActionType": "Hình thức khuyến mãi nào?",
       "discount": "Giảm giá",
+      "discountActionType": {
+        "discountAmountOfOrder": "Giảm giá số tiền đơn hàng",
+        "discountPercentageOfOrder": "Giảm giá phần trăm đơn hàng",
+        "discountShippingFeeOfOrder": "Giảm giá phí vận chuyển đơn hàng",
+        "discountAmountOfItem": "Giảm giá số tiền sản phẩm",
+        "discountPercentOfItem": "Giảm giá phần trăm sản phẩm",
+        "discountUnitOfItem": "Giảm giá số lượng sản phẩm",
+        "fixedPriceOfItem": "Giá sản phẩm cố định",
+        "ladderPriceOfItem": "Giá sản phẩm bậc thang",
+        "bundlePriceOfItem": "Giá sản phẩm gói"
+      },
       "gift": "Quà Tặng",
+      "giftActionType": {
+        "giftVoucher": "Quà Tặng Voucher",
+        "giftProduct": "Quà Tặng Sản Phẩm",
+        "giftPoint": "Quà Tặng Điểm Thưởng",
+        "giftGameCode": "Quà Tặng Mã Game"
+      },
       "timeFrame": "Khung thời gian",
       "from": "Từ",
       "to": "Đến",

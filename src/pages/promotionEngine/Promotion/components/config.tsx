@@ -21,24 +21,63 @@ const kindActionList = () => {
   ];
 };
 
-const discountActionList: string[] = [
-  'Discount amount of order',
-  'Discount amount of item',
-  'Fixed price of item',
-  'Discount percent of order',
-  'Discount percent of item',
-  'Ladder price of item',
-  'Discount shipping fee of order',
-  'Discount unit of item',
-  'Bundle price of item'
-];
+// const discountActionList: string[] = [
+//   'Discount amount of order',
+//   'Discount amount of item',
+//   'Fixed price of item',
+//   'Discount percent of order',
+//   'Discount percent of item',
+//   'Ladder price of item',
+//   'Discount shipping fee of order',
+//   'Discount unit of item',
+//   'Bundle price of item'
+// ];
 
-const giftActionList: string[] = [
-  'Gift products',
-  'Gift vouchers',
-  'Gift points',
-  'Gift game code'
-];
+const discountActionList = () => {
+  const { translate } = useLocales(); // eslint-disable-line
+  return [
+    `${translate(
+      'promotionSystem.promotion.createPromotion.discountActionType.discountAmountOfOrder'
+    )}`,
+    `${translate(
+      'promotionSystem.promotion.createPromotion.discountActionType.discountPercentageOfOrder'
+    )}`,
+    `${translate(
+      'promotionSystem.promotion.createPromotion.discountActionType.discountShippingFeeOfOrder'
+    )}`,
+    `${translate(
+      'promotionSystem.promotion.createPromotion.discountActionType.discountAmountOfItem'
+    )}`,
+    `${translate(
+      'promotionSystem.promotion.createPromotion.discountActionType.discountPercentOfItem'
+    )}`,
+    `${translate(
+      'promotionSystem.promotion.createPromotion.discountActionType.discountUnitOfItem'
+    )}`,
+    `${translate('promotionSystem.promotion.createPromotion.discountActionType.fixedPriceOfItem')}`,
+    `${translate(
+      'promotionSystem.promotion.createPromotion.discountActionType.ladderPriceOfItem'
+    )}`,
+    `${translate('promotionSystem.promotion.createPromotion.discountActionType.bundlePriceOfItem')}`
+  ];
+};
+
+// const giftActionList: string[] = [
+//   'Gift products',
+//   'Gift vouchers',
+//   'Gift points',
+//   'Gift game code'
+// ];
+
+const giftActionList = () => {
+  const { translate } = useLocales(); // eslint-disable-line
+  return [
+    `${translate('promotionSystem.promotion.createPromotion.giftActionType.giftVoucher')}`,
+    `${translate('promotionSystem.promotion.createPromotion.giftActionType.giftProduct')}`,
+    `${translate('promotionSystem.promotion.createPromotion.giftActionType.giftPoint')}`,
+    `${translate('promotionSystem.promotion.createPromotion.giftActionType.giftGameCode')}`
+  ];
+};
 
 const timeFrameList: string[] = [
   '00:00',

@@ -27,21 +27,26 @@ import FormBox from '../components/FormBox';
 import ToggleButton from '../components/ToggleButton';
 
 export default function StepOne() {
+  const giftAction = giftActionList();
+  const discountAction = discountActionList();
   const promotionType = promotionTypeList();
-  const [type, setType] = useState(promotionType[0]);
-  const handleChange1 = (event: React.MouseEvent<HTMLElement>, newAlignment: string) => {
+
+  // what kind of action
+  const kindAction = kindActionList();
+  const [type, setType] = useState(0);
+  const handleChange1 = (event: React.MouseEvent<HTMLElement>, newAlignment: number) => {
     if (newAlignment !== null) {
       setType(newAlignment);
     }
   };
-  // what kind of action
-  const kindAction = kindActionList();
+
   const [alignment, setAlignment] = useState(0);
   const handleChange = (event: React.MouseEvent<HTMLElement>, newAlignment: number) => {
     if (newAlignment !== null) {
       setAlignment(newAlignment);
     }
   };
+
   const [timeframeChecked, setTimeframeChecked] = useState(false);
   const handleTimeframChecked = () => {
     setTimeframeChecked((prev) => !prev);
@@ -54,6 +59,7 @@ export default function StepOne() {
   };
 
   const { translate } = useLocales();
+
   return (
     <Stack p={1} spacing={3}>
       <Card id="product-detail">
@@ -68,9 +74,9 @@ export default function StepOne() {
           >
             <Stack spacing={2} direction="column">
               <ToggleButtonGroup sx={{ gap: 2 }} value={type} exclusive onChange={handleChange1}>
-                {promotionType.map((promotionType, index) => (
-                  <ToggleButton sx={{ flex: 1 }} key={index} value={promotionType}>
-                    {promotionType}
+                {promotionType.map((item, index) => (
+                  <ToggleButton sx={{ flex: 1 }} key={index} value={index}>
+                    {item}
                   </ToggleButton>
                 ))}
               </ToggleButtonGroup>
@@ -86,7 +92,8 @@ export default function StepOne() {
                   size="medium"
                   fullWidth
                   required
-                  disabled={type === 'Automatic'}
+                  // promotionType[2] must be a automatic mode
+                  disabled={type === 2}
                   label={`${translate('promotionSystem.promotion.createPromotion.promotionCode')}`}
                   color="primary"
                 />
@@ -120,9 +127,9 @@ export default function StepOne() {
                     fullWidth
                     label={`${translate('promotionSystem.promotion.createPromotion.discount')}`}
                     name="discountAction"
-                    options={discountActionList}
+                    // options={discountAction}
                   >
-                    {discountActionList.map((item, index) => (
+                    {discountAction?.map((item, index) => (
                       <MenuItem value={item} key={index}>
                         {item}
                       </MenuItem>
@@ -146,9 +153,9 @@ export default function StepOne() {
                     fullWidth
                     label={`${translate('promotionSystem.promotion.createPromotion.gift')}`}
                     name="giftAction"
-                    options={giftActionList}
+                    // options={giftAction}
                   >
-                    {giftActionList.map((item, index) => (
+                    {giftAction?.map((item, index) => (
                       <MenuItem value={item} key={index}>
                         {item}
                       </MenuItem>

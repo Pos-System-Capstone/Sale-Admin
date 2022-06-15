@@ -7,58 +7,134 @@
     "draftPromotion": "DRAFT PROMOTION"
   },
   "promotion": {
-    "title": "Quản lý khuyến mãi",
-    "selectPromotionType": "Chọn loại khuyến mãi",
-    "description": "Mô tả",
-    "saveAndFinish": "Lưu và kết thúc",
+    "title": "Manage Promotion",
+    "selectPromotionType": "Select promotion type",
+    "description": "Description",
+    "setting": "Setting",
+    "saveAndFinish": "Save and Finish",
+    "select": "Select",
+    "save": "Save",
+    "back": "Back",
+    "next": "Next",
     "table": {
-      "no": "STT",
-      "name": "Tên",
-      "type": "Loại",
-      "action": "Hành động",
-      "startDate": "Ngày bắt đầu",
-      "status": "Trạng thái"
+      "no": "No",
+      "name": "Name",
+      "type": "Type",
+      "action": "Action",
+      "startDate": "Start",
+      "status": "Status",
+      "statusType": {
+        "all": "All",
+        "draft": "Draft",
+        "published": "Published",
+        "unpublished": "Unpublished",
+        "expired": "Expired"
+      }
     },
-    "addPromotion": {
-      "addPromotion": "Thêm khuyến mãi",
-      "promotionType": "Loại khuyến mãi",
-      "questionPromotionType": "Loại khuyến mãi nào?",
-      "usingVoucher": "Sử dụng phiếu giảm giá",
-      "usingCode": "Sử dụng mã khuyến mãi",
-      "automatic": "Tự động",
-      "promotionName": "Tên khuyến mãi",
-      "promotionCode": "Mã khuyến mãi",
-      "actionType": "Hình thức khuyến mãi",
-      "questionActionType": "Hình thức khuyến mãi nào?",
-      "discount": "Giảm giá",
-      "gift": "Quà Tặng",
-      "timeFrame": "Khung thời gian",
-      "from": "Từ",
-      "to": "Đến",
-      "unlimited": "Không thời hạn",
-      "validInThisTimeFrameOnly": "Chỉ áp dụng trong khung thời gian này",
-      "validOnParticularDayOnly": "Chỉ áp dụng trong ngày này"
+    "createPromotion": {
+      "createPromotion": "Create promotion",
+      "promotionType": "Promotion type",
+      "questionPromotionType": "What type of promotion ?",
+      "usingVoucher": "Using voucher",
+      "usingCode": "Using code",
+      "automatic": "Automatic",
+      "promotionName": "Promotion name",
+      "promotionCode": "Promotion code",
+      "actionType": "Action type",
+      "questionActionType": "What kind of action ?",
+      "discount": "Discount",
+      "discountActionType": {
+        "discountAmountOfOrder": "Discount amount of order",
+        "discountPercentageOfOrder": "Discount percentage of order",
+        "discountShippingFeeOfOrder": "Discount shipping fee of order",
+        "discountAmountOfItem": "Discount amount of item",
+        "discountPercentOfItem": "Discount percentage of item",
+        "discountUnitOfItem": "Discount unit of item",
+        "fixedPriceOfItem": "Fixed price of item",
+        "ladderPriceOfItem": "Ladder price of item",
+        "bundlePriceOfItem": "Bundle price of item"
+      },
+      "gift": "Gift",
+      "giftActionType": {
+        "giftVoucher": "Gift voucher",
+        "giftProduct": "Gift product",
+        "giftPoint": "Gift point",
+        "giftGameCode": "Gift game code"
+      },
+      "timeFrame": "Time frame",
+      "from": "From",
+      "to": "To",
+      "unlimited": "Unlimited",
+      "validInThisTimeFrameOnly": "Valid in this time frame only",
+      "validOnParticularDayOnly": "Valid on particular day only"
     },
     "settings": {
-      "constraint": "Giới hạn",
-      "paymentMethod": "Phương thức thanh toán",
-      "targetCustomer": "Khách hàng mục tiêu",
-      "memberShipLevel": "Cấp độ thành viên",
-      "customerGender": "Giới tính khách hàng",
-      "saleMode": "Chế độ bán hàng",
-      "applyBy": "Áp dụng theo",
-      "exclusive": "Khuyến mãi đặc biệt",
-      "storeConfig": "Cấu hình cửa hàng"
+      "constraint": "Constraint",
+      "paymentMethod": "Payment method",
+      "helperPaymentMethod": "Payment method can use this promotion",
+      "targetCustomer": "Target customer",
+      "helperTargetCustomer": "Kind of customer can use your promotion",
+      "memberShipLevel": "Membership level",
+      "helperMemberShipLevel": "Level of customer",
+      "customerGender": "Customer Gender",
+      "helperCustomerGender": "Gender of customer can use your promotion.",
+      "saleMode": "Sale mode",
+      "helperSaleMode": "The mode in which you sell your products.",
+      "applyBy": "Apply by",
+      "helperApplyBy": "Where yours customers can use promotion.",
+      "exclusive": "Exclusive",
+      "helperExclusive": "Whether promotion excludes others or not.",
+      "storeConfig": "Store configuration",
+      "helperStoreConfig": "Stores that customer can use promotion",
+      "paymentMethodType": {
+        "cash": "Cash",
+        "creditCard": "Credit card",
+        "bankTransfer": "Bank transfer",
+        "eWallet": "EWallet",
+        "mobileBanking": "Mobile banking",
+        "cod": "COD"
+      },
+      "targetCustomerType": {
+        "guest": "Guest",
+        "membership": "Membership"
+      },
+      "genderType": {
+        "male": "Male",
+        "female": "Female"
+      },
+      "saleModeType": {
+        "eatIn": "Eat-in",
+        "takeAway": "Take away",
+        "delivery": "Delivery"
+      },
+      "applyByType": {
+        "store": "Store",
+        "online": "Online"
+      },
+      "exclusiveType": {
+        "none": "None",
+        "level": "Level",
+        "global": "Global"
+      },
+      "memberLevelType": {
+        "level1": "Level 1",
+        "level2": "Level 2"
+      }
     },
     "preview": {
-      "title": "Xem trước",
-      "name": "Tên khuyến mãi",
-      "startDate": "Ngày bắt đầu",
-      "endDate": "Ngày kết thúc",
-      "exclusive": "Khuyến mãi đặc biệt",
-      "status": "Trạng thái",
-      "paymentMethod": "Phương thức thanh toán",
-      "uploadFile": "Tải lên tệp"
+      "title": "Preview",
+      "name": "Promotion name",
+      "startDate": "Start date",
+      "endDate": "End date",
+      "exclusive": "Exclusive",
+      "status": "Status",
+      "paymentMethod": "Payment method",
+      "uploadFile": "Upload file",
+      "saleMode": "Sale mode",
+      "applyBy": "Apply by",
+      "availableOnHoliday": "Available on holiday",
+      "customerType": "Customer type",
+      "customerGender": "Customer gender"
     }
   },
   "voucher": {
@@ -78,7 +154,7 @@
       "helperWarning": "A voucher is a bond of the redeemable transaction type which is worth a certain monetary value and which may be spent only for specific reasons or on specific goods.",
       "groupName": "Group Name",
       "quantity": "Quantity",
-      "length": "Lenght",
+      "length": "Length",
       "helperLength": "Maximum quantity of voucher",
       "discountAction": "Discount Action",
       "giftAction": "Gift Action",
