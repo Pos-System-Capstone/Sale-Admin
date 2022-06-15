@@ -15,11 +15,11 @@ import { useNavigate } from 'react-router-dom';
 import { PATH_DASHBOARD } from 'routes/paths';
 import { TProductBase } from 'types/product';
 //
-import { productColumns } from './config';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { deleteProdById, getAllProduct } from 'redux/product/api';
 import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
+import { TTableColumn } from 'types/table';
 
 // ----------------------------------------------------------------------
 
@@ -33,6 +33,85 @@ export default function Voucher() {
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
   const { t } = useLocales();
+
+  const productColumns: TTableColumn<TProductBase>[] = [
+    {
+      title: `${t('promotionSystem.voucher.table.no')}`,
+      hideInSearch: true
+    },
+    // {
+    //   title: 'Hình ảnh',
+    //   dataIndex: 'pic_url',
+    //   hideInSearch: true,
+    //   render: (src, { product_name }: any) => (
+    //     <Avatar
+    //       alt={product_name}
+    //       src={src}
+    //       variant="square"
+    //       style={{ width: '54px', height: '54px' }}
+    //     />
+    //   )
+    // },
+    {
+      title: `${t('promotionSystem.voucher.table.name')}`,
+      dataIndex: 'product_name',
+      hideInSearch: true
+    },
+    // {
+    //   title: 'Giá mặc định',
+    //   dataIndex: 'price',
+    //   hideInSearch: true
+    // },
+    {
+      title: `${t('promotionSystem.voucher.table.actionName')}`,
+      dataIndex: 'cate_name',
+      // renderFormItem: () => <AutocompleteCategory name="cat-id" label="Danh mục" />
+      hideInSearch: true
+    },
+    {
+      title: `${t('promotionSystem.voucher.table.total')}`,
+      hideInSearch: true
+
+      // dataIndex: 'product_type',
+      // valueType: 'select',
+      // valueEnum: PRODUCT_TYPE_DATA
+      // hideInSearch: true
+      // render: (type) => <Chip label={PRODUCT_TYPE_DATA.find(({ value }) => value == type)?.label} />
+    },
+    {
+      title: `${t('promotionSystem.voucher.table.redeemed')}`,
+      hideInSearch: true
+    },
+    {
+      title: `${t('promotionSystem.voucher.table.used')}`,
+      hideInSearch: true
+    }
+
+    // {
+    //   title: 'Trạng thái',
+    //   dataIndex: 'is_available',
+    //   width: 150,
+    //   render: (available) => (
+    //     <Label color={available ? 'primary' : 'default'}>
+    //       {available ? 'Đang bán' : 'Ngừng bán'}
+    //     </Label>
+    //   ),
+    //   valueEnum: [
+    //     {
+    //       label: 'Đang bán',
+    //       value: 'true'
+    //     },
+    //     {
+    //       label: 'Ngừng bán',
+    //       value: 'false'
+    //     }
+    //   ],
+    //   valueType: 'select',
+    //   formProps: {
+    //     fullWidth: true
+    //   }
+    // }
+  ];
 
   const editProuct = (data: TProductBase) => {
     if (data.product_type === 1) {
@@ -75,7 +154,7 @@ export default function Voucher() {
 
   return (
     <Page
-      title="Manage Voucher"
+      title={`${t('promotionSystem.voucher.title')}`}
       actions={() => [
         // <Button
         //   key="add-product-extra"
@@ -95,7 +174,7 @@ export default function Voucher() {
           variant="contained"
           startIcon={<Icon icon={plusFill} />}
         >
-          Thêm Voucher
+          {`${t('promotionSystem.voucher.addVoucher.newVoucher')}`}
         </Button>
       ]}
     >

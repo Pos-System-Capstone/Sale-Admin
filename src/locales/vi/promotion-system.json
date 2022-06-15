@@ -1,10 +1,10 @@
 {
   "dashboard": {
     "title": "Bảng điều khiển",
-    "totalPromotion": "Tổng số khuyến mãi",
-    "runningPromotion": "Khuyến mãi đang chạy",
-    "expiredPromotion": "Khuyến mãi đã hết hạn",
-    "draftPromotion": "Khuyến mãi đang nháp"
+    "totalPromotion": "TỔNG SỐ KHUYẾN MÃI",
+    "runningPromotion": "KHUYẾN MÃI ĐANG CHẠY",
+    "expiredPromotion": "KHUYẾN MÃI ĐÃ HẾT HẠN",
+    "draftPromotion": "KHUYẾN MÃI ĐANG NHÁP"
   },
   "promotion": {
     "title": "Quản lý khuyến mãi",
@@ -117,28 +117,28 @@
     "title": "Quản lý phiếu giảm giá",
     "table": {
       "no": "STT",
-      "name": "Tên",
-      "actionName": "Tên hình thức",
-      "total": "Tổng số",
-      "redeemed": "Đã đổi",
-      "used": "Đã sử dụng"
+      "name": "TÊN",
+      "actionName": "TÊN HÌNH THỨC",
+      "total": "TỔNG SỐ",
+      "redeemed": "ĐÃ ĐỔI",
+      "used": "ĐÃ SỬ DỤNG"
     },
     "addVoucher": {
-      "addVoucher": "Thêm phiếu giảm giá",
-      "voucherGroupBuilder": "Nhóm phiếu giảm giá",
+      "newVoucher": "Thêm phiếu giảm giá",
+      "voucherGroupBuilder": "NHÓM PHIẾU GIẢM GIÁ",
       "warning": "Cảnh báo",
       "helperWarning": "Một phiếu giảm giá là một chuỗi các giao dịch đổi đồng có giá trị tiền tệ và chỉ có thể được tiêu để một các lý do nào đó hoặc đồng thời chỉ được sử dụng cho các sản phẩm nào đó.",
-      "groupName": "Tên nhóm",
-      "quantity": "Số lượng",
-      "length": "Độ dài",
+      "groupName": "Tên Nhóm",
+      "quantity": "Số Lượng",
+      "length": "Độ Dài",
       "helperLength": "Số lượng phiếu giảm giá trong nhóm",
       "discountAction": "Hình thức giảm giá",
       "giftAction": "Hình thức quà tặng",
       "advancedSettings": "Cài đặt nâng cao",
-      "chartset": "Bảng chữ cái",
+      "charset": "Bảng chữ cái",
       "sample": "Mẫu",
       "prefix": "Tiền tố",
-      "postfix": "Tiền hàng"
+      "postfix": "Hậu tố"
     }
   },
   "profile": {

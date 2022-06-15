@@ -4,11 +4,13 @@ import orderReport from './order-report.json';
 import productReport from './product-report.json';
 import categories from './categories.json';
 import collections from './collection.json';
+import promotionSystem from './promotion-system.json';
 
 export default {
   dashboard,
   orderReport,
   productReport,
   categories,
-  collections
+  collections,
+  promotionSystem
 };

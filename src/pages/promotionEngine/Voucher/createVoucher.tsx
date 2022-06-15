@@ -7,6 +7,7 @@ import productApi from 'api/product';
 import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
 import Page from 'components/Page';
 import useDashboard from 'hooks/useDashboard';
+import useLocales from 'hooks/useLocales';
 import { DashboardNavLayout } from 'layouts/dashboard/DashboardNavbar';
 import { useSnackbar } from 'notistack';
 import { useEffect } from 'react';
@@ -20,6 +21,7 @@ import { UpdateProductForm, validationSchema } from './type';
 import { normalizeProductData, transformDraftToStr, transformProductForm } from './utils';
 
 const CreateVoucher = () => {
+  const { t } = useLocales();
   const { enqueueSnackbar } = useSnackbar();
   const { setNavOpen } = useDashboard();
   const navigate = useNavigate();
@@ -105,7 +107,7 @@ const CreateVoucher = () => {
           </LoadingAsyncButton>
         </Stack>
       </DashboardNavLayout>
-      <Page title="VOUCHER GROUP BUILDER">
+      <Page title={`${t('promotionSystem.voucher.addVoucher.voucherGroupBuilder')}`}>
         <Box display="flex">
           <MiddleForm />
         </Box>

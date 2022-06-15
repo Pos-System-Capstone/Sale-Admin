@@ -15,6 +15,20 @@ import GuestGuard from '../guards/GuestGuard';
 import RoleBasedGuard from '../guards/RoleBasedGuard';
 import DashboardLayout from '../layouts/dashboard';
 import LogoOnlyLayout from '../layouts/LogoOnlyLayout';
+// path
+import ConditionPage from 'pages/promotionEngine/Condition';
+import ProfilePage from 'pages/promotionEngine/Configuration/profile';
+import SettingPage from 'pages/promotionEngine/Configuration/settings';
+import NewGiftPage from 'pages/promotionEngine/Gift/create';
+import GiftPage from 'pages/promotionEngine/Gift';
+import NewActionPage from 'pages/promotionEngine/Action/create';
+import ActionPage from 'pages/promotionEngine/Action';
+import NewCondition from 'pages/promotionEngine/Condition/NewCondition';
+import CreateVoucher from 'pages/promotionEngine/Voucher/createVoucher';
+import Voucher from 'pages/promotionEngine/Voucher';
+import PromotionDash from 'pages/dashboard/PromotionSystemDashboard';
+import Promotion from 'pages/promotionEngine/Promotion';
+import CreatePromotion from 'pages/promotionEngine/Promotion/CreatePromotion';
 
 // import ReportGeneralApp from 'pages/report/GeneralReport/GeneralApp';
 
@@ -226,22 +240,22 @@ export default function Router() {
         {
           path: 'promotion',
           children: [
-            { path: '', element: <PromotionPage /> },
-            { path: 'new', element: <NewPromotionPage /> }
+            { path: '', element: <Promotion /> },
+            { path: 'new', element: <CreatePromotion /> }
           ]
         },
         {
           path: 'voucher',
           children: [
-            { path: '', element: <VoucherPage /> },
-            { path: 'new', element: <NewVoucherPage /> }
+            { path: '', element: <Voucher /> },
+            { path: 'new', element: <CreateVoucher /> }
           ]
         },
         {
           path: 'condition',
           children: [
             { path: '', element: <ConditionPage /> },
-            { path: 'new', element: <NewConditon /> }
+            { path: 'new', element: <NewCondition /> }
           ]
         },
         {
@@ -396,20 +410,20 @@ const ProductProgressReport = Loadable(
 const PaymentReport = Loadable(lazy(() => import('../pages/report/PaymentReport')));
 
 // Promotion system
-const PromotionDash = Loadable(lazy(() => import('../pages/dashboard/PromotionSystemDashboard')));
-const PromotionPage = Loadable(lazy(() => import('../pages/promotionEngine/Promotion')));
-const NewPromotionPage = Loadable(
-  lazy(() => import('../pages/promotionEngine//Promotion/CreatePromotion'))
-);
-const VoucherPage = Loadable(lazy(() => import('../pages/promotionEngine/Voucher')));
-const NewVoucherPage = Loadable(
-  lazy(() => import('../pages/promotionEngine/Voucher/createVoucher'))
-);
-const ConditionPage = Loadable(lazy(() => import('../pages/promotionEngine/Condition')));
-const NewConditon = Loadable(lazy(() => import('../pages/promotionEngine/Condition/NewCondition')));
-const ActionPage = Loadable(lazy(() => import('../pages/promotionEngine/Action')));
-const NewActionPage = Loadable(lazy(() => import('../pages/promotionEngine/Action/create')));
-const GiftPage = Loadable(lazy(() => import('../pages/promotionEngine/Gift')));
-const NewGiftPage = Loadable(lazy(() => import('../pages/promotionEngine/Gift/create')));
-const SettingPage = Loadable(lazy(() => import('../pages/promotionEngine/Configuration/settings')));
-const ProfilePage = Loadable(lazy(() => import('../pages/promotionEngine/Configuration/profile')));
+// const PromotionDash = Loadable(lazy(() => import('../pages/dashboard/PromotionSystemDashboard')));
+// const PromotionPage = Loadable(lazy(() => import('../pages/promotionEngine/Promotion')));
+// const NewPromotionPage = Loadable(
+//   lazy(() => import('../pages/promotionEngine//Promotion/CreatePromotion'))
+// );
+// const VoucherPage = Loadable(lazy(() => import('../pages/promotionEngine/Voucher')));
+// const NewVoucherPage = Loadable(
+//   lazy(() => import('../pages/promotionEngine/Voucher/createVoucher'))
+// );
+// const ConditionPage = Loadable(lazy(() => import('../pages/promotionEngine/Condition')));
+// const NewConditon = Loadable(lazy(() => import('../pages/promotionEngine/Condition/NewCondition')));
+// const ActionPage = Loadable(lazy(() => import('../pages/promotionEngine/Action')));
+// const NewActionPage = Loadable(lazy(() => import('../pages/promotionEngine/Action/create')));
+// const GiftPage = Loadable(lazy(() => import('../pages/promotionEngine/Gift')));
+// const NewGiftPage = Loadable(lazy(() => import('../pages/promotionEngine/Gift/create')));
+// const SettingPage = Loadable(lazy(() => import('../pages/promotionEngine/Configuration/settings')));
+// const ProfilePage = Loadable(lazy(() => import('../pages/promotionEngine/Configuration/profile')));

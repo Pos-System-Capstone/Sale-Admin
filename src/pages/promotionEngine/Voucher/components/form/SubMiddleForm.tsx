@@ -12,6 +12,7 @@ import {
   TextField
 } from '@mui/material';
 import { CheckBoxField } from 'components/form';
+import useLocales from 'hooks/useLocales';
 import React from 'react';
 import { useState } from 'react';
 import { CardTitle } from '../Card';
@@ -21,29 +22,36 @@ interface Props {
 
 const SubMiddleForm: React.FC<Props> = ({ hasVariant }) => {
   const [count, setCount] = useState(0);
+  const { t } = useLocales();
   return (
     <Card id="variants">
-      <CheckBoxField name="hasVariant" label="Advanced settings" />
+      <CheckBoxField
+        name="hasVariant"
+        label={`${t('promotionSystem.voucher.addVoucher.advancedSettings')}`}
+      />
       {hasVariant && (
         <Box sx={{ width: '100%' }}>
-          <CardTitle variant="subtitle1">Advanced settings</CardTitle>
+          <CardTitle variant="subtitle1">{`${t(
+            'promotionSystem.voucher.addVoucher.advancedSettings'
+          )}`}</CardTitle>
           <Stack sx={{ width: '100%', pb: '25px', pt: '20px' }} spacing={1}>
             <Alert severity="warning">
-              <AlertTitle>Warning</AlertTitle>A voucher is a bond of the redeemable transaction type
-              which is worth a certain monetary value and which may be spent only for specific
-              reasons or on specific goods.
+              <AlertTitle>{`${t('promotionSystem.voucher.addVoucher.warning')}`}</AlertTitle>
+              {`${t('promotionSystem.voucher.addVoucher.helperWarning')}`}
             </Alert>
           </Stack>
           <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
             <Grid item xs={6}>
               <Box sx={{ minWidth: 120 }}>
                 <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">Charset</InputLabel>
+                  <InputLabel id="demo-simple-select-label">{`${t(
+                    'promotionSystem.voucher.addVoucher.charset'
+                  )}`}</InputLabel>
                   <Select
                     defaultValue=""
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    label="Charset"
+                    label={`${t('promotionSystem.voucher.addVoucher.charset')}`}
                   >
                     <MenuItem value={10}>Alphanumeric</MenuItem>
                     <MenuItem value={10}>Alphabetic</MenuItem>
@@ -66,7 +74,7 @@ const SubMiddleForm: React.FC<Props> = ({ hasVariant }) => {
                   fullWidth
                   disabled
                   id="outlined-disabled"
-                  label="Sample"
+                  label={`${t('promotionSystem.voucher.addVoucher.sample')}`}
                   defaultValue="Hello World"
                 />
               </Box>
@@ -80,7 +88,7 @@ const SubMiddleForm: React.FC<Props> = ({ hasVariant }) => {
               >
                 <TextField
                   fullWidth
-                  label="Prefix"
+                  label={`${t('promotionSystem.voucher.addVoucher.prefix')}`}
                   id="fullWidth"
                   autoComplete="off"
                   inputProps={{ maxLength: 10 }}
@@ -98,7 +106,7 @@ const SubMiddleForm: React.FC<Props> = ({ hasVariant }) => {
               >
                 <TextField
                   fullWidth
-                  label="Postfix"
+                  label={`${t('promotionSystem.voucher.addVoucher.postfix')}`}
                   id="fullWidth"
                   autoComplete="off"
                   inputProps={{ maxLength: 10 }}

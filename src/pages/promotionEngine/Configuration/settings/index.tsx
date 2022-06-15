@@ -68,7 +68,7 @@ const SettingPage = () => {
 
   return (
     <Page
-      // title={`${translate('pages.configuration.settings')}`}
+      title={`${translate('menu.promotion.setting')}`}
       actions={() => [
         // <Button
         //   key="create-store"

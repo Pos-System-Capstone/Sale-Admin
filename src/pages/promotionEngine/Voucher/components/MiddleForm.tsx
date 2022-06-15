@@ -7,6 +7,7 @@ import AlertTitle from '@mui/material/AlertTitle';
 // import ModalForm from 'components/ModalForm/ModalForm';
 // import ResoTable from 'components/ResoTable/ResoTable';
 import useExtraCategory from 'hooks/extra-categories/useExtraCategoy';
+import useLocales from 'hooks/useLocales';
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { CreateProductForm, ProductTypeEnum, TProductBase } from 'types/product';
@@ -24,7 +25,7 @@ type Props = {
 // eslint-disable-next-line arrow-body-style
 const MiddleForm: React.FC<Props> = ({ updateMode }) => {
   const { watch } = useFormContext<CreateProductForm>();
-
+  const { t } = useLocales();
   const [hasExtra, hasVariant] = watch(['has_extra', 'hasVariant']);
   const cateId = watch('cat_id');
   const productType = watch('product_type');
@@ -54,13 +55,12 @@ const MiddleForm: React.FC<Props> = ({ updateMode }) => {
         <Card id="product-detail">
           <Stack spacing={2} textAlign="left">
             <CardTitle mb={2} variant="subtitle1">
-              VOUCHER GROUP BUILDER
+              {`${t('promotionSystem.voucher.addVoucher.voucherGroupBuilder')}`}
             </CardTitle>
             <Stack sx={{ width: '100%', pb: '15px', pt: '20px' }} spacing={1}>
               <Alert severity="warning">
-                <AlertTitle>Warning</AlertTitle>A voucher is a bond of the redeemable transaction
-                type which is worth a certain monetary value and which may be spent only for
-                specific reasons or on specific goods.
+                <AlertTitle>{`${t('promotionSystem.voucher.addVoucher.warning')}`}</AlertTitle>
+                {`${t('promotionSystem.voucher.addVoucher.helperWarning')}`}
               </Alert>
             </Stack>
             <BasicProductInfoForm />

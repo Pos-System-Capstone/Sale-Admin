@@ -11,6 +11,7 @@ import {
   ToggleButtonGroup
 } from '@mui/material';
 import { AutoCompleteField, InputField } from 'components/form';
+import useLocales from 'hooks/useLocales';
 // import { InputField, AutoCompleteField } from 'components/form';
 import React, { useState } from 'react';
 
@@ -31,6 +32,7 @@ const BasicProductInfoForm = (props: Props) => {
       backgroundColor: '#00AB55'
     }
   });
+  const { t } = useLocales();
 
   return (
     <Grid container flexWrap="nowrap" gap={2}>
@@ -40,7 +42,7 @@ const BasicProductInfoForm = (props: Props) => {
             <InputField
               fullWidth
               name="product_name"
-              label="Group Name"
+              label={`${t('promotionSystem.voucher.addVoucher.groupName')}`}
               required
               sx={{ height: '30px', pb: '50px' }}
             />
@@ -50,7 +52,7 @@ const BasicProductInfoForm = (props: Props) => {
               <Grid item xs={6}>
                 <AutoCompleteField
                   name="tags"
-                  label="Quanitity"
+                  label={`${t('promotionSystem.voucher.addVoucher.quantity')}`}
                   required
                   multiple
                   freeSolo
@@ -66,9 +68,9 @@ const BasicProductInfoForm = (props: Props) => {
                   fullWidth
                   type="number"
                   name="price"
-                  label="Length"
+                  label={`${t('promotionSystem.voucher.addVoucher.length')}`}
                   required
-                  helperText="Maximum quantity of voucher: 62"
+                  helperText={`${t('promotionSystem.voucher.addVoucher.helperLength')}: 62`}
                   sx={{ height: '30px', pb: '70px' }}
                 />
               </Grid>
@@ -85,19 +87,25 @@ const BasicProductInfoForm = (props: Props) => {
               onChange={handleChange}
               sx={{ display: 'flex' }}
             >
-              <StyledToggleButton value="discount">Discount Action</StyledToggleButton>
-              <StyledToggleButton value="gift">Gift Action</StyledToggleButton>
+              <StyledToggleButton value="discount">{`${t(
+                'promotionSystem.voucher.addVoucher.discountAction'
+              )}`}</StyledToggleButton>
+              <StyledToggleButton value="gift">{`${t(
+                'promotionSystem.voucher.addVoucher.giftAction'
+              )}`}</StyledToggleButton>
             </ToggleButtonGroup>
           </Box>
           <Box>
             {alignment !== 'gift' && (
               <Box sx={{ height: '55.8px', pt: '10px' }}>
                 <FormControl fullWidth disabled={alignment === 'gift'}>
-                  <InputLabel id="demo-simple-select-label">Discount action</InputLabel>
+                  <InputLabel id="demo-simple-select-label">{`${t(
+                    'promotionSystem.voucher.addVoucher.discountAction'
+                  )}`}</InputLabel>
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    label="Discount action"
+                    label={`${t('promotionSystem.voucher.addVoucher.discountAction')}`}
                     sx={{ mb: '10px' }}
                   >
                     <MenuItem value="">
@@ -112,11 +120,13 @@ const BasicProductInfoForm = (props: Props) => {
             {alignment === 'gift' && (
               <Box sx={{ height: '55.8px', pt: '10px' }}>
                 <FormControl fullWidth disabled={alignment !== 'gift'}>
-                  <InputLabel id="demo-simple-select-label">Gift action</InputLabel>
+                  <InputLabel id="demo-simple-select-label">{`${t(
+                    'promotionSystem.voucher.addVoucher.giftAction'
+                  )}`}</InputLabel>
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    label="Gift action"
+                    label={`${t('promotionSystem.voucher.addVoucher.giftAction')}`}
                     sx={{ mb: '10px' }}
                   >
                     <MenuItem value="">

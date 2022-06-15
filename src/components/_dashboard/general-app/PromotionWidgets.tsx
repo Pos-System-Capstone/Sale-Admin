@@ -19,14 +19,14 @@ const RootStyle = styled(Card)(({ theme }) => ({
   position: 'relative',
   alignItems: 'center',
   padding: theme.spacing(3),
-  width: '260px',
+  width: '280px',
   height: '150px'
 }));
 
 const IconStyle = styled(Icon)(({ theme }) => ({
   width: 120,
   height: 120,
-  opacity: 0.12,
+  opacity: 0.2,
   position: 'absolute',
   right: theme.spacing(-3),
   color: theme.palette.common.white
@@ -47,7 +47,7 @@ export default function PromotionWidgets({ Widget }: PromotionWidgetsProp) {
       }}
     >
       <Box sx={{ ml: 3, color: 'common.white', cursor: 'pointer' }}>
-        <Typography variant="h6" sx={{ opacity: 0.72, marginLeft: '-48px', marginTop: '30px' }}>
+        <Typography variant="h6" sx={{ opacity: 1, marginLeft: '-58px', marginTop: '30px' }}>
           {Widget.title}
         </Typography>
         <Typography variant="h2" sx={{ marginLeft: '-48px', p: '20px' }}>

@@ -14,7 +14,7 @@ const ProfilePage = () => {
   const { translate } = useLocales();
 
   return (
-    <Page title={`${translate('pages.configuration.profile.header')}`}>
+    <Page title={`${translate('productReport.table.productName')}`}>
       <Stack spacing={[2, 4]}>
         <Card>
           <BranchProfile />
