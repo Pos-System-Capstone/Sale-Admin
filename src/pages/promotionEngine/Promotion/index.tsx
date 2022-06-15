@@ -21,7 +21,8 @@ const Promotion = (props: Props) => {
 
   return (
     <Page
-      title="Manage Promotion"
+      // title="Manage Promotion"
+      title={`${t('promotion-system.promotion.title')}`}
       actions={() => [
         <Button
           key="create-promotion"

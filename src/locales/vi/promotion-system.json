@@ -1,0 +1,95 @@
+{
+  "dashboard": {
+    "title": "Bảng điều khiển",
+    "totalPromotion": "Tổng số khuyến mãi",
+    "runningPromotion": "Khuyến mãi đang chạy",
+    "expiredPromotion": "Khuyến mãi đã hết hạn",
+    "draftPromotion": "Khuyến mãi đang nháp"
+  },
+  "promotion": {
+    "title": "Quản lý khuyến mãi",
+    "selectPromotionType": "Chọn loại khuyến mãi",
+    "description": "Mô tả",
+    "saveAndFinish": "Lưu và kết thúc",
+    "table": {
+      "no": "STT",
+      "name": "Tên",
+      "type": "Loại",
+      "action": "Hành động",
+      "startDate": "Ngày bắt đầu",
+      "status": "Trạng thái"
+    },
+    "addPromotion": {
+      "addPromotion": "Thêm khuyến mãi",
+      "promotionType": "Loại khuyến mãi",
+      "questionPromotionType": "Loại khuyến mãi nào?",
+      "usingVoucher": "Sử dụng phiếu giảm giá",
+      "usingCode": "Sử dụng mã khuyến mãi",
+      "automatic": "Tự động",
+      "promotionName": "Tên khuyến mãi",
+      "promotionCode": "Mã khuyến mãi",
+      "actionType": "Hình thức khuyến mãi",
+      "questionActionType": "Hình thức khuyến mãi nào?",
+      "discount": "Giảm giá",
+      "gift": "Quà Tặng",
+      "timeFrame": "Khung thời gian",
+      "from": "Từ",
+      "to": "Đến",
+      "unlimited": "Không thời hạn",
+      "validInThisTimeFrameOnly": "Chỉ áp dụng trong khung thời gian này",
+      "validOnParticularDayOnly": "Chỉ áp dụng trong ngày này"
+    },
+    "settings": {
+      "constraint": "Giới hạn",
+      "paymentMethod": "Phương thức thanh toán",
+      "targetCustomer": "Khách hàng mục tiêu",
+      "memberShipLevel": "Cấp độ thành viên",
+      "customerGender": "Giới tính khách hàng",
+      "saleMode": "Chế độ bán hàng",
+      "applyBy": "Áp dụng theo",
+      "exclusive": "Khuyến mãi đặc biệt",
+      "storeConfig": "Cấu hình cửa hàng"
+    },
+    "preview": {
+      "title": "Xem trước",
+      "name": "Tên khuyến mãi",
+      "startDate": "Ngày bắt đầu",
+      "endDate": "Ngày kết thúc",
+      "exclusive": "Khuyến mãi đặc biệt",
+      "status": "Trạng thái",
+      "paymentMethod": "Phương thức thanh toán",
+      "uploadFile": "Tải lên tệp"
+    }
+  },
+  "voucher": {
+    "title": "Quản lý phiếu giảm giá",
+    "table": {
+      "no": "STT",
+      "name": "Tên",
+      "actionName": "Tên hình thức",
+      "total": "Tổng số",
+      "redeemed": "Đã đổi",
+      "used": "Đã sử dụng"
+    },
+    "addVoucher": {
+      "addVoucher": "Thêm phiếu giảm giá",
+      "voucherGroupBuilder": "Nhóm phiếu giảm giá",
+      "warning": "Cảnh báo",
+      "helperWarning": "Một phiếu giảm giá là một chuỗi các giao dịch đổi đồng có giá trị tiền tệ và chỉ có thể được tiêu để một các lý do nào đó hoặc đồng thời chỉ được sử dụng cho các sản phẩm nào đó.",
+      "groupName": "Tên nhóm",
+      "quantity": "Số lượng",
+      "length": "Độ dài",
+      "helperLength": "Số lượng phiếu giảm giá trong nhóm",
+      "discountAction": "Hình thức giảm giá",
+      "giftAction": "Hình thức quà tặng",
+      "advancedSettings": "Cài đặt nâng cao",
+      "chartset": "Bảng chữ cái",
+      "sample": "Mẫu",
+      "prefix": "Tiền tố",
+      "postfix": "Tiền hàng"
+    }
+  },
+  "profile": {
+    "title": "Hồ sơ"
+  }
+}

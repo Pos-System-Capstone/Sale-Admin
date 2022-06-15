@@ -16,6 +16,8 @@ import useLocales from 'hooks/useLocales';
 const SettingPage = () => {
   const { translate } = useLocales();
   const theme = useTheme();
+
+  // Todo: add href to each button
   const settingSections = [
     {
       header: 'Phân phối',

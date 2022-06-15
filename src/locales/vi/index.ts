@@ -5,6 +5,7 @@ import productReport from './product-report.json';
 import categories from './categories.json';
 import collections from './collection.json';
 import combos from './combos.json';
+import promotionSystem from './promotion-system.json';
 
 export default {
   dashboard,
@@ -12,5 +13,6 @@ export default {
   productReport,
   categories,
   collections,
-  combos
+  combos,
+  promotionSystem
 };
