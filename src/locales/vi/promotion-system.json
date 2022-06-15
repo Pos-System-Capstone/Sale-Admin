@@ -135,7 +135,15 @@
       "discountAction": "Hình thức giảm giá",
       "giftAction": "Hình thức quà tặng",
       "advancedSettings": "Cài đặt nâng cao",
-      "charset": "Bảng chữ cái",
+      "charset": {
+        "label": "Bảng chữ cái",
+        "alphanumeric": "Chữ số",
+        "alphabetic": "Bảng chữ cái",
+        "alphabeticlowercase": "Bảng chữ cái thường",
+        "alphabeticuppercase": "Bảng chữ cái hoa",
+        "numbers": "Chữ số",
+        "custom": "Tuỳ chọn"
+      },
       "sample": "Mẫu",
       "prefix": "Tiền tố",
       "postfix": "Hậu tố"

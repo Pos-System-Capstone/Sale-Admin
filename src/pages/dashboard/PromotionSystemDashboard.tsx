@@ -20,7 +20,7 @@ export default function PromotionDash() {
       icon: calendarFill,
       color: '#aa0a0a',
       hoverColor: '#F51720',
-      amount: 19
+      amount: 20
     },
     {
       title: `${translate('promotionSystem.dashboard.runningPromotion')}`,

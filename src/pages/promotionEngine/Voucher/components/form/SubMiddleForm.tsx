@@ -45,20 +45,32 @@ const SubMiddleForm: React.FC<Props> = ({ hasVariant }) => {
               <Box sx={{ minWidth: 120 }}>
                 <FormControl fullWidth>
                   <InputLabel id="demo-simple-select-label">{`${t(
-                    'promotionSystem.voucher.addVoucher.charset'
+                    'promotionSystem.voucher.addVoucher.charset.label'
                   )}`}</InputLabel>
                   <Select
                     defaultValue=""
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    label={`${t('promotionSystem.voucher.addVoucher.charset')}`}
+                    label={`${t('promotionSystem.voucher.addVoucher.charset.label')}`}
                   >
-                    <MenuItem value={10}>Alphanumeric</MenuItem>
-                    <MenuItem value={10}>Alphabetic</MenuItem>
-                    <MenuItem value={10}>Alphabetic Lowercase</MenuItem>
-                    <MenuItem value={10}>Alphabetic Uppercase</MenuItem>
-                    <MenuItem value={10}>Numbers</MenuItem>
-                    <MenuItem value={10}>Custom</MenuItem>
+                    <MenuItem value={10}>{`${t(
+                      'promotionSystem.voucher.addVoucher.charset.alphanumeric'
+                    )}`}</MenuItem>
+                    <MenuItem value={10}>{`${t(
+                      'promotionSystem.voucher.addVoucher.charset.alphabetic'
+                    )}`}</MenuItem>
+                    <MenuItem value={10}>{`${t(
+                      'promotionSystem.voucher.addVoucher.charset.alphabeticlowercase'
+                    )}`}</MenuItem>
+                    <MenuItem value={10}>{`${t(
+                      'promotionSystem.voucher.addVoucher.charset.alphabeticuppercase'
+                    )}`}</MenuItem>
+                    <MenuItem value={10}>{`${t(
+                      'promotionSystem.voucher.addVoucher.charset.numbers'
+                    )}`}</MenuItem>
+                    <MenuItem value={10}>{`${t(
+                      'promotionSystem.voucher.addVoucher.charset.custom'
+                    )}`}</MenuItem>
                   </Select>
                 </FormControl>
               </Box>

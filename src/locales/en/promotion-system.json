@@ -83,7 +83,15 @@
       "discountAction": "Discount Action",
       "giftAction": "Gift Action",
       "advancedSettings": "Advanced settings",
-      "charset": "Charset",
+      "charset": {
+        "label": "Charset",
+        "alphanumeric": "Alphanumeric",
+        "alphabetic": "Alphabetic",
+        "alphabeticlowercase": "Alphabetic Lowercase",
+        "alphabeticuppercase": "Alphabetic Uppercase",
+        "numbers": "Numbers",
+        "custom": "Custom"
+      },
       "sample": "Sample",
       "prefix": "Prefix",
       "postfix": "Postfix"
