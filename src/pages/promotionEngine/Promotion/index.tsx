@@ -15,14 +15,14 @@ interface Props {}
 
 const Promotion = (props: Props) => {
   const { enqueueSnackbar } = useSnackbar();
-  const { t } = useLocales();
+  const { translate } = useLocales();
   const navigate = useNavigate();
   const ref = useRef<any>();
 
   return (
     <Page
       // title="Manage Promotion"
-      title={`${t('promotion-system.promotion.title')}`}
+      title={`${translate('promotionSystem.promotion.title')}`}
       actions={() => [
         <Button
           key="create-promotion"
@@ -32,7 +32,7 @@ const Promotion = (props: Props) => {
           variant="contained"
           startIcon={<Icon icon={plusFill} />}
         >
-          New Promotion
+          {translate('promotionSystem.promotion.addPromotion.addPromotion')}
         </Button>
       ]}
     >

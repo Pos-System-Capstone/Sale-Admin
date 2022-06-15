@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 import { CheckBoxField, DraftEditorField, SelectField } from 'components/form';
 import DateRangePickerField from 'components/form/DateRangePickerField';
+import useLocales from 'hooks/useLocales';
 import { useState } from 'react';
 import { Controller } from 'react-hook-form';
 import { Card, CardTitle } from '../components/Card';
@@ -26,15 +27,17 @@ import FormBox from '../components/FormBox';
 import ToggleButton from '../components/ToggleButton';
 
 export default function StepOne() {
-  const [type, setType] = useState(promotionTypeList[0]);
+  const promotionType = promotionTypeList();
+  const [type, setType] = useState(promotionType[0]);
   const handleChange1 = (event: React.MouseEvent<HTMLElement>, newAlignment: string) => {
     if (newAlignment !== null) {
       setType(newAlignment);
     }
   };
   // what kind of action
-  const [alignment, setAlignment] = useState(kindActionList[0]);
-  const handleChange = (event: React.MouseEvent<HTMLElement>, newAlignment: string) => {
+  const kindAction = kindActionList();
+  const [alignment, setAlignment] = useState(0);
+  const handleChange = (event: React.MouseEvent<HTMLElement>, newAlignment: number) => {
     if (newAlignment !== null) {
       setAlignment(newAlignment);
     }
@@ -43,50 +46,65 @@ export default function StepOne() {
   const handleTimeframChecked = () => {
     setTimeframeChecked((prev) => !prev);
   };
+  const particularDays = particularDayList();
+
   const [particularDay, setParticularDay] = useState(false);
   const handleParticularDay = () => {
     setParticularDay((prev) => !prev);
   };
 
+  const { translate } = useLocales();
   return (
     <Stack p={1} spacing={3}>
       <Card id="product-detail">
-        <Stack spacing={4} sx={{ width: '65%' }}>
-          <Typography variant="h4" textAlign="center">
-            PROMOTION TYPE
+        <Stack spacing={4} sx={{ width: '80%' }}>
+          <Typography variant="h4" textAlign="left">
+            {translate('promotionSystem.promotion.createPromotion.promotionType')}
           </Typography>
-          <FormBox title="What type of promotion ?">
+          <FormBox
+            title={`${translate(
+              'promotionSystem.promotion.createPromotion.questionPromotionType'
+            )}`}
+          >
             <Stack spacing={2} direction="column">
               <ToggleButtonGroup sx={{ gap: 2 }} value={type} exclusive onChange={handleChange1}>
-                {promotionTypeList.map((promotionType, index) => (
+                {promotionType.map((promotionType, index) => (
                   <ToggleButton sx={{ flex: 1 }} key={index} value={promotionType}>
                     {promotionType}
                   </ToggleButton>
                 ))}
               </ToggleButtonGroup>
               <Stack spacing={2} direction="row">
-                <TextField size="small" fullWidth required label="Promotion Name" color="primary" />
                 <TextField
-                  size="small"
+                  size="medium"
+                  fullWidth
+                  required
+                  label={`${translate('promotionSystem.promotion.createPromotion.promotionName')}`}
+                  color="primary"
+                />
+                <TextField
+                  size="medium"
                   fullWidth
                   required
                   disabled={type === 'Automatic'}
-                  label="Code"
+                  label={`${translate('promotionSystem.promotion.createPromotion.promotionCode')}`}
                   color="primary"
                 />
               </Stack>
             </Stack>
           </FormBox>
-          <FormBox title="What kind of action ?">
+          <FormBox
+            title={`${translate('promotionSystem.promotion.createPromotion.questionActionType')}`}
+          >
             <Stack spacing={2} direction="column">
               <ToggleButtonGroup value={alignment} exclusive onChange={handleChange}>
-                {kindActionList.map((kindAction, index) => (
-                  <ToggleButton sx={{ flex: 1 }} key={index} value={kindAction}>
+                {kindAction.map((kindAction, index) => (
+                  <ToggleButton sx={{ flex: 1 }} key={index} value={index}>
                     {kindAction}
                   </ToggleButton>
                 ))}
               </ToggleButtonGroup>
-              {alignment === 'Discount' && (
+              {alignment === 0 && (
                 <Box>
                   {/* <Typography my={2} variant="subtitle1">
                             Discount Action
@@ -100,7 +118,7 @@ export default function StepOne() {
                           </ToggleButtonGroup> */}
                   <SelectField
                     fullWidth
-                    label="Discount Action"
+                    label={`${translate('promotionSystem.promotion.createPromotion.discount')}`}
                     name="discountAction"
                     options={discountActionList}
                   >
@@ -112,7 +130,7 @@ export default function StepOne() {
                   </SelectField>
                 </Box>
               )}
-              {alignment === 'Gift' && (
+              {alignment === 1 && (
                 <Box>
                   {/* <Typography my={2} variant="subtitle1">
                             Gift Action
@@ -126,7 +144,7 @@ export default function StepOne() {
                           </ToggleButtonGroup> */}
                   <SelectField
                     fullWidth
-                    label="Gift  Action"
+                    label={`${translate('promotionSystem.promotion.createPromotion.gift')}`}
                     name="giftAction"
                     options={giftActionList}
                   >
@@ -140,12 +158,14 @@ export default function StepOne() {
               )}
             </Stack>
           </FormBox>
-          <FormBox title="Time Frame">
+          <FormBox title={`${translate('promotionSystem.promotion.createPromotion.timeFrame')}`}>
             <Box>
               <DateRangePickerField name="dateRangePicker" />
               <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
                 <Checkbox />
-                <Typography>Unlimited Date</Typography>
+                <Typography>{`${translate(
+                  'promotionSystem.promotion.createPromotion.unlimited'
+                )}`}</Typography>
               </Box>
             </Box>
           </FormBox>
@@ -153,7 +173,7 @@ export default function StepOne() {
         <Stack spacing={1}>
           <Box sx={{ paddingLeft: '8px' }}>
             <Typography>
-              Valid in this timeframe only
+              {`${translate('promotionSystem.promotion.createPromotion.validInThisTimeFrameOnly')}`}
               <Switch checked={timeframeChecked} onChange={handleTimeframChecked} />
             </Typography>
             {timeframeChecked && (
@@ -168,12 +188,12 @@ export default function StepOne() {
           </Box>
           <Box sx={{ paddingLeft: '8px' }}>
             <Typography>
-              Valid on particular days only
+              {`${translate('promotionSystem.promotion.createPromotion.validOnParticularDayOnly')}`}
               <Switch checked={particularDay} onChange={handleParticularDay} />
             </Typography>
             {particularDay && (
               <Grid container spacing={2} columns={7}>
-                {particularDayList.map((item, index) => (
+                {particularDays.map((item, index) => (
                   <Grid xs={1} item key={index}>
                     <CheckBoxField name={item} label={item} />
                   </Grid>
@@ -186,7 +206,7 @@ export default function StepOne() {
 
       <Card>
         <CardTitle mb={2} variant="subtitle1">
-          Description
+          {`${translate('promotionSystem.promotion.description')}`}
         </CardTitle>
         <Controller
           name="description"

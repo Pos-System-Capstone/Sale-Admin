@@ -3,6 +3,7 @@ import { Box, Button, Stack, Step, StepLabel, Stepper } from '@mui/material';
 import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
 import Page from 'components/Page';
 import useProduct from 'hooks/products/useProduct';
+import useLocales from 'hooks/useLocales';
 import { DashboardNavLayout } from 'layouts/dashboard/DashboardNavbar';
 import { useSnackbar } from 'notistack';
 import { validationSchema } from 'pages/Products/type';
@@ -13,18 +14,25 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { createMasterProd } from 'redux/product/api';
 import { PATH_DASHBOARD } from 'routes/paths';
 import { CombinationModeEnum, CreateComboForm } from 'types/product';
+import { targetCustomerList } from '../components/config';
 import StepOne from './StepOne';
 import StepThree from './StepThree';
 import StepTwo from './StepTwo';
 
 interface Props {}
-const STEPS = ['Select promotion type', 'Setting', 'Save & Finish'];
+// const STEPS = ['Select promotion type', 'Setting', 'Save & Finish'];
 const CreatePromotion = (props: Props) => {
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
+  const { translate } = useLocales();
   const [searchParams] = useSearchParams();
   const cloneProductId: any = searchParams.get('cloneProductId');
 
+  const STEPS = [
+    `${translate('promotionSystem.promotion.selectPromotionType')}`,
+    `${translate('promotionSystem.promotion.setting')}`,
+    `${translate('promotionSystem.promotion.saveAndFinish')}`
+  ];
   const [activeStep, setActiveStep] = useState(0);
 
   const createComboForm = useForm({
@@ -55,15 +63,20 @@ const CreatePromotion = (props: Props) => {
         });
       });
   };
-
+  const targetCustomer = targetCustomerList();
   const { handleSubmit, watch } = createComboForm;
-  let isMember = watch('Membership');
+  // targetCustomer[1] = member
+  let isMember = watch(targetCustomer[1]);
 
   return (
     <FormProvider {...createComboForm}>
       <DashboardNavLayout>
         <Stack direction="row" spacing={2}>
-          {activeStep !== 0 && <Button onClick={() => setActiveStep(activeStep - 1)}>Back</Button>}
+          {activeStep !== 0 && (
+            <Button onClick={() => setActiveStep(activeStep - 1)}>
+              {translate('promotionSystem.promotion.back')}
+            </Button>
+          )}
           {activeStep !== STEPS.length - 1 && (
             <Button
               variant="contained"
@@ -74,17 +87,20 @@ const CreatePromotion = (props: Props) => {
                 setActiveStep((prev) => prev + 1);
               }}
             >
-              Next
+              {translate('promotionSystem.promotion.next')}
             </Button>
           )}
           {activeStep === STEPS.length - 1 && (
             <LoadingAsyncButton onClick={handleSubmit(onSubmit)} type="submit" variant="contained">
-              Save
+              {translate('promotionSystem.promotion.save')}
             </LoadingAsyncButton>
           )}
         </Stack>
       </DashboardNavLayout>
-      <Page title="CREATE PROMOTION">
+      <Page
+        // title="CREATE PROMOTION"
+        title={`${translate('promotionSystem.promotion.createPromotion.createPromotion')}`}
+      >
         <Box py={2}>
           <Stepper alternativeLabel activeStep={activeStep}>
             {STEPS.map((label) => (
@@ -106,7 +122,7 @@ const CreatePromotion = (props: Props) => {
 
         <Box display="flex">
           {activeStep === 0 && <StepOne />}
-          {activeStep === 1 && <StepTwo isMember={isMember} />}
+          {activeStep === 1 && <StepTwo isMember={isMember} targetCustomer={targetCustomer} />}
           {activeStep === 2 && <StepThree />}
         </Box>
       </Page>

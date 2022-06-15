@@ -10,7 +10,12 @@
     "title": "Quản lý khuyến mãi",
     "selectPromotionType": "Chọn loại khuyến mãi",
     "description": "Mô tả",
+    "setting": "Cài đặt",
     "saveAndFinish": "Lưu và kết thúc",
+    "select": "Chọn",
+    "save": "Lưu",
+    "back": "Trở lại",
+    "next": "Tiếp theo",
     "table": {
       "no": "STT",
       "name": "Tên",
@@ -19,11 +24,11 @@
       "startDate": "Ngày bắt đầu",
       "status": "Trạng thái"
     },
-    "addPromotion": {
-      "addPromotion": "Thêm khuyến mãi",
+    "createPromotion": {
+      "createPromotion": "Thêm khuyến mãi",
       "promotionType": "Loại khuyến mãi",
       "questionPromotionType": "Loại khuyến mãi nào?",
-      "usingVoucher": "Sử dụng phiếu giảm giá",
+      "usingVoucher": "Sử dụng Voucher",
       "usingCode": "Sử dụng mã khuyến mãi",
       "automatic": "Tự động",
       "promotionName": "Tên khuyến mãi",
@@ -42,13 +47,55 @@
     "settings": {
       "constraint": "Giới hạn",
       "paymentMethod": "Phương thức thanh toán",
+      "helperPaymentMethod": "Phương thức thanh toán có thể sử dụng khuyến mãi này",
       "targetCustomer": "Khách hàng mục tiêu",
+      "helperTargetCustomer": "Loại khách hàng có thể sử dụng khuyến mãi này",
       "memberShipLevel": "Cấp độ thành viên",
-      "customerGender": "Giới tính khách hàng",
-      "saleMode": "Chế độ bán hàng",
+      "helperMemberShipLevel": "Cấp độ thành viên",
+      "customerGender": "Giới tính",
+      "helperCustomerGender": "Giới tính khách hàng có thể sử dụng khuyến mãi này",
+      "saleMode": "Chế độ",
+      "helperSaleMode": "Chế độ bán hàng của bạn",
       "applyBy": "Áp dụng theo",
+      "helperApplyBy": "Khách hàng của bạn có thể sử dụng khuyến mãi này",
       "exclusive": "Khuyến mãi đặc biệt",
-      "storeConfig": "Cấu hình cửa hàng"
+      "helperExclusive": "Khuyến mãi có bao gồm các khuyến mãi khác không",
+      "storeConfig": "Cấu hình cửa hàng",
+      "helperStoreConfig": "Cửa hàng khách hàng có thể sử dụng khuyến mãi này",
+      "paymentMethodType": {
+        "cash": "Tiền mặt",
+        "creditCard": "Thẻ tín dụng",
+        "bankTransfer": "Chuyển khoản",
+        "eWallet": "Ví điện tử",
+        "mobileBanking": "Ngân hàng di động",
+        "cod": "Thanh toán khi nhận hàng"
+      },
+      "targetCustomerType": {
+        "guest": "Khách",
+        "membership": "Thành viên"
+      },
+      "genderType": {
+        "male": "Nam",
+        "female": "Nữ"
+      },
+      "saleModeType": {
+        "eatIn": "Dùng tại chỗ",
+        "takeAway": "Mang đi",
+        "delivery": "Giao hàng"
+      },
+      "applyByType": {
+        "store": "Cửa hàng",
+        "online": "Trực tuyến"
+      },
+      "exclusiveType": {
+        "none": "Không",
+        "level": "Cấp độ thành viên",
+        "global": "Toàn cục"
+      },
+      "memberLevelType": {
+        "level1": "Cấp 1",
+        "level2": "Cấp 2"
+      }
     },
     "preview": {
       "title": "Xem trước",
@@ -58,7 +105,12 @@
       "exclusive": "Khuyến mãi đặc biệt",
       "status": "Trạng thái",
       "paymentMethod": "Phương thức thanh toán",
-      "uploadFile": "Tải lên tệp"
+      "uploadFile": "Tải lên tệp",
+      "saleMode": "Chế độ bán hàng",
+      "applyBy": "Áp dụng theo",
+      "availableOnHoliday": "Có hiệu lực trên ngày lễ",
+      "customerType": "Loại khách hàng",
+      "customerGender": "Giới tính khách hàng"
     }
   },
   "voucher": {
@@ -91,5 +143,14 @@
   },
   "profile": {
     "title": "Hồ sơ"
+  },
+  "dayInWeek": {
+    "monday": "Thứ hai",
+    "tuesday": "Thứ ba",
+    "wednesday": "Thứ tư",
+    "thursday": "Thứ năm",
+    "friday": "Thứ sáu",
+    "saturday": "Thứ bảy",
+    "sunday": "Chủ nhật"
   }
 }

@@ -1,6 +1,25 @@
-const promotionTypeList: string[] = ['Using voucher', 'Using code', 'Automatic'];
+// const promotionTypeList: string[] = ['Using voucher', 'Using code', 'Automatic'];
 
-const kindActionList: string[] = ['Discount', 'Gift'];
+import useLocales from 'hooks/useLocales';
+
+const promotionTypeList = () => {
+  const { translate } = useLocales(); // eslint-disable-line
+  return [
+    `${translate('promotionSystem.promotion.createPromotion.usingVoucher')}`,
+    `${translate('promotionSystem.promotion.createPromotion.usingCode')}`,
+    `${translate('promotionSystem.promotion.createPromotion.automatic')}`
+  ];
+};
+
+// const kindActionList: string[] = ['Discount', 'Gift'];
+
+const kindActionList = () => {
+  const { translate } = useLocales(); // eslint-disable-line
+  return [
+    `${translate('promotionSystem.promotion.createPromotion.discount')}`,
+    `${translate('promotionSystem.promotion.createPromotion.gift')}`
+  ];
+};
 
 const discountActionList: string[] = [
   'Discount amount of order',
@@ -48,101 +67,114 @@ const timeFrameList: string[] = [
   '23:00'
 ];
 
-const particularDayList: string[] = [
-  'Sunday',
-  'Monday',
-  'Tuesday',
-  'Wednesday',
-  'Thursday',
-  'Friday',
-  'Saturday'
-];
-
-const paymentMethodList: string[] = [
-  'Cash',
-  'Credit Cards',
-  'Bank Transfers',
-  'eWallets',
-  'Mobile Banking',
-  'COD'
-];
-
-const targetCustomerList: string[] = ['Guest', 'Membership'];
-
-const genderList: string[] = ['Male', 'Female'];
-
-const saleModeList: string[] = ['Eat-in', 'Take-away', 'Delivery'];
-
-const applyByList: string[] = ['Store', 'Online'];
-
-const exclusiveList: string[] = ['None', 'Level', 'Global'];
-
-const memberLevelList: string[] = ['Level 1', 'Level 2'];
-
-// const useStyles = makeStyles((theme) => ({
-//   formControl: {
-//     width: 300
-//   },
-//   indeterminateColor: {
-//     color: '#f50057'
-//   },
-//   selectAllText: {
-//     fontWeight: 500
-//   },
-//   selectedAll: {
-//     backgroundColor: 'rgba(0, 0, 0, 0.08)',
-//     '&:hover': {
-//       backgroundColor: 'rgba(0, 0, 0, 0.08)'
-//     }
-//   }
-// }));
-
-// const ITEM_HEIGHT = 48;
-// const ITEM_PADDING_TOP = 8;
-// const MenuProps = {
-//   PaperProps: {
-//     style: {
-//       maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-//       width: 250
-//     }
-//   },
-//   getContentAnchorEl: null,
-//   anchorOrigin: {
-//     vertical: 'bottom',
-//     horizontal: 'center'
-//   },
-//   transformOrigin: {
-//     vertical: 'top',
-//     horizontal: 'center'
-//   },
-//   variant: 'menu'
-// };
-
-// const options = [
-//   'Oliver Hansen',
-//   'Van Henry',
-//   'April Tucker',
-//   'Ralph Hubbard',
-//   'Omar Alexander',
-//   'Carlos Abbott',
-//   'Miriam Wagner',
-//   'Bradley Wilkerson',
-//   'Virginia Andrews',
-//   'Kelly Snyder'
+// const particularDayList: string[] = [
+//   'Sunday',
+//   'Monday',
+//   'Tuesday',
+//   'Wednesday',
+//   'Thursday',
+//   'Friday',
+//   'Saturday'
 // ];
 
+const particularDayList = () => {
+  const { translate } = useLocales(); // eslint-disable-line
+  return [
+    `${translate('promotionSystem.dayInWeek.sunday')}`,
+    `${translate('promotionSystem.dayInWeek.monday')}`,
+    `${translate('promotionSystem.dayInWeek.tuesday')}`,
+    `${translate('promotionSystem.dayInWeek.wednesday')}`,
+    `${translate('promotionSystem.dayInWeek.thursday')}`,
+    `${translate('promotionSystem.dayInWeek.friday')}`,
+    `${translate('promotionSystem.dayInWeek.saturday')}`
+  ];
+};
+
+// const paymentMethodList: string[] = [
+//   'Cash',
+//   'Credit Cards',
+//   'Bank Transfers',
+//   'eWallets',
+//   'Mobile Banking',
+//   'COD'
+// ];
+
+const paymentMethodList = () => {
+  const { translate } = useLocales(); // eslint-disable-line
+  return [
+    `${translate('promotionSystem.promotion.settings.paymentMethodType.cash')}`,
+    `${translate('promotionSystem.promotion.settings.paymentMethodType.creditCard')}`,
+    `${translate('promotionSystem.promotion.settings.paymentMethodType.bankTransfer')}`,
+    `${translate('promotionSystem.promotion.settings.paymentMethodType.eWallet')}`,
+    `${translate('promotionSystem.promotion.settings.paymentMethodType.mobileBanking')}`,
+    `${translate('promotionSystem.promotion.settings.paymentMethodType.cod')}`
+  ];
+};
+
+// const targetCustomerList: string[] = ['Guest', 'Membership'];
+const targetCustomerList = () => {
+  const { translate } = useLocales(); // eslint-disable-line
+  return [
+    `${translate('promotionSystem.promotion.settings.targetCustomerType.guest')}`,
+    `${translate('promotionSystem.promotion.settings.targetCustomerType.membership')}`
+  ];
+};
+// const genderList: string[] = ['Male', 'Female'];
+const genderList = () => {
+  const { translate } = useLocales(); // eslint-disable-line
+  return [
+    `${translate('promotionSystem.promotion.settings.genderType.male')}`,
+    `${translate('promotionSystem.promotion.settings.genderType.female')}`
+  ];
+};
+// const saleModeList: string[] = ['Eat-in', 'Take-away', 'Delivery'];
+
+const saleModeList = () => {
+  const { translate } = useLocales(); // eslint-disable-line
+  return [
+    `${translate('promotionSystem.promotion.settings.saleModeType.eatIn')}`,
+    `${translate('promotionSystem.promotion.settings.saleModeType.takeAway')}`,
+    `${translate('promotionSystem.promotion.settings.saleModeType.delivery')}`
+  ];
+};
+
+// const applyByList: string[] = ['Store', 'Online'];
+const applyByList = () => {
+  const { translate } = useLocales(); // eslint-disable-line
+  return [
+    `${translate('promotionSystem.promotion.settings.applyByType.store')}`,
+    `${translate('promotionSystem.promotion.settings.applyByType.online')}`
+  ];
+};
+// const exclusiveList: string[] = ['None', 'Level', 'Global'];
+const exclusiveList = () => {
+  const { translate } = useLocales(); // eslint-disable-line
+  return [
+    `${translate('promotionSystem.promotion.settings.exclusiveType.none')}`,
+    `${translate('promotionSystem.promotion.settings.exclusiveType.level')}`,
+    `${translate('promotionSystem.promotion.settings.exclusiveType.global')}`
+  ];
+};
+// const memberLevelList: string[] = ['Level 1', 'Level 2'];
+const memberLevelList = () => {
+  const { translate } = useLocales(); // eslint-disable-line
+  return [
+    `${translate('promotionSystem.promotion.settings.memberLevelType.level1')}`,
+    `${translate('promotionSystem.promotion.settings.memberLevelType.level2')}`
+  ];
+};
 export {
   promotionTypeList,
-  discountActionList,
-  giftActionList,
   particularDayList,
   paymentMethodList,
+  kindActionList,
+  discountActionList,
+  giftActionList,
   targetCustomerList,
   timeFrameList,
   genderList,
   saleModeList,
   applyByList,
   exclusiveList,
-  kindActionList,
   memberLevelList
 };
