@@ -35,13 +35,15 @@ export default function StepTwo(props: Props) {
       setExclusive(newAlignment);
     }
   };
+
+  // const mh = currentLang.value === 'vi' ? '44px' : 0;
   return (
     <Stack p={1} spacing={3} width="100%">
-      <Typography variant="h4">
-        {translate('promotionSystem.promotion.settings.constraint')}
-      </Typography>
       <Card>
-        <Stack spacing={2} textAlign="left">
+        <Stack spacing={4} textAlign="left">
+          <Typography variant="h4">
+            {translate('promotionSystem.promotion.settings.constraint')}
+          </Typography>
           <FormBox
             title={`${translate('promotionSystem.promotion.settings.paymentMethod')}`}
             subtitle={`${translate('promotionSystem.promotion.settings.helperPaymentMethod')}`}
@@ -63,6 +65,7 @@ export default function StepTwo(props: Props) {
             title={`${translate('promotionSystem.promotion.settings.targetCustomer')}`}
             subtitle={`${translate('promotionSystem.promotion.settings.helperTargetCustomer')}`}
             sizeGrid={4}
+            minHeight="44px"
           >
             {targetCustomer.map((item, index) => (
               <CheckBoxField key={index} name={item} label={item} />
@@ -72,6 +75,7 @@ export default function StepTwo(props: Props) {
             title={`${translate('promotionSystem.promotion.settings.memberShipLevel')}`}
             subtitle={`${translate('promotionSystem.promotion.settings.helperMemberShipLevel')}`}
             sizeGrid={4}
+            minHeight="44px"
           >
             <SelectField
               disabled={!isMember}
@@ -91,6 +95,7 @@ export default function StepTwo(props: Props) {
             title={`${translate('promotionSystem.promotion.settings.customerGender')}`}
             subtitle={`${translate('promotionSystem.promotion.settings.helperCustomerGender')}`}
             sizeGrid={4}
+            minHeight="44px"
           >
             {gender.map((item, index) => (
               <CheckBoxField key={index} name={item} label={item} />
@@ -104,6 +109,7 @@ export default function StepTwo(props: Props) {
             title={`${translate('promotionSystem.promotion.settings.saleMode')}`}
             subtitle={`${translate('promotionSystem.promotion.settings.helperSaleMode')}`}
             sizeGrid={4}
+            minHeight="44px"
           >
             {saleMode.map((item, index) => (
               <CheckBoxField key={index} name={item} label={item} />
@@ -113,6 +119,7 @@ export default function StepTwo(props: Props) {
             title={`${translate('promotionSystem.promotion.settings.applyBy')}`}
             subtitle={`${translate('promotionSystem.promotion.settings.helperApplyBy')}`}
             sizeGrid={4}
+            minHeight="44px"
           >
             {applyBy.map((item, index) => (
               <CheckBoxField key={index} name={item} label={item} />
@@ -122,6 +129,7 @@ export default function StepTwo(props: Props) {
             title={`${translate('promotionSystem.promotion.settings.exclusive')}`}
             subtitle={`${translate('promotionSystem.promotion.settings.helperExclusive')}`}
             sizeGrid={4}
+            minHeight="44px"
           >
             <ToggleButtonGroup exclusive value={exclusive} onChange={handleChangeExclusive}>
               {exclusives.map((exclusive, index) => (

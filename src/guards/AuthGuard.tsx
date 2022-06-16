@@ -16,7 +16,7 @@ export default function AuthGuard({ children }: AuthGuardProps) {
   const { pathname } = useLocation();
   const [requestedLocation, setRequestedLocation] = useState<string | null>(null);
 
-  if (!isAuthenticated && process.env.REACT_APP_TEST_ADMIN) {
+  if (!isAuthenticated && false) {
     if (pathname !== requestedLocation) {
       setRequestedLocation(pathname);
     }

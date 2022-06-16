@@ -5,11 +5,10 @@ import {
   MenuItem,
   Stack,
   Switch,
-  TextField,
   ToggleButtonGroup,
   Typography
 } from '@mui/material';
-import { CheckBoxField, DraftEditorField, SelectField } from 'components/form';
+import { CheckBoxField, DraftEditorField, SelectField, InputField } from 'components/form';
 import DateRangePickerField from 'components/form/DateRangePickerField';
 import useLocales from 'hooks/useLocales';
 import { useState } from 'react';
@@ -63,7 +62,7 @@ export default function StepOne() {
   return (
     <Stack p={1} spacing={3}>
       <Card id="product-detail">
-        <Stack spacing={4} sx={{ width: '80%' }}>
+        <Stack spacing={4} sx={{ width: '100%' }}>
           <Typography variant="h4" textAlign="left">
             {translate('promotionSystem.promotion.createPromotion.promotionType')}
           </Typography>
@@ -81,17 +80,15 @@ export default function StepOne() {
                 ))}
               </ToggleButtonGroup>
               <Stack spacing={2} direction="row">
-                <TextField
-                  size="medium"
-                  fullWidth
-                  required
+                <InputField
+                  sx={{ width: '100%' }}
+                  name="promotionName"
                   label={`${translate('promotionSystem.promotion.createPromotion.promotionName')}`}
                   color="primary"
                 />
-                <TextField
-                  size="medium"
-                  fullWidth
-                  required
+                <InputField
+                  sx={{ width: '100%' }}
+                  name="promotionCode"
                   // promotionType[1] must be a automatic mode
                   disabled={type === 2}
                   label={`${translate('promotionSystem.promotion.createPromotion.promotionCode')}`}
