@@ -47,9 +47,9 @@ export default function StepOne() {
     }
   };
 
-  const [timeframeChecked, setTimeframeChecked] = useState(false);
-  const handleTimeframChecked = () => {
-    setTimeframeChecked((prev) => !prev);
+  const [timeFrameChecked, setTimeFrameChecked] = useState(false);
+  const handleTimeFrameChecked = () => {
+    setTimeFrameChecked((prev) => !prev);
   };
   const particularDays = particularDayList();
 
@@ -74,7 +74,7 @@ export default function StepOne() {
           >
             <Stack spacing={2} direction="column">
               <ToggleButtonGroup sx={{ gap: 2 }} value={type} exclusive onChange={handleChange1}>
-                {promotionType.map((item, index) => (
+                {promotionType?.map((item, index) => (
                   <ToggleButton sx={{ flex: 1 }} key={index} value={index}>
                     {item}
                   </ToggleButton>
@@ -92,7 +92,7 @@ export default function StepOne() {
                   size="medium"
                   fullWidth
                   required
-                  // promotionType[2] must be a automatic mode
+                  // promotionType[1] must be a automatic mode
                   disabled={type === 2}
                   label={`${translate('promotionSystem.promotion.createPromotion.promotionCode')}`}
                   color="primary"
@@ -105,7 +105,7 @@ export default function StepOne() {
           >
             <Stack spacing={2} direction="column">
               <ToggleButtonGroup value={alignment} exclusive onChange={handleChange}>
-                {kindAction.map((kindAction, index) => (
+                {kindAction?.map((kindAction, index) => (
                   <ToggleButton sx={{ flex: 1 }} key={index} value={index}>
                     {kindAction}
                   </ToggleButton>
@@ -181,11 +181,11 @@ export default function StepOne() {
           <Box sx={{ paddingLeft: '8px' }}>
             <Typography>
               {`${translate('promotionSystem.promotion.createPromotion.validInThisTimeFrameOnly')}`}
-              <Switch checked={timeframeChecked} onChange={handleTimeframChecked} />
+              <Switch checked={timeFrameChecked} onChange={handleTimeFrameChecked} />
             </Typography>
-            {timeframeChecked && (
+            {timeFrameChecked && (
               <Grid container spacing={2}>
-                {timeFrameList.map((timeFrame, index) => (
+                {timeFrameList?.map((timeFrame, index) => (
                   <Grid xs={2} item key={index}>
                     <CheckBoxField name={timeFrame} label={timeFrame} />
                   </Grid>
@@ -200,7 +200,7 @@ export default function StepOne() {
             </Typography>
             {particularDay && (
               <Grid container spacing={2} columns={7}>
-                {particularDays.map((item, index) => (
+                {particularDays?.map((item, index) => (
                   <Grid xs={1} item key={index}>
                     <CheckBoxField name={item} label={item} />
                   </Grid>

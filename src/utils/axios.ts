@@ -3,7 +3,8 @@ import axios, { AxiosRequestConfig } from 'axios';
 // Custom Axios Type
 export enum AxiosClientFactoryEnum {
   REPORT = 'report',
-  SALE = 'sale'
+  SALE = 'sale',
+  PROMOTION = 'promotion'
 }
 
 // ----------------------------------------------------------------------
@@ -32,7 +33,7 @@ const parseParams = (params: any) => {
 };
 const report = `${process.env.REACT_APP_REPORT_BASE_URL}`;
 const sale = `${process.env.REACT_APP_BASE_URL}`;
-
+const promotion = `${process.env.REACT_APP_PROMOTION_BASE_URL}`;
 const request = axios.create({
   baseURL: sale,
   paramsSerializer: parseParams
@@ -77,6 +78,28 @@ requestReport.interceptors.response.use(
   (error) => Promise.reject((error.response && error.response.data) || 'Có lỗi xảy ra')
 );
 
+const requestPromotion = axios.create({
+  baseURL: promotion,
+  paramsSerializer: parseParams
+});
+
+requestPromotion.interceptors.request.use((options) => {
+  const { method } = options;
+
+  if (method === 'put' || method === 'post') {
+    Object.assign(options.headers, {
+      'Content-Type': 'application/json;charset=UTF-8'
+    });
+  }
+
+  return options;
+});
+
+requestPromotion.interceptors.response.use(
+  (response) => response,
+  (error) => Promise.reject((error.response && error.response.data) || 'Có lỗi xảy ra')
+);
+
 // ----------------------------------------------------------------------
 class AxiosClientFactory {
   /**
@@ -102,6 +125,8 @@ class AxiosClientFactory {
         return requestReport;
       case 'sale':
         return request;
+      case 'promotion':
+        return requestPromotion;
       default:
         return request;
     }
@@ -114,7 +139,8 @@ const axiosClientFactory = new AxiosClientFactory();
  */
 const axiosInstances = {
   report: axiosClientFactory.getAxiosClient(AxiosClientFactoryEnum.REPORT),
-  sale: axiosClientFactory.getAxiosClient(AxiosClientFactoryEnum.SALE)
+  sale: axiosClientFactory.getAxiosClient(AxiosClientFactoryEnum.SALE),
+  promotion: axiosClientFactory.getAxiosClient(AxiosClientFactoryEnum.PROMOTION)
 };
 
 export { axiosClientFactory, axiosInstances };

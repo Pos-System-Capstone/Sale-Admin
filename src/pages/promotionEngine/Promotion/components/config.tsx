@@ -2,6 +2,8 @@
 
 import useLocales from 'hooks/useLocales';
 
+// promotionTypeList = ['Using voucher', 'Using code', 'Automatic'];
+// Note: recommend using [{name: 'Using voucher',value: voucher},{name: 'Using code',value: code}]
 const promotionTypeList = () => {
   const { translate } = useLocales(); // eslint-disable-line
   return [

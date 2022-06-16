@@ -1,6 +1,7 @@
 import plusFill from '@iconify/icons-eva/plus-fill';
 import { Icon } from '@iconify/react';
 import { Button, Card, Stack } from '@mui/material';
+import promotionApi, { PROMOTION_TYPE_DATA, TPromotionBase } from 'api/promotion/promotion';
 import Page from 'components/Page';
 import ResoTable from 'components/ResoTable/ResoTable';
 import useLocales from 'hooks/useLocales';
@@ -19,12 +20,11 @@ const Promotion = (props: Props) => {
   const navigate = useNavigate();
   const ref = useRef<any>();
 
-  const promotionColumn: TTableColumn[] = [
+  const promotionColumn: TTableColumn<TPromotionBase>[] = [
     {
       title: `${translate('promotionSystem.promotion.table.no')}`,
       hideInSearch: true
     },
-
     {
       title: `${translate('promotionSystem.promotion.table.name')}`
     },
@@ -34,7 +34,10 @@ const Promotion = (props: Props) => {
     },
     {
       title: `${translate('promotionSystem.promotion.table.action')}`,
-      hideInSearch: true
+      hideInSearch: false,
+      dataIndex: 'actionType',
+      valueEnum: PROMOTION_TYPE_DATA,
+      valueType: 'select'
     },
     {
       title: `${translate('promotionSystem.promotion.table.startDate')}`,
@@ -97,6 +100,12 @@ const Promotion = (props: Props) => {
             //   'product-type': ProductTypeEnum.Combo
             // }}
             // getData
+            getData={() =>
+              promotionApi.getPromotion({
+                BrandId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+                status: 0
+              })
+            }
             showSettings={false}
             columns={promotionColumn}
             rowKey="product_id"
