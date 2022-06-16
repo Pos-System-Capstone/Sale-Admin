@@ -39,16 +39,16 @@ export default function StepTwo(props: Props) {
   // const mh = currentLang.value === 'vi' ? '44px' : 0;
   return (
     <Stack p={1} spacing={3} width="100%">
+      <Typography px={2} variant="h3" sx={{ textTransform: 'uppercase' }} textAlign={'left'}>
+        {translate('promotionSystem.promotion.settings.constraint')}
+      </Typography>
       <Card>
-        <Stack spacing={4} textAlign="left">
-          <Typography variant="h4">
-            {translate('promotionSystem.promotion.settings.constraint')}
-          </Typography>
+        <Stack spacing={4} p={2} textAlign="left">
           <FormBox
             title={`${translate('promotionSystem.promotion.settings.paymentMethod')}`}
             subtitle={`${translate('promotionSystem.promotion.settings.helperPaymentMethod')}`}
           >
-            {paymentMethod.map((paymentMethod, index) => (
+            {paymentMethod?.map((paymentMethod, index) => (
               <CheckBoxField
                 key={index}
                 name={paymentMethod}
@@ -60,14 +60,21 @@ export default function StepTwo(props: Props) {
         </Stack>
       </Card>
       <Card>
-        <Stack spacing={4} textAlign="left" direction="row">
+        <Stack
+          spacing={4}
+          px={2}
+          textAlign="left"
+          display={'flex'}
+          direction="row"
+          alignItems={'stretch'}
+        >
           <FormBox
             title={`${translate('promotionSystem.promotion.settings.targetCustomer')}`}
             subtitle={`${translate('promotionSystem.promotion.settings.helperTargetCustomer')}`}
             sizeGrid={4}
             minHeight="44px"
           >
-            {targetCustomer.map((item, index) => (
+            {targetCustomer?.map((item, index) => (
               <CheckBoxField key={index} name={item} label={item} />
             ))}
           </FormBox>
@@ -84,7 +91,7 @@ export default function StepTwo(props: Props) {
               fullWidth
               multiple
             >
-              {memberLevel.map((item, index) => (
+              {memberLevel?.map((item, index) => (
                 <MenuItem value={item} key={index}>
                   {item}
                 </MenuItem>
@@ -104,7 +111,7 @@ export default function StepTwo(props: Props) {
         </Stack>
       </Card>
       <Card>
-        <Stack spacing={4} textAlign="left" direction="row">
+        <Stack spacing={4} px={2} textAlign="left" direction="row">
           <FormBox
             title={`${translate('promotionSystem.promotion.settings.saleMode')}`}
             subtitle={`${translate('promotionSystem.promotion.settings.helperSaleMode')}`}
@@ -132,7 +139,7 @@ export default function StepTwo(props: Props) {
             minHeight="44px"
           >
             <ToggleButtonGroup exclusive value={exclusive} onChange={handleChangeExclusive}>
-              {exclusives.map((exclusive, index) => (
+              {exclusives?.map((exclusive, index) => (
                 <ToggleButton size="small" key={index} value={exclusive}>
                   {exclusive}
                 </ToggleButton>
@@ -142,7 +149,7 @@ export default function StepTwo(props: Props) {
         </Stack>
       </Card>
       <Card>
-        <Stack spacing={2} textAlign="left">
+        <Stack spacing={4} px={2} textAlign="left">
           <FormBox
             title={`${translate('promotionSystem.promotion.settings.storeConfig')}`}
             subtitle={`${translate('promotionSystem.promotion.settings.helperStoreConfig')}`}

@@ -7,9 +7,18 @@ import useLocales from 'hooks/useLocales';
 const promotionTypeList = () => {
   const { translate } = useLocales(); // eslint-disable-line
   return [
-    `${translate('promotionSystem.promotion.createPromotion.usingVoucher')}`,
-    `${translate('promotionSystem.promotion.createPromotion.usingCode')}`,
-    `${translate('promotionSystem.promotion.createPromotion.automatic')}`
+    {
+      label: `${translate('promotionSystem.promotion.createPromotion.usingVoucher')}`,
+      value: 'usingVoucher'
+    },
+    {
+      label: `${translate('promotionSystem.promotion.createPromotion.usingCode')}`,
+      value: 'usingCode'
+    },
+    {
+      label: `${translate('promotionSystem.promotion.createPromotion.automatic')}`,
+      value: 'automatic'
+    }
   ];
 };
 
@@ -18,8 +27,11 @@ const promotionTypeList = () => {
 const kindActionList = () => {
   const { translate } = useLocales(); // eslint-disable-line
   return [
-    `${translate('promotionSystem.promotion.createPromotion.discount')}`,
-    `${translate('promotionSystem.promotion.createPromotion.gift')}`
+    {
+      label: `${translate('promotionSystem.promotion.createPromotion.discount')}`,
+      value: 'discount'
+    },
+    { label: `${translate('promotionSystem.promotion.createPromotion.gift')}`, value: 'gift' }
   ];
 };
 

@@ -1,14 +1,11 @@
+import { Box, Checkbox, Grid, MenuItem, Stack, Switch, Typography } from '@mui/material';
 import {
-  Box,
-  Checkbox,
-  Grid,
-  MenuItem,
-  Stack,
-  Switch,
-  ToggleButtonGroup,
-  Typography
-} from '@mui/material';
-import { CheckBoxField, DraftEditorField, SelectField, InputField } from 'components/form';
+  CheckBoxField,
+  DraftEditorField,
+  InputField,
+  RadioGroupField,
+  SelectField
+} from 'components/form';
 import DateRangePickerField from 'components/form/DateRangePickerField';
 import useLocales from 'hooks/useLocales';
 import { useState } from 'react';
@@ -23,7 +20,6 @@ import {
   timeFrameList
 } from '../components/config';
 import FormBox from '../components/FormBox';
-import ToggleButton from '../components/ToggleButton';
 
 export default function StepOne() {
   const giftAction = giftActionList();
@@ -61,109 +57,106 @@ export default function StepOne() {
 
   return (
     <Stack p={1} spacing={3}>
-      <Card id="product-detail">
-        <Stack spacing={4} sx={{ width: '100%' }}>
-          <Typography variant="h4" textAlign="left">
-            {translate('promotionSystem.promotion.createPromotion.promotionType')}
-          </Typography>
+      {/* <Card id="promotion-create">
+        <Typography px={2} variant="h3" textAlign="left" sx={{ textTransform: 'uppercase' }}>
+          {translate('promotionSystem.promotion.createPromotion.promotionType')}
+        </Typography>
+      </Card> */}
+      <Typography px={2} variant="h3" textAlign="left" sx={{ textTransform: 'uppercase' }}>
+        {translate('promotionSystem.promotion.createPromotion.promotionType')}
+      </Typography>
+      <Card>
+        <Stack spacing={4} px={2} py={1} textAlign="left" direction="row">
           <FormBox
             title={`${translate(
               'promotionSystem.promotion.createPromotion.questionPromotionType'
             )}`}
           >
-            <Stack spacing={2} direction="column">
-              <ToggleButtonGroup sx={{ gap: 2 }} value={type} exclusive onChange={handleChange1}>
-                {promotionType?.map((item, index) => (
-                  <ToggleButton sx={{ flex: 1 }} key={index} value={index}>
-                    {item}
-                  </ToggleButton>
-                ))}
-              </ToggleButtonGroup>
-              <Stack spacing={2} direction="row">
-                <InputField
-                  sx={{ width: '100%' }}
-                  name="promotionName"
-                  label={`${translate('promotionSystem.promotion.createPromotion.promotionName')}`}
-                  color="primary"
-                />
-                <InputField
-                  sx={{ width: '100%' }}
-                  name="promotionCode"
-                  // promotionType[1] must be a automatic mode
-                  disabled={type === 2}
-                  label={`${translate('promotionSystem.promotion.createPromotion.promotionCode')}`}
-                  color="primary"
-                />
-              </Stack>
+            <Stack spacing={2} direction="column" width={'100%'}>
+              <RadioGroupField
+                sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}
+                fullWidth
+                options={promotionType}
+                name="promotion-type"
+                defaultValue="usingVoucher"
+              />
+              <Grid container gap={2}>
+                <Grid item xs={12}>
+                  <InputField
+                    fullWidth
+                    size="small"
+                    name="promotionName"
+                    label={`${translate(
+                      'promotionSystem.promotion.createPromotion.promotionName'
+                    )}`}
+                    color="primary"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <InputField
+                    fullWidth
+                    size="small"
+                    name="promotionCode"
+                    // promotionType[1] must be a automatic mode
+                    disabled={type === 2}
+                    label={`${translate(
+                      'promotionSystem.promotion.createPromotion.promotionCode'
+                    )}`}
+                    color="primary"
+                  />
+                </Grid>
+              </Grid>
             </Stack>
           </FormBox>
           <FormBox
             title={`${translate('promotionSystem.promotion.createPromotion.questionActionType')}`}
           >
-            <Stack spacing={2} direction="column">
-              <ToggleButtonGroup value={alignment} exclusive onChange={handleChange}>
-                {kindAction?.map((kindAction, index) => (
-                  <ToggleButton sx={{ flex: 1 }} key={index} value={index}>
-                    {kindAction}
-                  </ToggleButton>
-                ))}
-              </ToggleButtonGroup>
+            <Stack spacing={2} direction="column" width={'100%'}>
+              <RadioGroupField
+                sx={{ display: 'flex', flexDirection: 'row', gap: 2 }}
+                fullWidth
+                options={kindAction}
+                name="promotion-action"
+                defaultValue="discount"
+              />
+
               {alignment === 0 && (
-                <Box>
-                  {/* <Typography my={2} variant="subtitle1">
-                            Discount Action
-                          </Typography>
-                          <ToggleButtonGroup value={action1} exclusive onChange={handleChange2}>
-                            {discountActionList.map((action, index) => (
-                              <ToggleButton key={index} value={action}>
-                                {action}
-                              </ToggleButton>
-                            ))}
-                          </ToggleButtonGroup> */}
-                  <SelectField
-                    fullWidth
-                    label={`${translate('promotionSystem.promotion.createPromotion.discount')}`}
-                    name="discountAction"
-                    // options={discountAction}
-                  >
-                    {discountAction?.map((item, index) => (
-                      <MenuItem value={item} key={index}>
-                        {item}
-                      </MenuItem>
-                    ))}
-                  </SelectField>
-                </Box>
+                <SelectField
+                  fullWidth
+                  label={`${translate('promotionSystem.promotion.createPromotion.discount')}`}
+                  name="discountAction"
+                  // options={discountAction}
+                >
+                  {discountAction?.map((item, index) => (
+                    <MenuItem value={item} key={index}>
+                      {item}
+                    </MenuItem>
+                  ))}
+                </SelectField>
               )}
+
               {alignment === 1 && (
-                <Box>
-                  {/* <Typography my={2} variant="subtitle1">
-                            Gift Action
-                          </Typography>
-                          <ToggleButtonGroup value={action1} exclusive onChange={handleChange2}>
-                            {giftActionList.map((action, index) => (
-                              <ToggleButton key={index} value={action}>
-                                {action}
-                              </ToggleButton>
-                            ))}
-                          </ToggleButtonGroup> */}
-                  <SelectField
-                    fullWidth
-                    label={`${translate('promotionSystem.promotion.createPromotion.gift')}`}
-                    name="giftAction"
-                    // options={giftAction}
-                  >
-                    {giftAction?.map((item, index) => (
-                      <MenuItem value={item} key={index}>
-                        {item}
-                      </MenuItem>
-                    ))}
-                  </SelectField>
-                </Box>
+                <SelectField
+                  fullWidth
+                  label={`${translate('promotionSystem.promotion.createPromotion.gift')}`}
+                  name="giftAction"
+                  // options={giftAction}
+                >
+                  {giftAction?.map((item, index) => (
+                    <MenuItem value={item} key={index}>
+                      {item}
+                    </MenuItem>
+                  ))}
+                </SelectField>
               )}
             </Stack>
           </FormBox>
+        </Stack>
+      </Card>
+      <Card>
+        <Stack spacing={3} px={2} py={1}>
           <FormBox title={`${translate('promotionSystem.promotion.createPromotion.timeFrame')}`}>
-            <Box>
+            <Box width={'50%'}>
               <DateRangePickerField name="dateRangePicker" />
               <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
                 <Checkbox />
@@ -173,15 +166,14 @@ export default function StepOne() {
               </Box>
             </Box>
           </FormBox>
-        </Stack>
-        <Stack spacing={1}>
+
           <Box sx={{ paddingLeft: '8px' }}>
             <Typography>
               {`${translate('promotionSystem.promotion.createPromotion.validInThisTimeFrameOnly')}`}
               <Switch checked={timeFrameChecked} onChange={handleTimeFrameChecked} />
             </Typography>
             {timeFrameChecked && (
-              <Grid container spacing={2}>
+              <Grid container spacing={2} width={'100%'}>
                 {timeFrameList?.map((timeFrame, index) => (
                   <Grid xs={2} item key={index}>
                     <CheckBoxField name={timeFrame} label={timeFrame} />
@@ -196,7 +188,7 @@ export default function StepOne() {
               <Switch checked={particularDay} onChange={handleParticularDay} />
             </Typography>
             {particularDay && (
-              <Grid container spacing={2} columns={7}>
+              <Grid container spacing={2} columns={7} width={'100%'}>
                 {particularDays?.map((item, index) => (
                   <Grid xs={1} item key={index}>
                     <CheckBoxField name={item} label={item} />

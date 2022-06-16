@@ -11,11 +11,11 @@ function StepThree() {
   const { translate } = useLocales();
   return (
     <Stack p={1} spacing={3} sx={{ width: '100%' }}>
+      <Typography px={2} variant="h3" sx={{ textTransform: 'uppercase' }}>
+        {translate('promotionSystem.promotion.preview.title')}
+      </Typography>
       <Card>
-        <Stack spacing={4} textAlign="left">
-          <Typography variant="h4">
-            {translate('promotionSystem.promotion.preview.title')}
-          </Typography>
+        <Stack spacing={4} p={2} textAlign="left">
           <Box
             sx={{
               display: 'flex',

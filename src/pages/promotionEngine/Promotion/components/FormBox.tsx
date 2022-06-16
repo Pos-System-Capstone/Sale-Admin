@@ -17,17 +17,66 @@ export default function FormBox(props: Props) {
         width: `${(sizeGrid / 12) * 100}%`,
         display: 'flex',
         flexDirection: 'column',
-        gap: '16px 0'
-        // paddingLeft: '8px'
+        flex: 1,
+        gap: '8px 0'
       }}
     >
-      {title && <Typography variant="h5">{title}</Typography>}
-      {subtitle && (
-        <Box sx={{ minHeight: minHeight }}>
-          <Typography variant="subtitle2">{subtitle}</Typography>
+      {title && subtitle ? (
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '8px 0',
+            flexShrink: 0,
+            minHeight: '82px'
+          }}
+        >
+          <Box>{title && <Typography variant="h5">{title}</Typography>}</Box>
+
+          <Box>
+            {subtitle && (
+              <Typography component="div" variant="subtitle2">
+                {subtitle}
+              </Typography>
+            )}
+          </Box>
+        </Box>
+      ) : (
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '8px 0',
+            flexShrink: 0
+          }}
+        >
+          <Box>{title && <Typography variant="h5">{title}</Typography>}</Box>
+
+          <Box>
+            {subtitle && (
+              <Typography component="div" variant="subtitle2">
+                {subtitle}
+              </Typography>
+            )}
+          </Box>
         </Box>
       )}
-      {children && <Box>{children}</Box>}
+
+      {children && (
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            flexShrink: 0,
+            flex: 1,
+            flexWrap: 'wrap'
+          }}
+          minHeight={'48px'}
+          marginTop={'auto'}
+        >
+          {children}
+        </Box>
+      )}
     </Box>
   );
 }

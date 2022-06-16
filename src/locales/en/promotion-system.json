@@ -75,7 +75,7 @@
       "targetCustomer": "Target customer",
       "helperTargetCustomer": "Kind of customer can use your promotion",
       "memberShipLevel": "Membership level",
-      "helperMemberShipLevel": "Level of customer",
+      "helperMemberShipLevel": "Level of customer                  ",
       "customerGender": "Customer Gender",
       "helperCustomerGender": "Gender of customer can use your promotion.",
       "saleMode": "Sale mode",
