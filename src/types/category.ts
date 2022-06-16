@@ -3,7 +3,7 @@ import { ModifierSelectType } from './Modifier';
 export type TCategory = {
   cate_id: number;
   cate_name: string;
-  cate_name_eng?: any;
+  cate_name_eng: string;
   is_extra: boolean;
   store_id: number;
   seo_name: string;

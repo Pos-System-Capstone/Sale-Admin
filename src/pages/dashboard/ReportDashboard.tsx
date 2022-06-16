@@ -53,7 +53,7 @@ export default function ReportDashboard() {
   return (
     <Page title="Dashboard">
       <Grid container spacing={3}>
-        {Widgets.map((item) => (
+        {Widgets?.map((item) => (
           <Grid key={item.title} item xs={12} md={4}>
             <DashboarWidgets Widget={item} />
           </Grid>

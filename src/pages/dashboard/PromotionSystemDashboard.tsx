@@ -49,7 +49,7 @@ export default function PromotionDash() {
     <Page title={`${translate('promotionSystem.dashboard.title')}`}>
       <Grid container spacing={3}>
         {PWidgets.map((item) => (
-          <Grid key={item.title} item xs={12} md={3}>
+          <Grid key={item.title} item xs={12} md={6} lg={3}>
             <PromotionWidgets Widget={item} />
           </Grid>
         ))}
