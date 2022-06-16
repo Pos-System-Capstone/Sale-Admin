@@ -18,9 +18,7 @@ const RootStyle = styled(Card)(({ theme }) => ({
   display: 'flex',
   position: 'relative',
   alignItems: 'center',
-  padding: theme.spacing(3),
-  width: '280px',
-  height: '150px'
+  padding: theme.spacing(3)
 }));
 
 const IconStyle = styled(Icon)(({ theme }) => ({
@@ -46,11 +44,11 @@ export default function PromotionWidgets({ Widget }: PromotionWidgetsProp) {
         padding: '48px'
       }}
     >
-      <Box sx={{ ml: 3, color: 'common.white', cursor: 'pointer' }}>
-        <Typography variant="h6" sx={{ opacity: 1, marginLeft: '-58px', marginTop: '30px' }}>
+      <Box sx={{ ml: 3, color: 'common.white', cursor: 'pointer', height: '50px' }}>
+        <Typography variant="h6" sx={{ marginLeft: '-48px', marginTop: '-20px' }}>
           {Widget.title}
         </Typography>
-        <Typography variant="h2" sx={{ marginLeft: '-48px', p: '20px' }}>
+        <Typography variant="h2" sx={{ marginLeft: '-48px', marginTop: '8px' }}>
           {Widget.amount}
         </Typography>
       </Box>

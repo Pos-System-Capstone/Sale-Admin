@@ -29,6 +29,7 @@ import Voucher from 'pages/promotionEngine/Voucher';
 import PromotionDash from 'pages/dashboard/PromotionSystemDashboard';
 import Promotion from 'pages/promotionEngine/Promotion';
 import CreatePromotion from 'pages/promotionEngine/Promotion/CreatePromotion';
+import ReportDashboard from 'pages/dashboard/ReportDashboard';
 
 // import ReportGeneralApp from 'pages/report/GeneralReport/GeneralApp';
 
@@ -190,7 +191,7 @@ export default function Router() {
       ),
       children: [
         { path: '', element: <Navigate to="/report/dashboard" replace /> },
-        { path: 'dashboard', element: <></> },
+        { path: 'dashboard', element: <ReportDashboard /> },
         {
           path: 'overview-date',
           element: <OverviewDate />
