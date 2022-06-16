@@ -26,7 +26,8 @@ const Promotion = (props: Props) => {
       hideInSearch: true
     },
     {
-      title: `${translate('promotionSystem.promotion.table.name')}`
+      title: `${translate('promotionSystem.promotion.table.name')}`,
+      valueType: 'text'
     },
     {
       title: `${translate('promotionSystem.promotion.table.type')}`,
@@ -35,9 +36,12 @@ const Promotion = (props: Props) => {
     {
       title: `${translate('promotionSystem.promotion.table.action')}`,
       hideInSearch: false,
-      dataIndex: 'actionType',
+      // dataIndex: 'actionType',
       valueEnum: PROMOTION_TYPE_DATA,
-      valueType: 'select'
+      valueType: 'select',
+      formProps: {
+        fullWidth: true
+      }
     },
     {
       title: `${translate('promotionSystem.promotion.table.startDate')}`,
@@ -59,8 +63,8 @@ const Promotion = (props: Props) => {
           value: 'true'
         },
         {
-          label: `${translate('promotionSystem.promotion.table.statusType.unpublished')}`,
-          value: 'false'
+          label: `${translate('promotionSystem.promotion.table.statusType.unPublished')}`,
+          value: 'true'
         },
         {
           label: `${translate('promotionSystem.promotion.table.statusType.expired')}`,
@@ -96,17 +100,12 @@ const Promotion = (props: Props) => {
           <ResoTable
             pagination
             ref={ref}
-            // defaultFilters={{
-            //   'product-type': ProductTypeEnum.Combo
-            // }}
-            // getData
             getData={() =>
               promotionApi.getPromotion({
                 BrandId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
                 status: 0
               })
             }
-            showSettings={false}
             columns={promotionColumn}
             rowKey="product_id"
           />

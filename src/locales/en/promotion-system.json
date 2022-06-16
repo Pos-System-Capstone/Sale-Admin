@@ -27,7 +27,7 @@
         "all": "All",
         "draft": "Draft",
         "published": "Published",
-        "unpublished": "Unpublished",
+        "unPublished": "Unpublished",
         "expired": "Expired"
       }
     },

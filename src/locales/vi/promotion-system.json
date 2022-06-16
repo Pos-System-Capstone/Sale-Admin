@@ -27,7 +27,7 @@
         "all": "Tất cả",
         "draft": "Nháp",
         "published": "Đã xuất bản",
-        "unpublished:": "Chưa xuất bản",
+        "unPublished": "Chưa xuất bản",
         "expired": "Đã hết hạn"
       }
     },
@@ -141,11 +141,11 @@
     "title": "Quản lý phiếu giảm giá",
     "table": {
       "no": "STT",
-      "name": "TÊN",
-      "actionName": "TÊN HÌNH THỨC",
-      "total": "TỔNG SỐ",
-      "redeemed": "ĐÃ ĐỔI",
-      "used": "ĐÃ SỬ DỤNG"
+      "name": "Tên",
+      "actionName": "Tên hình thức",
+      "total": "Tổng số",
+      "redeemed": "Đã đổi",
+      "used": "Đã sử dụng"
     },
     "addVoucher": {
       "newVoucher": "Thêm phiếu giảm giá",
