@@ -63,7 +63,7 @@ export default function Voucher() {
     // },
     {
       title: `${t('promotionSystem.voucher.table.actionName')}`,
-      dataIndex: 'action',
+      dataIndex: ['action', 'name'],
       // renderFormItem: () => <AutocompleteCategory name="cat-id" label="Danh mục" />
       hideInSearch: true
     },

@@ -8,6 +8,7 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  SelectChangeEvent,
   Stack,
   TextField
 } from '@mui/material';
@@ -22,6 +23,11 @@ interface Props {
 
 const SubMiddleForm: React.FC<Props> = ({ hasVariant }) => {
   const [count, setCount] = useState(0);
+  const [charset, setCharset] = React.useState('');
+
+  const handleChange = (event: SelectChangeEvent) => {
+    setCharset(event.target.value);
+  };
   const { t } = useLocales();
   return (
     <Card id="variants">
@@ -52,23 +58,24 @@ const SubMiddleForm: React.FC<Props> = ({ hasVariant }) => {
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     label={`${t('promotionSystem.voucher.addVoucher.charset.label')}`}
+                    onChange={handleChange}
                   >
                     <MenuItem value={10}>{`${t(
                       'promotionSystem.voucher.addVoucher.charset.alphanumeric'
                     )}`}</MenuItem>
-                    <MenuItem value={10}>{`${t(
+                    <MenuItem value={20}>{`${t(
                       'promotionSystem.voucher.addVoucher.charset.alphabetic'
                     )}`}</MenuItem>
-                    <MenuItem value={10}>{`${t(
+                    <MenuItem value={30}>{`${t(
                       'promotionSystem.voucher.addVoucher.charset.alphabeticlowercase'
                     )}`}</MenuItem>
-                    <MenuItem value={10}>{`${t(
+                    <MenuItem value={40}>{`${t(
                       'promotionSystem.voucher.addVoucher.charset.alphabeticuppercase'
                     )}`}</MenuItem>
-                    <MenuItem value={10}>{`${t(
+                    <MenuItem value={50}>{`${t(
                       'promotionSystem.voucher.addVoucher.charset.numbers'
                     )}`}</MenuItem>
-                    <MenuItem value={10}>{`${t(
+                    <MenuItem value={60}>{`${t(
                       'promotionSystem.voucher.addVoucher.charset.custom'
                     )}`}</MenuItem>
                   </Select>
@@ -87,7 +94,7 @@ const SubMiddleForm: React.FC<Props> = ({ hasVariant }) => {
                   disabled
                   id="outlined-disabled"
                   label={`${t('promotionSystem.voucher.addVoucher.sample')}`}
-                  defaultValue="Hello World"
+                  defaultValue="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
                 />
               </Box>
             </Grid>

@@ -1,4 +1,5 @@
 #### `2022-06-17` `Phuoclt:`
+
 - 🌐 Update locale promotion system
 - 🔥 Call api get promotion
 - 🔥 Create DateTimePickerField component
@@ -6,6 +7,14 @@
 - 🆕 Update column (add dataIndex) call api promotion
 - 🆕 Add field for promotion api type
 - 💄 Fix UI StepOne.tsx + StepTwo.tsx create promotion section
+
+#### `2022-06-17` || `TrungLV_[FE]`
+
+- 🐞: Fix `SelectField` in Voucher to filter value in Resotable
+- 🆕Change port in `env.development` to 8080
+- 🔥 Create `voucher.ts` to get API
+- 🛠 Get Api in Voucher
+
 ```
 💄 for styling
 🐞 for bug fix
