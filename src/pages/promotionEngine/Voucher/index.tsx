@@ -15,9 +15,8 @@ import { useNavigate } from 'react-router-dom';
 import { PATH_DASHBOARD } from 'routes/paths';
 import { TProductBase } from 'types/product';
 //
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import { deleteProdById, getAllProduct } from 'redux/product/api';
+import voucherApi, { TVoucherBase } from 'api/promotion/voucher';
+import { deleteProdById } from 'redux/product/api';
 import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
 import { TTableColumn } from 'types/table';
 
@@ -34,9 +33,10 @@ export default function Voucher() {
   const navigate = useNavigate();
   const { t } = useLocales();
 
-  const productColumns: TTableColumn<TProductBase>[] = [
+  const productColumns: TTableColumn<TVoucherBase>[] = [
     {
       title: `${t('promotionSystem.voucher.table.no')}`,
+      dataIndex: 'index',
       hideInSearch: true
     },
     // {
@@ -54,8 +54,7 @@ export default function Voucher() {
     // },
     {
       title: `${t('promotionSystem.voucher.table.name')}`,
-      dataIndex: 'product_name',
-      hideInSearch: true
+      dataIndex: 'voucherName'
     },
     // {
     //   title: 'Giá mặc định',
@@ -64,12 +63,13 @@ export default function Voucher() {
     // },
     {
       title: `${t('promotionSystem.voucher.table.actionName')}`,
-      dataIndex: 'cate_name',
+      dataIndex: 'action',
       // renderFormItem: () => <AutocompleteCategory name="cat-id" label="Danh mục" />
       hideInSearch: true
     },
     {
       title: `${t('promotionSystem.voucher.table.total')}`,
+      dataIndex: 'quantity',
       hideInSearch: true
 
       // dataIndex: 'product_type',
@@ -80,10 +80,12 @@ export default function Voucher() {
     },
     {
       title: `${t('promotionSystem.voucher.table.redeemed')}`,
+      dataIndex: 'redempedQuantity',
       hideInSearch: true
     },
     {
       title: `${t('promotionSystem.voucher.table.used')}`,
+      dataIndex: 'usedQuantity',
       hideInSearch: true
     }
 
@@ -179,16 +181,6 @@ export default function Voucher() {
       ]}
     >
       <Card>
-        <Box
-          sx={{
-            width: 200,
-            maxWidth: '100%',
-            pb: '28px',
-            m: '8px'
-          }}
-        >
-          <TextField fullWidth size="small" label="NAME" id="fullWidth" />
-        </Box>
         <TabContext value={activeTab}>
           {/* <Box>
             <TabList onChange={handleChangeTab}>
@@ -199,7 +191,13 @@ export default function Voucher() {
           <ResoTable
             ref={ref}
             pagination
-            getData={getAllProduct}
+            getData={() =>
+              voucherApi.getVoucher({
+                brandId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+                ActionType: 0,
+                PostActionType: 0
+              })
+            }
             onEdit={editProuct}
             onDelete={onDelete}
             columns={productColumns}
