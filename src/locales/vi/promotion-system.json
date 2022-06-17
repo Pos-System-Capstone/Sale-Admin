@@ -1,4 +1,7 @@
 {
+  "common": {
+    "unknown": "Unknown"
+  },
   "dashboard": {
     "title": "Bảng điều khiển",
     "totalPromotion": "TỔNG SỐ KHUYẾN MÃI",

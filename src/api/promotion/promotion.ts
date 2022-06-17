@@ -66,59 +66,61 @@ export const DISCOUNT_TYPE_DATA = () => {
 export const STATUS_TYPE_DATA = () => {
   const { translate } = useLocales();
   return [
-    { value: 1, label: `DRAFT` },
-    { value: 2, label: 'PUBLISH' },
-    { value: 3, label: 'UNPUBLISH' },
-    { value: 4, label: 'EXPIRED' }
+    { value: 0, label: translate('promotionSystem.promotion.table.statusType.all') },
+    { value: 1, label: translate('promotionSystem.promotion.table.statusType.draft') },
+    { value: 2, label: translate('promotionSystem.promotion.table.statusType.published') },
+    { value: 3, label: translate('promotionSystem.promotion.table.statusType.unPublished') },
+    { value: 4, label: translate('promotionSystem.promotion.table.statusType.expired') }
   ];
 };
 export const PROMOTION_TYPE_DATA = () => {
   const { translate } = useLocales();
   return [
-    { value: 1, label: `USING VOUCHER` },
-    { value: 2, label: 'USING CODE' },
-    { value: 3, label: 'AUTOMATIC' },
+    { value: 1, label: translate('promotionSystem.promotion.createPromotion.usingVoucher') },
+    { value: 2, label: translate('promotionSystem.promotion.createPromotion.usingCode') },
+    { value: 3, label: translate('promotionSystem.promotion.createPromotion.automatic') },
     { value: null, label: '' }
   ];
 };
-export enum discountActionTypeEnum {
-  Amount_Order = 1,
-  Percentage_Order = 2,
-  Shipping = 3,
-  Amount_Product = 4,
-  Percentage_Product = 5,
-  Unit = 6,
-  Fixed = 7,
-  Ladder = 8,
-  Bundle = 9
-}
+// export enum discountActionTypeEnum {
+//   Amount_Order = 1,
+//   Percentage_Order = 2,
+//   Shipping = 3,
+//   Amount_Product = 4,
+//   Percentage_Product = 5,
+//   Unit = 6,
+//   Fixed = 7,
+//   Ladder = 8,
+//   Bundle = 9
+// }
 
-export enum giftActionTypeEnum {
-  Gift_Product = 1,
-  Gift_Voucher = 2,
-  Gift_Point = 3,
-  Gift_Game_code = 4
-}
+// export enum giftActionTypeEnum {
+//   Gift_Product = 1,
+//   Gift_Voucher = 2,
+//   Gift_Point = 3,
+//   Gift_Game_code = 4
+// }
 
-export enum promotionTypeEnum {
-  Using_Voucher = 1,
-  Using_Code = 2,
-  Automatic = 3
-}
+// export enum promotionTypeEnum {
+//   Using_Voucher = 1,
+//   Using_Code = 2,
+//   Automatic = 3
+// }
 
-export enum statusTypeEnum {
-  Draft = 1,
-  Publish = 2,
-  Un_Publish = 3,
-  Expired = 4
-}
+// export enum statusTypeEnum {
+//   Draft = 1,
+//   Publish = 2,
+//   Un_Publish = 3,
+//   Expired = 4
+// }
 
 export type TPromotionBase = {
   promotionId?: string;
   brandId?: string;
   promotionCode?: string;
   promotionName?: string;
-  actionType?: discountActionTypeEnum;
+  actionType?: number;
+  // actionType?: number[];
   postActionType?: string;
   imgUrl?: string;
   description?: string;
@@ -133,13 +135,14 @@ export type TPromotionBase = {
   forMembership?: number;
   dayFilter?: number;
   hourFilter?: number;
-  status?: statusTypeEnum;
+  status?: number;
+  // status?: number[];
   delFlg?: boolean;
   insDate?: Date;
   updDate?: Date;
   hasVoucher?: boolean;
   isAuto?: boolean;
-  promotionType?: promotionTypeEnum;
+  promotionType?: number;
   brand?: any;
 };
 

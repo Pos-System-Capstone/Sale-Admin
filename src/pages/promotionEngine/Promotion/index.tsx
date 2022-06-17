@@ -7,6 +7,7 @@ import promotionApi, {
   STATUS_TYPE_DATA,
   TPromotionBase
 } from 'api/promotion/promotion';
+import Label from 'components/Label';
 import Page from 'components/Page';
 import ResoTable from 'components/ResoTable/ResoTable';
 import useLocales from 'hooks/useLocales';
@@ -15,6 +16,7 @@ import { useRef } from 'react';
 import { useNavigate } from 'react-router';
 import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
 import { TTableColumn } from 'types/table';
+import { fDate } from 'utils/formatTime';
 // import { CollectionTypeEnum } from 'types/collection';
 
 interface Props {}
@@ -43,22 +45,42 @@ const Promotion = (props: Props) => {
       title: `${translate('promotionSystem.promotion.table.type')}`,
       dataIndex: 'promotionType',
       valueEnum: PROMOTION_TYPE_ENUM,
-      hideInSearch: true
+      valueType: 'select',
+      hideInSearch: true,
+      render: (value) => (
+        <Label
+          color={
+            value === 1
+              ? 'secondary'
+              : value === 2
+              ? 'warning'
+              : value === 3
+              ? 'success'
+              : 'default'
+          }
+        >
+          {value === 1
+            ? translate('promotionSystem.promotion.createPromotion.usingVoucher')
+            : value === 2
+            ? translate('promotionSystem.promotion.createPromotion.usingCode')
+            : value === 3
+            ? translate('promotionSystem.promotion.createPromotion.automatic')
+            : translate('promotionSystem.common.unknown')}
+        </Label>
+      )
     },
     {
       title: `${translate('promotionSystem.promotion.table.action')}`,
-      hideInSearch: false,
+      hideInSearch: true,
       dataIndex: 'actionType',
-      valueEnum: DISCOUNT_TYPE_ENUM,
-      valueType: 'select',
-      formProps: {
-        fullWidth: true
-      }
+      valueEnum: DISCOUNT_TYPE_ENUM
     },
     {
       title: `${translate('promotionSystem.promotion.table.startDate')}`,
       dataIndex: 'startDate',
-      hideInSearch: true
+      valueType: 'datetime',
+      hideInSearch: true,
+      render: (value) => fDate(value)
     },
     {
       title: `${translate('promotionSystem.promotion.table.status')}`,
@@ -67,29 +89,22 @@ const Promotion = (props: Props) => {
       valueType: 'select',
       formProps: {
         fullWidth: true
-      }
-      // valueEnum: [
-      //   {
-      //     label: `${translate('promotionSystem.promotion.table.statusType.all')}`,
-      //     value: 'true'
-      //   },
-      //   {
-      //     label: `${translate('promotionSystem.promotion.table.statusType.draft')}`,
-      //     value: 'false'
-      //   },
-      //   {
-      //     label: `${translate('promotionSystem.promotion.table.statusType.published')}`,
-      //     value: 'true'
-      //   },
-      //   {
-      //     label: `${translate('promotionSystem.promotion.table.statusType.unPublished')}`,
-      //     value: 'true'
-      //   },
-      //   {
-      //     label: `${translate('promotionSystem.promotion.table.statusType.expired')}`,
-      //     value: 'false'
-      //   }
-      // ],
+      },
+      render: (value) => (
+        <Label
+          color={
+            value === 1 ? 'default' : value === 2 ? 'primary' : value === 3 ? 'warning' : 'error'
+          }
+        >
+          {value === 1
+            ? translate('promotionSystem.promotion.table.statusType.draft')
+            : value === 2
+            ? translate('promotionSystem.promotion.table.statusType.published')
+            : value === 3
+            ? translate('promotionSystem.promotion.table.statusType.unPublished')
+            : translate('promotionSystem.promotion.table.statusType.expired')}
+        </Label>
+      )
     }
   ];
 
@@ -113,6 +128,7 @@ const Promotion = (props: Props) => {
       <Card>
         <Stack spacing={2}>
           <ResoTable
+            showAction={false}
             pagination
             ref={ref}
             getData={() =>
@@ -122,7 +138,7 @@ const Promotion = (props: Props) => {
               })
             }
             columns={promotionColumn}
-            rowKey="product_id"
+            rowKey="promotion_id"
           />
         </Stack>
       </Card>
