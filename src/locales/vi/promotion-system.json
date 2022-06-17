@@ -34,14 +34,14 @@
     "createPromotion": {
       "createPromotion": "Thêm khuyến mãi",
       "promotionType": "Loại khuyến mãi",
-      "questionPromotionType": "Loại khuyến mãi nào?",
+      "questionPromotionType": "Loại khuyến mãi",
       "usingVoucher": "Sử dụng Voucher",
       "usingCode": "Sử dụng mã khuyến mãi",
       "automatic": "Tự động",
       "promotionName": "Tên khuyến mãi",
       "promotionCode": "Mã khuyến mãi",
       "actionType": "Hình thức khuyến mãi",
-      "questionActionType": "Hình thức khuyến mãi nào?",
+      "questionActionType": "Hình thức khuyến mãi",
       "discount": "Giảm giá",
       "discountActionType": {
         "discountAmountOfOrder": "Giảm giá số tiền đơn hàng",

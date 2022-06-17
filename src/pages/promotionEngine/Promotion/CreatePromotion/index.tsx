@@ -67,7 +67,7 @@ const CreatePromotion = (props: Props) => {
   const { handleSubmit, watch } = createComboForm;
   // targetCustomer[1] = member
   let isMember = watch(targetCustomer[1]);
-
+  console.log(watch('start-date-time'));
   return (
     <FormProvider {...createComboForm}>
       <DashboardNavLayout>

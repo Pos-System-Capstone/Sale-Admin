@@ -1,4 +1,4 @@
-import { Box, Checkbox, Grid, MenuItem, Stack, Switch, Typography } from '@mui/material';
+import { Box, Grid, MenuItem, Stack, Switch, Typography } from '@mui/material';
 import {
   CheckBoxField,
   DraftEditorField,
@@ -6,7 +6,7 @@ import {
   RadioGroupField,
   SelectField
 } from 'components/form';
-import DateRangePickerField from 'components/form/DateRangePickerField';
+import DateTimePickerField from 'components/form/DateTimePickerField';
 import useLocales from 'hooks/useLocales';
 import { useState } from 'react';
 import { Controller } from 'react-hook-form';
@@ -54,7 +54,6 @@ export default function StepOne() {
   };
 
   const { translate } = useLocales();
-
   return (
     <Stack p={1} spacing={3}>
       {/* <Card id="promotion-create">
@@ -156,41 +155,46 @@ export default function StepOne() {
       <Card>
         <Stack spacing={3} px={2} py={1}>
           <FormBox title={`${translate('promotionSystem.promotion.createPromotion.timeFrame')}`}>
-            <Box width={'50%'}>
-              <DateRangePickerField name="dateRangePicker" />
-              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-                <Checkbox />
-                <Typography>{`${translate(
-                  'promotionSystem.promotion.createPromotion.unlimited'
-                )}`}</Typography>
-              </Box>
-            </Box>
+            {/* <DateRangePickerField name="dateRangePicker" /> */}
+            <Stack direction={'row'} spacing={2} alignItems={'center'}>
+              <Stack direction={'row'} spacing={2}>
+                <DateTimePickerField fullWidth name="start-date-time" label="Start" />
+                <DateTimePickerField fullWidth name="end-date-time" label="End" />
+              </Stack>
+
+              <Stack direction={'row'} alignItems={'center'}>
+                <CheckBoxField
+                  name="unlimited"
+                  label={`${translate('promotionSystem.promotion.createPromotion.unlimited')}`}
+                />
+              </Stack>
+            </Stack>
           </FormBox>
 
-          <Box sx={{ paddingLeft: '8px' }}>
+          <Box>
             <Typography>
               {`${translate('promotionSystem.promotion.createPromotion.validInThisTimeFrameOnly')}`}
               <Switch checked={timeFrameChecked} onChange={handleTimeFrameChecked} />
             </Typography>
             {timeFrameChecked && (
-              <Grid container spacing={2} width={'100%'}>
+              <Grid container spacing={2} width={'100%'} py={1}>
                 {timeFrameList?.map((timeFrame, index) => (
-                  <Grid xs={2} item key={index}>
+                  <Grid xs={3} md={2} item key={index}>
                     <CheckBoxField name={timeFrame} label={timeFrame} />
                   </Grid>
                 ))}
               </Grid>
             )}
           </Box>
-          <Box sx={{ paddingLeft: '8px' }}>
+          <Box>
             <Typography>
               {`${translate('promotionSystem.promotion.createPromotion.validOnParticularDayOnly')}`}
               <Switch checked={particularDay} onChange={handleParticularDay} />
             </Typography>
             {particularDay && (
-              <Grid container spacing={2} columns={7} width={'100%'}>
+              <Grid container spacing={2} columns={7} width={'100%'} py={1}>
                 {particularDays?.map((item, index) => (
-                  <Grid xs={1} item key={index}>
+                  <Grid xs={3} md={1} item key={index}>
                     <CheckBoxField name={item} label={item} />
                   </Grid>
                 ))}

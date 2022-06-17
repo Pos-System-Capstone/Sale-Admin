@@ -20,6 +20,7 @@ const Promotion = (props: Props) => {
   const navigate = useNavigate();
   const ref = useRef<any>();
 
+  const PROMOTION_TYPE_DATE_ENUM = PROMOTION_TYPE_DATA();
   const promotionColumn: TTableColumn<TPromotionBase>[] = [
     {
       title: `${translate('promotionSystem.promotion.table.no')}`,
@@ -37,7 +38,7 @@ const Promotion = (props: Props) => {
       title: `${translate('promotionSystem.promotion.table.action')}`,
       hideInSearch: false,
       // dataIndex: 'actionType',
-      valueEnum: PROMOTION_TYPE_DATA,
+      valueEnum: PROMOTION_TYPE_DATE_ENUM,
       valueType: 'select',
       formProps: {
         fullWidth: true
