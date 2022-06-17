@@ -18,6 +18,7 @@ const DateTimePickerField = ({ name, label, defaultValue = '', transform, ...pro
           )}
           {...field}
           onChange={(e) => field.onChange(transform ? transform.output(e) : e)}
+          {...props}
         />
       )}
       name={name}

@@ -82,7 +82,7 @@ const requestPromotion = axios.create({
   baseURL: promotion,
   paramsSerializer: parseParams,
   headers: {
-    Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImJlYW5vaSIsInJvbGUiOiJCcmFuZCBNYW5hZ2VyIiwibmJmIjoxNjU1NDMwNjU2LCJleHAiOjE2NTYwMzU0NTYsImlhdCI6MTY1NTQzMDY1Nn0.6lPO0wywVEKb3zIXQjObUXAxoV7uJDH_qI03RCBB7SU`
+    authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImJlYW5vaSIsInJvbGUiOiJCcmFuZCBNYW5hZ2VyIiwibmJmIjoxNjU1NDMwNjU2LCJleHAiOjE2NTYwMzU0NTYsImlhdCI6MTY1NTQzMDY1Nn0.6lPO0wywVEKb3zIXQjObUXAxoV7uJDH_qI03RCBB7SU`
   }
 });
 

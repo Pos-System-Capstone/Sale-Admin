@@ -203,9 +203,18 @@ const applyByList = () => {
 const exclusiveList = () => {
   const { translate } = useLocales(); // eslint-disable-line
   return [
-    `${translate('promotionSystem.promotion.settings.exclusiveType.none')}`,
-    `${translate('promotionSystem.promotion.settings.exclusiveType.level')}`,
-    `${translate('promotionSystem.promotion.settings.exclusiveType.global')}`
+    {
+      label: `${translate('promotionSystem.promotion.settings.exclusiveType.none')}`,
+      value: 'none'
+    },
+    {
+      label: `${translate('promotionSystem.promotion.settings.exclusiveType.level')}`,
+      value: 'level'
+    },
+    {
+      label: `${translate('promotionSystem.promotion.settings.exclusiveType.global')}`,
+      value: 'global'
+    }
   ];
 };
 // const memberLevelList: string[] = ['Level 1', 'Level 2'];

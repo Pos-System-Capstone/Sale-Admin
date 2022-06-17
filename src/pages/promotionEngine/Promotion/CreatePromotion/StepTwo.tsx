@@ -1,7 +1,6 @@
-import { MenuItem, Stack, ToggleButtonGroup, Typography } from '@mui/material';
-import { CheckBoxField, SelectField } from 'components/form';
+import { MenuItem, Stack, Typography } from '@mui/material';
+import { CheckBoxField, RadioGroupField, SelectField } from 'components/form';
 import useLocales from 'hooks/useLocales';
-import React, { useState } from 'react';
 import { Card } from '../components/Card';
 import {
   applyByList,
@@ -12,7 +11,6 @@ import {
   saleModeList
 } from '../components/config';
 import FormBox from '../components/FormBox';
-import ToggleButton from '../components/ToggleButton';
 
 interface Props {
   isMember: boolean;
@@ -29,12 +27,12 @@ export default function StepTwo(props: Props) {
   const applyBy = applyByList();
   const memberLevel = memberLevelList();
   const exclusives = exclusiveList();
-  const [exclusive, setExclusive] = useState(exclusives[0]);
-  const handleChangeExclusive = (event: React.MouseEvent<HTMLElement>, newAlignment: string) => {
-    if (newAlignment !== null) {
-      setExclusive(newAlignment);
-    }
-  };
+  // const [exclusive, setExclusive] = useState(exclusives[0]);
+  // const handleChangeExclusive = (event: React.MouseEvent<HTMLElement>, newAlignment: string) => {
+  //   if (newAlignment !== null) {
+  //     setExclusive(newAlignment);
+  //   }
+  // };
 
   // const mh = currentLang.value === 'vi' ? '44px' : 0;
   return (
@@ -138,13 +136,20 @@ export default function StepTwo(props: Props) {
             sizeGrid={4}
             minHeight="44px"
           >
-            <ToggleButtonGroup exclusive value={exclusive} onChange={handleChangeExclusive}>
+            {/* <ToggleButtonGroup exclusive value={exclusive} onChange={handleChangeExclusive}>
               {exclusives?.map((exclusive, index) => (
                 <ToggleButton size="small" key={index} value={exclusive}>
                   {exclusive}
                 </ToggleButton>
               ))}
-            </ToggleButtonGroup>
+            </ToggleButtonGroup> */}
+            <RadioGroupField
+              sx={{ display: 'flex', flexDirection: 'row', gap: 2 }}
+              fullWidth
+              options={exclusives}
+              name="exclusive"
+              defaultValue="none"
+            />
           </FormBox>
         </Stack>
       </Card>

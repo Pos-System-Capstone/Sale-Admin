@@ -158,8 +158,20 @@ export default function StepOne() {
             {/* <DateRangePickerField name="dateRangePicker" /> */}
             <Stack direction={'row'} spacing={2} alignItems={'center'}>
               <Stack direction={'row'} spacing={2}>
-                <DateTimePickerField fullWidth name="start-date-time" label="Start" />
-                <DateTimePickerField fullWidth name="end-date-time" label="End" />
+                <DateTimePickerField
+                  fullWidth
+                  name="start-date-time"
+                  label="Start"
+                  inputFormat="yyyy/MM/dd hh:mm a"
+                  minDate={new Date()}
+                />
+                <DateTimePickerField
+                  fullWidth
+                  name="end-date-time"
+                  label="End"
+                  inputFormat="yyyy/MM/dd hh:mm a"
+                  minDate={new Date()}
+                />
               </Stack>
 
               <Stack direction={'row'} alignItems={'center'}>

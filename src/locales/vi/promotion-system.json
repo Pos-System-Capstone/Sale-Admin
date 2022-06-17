@@ -113,7 +113,7 @@
       },
       "exclusiveType": {
         "none": "Không",
-        "level": "Cấp độ thành viên",
+        "level": "Cấp độ",
         "global": "Toàn cục"
       },
       "memberLevelType": {
