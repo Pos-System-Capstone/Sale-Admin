@@ -1,9 +1,9 @@
 {
   "dashboard": {
     "title": "Bảng điều khiển",
-    "totalPromotion": "TỔNG KHUYẾN MÃI",
+    "totalPromotion": "TỔNG SỐ KHUYẾN MÃI",
     "runningPromotion": "KHUYẾN MÃI ĐANG CHẠY",
-    "expiredPromotion": "KHUYẾN MÃI HẾT HẠN",
+    "expiredPromotion": "KHUYẾN MÃI ĐÃ HẾT HẠN",
     "draftPromotion": "KHUYẾN MÃI ĐANG NHÁP"
   },
   "promotion": {

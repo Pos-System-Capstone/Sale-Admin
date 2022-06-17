@@ -45,19 +45,21 @@ export default function PromotionWidgets({ Widget }: PromotionWidgetsProp) {
       }}
     >
       <Box
-        sx={{ ml: 1.9, color: 'common.white', cursor: 'pointer', height: '50px', display: 'flex' }}
+        sx={{ ml: 3, color: 'common.white', cursor: 'pointer', height: '50px', display: 'flex' }}
         flexDirection="column"
+        flex={1}
+        flexWrap="wrap"
       >
         <Typography
-          component="h6"
-          fontSize={'16px'}
-          fontWeight="bold"
-          flex={1}
-          sx={{ marginLeft: '-48px', marginTop: '-30px' }}
+          variant="h6"
+          sx={{
+            marginLeft: '-48px',
+            marginTop: '-30px'
+          }}
         >
           {Widget.title}
         </Typography>
-        <Typography variant="h2" sx={{ marginLeft: '-28px', marginTop: '15px' }} flexShrink={0}>
+        <Typography variant="h2" sx={{ marginLeft: '-180px', marginTop: '20px' }}>
           {Widget.amount}
         </Typography>
       </Box>
