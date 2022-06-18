@@ -7,7 +7,7 @@ import useLocales from 'hooks/useLocales';
 import moment from 'moment';
 import { useSnackbar } from 'notistack';
 import ReportBtn from 'pages/report/components/ReportBtn';
-import ReportDatePicker from 'pages/report/components/ReportDatePicker';
+import { ReportMonthPicker } from 'pages/report/components/ReportDatePicker';
 import ReportPage from 'pages/report/components/ReportPage';
 import React, { useEffect, useRef, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
@@ -99,15 +99,15 @@ export default function OverviewMonth() {
     }
   ];
   useEffect(() => {
-    console.log(today.getDate());
-    console.log(
-      'date',
-      date.toLocaleDateString('zh-Hans-CN', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit'
-      })
-    );
+    // console.log(today.getDate());
+    // console.log(
+    //   'date',
+    //   date.toLocaleDateString('zh-Hans-CN', {
+    //     year: 'numeric',
+    //     month: '2-digit',
+    //     day: '2-digit'
+    //   })
+    // );
     if (ref.current) {
       ref.current.formControl.setValue(
         'create_at',
@@ -142,7 +142,7 @@ export default function OverviewMonth() {
           : ''
       }
       actions={[
-        <ReportDatePicker
+        <ReportMonthPicker
           key="month-date-picker"
           value={date}
           onChange={(newValue) => {

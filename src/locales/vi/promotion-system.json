@@ -1,6 +1,8 @@
 {
   "common": {
-    "unknown": "Unknown"
+    "unknown": "Unknown",
+    "start": "Bắt đầu",
+    "end": "Kết thúc"
   },
   "dashboard": {
     "title": "Bảng điều khiển",

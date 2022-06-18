@@ -1,4 +1,9 @@
 {
+  "common": {
+    "unknown": "Unknown",
+    "start": "Start",
+    "end": "End"
+  },
   "dashboard": {
     "title": "Dashboard",
     "totalPromotion": "TOTAL PROMOTION",

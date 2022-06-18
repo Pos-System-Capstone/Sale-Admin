@@ -2,8 +2,6 @@
 
 import useLocales from 'hooks/useLocales';
 
-// promotionTypeList = ['Using voucher', 'Using code', 'Automatic'];
-// Note: recommend using [{name: 'Using voucher',value: voucher},{name: 'Using code',value: code}]
 const promotionTypeList = () => {
   const { translate } = useLocales(); // eslint-disable-line
   return [
@@ -22,8 +20,6 @@ const promotionTypeList = () => {
   ];
 };
 
-// const kindActionList: string[] = ['Discount', 'Gift'];
-
 const kindActionList = () => {
   const { translate } = useLocales(); // eslint-disable-line
   return [
@@ -35,61 +31,87 @@ const kindActionList = () => {
   ];
 };
 
-// const discountActionList: string[] = [
-//   'Discount amount of order',
-//   'Discount amount of item',
-//   'Fixed price of item',
-//   'Discount percent of order',
-//   'Discount percent of item',
-//   'Ladder price of item',
-//   'Discount shipping fee of order',
-//   'Discount unit of item',
-//   'Bundle price of item'
-// ];
-
 const discountActionList = () => {
   const { translate } = useLocales(); // eslint-disable-line
   return [
-    `${translate(
-      'promotionSystem.promotion.createPromotion.discountActionType.discountAmountOfOrder'
-    )}`,
-    `${translate(
-      'promotionSystem.promotion.createPromotion.discountActionType.discountPercentageOfOrder'
-    )}`,
-    `${translate(
-      'promotionSystem.promotion.createPromotion.discountActionType.discountShippingFeeOfOrder'
-    )}`,
-    `${translate(
-      'promotionSystem.promotion.createPromotion.discountActionType.discountAmountOfItem'
-    )}`,
-    `${translate(
-      'promotionSystem.promotion.createPromotion.discountActionType.discountPercentOfItem'
-    )}`,
-    `${translate(
-      'promotionSystem.promotion.createPromotion.discountActionType.discountUnitOfItem'
-    )}`,
-    `${translate('promotionSystem.promotion.createPromotion.discountActionType.fixedPriceOfItem')}`,
-    `${translate(
-      'promotionSystem.promotion.createPromotion.discountActionType.ladderPriceOfItem'
-    )}`,
-    `${translate('promotionSystem.promotion.createPromotion.discountActionType.bundlePriceOfItem')}`
+    {
+      label: `${translate(
+        'promotionSystem.promotion.createPromotion.discountActionType.discountAmountOfOrder'
+      )}`,
+      value: 'discountAmountOfOrder'
+    },
+    {
+      label: `${translate(
+        'promotionSystem.promotion.createPromotion.discountActionType.discountPercentageOfOrder'
+      )}`,
+      value: 'discountPercentageOfOrder'
+    },
+    {
+      label: `${translate(
+        'promotionSystem.promotion.createPromotion.discountActionType.discountShippingFeeOfOrder'
+      )}`,
+      value: 'discountShippingFeeOfOrder'
+    },
+    {
+      label: `${translate(
+        'promotionSystem.promotion.createPromotion.discountActionType.discountAmountOfItem'
+      )}`,
+      value: 'discountAmountOfItem'
+    },
+    {
+      label: `${translate(
+        'promotionSystem.promotion.createPromotion.discountActionType.discountPercentOfItem'
+      )}`,
+      value: 'discountPercentOfItem'
+    },
+    {
+      label: `${translate(
+        'promotionSystem.promotion.createPromotion.discountActionType.discountUnitOfItem'
+      )}`,
+      value: 'discountUnitOfItem'
+    },
+    {
+      label: `${translate(
+        'promotionSystem.promotion.createPromotion.discountActionType.fixedPriceOfItem'
+      )}`,
+      value: 'fixedPriceOfItem'
+    },
+    {
+      label: `${translate(
+        'promotionSystem.promotion.createPromotion.discountActionType.ladderPriceOfItem'
+      )}`,
+      value: 'ladderPriceOfItem'
+    },
+    {
+      label: `${translate(
+        'promotionSystem.promotion.createPromotion.discountActionType.bundlePriceOfItem'
+      )}`,
+      value: 'bundlePriceOfItem'
+    }
   ];
 };
-
-// const giftActionList: string[] = [
-//   'Gift products',
-//   'Gift vouchers',
-//   'Gift points',
-//   'Gift game code'
-// ];
 
 const giftActionList = () => {
   const { translate } = useLocales(); // eslint-disable-line
   return [
-    `${translate('promotionSystem.promotion.createPromotion.giftActionType.giftVoucher')}`,
-    `${translate('promotionSystem.promotion.createPromotion.giftActionType.giftProduct')}`,
-    `${translate('promotionSystem.promotion.createPromotion.giftActionType.giftPoint')}`,
-    `${translate('promotionSystem.promotion.createPromotion.giftActionType.giftGameCode')}`
+    {
+      label: `${translate('promotionSystem.promotion.createPromotion.giftActionType.giftVoucher')}`,
+      value: 'giftVoucher'
+    },
+    {
+      label: `${translate('promotionSystem.promotion.createPromotion.giftActionType.giftProduct')}`,
+      value: 'giftProduct'
+    },
+    {
+      label: `${translate('promotionSystem.promotion.createPromotion.giftActionType.giftPoint')}`,
+      value: 'giftPoint'
+    },
+    {
+      label: `${translate(
+        'promotionSystem.promotion.createPromotion.giftActionType.giftGameCode'
+      )}`,
+      value: 'giftGameCode'
+    }
   ];
 };
 
@@ -120,16 +142,6 @@ const timeFrameList: string[] = [
   '23:00'
 ];
 
-// const particularDayList: string[] = [
-//   'Sunday',
-//   'Monday',
-//   'Tuesday',
-//   'Wednesday',
-//   'Thursday',
-//   'Friday',
-//   'Saturday'
-// ];
-
 const particularDayList = () => {
   const { translate } = useLocales(); // eslint-disable-line
   return [
@@ -143,86 +155,113 @@ const particularDayList = () => {
   ];
 };
 
-// const paymentMethodList: string[] = [
-//   'Cash',
-//   'Credit Cards',
-//   'Bank Transfers',
-//   'eWallets',
-//   'Mobile Banking',
-//   'COD'
-// ];
-
 const paymentMethodList = () => {
   const { translate } = useLocales(); // eslint-disable-line
   return [
-    `${translate('promotionSystem.promotion.settings.paymentMethodType.cash')}`,
-    `${translate('promotionSystem.promotion.settings.paymentMethodType.creditCard')}`,
-    `${translate('promotionSystem.promotion.settings.paymentMethodType.bankTransfer')}`,
-    `${translate('promotionSystem.promotion.settings.paymentMethodType.eWallet')}`,
-    `${translate('promotionSystem.promotion.settings.paymentMethodType.mobileBanking')}`,
-    `${translate('promotionSystem.promotion.settings.paymentMethodType.cod')}`
+    {
+      label: `${translate('promotionSystem.promotion.settings.paymentMethodType.cash')}`,
+      value: 'cash'
+    },
+    {
+      label: `${translate('promotionSystem.promotion.settings.paymentMethodType.creditCard')}`,
+      value: 'creditCard'
+    },
+    {
+      label: `${translate('promotionSystem.promotion.settings.paymentMethodType.bankTransfer')}`,
+      value: 'bankTransfer'
+    },
+    {
+      label: `${translate('promotionSystem.promotion.settings.paymentMethodType.eWallet')}`,
+      value: 'eWallet'
+    },
+    {
+      label: `${translate('promotionSystem.promotion.settings.paymentMethodType.mobileBanking')}`,
+      value: 'mobileBanking'
+    },
+    {
+      label: `${translate('promotionSystem.promotion.settings.paymentMethodType.cod')}`,
+      value: 'cod'
+    }
   ];
 };
 
-// const targetCustomerList: string[] = ['Guest', 'Membership'];
 const targetCustomerList = () => {
   const { translate } = useLocales(); // eslint-disable-line
   return [
-    `${translate('promotionSystem.promotion.settings.targetCustomerType.guest')}`,
-    `${translate('promotionSystem.promotion.settings.targetCustomerType.membership')}`
+    {
+      label: translate('promotionSystem.promotion.settings.targetCustomerType.guest'),
+      value: 'guest'
+    },
+    {
+      label: translate('promotionSystem.promotion.settings.targetCustomerType.membership'),
+      value: 'membership'
+    }
   ];
 };
-// const genderList: string[] = ['Male', 'Female'];
 const genderList = () => {
   const { translate } = useLocales(); // eslint-disable-line
   return [
-    `${translate('promotionSystem.promotion.settings.genderType.male')}`,
-    `${translate('promotionSystem.promotion.settings.genderType.female')}`
+    { label: translate('promotionSystem.promotion.settings.genderType.male'), value: 'male' },
+    { label: translate('promotionSystem.promotion.settings.genderType.female'), value: 'female' }
   ];
 };
-// const saleModeList: string[] = ['Eat-in', 'Take-away', 'Delivery'];
 
 const saleModeList = () => {
   const { translate } = useLocales(); // eslint-disable-line
   return [
-    `${translate('promotionSystem.promotion.settings.saleModeType.eatIn')}`,
-    `${translate('promotionSystem.promotion.settings.saleModeType.takeAway')}`,
-    `${translate('promotionSystem.promotion.settings.saleModeType.delivery')}`
+    { label: translate('promotionSystem.promotion.settings.saleModeType.eatIn'), value: 'eatIn' },
+    {
+      label: translate('promotionSystem.promotion.settings.saleModeType.takeAway'),
+      value: 'takeAway'
+    },
+    {
+      label: translate('promotionSystem.promotion.settings.saleModeType.delivery'),
+      value: 'delivery'
+    }
   ];
 };
 
-// const applyByList: string[] = ['Store', 'Online'];
 const applyByList = () => {
   const { translate } = useLocales(); // eslint-disable-line
   return [
-    `${translate('promotionSystem.promotion.settings.applyByType.store')}`,
-    `${translate('promotionSystem.promotion.settings.applyByType.online')}`
+    {
+      label: translate('promotionSystem.promotion.settings.applyByType.store'),
+      value: 'store'
+    },
+    {
+      label: translate('promotionSystem.promotion.settings.applyByType.online'),
+      value: 'online'
+    }
   ];
 };
-// const exclusiveList: string[] = ['None', 'Level', 'Global'];
 const exclusiveList = () => {
   const { translate } = useLocales(); // eslint-disable-line
   return [
     {
-      label: `${translate('promotionSystem.promotion.settings.exclusiveType.none')}`,
+      label: translate('promotionSystem.promotion.settings.exclusiveType.none'),
       value: 'none'
     },
     {
-      label: `${translate('promotionSystem.promotion.settings.exclusiveType.level')}`,
+      label: translate('promotionSystem.promotion.settings.exclusiveType.level'),
       value: 'level'
     },
     {
-      label: `${translate('promotionSystem.promotion.settings.exclusiveType.global')}`,
+      label: translate('promotionSystem.promotion.settings.exclusiveType.global'),
       value: 'global'
     }
   ];
 };
-// const memberLevelList: string[] = ['Level 1', 'Level 2'];
 const memberLevelList = () => {
   const { translate } = useLocales(); // eslint-disable-line
   return [
-    `${translate('promotionSystem.promotion.settings.memberLevelType.level1')}`,
-    `${translate('promotionSystem.promotion.settings.memberLevelType.level2')}`
+    {
+      label: translate('promotionSystem.promotion.settings.memberLevelType.level1'),
+      value: 'level1'
+    },
+    {
+      label: translate('promotionSystem.promotion.settings.memberLevelType.level2'),
+      value: 'level2'
+    }
   ];
 };
 export {

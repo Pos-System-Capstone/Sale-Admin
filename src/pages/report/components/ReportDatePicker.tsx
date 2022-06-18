@@ -15,9 +15,6 @@ const ReportDatePicker = ({ value, onChange, ...props }: ReportDatePickerProps) 
     <LocalizationProvider key="choose-day" dateAdapter={AdapterDateFns}>
       <DatePicker
         value={value}
-        // onChange={(newValue) => {
-        //   setDate(newValue || new Date());
-        // }}
         onChange={onChange}
         disableFuture
         inputFormat="dd/MM/yyyy"
@@ -30,3 +27,21 @@ const ReportDatePicker = ({ value, onChange, ...props }: ReportDatePickerProps) 
 };
 
 export default ReportDatePicker;
+
+export const ReportMonthPicker = ({ value, onChange, ...props }: ReportDatePickerProps) => {
+  const { disabled, label } = props;
+  return (
+    <LocalizationProvider key="choose-month" dateAdapter={AdapterDateFns}>
+      <DatePicker
+        disabled={disabled}
+        views={['year', 'month']}
+        label={label}
+        value={value}
+        disableFuture
+        maxDate={new Date()}
+        onChange={onChange}
+        renderInput={(params) => <TextField {...params} helperText={null} />}
+      />
+    </LocalizationProvider>
+  );
+};

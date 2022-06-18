@@ -1,144 +1,106 @@
 import { Box, Button, Grid, Stack, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import useLocales from 'hooks/useLocales';
+import { fDateTime } from 'utils/formatTime';
 import { Card } from '../components/Card';
 
-function StepThree() {
+function StepThree({ watch }: any) {
+  const { translate } = useLocales();
   const StyleWidthTypography = styled(Typography)((props) => ({
     marginTop: `${props.marginTop || '16px'}`,
     width: `${props.width || '50%'}`
   }));
-  const { translate } = useLocales();
+
+  let [paymentMethod] = watch([
+    'cash',
+    'creditCard',
+    'bankTransfer',
+    'eWallet',
+    'mobileBanking',
+    'cod'
+  ]);
+  console.log(paymentMethod);
+
+  const [promotionName, startDate, endDate] = watch(['promotionName', 'startDate', 'endDate']);
   return (
-    <Stack p={1} spacing={3} sx={{ width: '100%' }}>
+    <Stack p={1} spacing={3} width={'100%'}>
       <Typography px={2} variant="h3" sx={{ textTransform: 'uppercase' }}>
         {translate('promotionSystem.promotion.preview.title')}
       </Typography>
       <Card>
         <Stack spacing={4} p={2} textAlign="left">
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center'
-            }}
-          >
+          <Box display="flex" alignItems="center">
             <StyleWidthTypography marginTop="0" width="40%" variant="h6">
               {translate('promotionSystem.promotion.preview.name')}
             </StyleWidthTypography>
             <StyleWidthTypography marginTop="0" variant="body1">
-              Test promotion name
+              {promotionName}
             </StyleWidthTypography>
           </Box>
           <Box>
             <Grid container spacing={6}>
               <Grid item xs={6}>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center'
-                  }}
-                >
+                <Box display="flex" alignItems="center">
                   <StyleWidthTypography variant="h6">
                     {translate('promotionSystem.promotion.preview.startDate')}
                   </StyleWidthTypography>
-                  <StyleWidthTypography variant="body1">19/05/2022 - 00:00</StyleWidthTypography>
+                  <StyleWidthTypography variant="body1">
+                    {startDate ? fDateTime(startDate) : '-'}
+                  </StyleWidthTypography>
                 </Box>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center'
-                  }}
-                >
+                <Box display="flex" alignItems="center">
                   <StyleWidthTypography variant="h6">
                     {translate('promotionSystem.promotion.preview.endDate')}
                   </StyleWidthTypography>
-                  <StyleWidthTypography variant="body1">28/05/2022 - 00:00</StyleWidthTypography>
+                  <StyleWidthTypography variant="body1">
+                    {endDate ? fDateTime(endDate) : '-'}
+                  </StyleWidthTypography>
                 </Box>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center'
-                  }}
-                >
+                <Box display="flex" alignItems="center">
                   <StyleWidthTypography variant="h6">
                     {translate('promotionSystem.promotion.preview.exclusive')}
                   </StyleWidthTypography>
-                  <StyleWidthTypography variant="body1">None</StyleWidthTypography>
+                  <StyleWidthTypography variant="body1"></StyleWidthTypography>
                 </Box>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center'
-                  }}
-                >
+                <Box display="flex" alignItems="center">
                   <StyleWidthTypography variant="h6">
                     {translate('promotionSystem.promotion.preview.status')}
                   </StyleWidthTypography>
-                  <StyleWidthTypography variant="body1">Draft</StyleWidthTypography>
+                  <StyleWidthTypography variant="body1"></StyleWidthTypography>
                 </Box>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center'
-                  }}
-                >
+                <Box display="flex" alignItems="center">
                   <StyleWidthTypography variant="h6">
                     {translate('promotionSystem.promotion.preview.paymentMethod')}
                   </StyleWidthTypography>
-                  <StyleWidthTypography variant="body1">Cash</StyleWidthTypography>
+                  <StyleWidthTypography variant="body1"></StyleWidthTypography>
                 </Box>
               </Grid>
               <Grid item xs={6}>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center'
-                  }}
-                >
+                <Box display="flex" alignItems="center">
                   <StyleWidthTypography variant="h6">
                     {translate('promotionSystem.promotion.preview.saleMode')}
                   </StyleWidthTypography>
                   <StyleWidthTypography variant="body1">Delivery</StyleWidthTypography>
                 </Box>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center'
-                  }}
-                >
+                <Box display="flex" alignItems="center">
                   <StyleWidthTypography variant="h6">
                     {translate('promotionSystem.promotion.preview.applyBy')}
                   </StyleWidthTypography>
                   <StyleWidthTypography variant="body1">Online</StyleWidthTypography>
                 </Box>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center'
-                  }}
-                >
+                <Box display="flex" alignItems="center">
                   <StyleWidthTypography variant="h6">
                     {translate('promotionSystem.promotion.preview.availableOnHoliday')}
                   </StyleWidthTypography>
                   <StyleWidthTypography variant="body1">Yes</StyleWidthTypography>
                 </Box>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center'
-                  }}
-                >
+                <Box display="flex" alignItems="center">
                   <StyleWidthTypography variant="h6">
                     {translate('promotionSystem.promotion.preview.customerType')}
                   </StyleWidthTypography>
                   <StyleWidthTypography variant="body1">Guest</StyleWidthTypography>
                 </Box>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center'
-                  }}
-                >
+                <Box display="flex" alignItems="center">
                   <StyleWidthTypography variant="h6">
                     {translate('promotionSystem.promotion.preview.customerGender')}
                   </StyleWidthTypography>

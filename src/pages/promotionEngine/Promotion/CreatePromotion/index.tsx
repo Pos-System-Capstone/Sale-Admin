@@ -7,13 +7,11 @@ import useLocales from 'hooks/useLocales';
 import { DashboardNavLayout } from 'layouts/dashboard/DashboardNavbar';
 import { useSnackbar } from 'notistack';
 import { validationSchema } from 'pages/Products/type';
-import { normalizeProductCombo, transformComboForm } from 'pages/Products/utils';
+import { normalizeProductCombo } from 'pages/Products/utils';
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { createMasterProd } from 'redux/product/api';
-import { PATH_DASHBOARD } from 'routes/paths';
-import { CombinationModeEnum, CreateComboForm } from 'types/product';
+import { CreateComboForm } from 'types/product';
 import { targetCustomerList } from '../components/config';
 import StepOne from './StepOne';
 import StepThree from './StepThree';
@@ -50,24 +48,23 @@ const CreatePromotion = (props: Props) => {
   });
 
   const onSubmit = (values: any) => {
-    return createMasterProd(transformComboForm(values, CombinationModeEnum.ChoiceCombo))
-      .then((res) => {
-        enqueueSnackbar(`Tạo thành công ${values.product_name}`, {
-          variant: 'success'
-        });
-        navigate(`${PATH_DASHBOARD.combos.editById(res.data)}`);
-      })
-      .catch((err) => {
-        enqueueSnackbar(`Có lỗi xảy ra. Vui lòng thử lại`, {
-          variant: 'error'
-        });
-      });
+    // return createMasterProd(transformComboForm(values, CombinationModeEnum.ChoiceCombo))
+    //   .then((res) => {
+    //     enqueueSnackbar(`Tạo thành công ${values.product_name}`, {
+    //       variant: 'success'
+    //     });
+    //     navigate(`${PATH_DASHBOARD.combos.editById(res.data)}`);
+    //   })
+    //   .catch((err) => {
+    //     enqueueSnackbar(`Có lỗi xảy ra. Vui lòng thử lại`, {
+    //       variant: 'error'
+    //     });
+    //   });
+    console.log(values);
   };
   const targetCustomer = targetCustomerList();
   const { handleSubmit, watch } = createComboForm;
   // targetCustomer[1] = member
-  let isMember = watch(targetCustomer[1]);
-  console.log(watch('start-date-time'));
   return (
     <FormProvider {...createComboForm}>
       <DashboardNavLayout>
@@ -81,9 +78,6 @@ const CreatePromotion = (props: Props) => {
             <Button
               variant="contained"
               onClick={async () => {
-                // const valid = await createComboForm.trigger();
-                // console.log(`valid`, valid);
-                // if (valid)
                 setActiveStep((prev) => prev + 1);
               }}
             >
@@ -97,10 +91,7 @@ const CreatePromotion = (props: Props) => {
           )}
         </Stack>
       </DashboardNavLayout>
-      <Page
-        // title="CREATE PROMOTION"
-        title={`${translate('promotionSystem.promotion.createPromotion.createPromotion')}`}
-      >
+      <Page title={`${translate('promotionSystem.promotion.createPromotion.createPromotion')}`}>
         <Box py={2}>
           <Stepper alternativeLabel activeStep={activeStep}>
             {STEPS.map((label) => (
@@ -121,9 +112,9 @@ const CreatePromotion = (props: Props) => {
         </Box>
 
         <Box display="flex">
-          {activeStep === 0 && <StepOne />}
-          {activeStep === 1 && <StepTwo isMember={isMember} targetCustomer={targetCustomer} />}
-          {activeStep === 2 && <StepThree />}
+          {activeStep === 0 && <StepOne watch={watch} />}
+          {activeStep === 1 && <StepTwo watch={watch} />}
+          {activeStep === 2 && <StepThree watch={watch} />}
         </Box>
       </Page>
     </FormProvider>

@@ -8,33 +8,23 @@ import {
   genderList,
   memberLevelList,
   paymentMethodList,
-  saleModeList
+  saleModeList,
+  targetCustomerList
 } from '../components/config';
 import FormBox from '../components/FormBox';
 
-interface Props {
-  isMember: boolean;
-  targetCustomer: string[];
-}
-
-export default function StepTwo(props: Props) {
+export default function StepTwo({ watch }: any) {
   const { translate } = useLocales();
-  const { isMember, targetCustomer } = props;
 
+  const targetCustomer = targetCustomerList();
   const paymentMethod = paymentMethodList();
   const gender = genderList();
   const saleMode = saleModeList();
   const applyBy = applyByList();
   const memberLevel = memberLevelList();
   const exclusives = exclusiveList();
-  // const [exclusive, setExclusive] = useState(exclusives[0]);
-  // const handleChangeExclusive = (event: React.MouseEvent<HTMLElement>, newAlignment: string) => {
-  //   if (newAlignment !== null) {
-  //     setExclusive(newAlignment);
-  //   }
-  // };
 
-  // const mh = currentLang.value === 'vi' ? '44px' : 0;
+  const [isMember] = watch(['membership']);
   return (
     <Stack p={1} spacing={3} width="100%">
       <Typography px={2} variant="h3" sx={{ textTransform: 'uppercase' }} textAlign={'left'}>
@@ -46,11 +36,11 @@ export default function StepTwo(props: Props) {
             title={`${translate('promotionSystem.promotion.settings.paymentMethod')}`}
             subtitle={`${translate('promotionSystem.promotion.settings.helperPaymentMethod')}`}
           >
-            {paymentMethod?.map((paymentMethod, index) => (
+            {paymentMethod?.map((item) => (
               <CheckBoxField
-                key={index}
-                name={paymentMethod}
-                label={paymentMethod}
+                key={item.value}
+                name={item.value}
+                label={item.label}
                 helperText="Please choose at least one payment"
               />
             ))}
@@ -72,8 +62,8 @@ export default function StepTwo(props: Props) {
             sizeGrid={4}
             minHeight="44px"
           >
-            {targetCustomer?.map((item, index) => (
-              <CheckBoxField key={index} name={item} label={item} />
+            {targetCustomer?.map((item) => (
+              <CheckBoxField key={item.value} name={item.value} label={item.label} />
             ))}
           </FormBox>
           <FormBox
@@ -89,9 +79,9 @@ export default function StepTwo(props: Props) {
               fullWidth
               multiple
             >
-              {memberLevel?.map((item, index) => (
-                <MenuItem value={item} key={index}>
-                  {item}
+              {memberLevel?.map((item) => (
+                <MenuItem value={item.value} key={item.value}>
+                  {item.label}
                 </MenuItem>
               ))}
             </SelectField>
@@ -102,8 +92,8 @@ export default function StepTwo(props: Props) {
             sizeGrid={4}
             minHeight="44px"
           >
-            {gender.map((item, index) => (
-              <CheckBoxField key={index} name={item} label={item} />
+            {gender.map((item) => (
+              <CheckBoxField key={item.value} name={item.value} label={item.label} />
             ))}
           </FormBox>
         </Stack>
@@ -116,8 +106,8 @@ export default function StepTwo(props: Props) {
             sizeGrid={4}
             minHeight="44px"
           >
-            {saleMode.map((item, index) => (
-              <CheckBoxField key={index} name={item} label={item} />
+            {saleMode.map((item) => (
+              <CheckBoxField key={item.value} name={item.value} label={item.label} />
             ))}
           </FormBox>
           <FormBox
@@ -126,8 +116,8 @@ export default function StepTwo(props: Props) {
             sizeGrid={4}
             minHeight="44px"
           >
-            {applyBy.map((item, index) => (
-              <CheckBoxField key={index} name={item} label={item} />
+            {applyBy.map((item) => (
+              <CheckBoxField key={item.value} name={item.value} label={item.label} />
             ))}
           </FormBox>
           <FormBox
@@ -136,19 +126,12 @@ export default function StepTwo(props: Props) {
             sizeGrid={4}
             minHeight="44px"
           >
-            {/* <ToggleButtonGroup exclusive value={exclusive} onChange={handleChangeExclusive}>
-              {exclusives?.map((exclusive, index) => (
-                <ToggleButton size="small" key={index} value={exclusive}>
-                  {exclusive}
-                </ToggleButton>
-              ))}
-            </ToggleButtonGroup> */}
             <RadioGroupField
               sx={{ display: 'flex', flexDirection: 'row', gap: 2 }}
               fullWidth
-              options={exclusives}
               name="exclusive"
               defaultValue="none"
+              options={exclusives}
             />
           </FormBox>
         </Stack>

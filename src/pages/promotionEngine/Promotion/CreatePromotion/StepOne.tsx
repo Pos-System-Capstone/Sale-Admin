@@ -1,4 +1,4 @@
-import { Box, Grid, MenuItem, Stack, Switch, Typography } from '@mui/material';
+import { Box, Grid, Stack, Switch, Typography } from '@mui/material';
 import {
   CheckBoxField,
   DraftEditorField,
@@ -21,26 +21,12 @@ import {
 } from '../components/config';
 import FormBox from '../components/FormBox';
 
-export default function StepOne() {
+export default function StepOne({ watch }: any) {
+  const { translate } = useLocales();
   const giftAction = giftActionList();
   const discountAction = discountActionList();
   const promotionType = promotionTypeList();
-
-  // what kind of action
   const kindAction = kindActionList();
-  const [type, setType] = useState(0);
-  const handleChange1 = (event: React.MouseEvent<HTMLElement>, newAlignment: number) => {
-    if (newAlignment !== null) {
-      setType(newAlignment);
-    }
-  };
-
-  const [alignment, setAlignment] = useState(0);
-  const handleChange = (event: React.MouseEvent<HTMLElement>, newAlignment: number) => {
-    if (newAlignment !== null) {
-      setAlignment(newAlignment);
-    }
-  };
 
   const [timeFrameChecked, setTimeFrameChecked] = useState(false);
   const handleTimeFrameChecked = () => {
@@ -53,7 +39,11 @@ export default function StepOne() {
     setParticularDay((prev) => !prev);
   };
 
-  const { translate } = useLocales();
+  const [promoType = 'usingCode', promoAction = 'discount', unlimitedDate] = watch([
+    'promotionType',
+    'promotion-action',
+    'unlimited'
+  ]);
   return (
     <Stack p={1} spacing={3}>
       {/* <Card id="promotion-create">
@@ -76,7 +66,7 @@ export default function StepOne() {
                 sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}
                 fullWidth
                 options={promotionType}
-                name="promotion-type"
+                name="promotionType"
                 defaultValue="usingVoucher"
               />
               <Grid container gap={2}>
@@ -95,13 +85,12 @@ export default function StepOne() {
                   <InputField
                     fullWidth
                     size="small"
+                    color="primary"
                     name="promotionCode"
-                    // promotionType[1] must be a automatic mode
-                    disabled={type === 2}
                     label={`${translate(
                       'promotionSystem.promotion.createPromotion.promotionCode'
                     )}`}
-                    color="primary"
+                    disabled={promoType === 'automatic'}
                   />
                 </Grid>
               </Grid>
@@ -118,35 +107,21 @@ export default function StepOne() {
                 name="promotion-action"
                 defaultValue="discount"
               />
-
-              {alignment === 0 && (
+              {promoAction === 'discount' && (
                 <SelectField
                   fullWidth
                   label={`${translate('promotionSystem.promotion.createPromotion.discount')}`}
                   name="discountAction"
-                  // options={discountAction}
-                >
-                  {discountAction?.map((item, index) => (
-                    <MenuItem value={item} key={index}>
-                      {item}
-                    </MenuItem>
-                  ))}
-                </SelectField>
+                  options={discountAction}
+                />
               )}
-
-              {alignment === 1 && (
+              {promoAction === 'gift' && (
                 <SelectField
                   fullWidth
                   label={`${translate('promotionSystem.promotion.createPromotion.gift')}`}
                   name="giftAction"
-                  // options={giftAction}
-                >
-                  {giftAction?.map((item, index) => (
-                    <MenuItem value={item} key={index}>
-                      {item}
-                    </MenuItem>
-                  ))}
-                </SelectField>
+                  options={giftAction}
+                />
               )}
             </Stack>
           </FormBox>
@@ -155,20 +130,20 @@ export default function StepOne() {
       <Card>
         <Stack spacing={3} px={2} py={1}>
           <FormBox title={`${translate('promotionSystem.promotion.createPromotion.timeFrame')}`}>
-            {/* <DateRangePickerField name="dateRangePicker" /> */}
             <Stack direction={'row'} spacing={2} alignItems={'center'}>
               <Stack direction={'row'} spacing={2}>
                 <DateTimePickerField
                   fullWidth
-                  name="start-date-time"
-                  label="Start"
+                  name="startDate"
+                  label={translate('promotionSystem.common.start')}
                   inputFormat="yyyy/MM/dd hh:mm a"
                   minDate={new Date()}
                 />
                 <DateTimePickerField
+                  disabled={unlimitedDate}
                   fullWidth
-                  name="end-date-time"
-                  label="End"
+                  name="endDate"
+                  label={translate('promotionSystem.common.end')}
                   inputFormat="yyyy/MM/dd hh:mm a"
                   minDate={new Date()}
                 />

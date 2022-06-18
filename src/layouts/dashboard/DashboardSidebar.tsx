@@ -15,7 +15,11 @@ import useCollapseDrawer from '../../hooks/useCollapseDrawer';
 // routes
 import { PATH_DASHBOARD } from '../../routes/paths';
 //
-import { promotionAppSidebarConfig, storeAppSidebarConfig } from './SidebarConfig';
+import {
+  promotionAppSidebarConfig,
+  reportAppSidebarConfig,
+  storeAppSidebarConfig
+} from './SidebarConfig';
 
 const DRAWER_WIDTH = 280;
 const COLLAPSE_WIDTH = 102;
@@ -108,6 +112,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }: Dash
       return storeAppSidebarConfig;
     }
     return promotionAppSidebarConfig;
+    return reportAppSidebarConfig;
   }, [user?.roles]);
 
   const { isCollapse, collapseClick, collapseHover, onToggleCollapse, onHoverEnter, onHoverLeave } =
