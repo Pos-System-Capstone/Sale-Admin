@@ -144,6 +144,22 @@ const CHART_COLORS = {
   red: ['#FF6C40', '#FF8F6D', '#FFBD98', '#FFF2D4']
 };
 
+const REPORT_PALETTE = {
+  green1: '#4CAF50',
+  green2: '#81C784',
+  blue1: '#2196F3',
+  blue2: '#03A9F4',
+  red1: '#BF4F4F',
+  red2: '#C85151',
+  darkGreen1: '#536732',
+  darkGreen2: '#556B2F',
+  yellow1: '#C3941D',
+  yellow2: '#CC9B1E',
+  purple1: '#673AB7',
+  purple2: '#9575CD',
+  pine1: '#009688'
+};
+
 const COMMON = {
   common: { black: '#000', white: '#fff' },
   primary: { ...PRIMARY, contrastText: '#fff' },
@@ -165,7 +181,8 @@ const COMMON = {
     focus: GREY[500_24],
     hoverOpacity: 0.08,
     disabledOpacity: 0.48
-  }
+  },
+  reportPalette: { ...REPORT_PALETTE }
 };
 
 const palette = {

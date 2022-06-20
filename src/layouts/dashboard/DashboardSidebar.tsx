@@ -111,8 +111,8 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }: Dash
     } else if (user?.roles.includes('store-admin')) {
       return storeAppSidebarConfig;
     }
-    return promotionAppSidebarConfig;
     return reportAppSidebarConfig;
+    return promotionAppSidebarConfig;
   }, [user?.roles]);
 
   const { isCollapse, collapseClick, collapseHover, onToggleCollapse, onHoverEnter, onHoverLeave } =
