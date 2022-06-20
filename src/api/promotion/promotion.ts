@@ -146,9 +146,12 @@ export type TPromotionBase = {
   brand?: any;
 };
 
-const getPromotion = (params?: any) =>
+const getPromotion = (params: any = {}) =>
   request.get<BaseReponse<TPromotionBase>>(`/promotions`, { params });
 
-const promotionApi = { getPromotion };
+const createPromotion = (data?: any) =>
+  request.post<BaseReponse<TPromotionBase>>(`/promotions`, data);
+
+const promotionApi = { getPromotion, createPromotion };
 
 export default promotionApi;

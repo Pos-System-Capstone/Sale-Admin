@@ -1,5 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Button, Stack, Step, StepLabel, Stepper } from '@mui/material';
+import promotionApi from 'api/promotion/promotion';
 import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
 import Page from 'components/Page';
 import useProduct from 'hooks/products/useProduct';
@@ -11,8 +12,8 @@ import { normalizeProductCombo } from 'pages/Products/utils';
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
 import { CreateComboForm } from 'types/product';
-import { targetCustomerList } from '../components/config';
 import StepOne from './StepOne';
 import StepThree from './StepThree';
 import StepTwo from './StepTwo';
@@ -60,9 +61,59 @@ const CreatePromotion = (props: Props) => {
     //       variant: 'error'
     //     });
     //   });
-    console.log(values);
+    console.log('values', values);
+    const data = {
+      promotionCode: values.promotionCode,
+      promotionName: values.promotionName,
+      brandId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+      isAuto: values.automatic,
+      exclusive: values.exclusive
+    };
+    const testPayload = {
+      delFlg: true,
+      insDate: '2022-06-28T09:07:18.224Z',
+      updDate: '2022-06-29T09:07:18.224Z',
+      promotionId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+      brandId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+      promotionCode: 'Test code',
+      promotionName: 'Test name',
+      actionType: 1,
+      postActionType: 1,
+      imgUrl: '',
+      description: '',
+      startDate: '2022-06-28T09:07:18.224Z',
+      endDate: '2022-06-29T09:07:18.224Z',
+      exclusive: 1,
+      applyBy: 1,
+      saleMode: 1,
+      gender: 2,
+      paymentMethod: 1,
+      forHoliday: 1,
+      forMembership: 1,
+      dayFilter: 1,
+      hourFilter: 1,
+      status: 1,
+      hasVoucher: true,
+      isAuto: true,
+      voucherGroupId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+      voucherQuantity: 10,
+      conditionRuleId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+      promotionType: 1
+    };
+    promotionApi
+      .createPromotion(testPayload)
+      .then((res) => {
+        enqueueSnackbar(`Tạo thành công ${values.promotionName}`, {
+          variant: 'success'
+        });
+        navigate(PATH_PROMOTION_APP.promotion.root);
+      })
+      .catch((err) => {
+        enqueueSnackbar(`${err}`, {
+          variant: 'error'
+        });
+      });
   };
-  const targetCustomer = targetCustomerList();
   const { handleSubmit, watch } = createComboForm;
   // targetCustomer[1] = member
   return (

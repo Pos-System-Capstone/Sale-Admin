@@ -11,15 +11,14 @@ function StepThree({ watch }: any) {
     width: `${props.width || '50%'}`
   }));
 
-  let [paymentMethod] = watch([
-    'cash',
-    'creditCard',
-    'bankTransfer',
-    'eWallet',
-    'mobileBanking',
-    'cod'
-  ]);
-  console.log(paymentMethod);
+  // let [paymentMethod] = watch([
+  //   'cash',
+  //   'creditCard',
+  //   'bankTransfer',
+  //   'eWallet',
+  //   'mobileBanking',
+  //   'cod'
+  // ]);
 
   const [promotionName, startDate, endDate] = watch(['promotionName', 'startDate', 'endDate']);
   return (
