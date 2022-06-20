@@ -42,12 +42,20 @@ export const menuColumns: TTableColumn<TTradingBase>[] = [
   },
   {
     fixed: 'left',
-    title: 'Ngày',
+    title: 'Thứ',
     valueType: 'select',
     valueEnum: [
       {
+        label: 'Tuần này',
+        value: false
+      },
+      {
+        label: 'Tuần trước',
+        value: false
+      },
+      {
         label: 'Tháng này',
-        value: true
+        value: false
       },
       {
         label: 'Tháng trước',
@@ -117,7 +125,7 @@ export const menuColumns: TTableColumn<TTradingBase>[] = [
   }
 ];
 
-const DayReport = () => {
+const DateReport = () => {
   const navigate = useNavigate();
   const tableRef = useRef<any>();
   const { enqueueSnackbar } = useSnackbar();
@@ -218,7 +226,7 @@ const DayReport = () => {
   return (
     <ReportPage
       // title="Báo cáo doanh thu theo ngày"
-      title={`Báo cáo doanh thu theo ngày: ${day.toLocaleDateString('vi-VI', {
+      title={`Báo cáo doanh thu theo thứ: ${day.toLocaleDateString('vi-VI', {
         year: 'numeric',
         month: '2-digit',
         day: '2-digit'
@@ -298,4 +306,4 @@ const DayReport = () => {
   );
 };
 
-export default DayReport;
+export default DateReport;

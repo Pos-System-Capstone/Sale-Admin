@@ -2,49 +2,57 @@
 import { Grid } from '@mui/material';
 // hooks
 // components
-import Page from '../../components/Page';
-import calendarFill from '@iconify/icons-eva/calendar-fill';
-import archiveFill from '@iconify/icons-eva/archive-fill';
+import dashboardFill from '@iconify/icons-ant-design/dashboard-fill';
 import clockOuline from '@iconify/icons-eva/clock-outline';
-import castFill from '@iconify/icons-eva/cast-fill';
-import pantoneFill from '@iconify/icons-eva/pantone-fill';
-import { PATH_REPORT_APP } from 'routes/reportAppPaths';
+import repeatFill from '@iconify/icons-eva/repeat-fill';
+import shoppingBagFill from '@iconify/icons-eva/shopping-bag-fill';
+import trendingUp from '@iconify/icons-eva/trending-up-fill';
+import peopleFill from '@iconify/icons-eva/people-fill';
 import DashboarWidgets from 'components/_dashboard/general-app/DashboarWidgets';
+import { PATH_REPORT_APP } from 'routes/reportAppPaths';
+import Page from '../../components/Page';
 // ----------------------------------------------------------------------
 const Widgets = [
   {
     title: 'TỔNG QUAN',
-    icon: archiveFill,
-    color: '#18A558',
-    hoverColor: '#4CAF50',
+    icon: dashboardFill,
+    color: '#50C878',
+    hoverColor: '#2D8F4E',
     path: PATH_REPORT_APP.overviewDate
   },
   {
     title: 'THỜI GIAN',
     icon: clockOuline,
-    color: '#116530',
-    hoverColor: 'green',
-    path: PATH_REPORT_APP.trading
+    color: '#228B22',
+    hoverColor: '#116530',
+    path: PATH_REPORT_APP.dayReport
   },
   {
     title: 'SẢN PHẨM',
-    icon: castFill,
-    color: '#E1C340',
-    hoverColor: '#FAD02C',
+    icon: shoppingBagFill,
+    color: '#FFA500',
+    hoverColor: '#A36A00',
     path: PATH_REPORT_APP.productSale
   },
   {
     title: 'DIỄN TIẾN NGÀY',
-    icon: calendarFill,
+    icon: trendingUp,
     color: '#E4021B',
     hoverColor: '#bb0909',
     path: PATH_REPORT_APP.productProgress
   },
   {
     title: 'SO SÁNH SẢN PHẨM',
-    icon: pantoneFill,
-    color: '#2E8BC0',
-    hoverColor: '#009688',
+    icon: repeatFill,
+    color: '#30D5C8',
+    hoverColor: '#1D8D84',
+    path: PATH_REPORT_APP.productProgress
+  },
+  {
+    title: 'SO SÁNH DOANH THU',
+    icon: peopleFill,
+    color: '#A020F0',
+    hoverColor: '#6C0BA9',
     path: PATH_REPORT_APP.productProgress
   }
 ];

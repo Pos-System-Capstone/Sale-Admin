@@ -4,8 +4,7 @@ import { axiosInstances } from 'utils/axios';
 
 const request = axiosInstances.report;
 
-const getPromotion = (id: number, params?: any) =>
-  request.get<BaseReponse<TPromotionBase>>(`/promotion-report/${id}`);
+const getPromotion = (id: number, params?: any) => request.get<BaseReponse<TPromotionBase>>(``);
 
 const promotionApi = { getPromotion };
 

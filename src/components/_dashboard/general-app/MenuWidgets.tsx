@@ -1,10 +1,12 @@
 import { Icon } from '@iconify/react';
 // material
 import { useTheme, styled } from '@mui/material/styles';
-import { Card, Typography, Box } from '@mui/material';
+import { Card, Typography, Box, Link } from '@mui/material';
 // utils
 // import { fNumber } from '../../../utils/formatNumber';
 import React, { useState } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
+
 // ----------------------------------------------------------------------
 type FeatureProp = {
   Features: {
@@ -12,6 +14,7 @@ type FeatureProp = {
     icon: any;
     color: any;
     hoverColor: any;
+    path: any;
   };
 };
 
@@ -39,26 +42,30 @@ export default function MenuWidgets({ Features }: FeatureProp) {
   const [isShown, setIsShown] = useState(false);
 
   return (
-    <RootStyle
-      sx={{
-        backgroundColor: `${Features.color}`,
-        cursor: 'pointer',
-        '&:hover': { backgroundColor: `${Features.hoverColor}`, padding: '60px' }
-      }}
-      onMouseEnter={() => setIsShown(true)}
-      onMouseLeave={() => setIsShown(false)}
-    >
-      <Box sx={{ ml: 3, color: 'common.white', cursor: 'pointer' }}>
-        <Typography variant="h3" sx={{ marginLeft: '-20px' }}>
-          {Features.title}
-        </Typography>
-        {isShown && (
-          <Typography variant="subtitle1" sx={{ opacity: 0.72, marginLeft: '-20px' }}>
-            Doanh thu cao nhất
-          </Typography>
-        )}
-      </Box>
-      <IconStyle icon={Features.icon} />
-    </RootStyle>
+    <>
+      <Link underline="none" component={RouterLink} to={Features.path}>
+        <RootStyle
+          sx={{
+            backgroundColor: `${Features.color}`,
+            cursor: 'pointer',
+            '&:hover': { backgroundColor: `${Features.hoverColor}`, padding: '60px' }
+          }}
+          onMouseEnter={() => setIsShown(true)}
+          onMouseLeave={() => setIsShown(false)}
+        >
+          <Box sx={{ ml: 3, color: 'common.white', cursor: 'pointer' }}>
+            <Typography variant="h3" sx={{ marginLeft: '-20px' }}>
+              {Features.title}
+            </Typography>
+            {isShown && (
+              <Typography variant="subtitle1" sx={{ opacity: 0.72, marginLeft: '-20px' }}>
+                Doanh thu cao nhất
+              </Typography>
+            )}
+          </Box>
+          <IconStyle icon={Features.icon} />
+        </RootStyle>
+      </Link>
+    </>
   );
 }

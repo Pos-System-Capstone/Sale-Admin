@@ -9,10 +9,10 @@ import { get } from 'lodash';
 import { useSnackbar } from 'notistack';
 import { useRef, useState } from 'react';
 // components
-import promotionApi from 'api/report/promotion';
+// import promotionApi from 'api/report/promotion';
 import { SelectField } from 'components/form';
 import Label from 'components/Label';
-import { TPromotionBase } from 'types/report/promotion';
+// import { TPromotionBase } from 'types/report/promotion';
 import { TStore } from 'types/store';
 import { TTableColumn } from 'types/table';
 // import { DatePicker, LocalizationProvider } from '@mui/lab';
@@ -43,35 +43,146 @@ const PromotionReport = () => {
           variant: 'error'
         });
       });
+  type TPromotionBase = {
+    CustomerName: string;
+    OrderQty: number;
+    SumAmount: number;
+    SumDiscount: number;
+    SumFinal: number;
+    PromoID: number;
+    Id: number;
+  };
+  const PromotionBase: any = () => {
+    return {
+      metadata: {
+        page: 1,
+        size: 10,
+        total: 20
+      },
+      data: [
+        {
+          CustomerName: 'Trần Hữu Ninh',
+          OrderQty: 1,
+          SumAmount: 25000,
+          SumDiscount: 25000,
+          SumFinal: 0,
+          PromoID: 1,
+          Id: 5795
+        },
+        {
+          CustomerName: 'Hồ Ngọc Ẩn',
+          OrderQty: 1,
+          SumAmount: 25000,
+          SumDiscount: 25000,
+          SumFinal: 0,
+          PromoID: 1,
+          Id: 5799
+        },
+        {
+          CustomerName: 'nguyễn văn thuấn',
+          OrderQty: 2,
+          SumAmount: 70000,
+          SumDiscount: 70000,
+          SumFinal: 0,
+          PromoID: 1,
+          Id: 5802
+        },
+        {
+          CustomerName: 'Vũ Đinh',
+          OrderQty: 1,
+          SumAmount: 19000,
+          SumDiscount: 19000,
+          SumFinal: 0,
+          PromoID: 1,
+          Id: 6533
+        },
+        {
+          CustomerName: 'Nguyễn Phạm Quang Trí',
+          OrderQty: 1,
+          SumAmount: 55000,
+          SumDiscount: 55000,
+          SumFinal: 0,
+          PromoID: 1,
+          Id: 11857
+        },
+        {
+          CustomerName: 'Võ Tuấn Thanh AM',
+          OrderQty: 3,
+          SumAmount: 135000,
+          SumDiscount: 135000,
+          SumFinal: 0,
+          PromoID: 1,
+          Id: 13957
+        },
+        {
+          CustomerName: 'quynh nguyen',
+          OrderQty: 2,
+          SumAmount: 150000,
+          SumDiscount: 150000,
+          SumFinal: 0,
+          PromoID: 1,
+          Id: 13986
+        },
+        {
+          CustomerName: 'huỳnh văn tuyển',
+          OrderQty: 2,
+          SumAmount: 60000,
+          SumDiscount: 60000,
+          SumFinal: 0,
+          PromoID: 1,
+          Id: 29424
+        },
+        {
+          CustomerName: 'Long',
+          OrderQty: 1,
+          SumAmount: 350000,
+          SumDiscount: 350000,
+          SumFinal: 0,
+          PromoID: 1,
+          Id: 31440
+        },
+        {
+          CustomerName: 'Viết Khôi',
+          OrderQty: 1,
+          SumAmount: 47000,
+          SumDiscount: 47000,
+          SumFinal: 0,
+          PromoID: 1,
+          Id: 41288
+        }
+      ]
+    };
+  };
+  console.log(PromotionBase.data);
   const columns: TTableColumn<TPromotionBase>[] = [
     {
-      title: 'Chương trình khuyên mãi',
-      dataIndex: 'customerName'
+      title: 'Tên khách hàng',
+      dataIndex: 'CustomerName'
       // hideInSearch: true
     },
     {
-      title: 'Doanh số trước giảm giá',
-      dataIndex: 'sumAmount',
+      title: 'Số lần sử dụng thẻ',
+      dataIndex: 'OrderQty',
       hideInSearch: true
     },
     {
-      title: 'Giảm giá',
-      dataIndex: 'storeName',
+      title: 'Số tiền',
+      dataIndex: 'SumAmount',
       hideInSearch: true
     },
     {
-      title: 'Doanh số sau giảm giá',
-      // dataIndex: 'open_time',
+      title: 'Số tiền giảm giá',
+      dataIndex: 'SumDiscount',
       hideInSearch: true
     },
-    // {
-    //   title: translate('pages.stores.table.closeTime'),
-    //   dataIndex: 'close_time',
-    //   hideInSearch: true
-    // },
+    {
+      title: 'Thanh toán',
+      dataIndex: 'SumFinal',
+      hideInSearch: true
+    },
     {
       title: 'Xem các hóa đơn',
-      // dataIndex: 'is_available',
+      dataIndex: 'PromoID',
       // hideInSearch: true,
       render: (isAvai: any) => (
         <Label color={isAvai ? 'success' : 'default'}>
@@ -148,7 +259,7 @@ const PromotionReport = () => {
           <ResoTable
             rowKey="promotion-id"
             ref={tableRef}
-            getData={promotionApi.getPromotion(13)}
+            getData={PromotionBase}
             columns={columns}
           />
         </Stack>

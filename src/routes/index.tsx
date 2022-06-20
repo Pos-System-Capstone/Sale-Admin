@@ -30,6 +30,9 @@ import PromotionDash from 'pages/dashboard/PromotionSystemDashboard';
 import Promotion from 'pages/promotionEngine/Promotion';
 import CreatePromotion from 'pages/promotionEngine/Promotion/CreatePromotion';
 import ReportDashboard from 'pages/dashboard/ReportDashboard';
+import TimeReport from 'pages/report/TradingReport/TimeReport';
+import DateReport from 'pages/report/TradingReport/DateReport';
+import MonthReport from 'pages/report/TradingReport/MonthReport';
 
 // import ReportGeneralApp from 'pages/report/GeneralReport/GeneralApp';
 
@@ -213,10 +216,12 @@ export default function Router() {
           children: [{ path: '', element: <ProductSaleReport /> }]
         },
         {
-          path: 'trading',
+          path: 'day-report',
           children: [
-            { path: '', element: <TradingReport /> },
-            { path: ':id', element: <UpdateMenuPage /> }
+            { path: '', element: <DayReport /> },
+            { path: 'time-report', element: <TimeReport /> },
+            { path: 'date-report', element: <DateReport /> },
+            { path: 'month-report', element: <MonthReport /> }
           ]
         },
         {
@@ -366,7 +371,7 @@ const UpdateProduct = Loadable(lazy(() => import('../pages/Products/UpdateProduc
 const CreateProduct = Loadable(lazy(() => import('../pages/Products/create')));
 
 // Menu
-const TradingReport = Loadable(lazy(() => import('../pages/report/TradingReport')));
+const DayReport = Loadable(lazy(() => import('../pages/report/TradingReport')));
 const MenusPage = Loadable(lazy(() => import('../pages/Menus')));
 const UpdateMenuPage = Loadable(lazy(() => import('../pages/Menus/update')));
 const MenuInStorePage = Loadable(lazy(() => import('../pages/Menus/MenuInStore')));

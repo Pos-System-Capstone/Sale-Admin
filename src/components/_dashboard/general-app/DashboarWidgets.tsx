@@ -24,9 +24,10 @@ const RootStyle = styled(Card)(({ theme }) => ({
 }));
 
 const IconStyle = styled(Icon)(({ theme }) => ({
+  marginRight: 20,
   width: 120,
   height: 120,
-  opacity: 0.12,
+  opacity: 0.2,
   position: 'absolute',
   right: theme.spacing(-3),
   color: theme.palette.common.white

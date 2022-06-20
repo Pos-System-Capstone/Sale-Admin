@@ -246,7 +246,7 @@ export const reportAppSidebarConfig = [
       },
       {
         title: 'report.trading',
-        path: PATH_REPORT_APP.trading,
+        path: PATH_REPORT_APP.dayReport,
         icon: ICONS.menu
       },
       {

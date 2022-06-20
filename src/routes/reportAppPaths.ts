@@ -32,5 +32,8 @@ export const PATH_REPORT_APP = {
   productSale: path(ROOTS_DASHBOARD, '/product-sale'),
   productProgress: path(ROOTS_DASHBOARD, '/product-progress'),
   promotion: path(ROOTS_DASHBOARD, '/promotion'),
-  trading: path(ROOTS_DASHBOARD, '/trading')
+  dayReport: path(ROOTS_DASHBOARD, '/day-report'),
+  timeReport: path(ROOTS_DASHBOARD, '/day-report/time-report'),
+  dateReport: path(ROOTS_DASHBOARD, '/day-report/date-report'),
+  monthReport: path(ROOTS_DASHBOARD, '/day-report/month-report')
 };
