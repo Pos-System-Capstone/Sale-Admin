@@ -100,7 +100,8 @@ const atStore: any = [
   {
     title: 'Doanh thu',
     unit: 'VNĐ',
-    dataIndex: 'TotalRevenueAtStore'
+    dataIndex: 'TotalRevenueAtStore',
+    highlight: true
   },
   {
     title: 'Tổng hóa đơn',
@@ -110,7 +111,8 @@ const atStore: any = [
   {
     title: 'TB hóa đơn',
     unit: 'VNĐ/Hóa đơn',
-    dataIndex: ''
+    dataIndex: '',
+    highlight: true
   },
   {
     title: 'TB sản phẩm',
@@ -122,7 +124,8 @@ const takeAway: any = [
   {
     title: 'Doanh thu',
     unit: 'VNĐ',
-    dataIndex: 'TotalRevenueTakeAway'
+    dataIndex: 'TotalRevenueTakeAway',
+    highlight: true
   },
   {
     title: 'Tổng hóa đơn',
@@ -132,7 +135,8 @@ const takeAway: any = [
   {
     title: 'TB hóa đơn',
     unit: 'VNĐ/Hóa đơn',
-    dataIndex: ''
+    dataIndex: '',
+    highlight: true
   },
   {
     title: 'TB sản phẩm',
@@ -144,7 +148,8 @@ const delivery: any = [
   {
     title: 'Doanh thu',
     unit: 'VNĐ',
-    dataIndex: 'TotalRevenueDelivery'
+    dataIndex: 'TotalRevenueDelivery',
+    highlight: true
   },
   {
     title: 'Tổng hóa đơn',
@@ -154,7 +159,8 @@ const delivery: any = [
   {
     title: 'TB hóa đơn',
     unit: 'VNĐ/Hóa đơn',
-    dataIndex: ''
+    dataIndex: '',
+    highlight: true
   },
   {
     title: 'TB sản phẩm',
@@ -166,7 +172,8 @@ const cancel: any = [
   {
     title: 'Tổng giá trị',
     unit: 'VNĐ',
-    dataIndex: 'TotalRevenuePrecancel'
+    dataIndex: 'TotalRevenuePrecancel',
+    highlight: true
   },
   {
     title: 'Tổng hóa đơn',
@@ -176,7 +183,8 @@ const cancel: any = [
   {
     title: 'Hủy Trước Chế Biến',
     unit: 'VNĐ/Hóa đơn',
-    dataIndex: ''
+    dataIndex: '',
+    highlight: true
   },
   {
     title: 'Hủy Sau Chế Biến',

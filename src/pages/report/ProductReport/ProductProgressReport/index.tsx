@@ -12,39 +12,117 @@ import { useState } from 'react';
 // components
 import { useNavigate } from 'react-router-dom';
 //
-import { Menu } from 'types/menu';
 import { TTableColumn } from 'types/table';
 
 const ProductProgressReport = () => {
   const navigate = useNavigate();
   const { translate } = useLocales();
   const { enqueueSnackbar } = useSnackbar();
-
-  const orderColumns: TTableColumn<Menu>[] = [
+  type ProductSaleDetail = {
+    date?: any;
+    quantity?: any;
+    revenueBefore?: any;
+    discount?: any;
+    revenue?: any;
+  };
+  const data = [
+    {
+      date: '2022/12/20',
+      quantity: 12,
+      revenueBefore: 21312312312,
+      discount: 12,
+      revenue: 321321312
+    },
+    {
+      date: '2022/12/20',
+      quantity: 12,
+      revenueBefore: 21312312312,
+      discount: 12,
+      revenue: 321321312
+    },
+    {
+      date: '2022/12/20',
+      quantity: 12,
+      revenueBefore: 21312312312,
+      discount: 12,
+      revenue: 321321312
+    },
+    {
+      date: '2022/12/20',
+      quantity: 12,
+      revenueBefore: 21312312312,
+      discount: 12,
+      revenue: 321321312
+    },
+    {
+      date: '2022/12/20',
+      quantity: 12,
+      revenueBefore: 21312312312,
+      discount: 12,
+      revenue: 321321312
+    },
+    {
+      date: '2022/12/20',
+      quantity: 12,
+      revenueBefore: 21312312312,
+      discount: 12,
+      revenue: 321321312
+    },
+    {
+      date: '2022/12/20',
+      quantity: 12,
+      revenueBefore: 21312312312,
+      discount: 12,
+      revenue: 321321312
+    },
+    {
+      date: '2022/12/20',
+      quantity: 12,
+      revenueBefore: 21312312312,
+      discount: 12,
+      revenue: 321321312
+    },
+    {
+      date: '2022/12/20',
+      quantity: 12,
+      revenueBefore: 21312312312,
+      discount: 12,
+      revenue: 321321312
+    },
+    {
+      date: '2022/12/20',
+      quantity: 12,
+      revenueBefore: 21312312312,
+      discount: 12,
+      revenue: 321321312
+    }
+  ];
+  const orderColumns: TTableColumn<ProductSaleDetail>[] = [
     {
       title: 'Ngày',
       valueType: 'select',
-      hideInSearch: true
+      hideInSearch: true,
+      dataIndex: 'date'
     },
     {
       title: 'Số',
-      hideInSearch: true
+      hideInSearch: true,
+      dataIndex: 'quantity'
     },
     {
       title: 'Doanh thu trước giảm giá',
-      hideInSearch: true
+      hideInSearch: true,
+      dataIndex: 'revenueBefore'
     },
     {
       title: 'Giảm giá',
-      hideInSearch: true
+      hideInSearch: true,
+      dataIndex: 'discount'
     },
     {
       title: 'Doanh thu',
-      hideInSearch: true
-    },
-    {
-      title: '',
-      hideInTable: true
+      hideInSearch: true,
+      dataIndex: 'revenue'
     },
     {
       title: 'Loại',
@@ -120,7 +198,7 @@ const ProductProgressReport = () => {
             </Box>
           )}
           <Box>
-            <ResoTable showAction={false} columns={orderColumns} />
+            <ResoTable showAction={false} columns={orderColumns} dataSource={data} />
           </Box>
         </Stack>
       </Card>

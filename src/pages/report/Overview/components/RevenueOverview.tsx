@@ -44,7 +44,7 @@ function RevenueOverview() {
     <Stack spacing={4} mt={4}>
       {/* I. Bán hàng */}
       <Stack spacing={2}>
-        <Typography pl={1} variant="h4">
+        <Typography pl={2} variant="h4">
           I. Bán hàng
         </Typography>
 
@@ -76,7 +76,7 @@ function RevenueOverview() {
 
       {/* II. Nạp thẻ */}
       <Stack spacing={2}>
-        <Typography pl={1} variant="h4">
+        <Typography pl={2} variant="h4">
           II. Nạp thẻ
         </Typography>
         <Box>
@@ -107,7 +107,7 @@ function RevenueOverview() {
 
       {/* III. Thành phần doanh thu*/}
       <Stack spacing={2}>
-        <Typography pl={1} variant="h4">
+        <Typography pl={2} variant="h4">
           III. Thành phần doanh thu
         </Typography>
 
@@ -251,7 +251,7 @@ function RevenueOverview() {
 
       {/* IV. Thanh Toán & Thu Ngân*/}
       <Stack spacing={2}>
-        <Typography pl={1} variant="h4">
+        <Typography pl={2} variant="h4">
           IV. Thanh Toán & Thu Ngân
         </Typography>
 

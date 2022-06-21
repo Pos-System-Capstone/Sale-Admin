@@ -8,7 +8,6 @@ import { useSnackbar } from 'notistack';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TCollection } from 'types/collection';
-import { Menu } from 'types/menu';
 import { TTableColumn } from 'types/table';
 import ReportBtn from '../components/ReportBtn';
 import ReportDatePicker from '../components/ReportDatePicker';
@@ -22,35 +21,118 @@ const CollectionListPage = () => {
   const [date, setDate] = useState<Date>(new Date());
   const [currentDeleteItem, setCurrentDeleteItem] = useState<TCollection | null>(null);
 
-  const orderColumns: TTableColumn<Menu>[] = [
+  type ProductSaleDetail = {
+    name?: any;
+    date?: any;
+    cash?: any;
+    memberCard?: any;
+    bank?: any;
+    eWallet?: any;
+  };
+  const data = [
+    {
+      name: 'รายการที่ 1',
+      date: '2022/12/20',
+      cash: 12321,
+      memberCard: 1,
+      bank: 12321,
+      eWallet: 123
+    },
+    {
+      name: 'รายการที่ 1',
+      date: '2022/12/20',
+      cash: 12321,
+      memberCard: 1,
+      bank: 12321,
+      eWallet: 123
+    },
+    {
+      name: 'รายการที่ 1',
+      date: '2022/12/20',
+      cash: 12321,
+      memberCard: 1,
+      bank: 12321,
+      eWallet: 123
+    },
+    {
+      name: 'รายการที่ 1',
+      date: '2022/12/20',
+      cash: 12321,
+      memberCard: 1,
+      bank: 12321,
+      eWallet: 123
+    },
+    {
+      name: 'รายการที่ 1',
+      date: '2022/12/20',
+      cash: 12321,
+      memberCard: 1,
+      bank: 12321,
+      eWallet: 123
+    },
+    {
+      name: 'รายการที่ 1',
+      date: '2022/12/20',
+      cash: 12321,
+      memberCard: 1,
+      bank: 12321,
+      eWallet: 123
+    },
+    {
+      name: 'รายการที่ 1',
+      date: '2022/12/20',
+      cash: 12321,
+      memberCard: 1,
+      bank: 12321,
+      eWallet: 123
+    },
+    {
+      name: 'รายการที่ 1',
+      date: '2022/12/20',
+      cash: 12321,
+      memberCard: 1,
+      bank: 12321,
+      eWallet: 123
+    },
+    {
+      name: 'รายการที่ 1',
+      date: '2022/12/20',
+      cash: 12321,
+      memberCard: 1,
+      bank: 12321,
+      eWallet: 123
+    }
+  ];
+  const orderColumns: TTableColumn<ProductSaleDetail>[] = [
     {
       title: 'Ngày',
       hideInSearch: true,
-      hideInTable: true
+      dataIndex: 'date'
     },
     {
       title: 'Cửa hàng',
-      valueType: 'select'
+      valueType: 'select',
+      hideInTable: true
     },
     {
-      title: 'Tiền mặt bán hàng',
-      hideInSearch: true
+      title: 'Tiền mặt',
+      hideInSearch: true,
+      dataIndex: 'cash'
     },
     {
-      title: 'Tiền mặt nạp thẻ',
-      hideInSearch: true
-    },
-    {
-      title: 'Tiền sử dụng TTV',
-      hideInSearch: true
+      title: 'Thẻ thành viên',
+      hideInSearch: true,
+      dataIndex: 'memberCard'
     },
     {
       title: 'Ngân hàng',
-      hideInSearch: true
+      hideInSearch: true,
+      dataIndex: 'bank'
     },
     {
       title: 'Ví điện tử',
-      hideInSearch: true
+      hideInSearch: true,
+      dataIndex: 'eWallet'
     }
   ];
 
@@ -70,7 +152,7 @@ const CollectionListPage = () => {
     >
       <Card>
         <Stack spacing={2}>
-          <ResoTable showAction={false} columns={orderColumns} />
+          <ResoTable showAction={false} columns={orderColumns} dataSource={data} />
         </Stack>
       </Card>
     </ReportPage>

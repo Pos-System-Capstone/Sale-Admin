@@ -56,6 +56,99 @@ function TabTwo({ date }: any) {
     totalRevenue?: any;
   };
 
+  const data = [
+    {
+      name: 'HCM.UN.FPTMALL.D1\r\n',
+      bill: 355,
+      billCard: 0,
+      totalProduct: 0,
+      saleRevenue: 132121,
+      billRevenue: 0,
+      totalRevenue: 132121
+    },
+    {
+      name: 'HCM.UN.FPTMALL.D1\r\n',
+      bill: 355,
+      billCard: 0,
+      totalProduct: 0,
+      saleRevenue: 132121,
+      billRevenue: 0,
+      totalRevenue: 132121
+    },
+    {
+      name: 'HCM.UN.FPTMALL.D1\r\n',
+      bill: 355,
+      billCard: 0,
+      totalProduct: 0,
+      saleRevenue: 132121,
+      billRevenue: 0,
+      totalRevenue: 132121
+    },
+    {
+      name: 'HCM.UN.FPTMALL.D1\r\n',
+      bill: 355,
+      billCard: 0,
+      totalProduct: 0,
+      saleRevenue: 132121,
+      billRevenue: 0,
+      totalRevenue: 132121
+    },
+    {
+      name: 'HCM.UN.FPTMALL.D1\r\n',
+      bill: 355,
+      billCard: 0,
+      totalProduct: 0,
+      saleRevenue: 132121,
+      billRevenue: 0,
+      totalRevenue: 132121
+    },
+    {
+      name: 'HCM.UN.FPTMALL.D1\r\n',
+      bill: 355,
+      billCard: 0,
+      totalProduct: 0,
+      saleRevenue: 132121,
+      billRevenue: 0,
+      totalRevenue: 132121
+    },
+    {
+      name: 'HCM.UN.FPTMALL.D1\r\n',
+      bill: 355,
+      billCard: 0,
+      totalProduct: 0,
+      saleRevenue: 132121,
+      billRevenue: 0,
+      totalRevenue: 132121
+    },
+    {
+      name: 'HCM.UN.FPTMALL.D1\r\n',
+      bill: 355,
+      billCard: 0,
+      totalProduct: 0,
+      saleRevenue: 132121,
+      billRevenue: 0,
+      totalRevenue: 132121
+    },
+    {
+      name: 'HCM.UN.FPTMALL.D1\r\n',
+      bill: 355,
+      billCard: 0,
+      totalProduct: 0,
+      saleRevenue: 132121,
+      billRevenue: 0,
+      totalRevenue: 132121
+    },
+    {
+      name: 'HCM.UN.FPTMALL.D1\r\n',
+      bill: 355,
+      billCard: 0,
+      totalProduct: 0,
+      saleRevenue: 132121,
+      billRevenue: 0,
+      totalRevenue: 132121
+    }
+  ];
+
   const orderColumns: TTableColumn<ProductSaleDetail>[] = [
     {
       title: 'Ngày',
@@ -106,7 +199,7 @@ function TabTwo({ date }: any) {
     >
       {/* VI. Chi tiet Doanh Thu Sản Phẩm*/}
       <Stack spacing={2}>
-        <Typography pl={1} variant="h4">
+        <Typography pl={2} variant="h4">
           VI. Top Doanh Thu Sản Phẩm
         </Typography>
         <ResoTable
@@ -120,6 +213,7 @@ function TabTwo({ date }: any) {
           showAction={false}
           columns={orderColumns}
           ref={ref}
+          dataSource={data}
           // getData={getFakeApi}
         />
       </Stack>

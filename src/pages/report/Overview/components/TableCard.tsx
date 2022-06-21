@@ -118,7 +118,7 @@ const TableCard: React.FC<CardProps> = ({
   fakeData,
   bc,
   bch,
-  fontWeight = '400',
+  fontWeight = '500',
   titleHeader = 'A default title',
   subtitleHeader = 'A default subtitle',
   smallCard = false,
@@ -132,51 +132,74 @@ const TableCard: React.FC<CardProps> = ({
         color: 'grey.0',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        px: smallCard ? 1 : 2
       }}
     >
       <Box>
         <Typography variant="h4" align="center">
           {titleHeader}
         </Typography>
-        <Typography variant="subtitle2" color="grey.400" align="center">
+        <Typography variant="subtitle2" color="grey.300" align="center">
           {subtitleHeader}
         </Typography>
       </Box>
 
-      {smallCard ? (
-        <>
-          {columnData?.map((item: any) => {
-            const hItem = item.highlight ? bch : bc;
-            const fz = item.fontSize === 'small' ? 'h6' : 'h4';
-            return (
+      {columnData?.map((item: any) => {
+        const hItem = item.highlight ? bch : bc;
+        const fz = item.fontSize === 'small' ? 'h6' : 'h4';
+        const fz2 = item.fontSize === 'small' ? 'caption' : 'body2';
+        return (
+          <Box
+            key={item}
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: smallCard ? 'flex-start' : 'center',
+              borderRadius: 1,
+              p: 1,
+              backgroundColor: hItem
+            }}
+          >
+            {smallCard ? (
               <>
-                <Box
-                  key={item}
-                  sx={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    pt: 1,
-                    gap: 1,
-                    backgroundColor: hItem
-                  }}
-                >
-                  <Box>
-                    <Typography sx={{ fontWeight }} variant="body2" component="div">
-                      {item.title}
-                    </Typography>
-                  </Box>
+                <Box>
+                  <Typography sx={{ fontWeight }} variant="body2" component="div">
+                    {item.title}
+                  </Typography>
+                </Box>
+                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
                   <Box>
                     <Typography sx={{ fontWeight }} variant="body2" component="div">
                       {item.unit}
                     </Typography>
                   </Box>
+                  {item.dataIndex === 'null' ? (
+                    ''
+                  ) : (
+                    <Box display="flex" justifyContent="flex-end">
+                      <Typography sx={{ fontWeight }} variant={fz} component="div">
+                        {fakeData[item.dataIndex] < 100
+                          ? fShortenNumber(
+                              fakeData[item.dataIndex] || fakeDataPayment[item.dataIndex]
+                            )
+                          : fNumber(fakeData[item.dataIndex] || fakeDataPayment[item.dataIndex])}
+                      </Typography>
+                    </Box>
+                  )}
                 </Box>
-                {item.dataIndex === 'null' ? (
-                  ''
-                ) : (
-                  <Box display="flex" justifyContent="flex-end">
+              </>
+            ) : (
+              <>
+                <Box>
+                  <Typography sx={{ fontWeight }} variant={fz2} component="div">
+                    {item.title}
+                  </Typography>
+                </Box>
+                <Box>
+                  {item.dataIndex === 'null' ? (
+                    ''
+                  ) : (
                     <Typography sx={{ fontWeight }} variant={fz} component="div">
                       {fakeData[item.dataIndex] < 100
                         ? fShortenNumber(
@@ -184,47 +207,13 @@ const TableCard: React.FC<CardProps> = ({
                           )
                         : fNumber(fakeData[item.dataIndex] || fakeDataPayment[item.dataIndex])}
                     </Typography>
-                  </Box>
-                )}
+                  )}
+                </Box>
               </>
-            );
-          })}
-        </>
-      ) : (
-        <>
-          {columnData?.map((item: any) => {
-            const hItem = item.highlight ? bch : bc;
-            const fz = item.fontSize === 'small' ? 'h6' : 'h4';
-            const fz2 = item.fontSize === 'small' ? 'caption' : 'body2';
-            return (
-              <Box
-                key={item}
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  p: 1,
-                  gap: 2,
-                  backgroundColor: hItem
-                }}
-              >
-                <Typography sx={{ fontWeight }} variant={fz2} component="div">
-                  {item.title}
-                </Typography>
-                {item.dataIndex === 'null' ? (
-                  ''
-                ) : (
-                  <Typography sx={{ fontWeight }} variant={fz} component="div">
-                    {fakeData[item.dataIndex] < 100
-                      ? fShortenNumber(fakeData[item.dataIndex] || fakeDataPayment[item.dataIndex])
-                      : fNumber(fakeData[item.dataIndex] || fakeDataPayment[item.dataIndex])}
-                  </Typography>
-                )}
-              </Box>
-            );
-          })}
-        </>
-      )}
+            )}
+          </Box>
+        );
+      })}
     </Card>
   );
 };

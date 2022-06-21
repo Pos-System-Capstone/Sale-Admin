@@ -18,39 +18,108 @@ function TopStoreRevenue({ date }: any) {
   //   }
   // }, [date]);
 
-  const getFakeApi: any = () => {
-    return {
-      data: {
-        metadata: {
-          page: 1,
-          size: 10,
-          total: 2
-        },
-        data: [
-          {
-            index: 1,
-            name: 'HCM.UN.FPTMALL.D1\r\n',
-            bill: 355,
-            billCard: 0,
-            totalProduct: 0,
-            saleRevenue: 132121,
-            billRevenue: 0,
-            totalRevenue: 132121
-          },
-          {
-            index: 2,
-            name: 'HCM.UN.FPTMALL.D1\r\n',
-            bill: 355,
-            billCard: 1,
-            totalProduct: 1,
-            saleRevenue: 132121,
-            billRevenue: 1,
-            totalRevenue: 132121
-          }
-        ]
-      }
-    };
-  };
+  const data = [
+    {
+      index: 1,
+      name: 'HCM.UN.FPTMALL.D1\r\n',
+      bill: 355,
+      billCard: 0,
+      totalProduct: 0,
+      saleRevenue: 132121,
+      billRevenue: 0,
+      totalRevenue: 132121
+    },
+    {
+      index: 2,
+      name: 'HCM.UN.FPTMALL.D1\r\n',
+      bill: 355,
+      billCard: 1,
+      totalProduct: 1,
+      saleRevenue: 132121,
+      billRevenue: 1,
+      totalRevenue: 132121
+    },
+    {
+      index: 1,
+      name: 'HCM.UN.FPTMALL.D1\r\n',
+      bill: 355,
+      billCard: 0,
+      totalProduct: 0,
+      saleRevenue: 132121,
+      billRevenue: 0,
+      totalRevenue: 132121
+    },
+    {
+      index: 2,
+      name: 'HCM.UN.FPTMALL.D1\r\n',
+      bill: 355,
+      billCard: 1,
+      totalProduct: 1,
+      saleRevenue: 132121,
+      billRevenue: 1,
+      totalRevenue: 132121
+    },
+    {
+      index: 1,
+      name: 'HCM.UN.FPTMALL.D1\r\n',
+      bill: 355,
+      billCard: 0,
+      totalProduct: 0,
+      saleRevenue: 132121,
+      billRevenue: 0,
+      totalRevenue: 132121
+    },
+    {
+      index: 2,
+      name: 'HCM.UN.FPTMALL.D1\r\n',
+      bill: 355,
+      billCard: 1,
+      totalProduct: 1,
+      saleRevenue: 132121,
+      billRevenue: 1,
+      totalRevenue: 132121
+    },
+    {
+      index: 1,
+      name: 'HCM.UN.FPTMALL.D1\r\n',
+      bill: 355,
+      billCard: 0,
+      totalProduct: 0,
+      saleRevenue: 132121,
+      billRevenue: 0,
+      totalRevenue: 132121
+    },
+    {
+      index: 2,
+      name: 'HCM.UN.FPTMALL.D1\r\n',
+      bill: 355,
+      billCard: 1,
+      totalProduct: 1,
+      saleRevenue: 132121,
+      billRevenue: 1,
+      totalRevenue: 132121
+    },
+    {
+      index: 1,
+      name: 'HCM.UN.FPTMALL.D1\r\n',
+      bill: 355,
+      billCard: 0,
+      totalProduct: 0,
+      saleRevenue: 132121,
+      billRevenue: 0,
+      totalRevenue: 132121
+    },
+    {
+      index: 2,
+      name: 'HCM.UN.FPTMALL.D1\r\n',
+      bill: 355,
+      billCard: 1,
+      totalProduct: 1,
+      saleRevenue: 132121,
+      billRevenue: 1,
+      totalRevenue: 132121
+    }
+  ];
 
   type ProductSaleDetail = {
     index?: any;
@@ -113,7 +182,7 @@ function TopStoreRevenue({ date }: any) {
     >
       {/* V. Top Doanh Thu Sản Phẩm*/}
       <Stack spacing={2}>
-        <Typography pl={1} variant="h4">
+        <Typography pl={2} variant="h4">
           V. Top Doanh Thu Cửa Hàng
         </Typography>
         <ResoTable
@@ -127,7 +196,7 @@ function TopStoreRevenue({ date }: any) {
           showAction={false}
           columns={orderColumns}
           ref={ref}
-          getData={getFakeApi}
+          dataSource={data}
         />
       </Stack>
     </Box>

@@ -12,7 +12,6 @@ import { useState } from 'react';
 // components
 import { useNavigate } from 'react-router-dom';
 //
-import { Menu } from 'types/menu';
 import { TTableColumn } from 'types/table';
 
 const ProductSaleReport = () => {
@@ -20,7 +19,114 @@ const ProductSaleReport = () => {
   const { translate } = useLocales();
   const { enqueueSnackbar } = useSnackbar();
 
-  const orderColumns: TTableColumn<Menu>[] = [
+  type ProductSaleDetail = {
+    name?: any;
+    quantity?: any;
+    radio?: any;
+    revenueBefore?: any;
+    discount?: any;
+    revenue?: any;
+  };
+  const data = [
+    {
+      name: 'eqweqweqw',
+      quantity: 321,
+      radio: '12%',
+      revenueBefore: 321312321,
+      discount: '50%',
+      revenue: 321312321321
+    },
+    {
+      name: 'eqweqweqw',
+      quantity: 321,
+      radio: '12%',
+      revenueBefore: 321312321,
+      discount: '50%',
+      revenue: 321312321321
+    },
+    {
+      name: 'eqweqweqw',
+      quantity: 321,
+      radio: '12%',
+      revenueBefore: 321312321,
+      discount: '50%',
+      revenue: 321312321321
+    },
+    {
+      name: 'eqweqweqw',
+      quantity: 321,
+      radio: '12%',
+      revenueBefore: 321312321,
+      discount: '50%',
+      revenue: 321312321321
+    },
+    {
+      name: 'eqweqweqw',
+      quantity: 321,
+      radio: '12%',
+      revenueBefore: 321312321,
+      discount: '50%',
+      revenue: 321312321321
+    },
+    {
+      name: 'eqweqweqw',
+      quantity: 321,
+      radio: '12%',
+      revenueBefore: 321312321,
+      discount: '50%',
+      revenue: 321312321321
+    },
+    {
+      name: 'eqweqweqw',
+      quantity: 321,
+      radio: '12%',
+      revenueBefore: 321312321,
+      discount: '50%',
+      revenue: 321312321321
+    },
+    {
+      name: 'eqweqweqw',
+      quantity: 321,
+      radio: '12%',
+      revenueBefore: 321312321,
+      discount: '50%',
+      revenue: 321312321321
+    },
+    {
+      name: 'eqweqweqw',
+      quantity: 321,
+      radio: '12%',
+      revenueBefore: 321312321,
+      discount: '50%',
+      revenue: 321312321321
+    },
+    {
+      name: 'eqweqweqw',
+      quantity: 321,
+      radio: '12%',
+      revenueBefore: 321312321,
+      discount: '50%',
+      revenue: 321312321321
+    },
+    {
+      name: 'eqweqweqw',
+      quantity: 321,
+      radio: '12%',
+      revenueBefore: 321312321,
+      discount: '50%',
+      revenue: 321312321321
+    },
+    {
+      name: 'eqweqweqw',
+      quantity: 321,
+      radio: '12%',
+      revenueBefore: 321312321,
+      discount: '50%',
+      revenue: 321312321321
+    }
+  ];
+
+  const orderColumns: TTableColumn<ProductSaleDetail>[] = [
     {
       title: 'Cửa hàng',
       hideInTable: true,
@@ -34,27 +140,33 @@ const ProductSaleReport = () => {
     },
     {
       title: 'Tên sản phẩm',
-      hideInSearch: true
+      hideInSearch: true,
+      dataIndex: 'name'
     },
     {
       title: 'Số lượng',
-      hideInSearch: true
+      hideInSearch: true,
+      dataIndex: 'quantity'
     },
     {
-      title: 'Tỉ trọng(%)',
-      hideInSearch: true
+      title: 'Tỉ trọng (%)',
+      hideInSearch: true,
+      dataIndex: 'radio'
     },
     {
       title: 'Tổng tiền trước giảm giá',
-      hideInSearch: true
+      hideInSearch: true,
+      dataIndex: 'revenueBefore'
     },
     {
       title: 'Giảm giá',
-      hideInSearch: true
+      hideInSearch: true,
+      dataIndex: 'discount'
     },
     {
       title: 'Tổng tiền sau giảm giá',
-      hideInSearch: true
+      hideInSearch: true,
+      dataIndex: 'revenue'
     },
     {
       title: 'Loại',
@@ -94,7 +206,7 @@ const ProductSaleReport = () => {
 
   return (
     <ReportPage
-      title="Báo cáo diễn tiến sản phẩm"
+      title="Báo cáo doanh thu sản phẩm"
       content={
         date.toDateString() === today.toDateString()
           ? `Tính đến: ${moment().format('hh:mm:ss')}`
@@ -129,7 +241,7 @@ const ProductSaleReport = () => {
             </Box>
           )}
           <Box>
-            <ResoTable showAction={false} columns={orderColumns} />
+            <ResoTable showAction={false} columns={orderColumns} dataSource={data} />
           </Box>
         </Stack>
       </Card>
