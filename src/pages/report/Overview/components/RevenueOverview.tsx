@@ -6,7 +6,7 @@ import { Box, Card, Grid, Stack, Typography } from '@mui/material';
 import ReactApexChart from 'react-apexcharts';
 import palette from 'theme/palette';
 import { fNumber } from 'utils/formatNumber';
-import TableCard, { fakeData, MiniTableCard, TableCardSmall } from '../components/TableCard';
+import TableCard, { fakeData, MiniTableCard } from '../components/TableCard';
 import config from './config';
 
 function RevenueOverview() {
@@ -41,17 +41,12 @@ function RevenueOverview() {
     }
   };
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 4,
-        mt: '30px'
-      }}
-    >
+    <Stack spacing={4} mt={4}>
       {/* I. Bán hàng */}
       <Stack spacing={2}>
-        <Typography variant="h4">I. Bán hàng</Typography>
+        <Typography pl={1} variant="h4">
+          I. Bán hàng
+        </Typography>
 
         <Box>
           <Grid container spacing={2}>
@@ -61,7 +56,7 @@ function RevenueOverview() {
                 subtitleHeader="Đơn vị (VNĐ)"
                 bc="reportPalette.green1"
                 bch="reportPalette.green2"
-                data={config.totalSalesRevenue}
+                columnData={config.totalSalesRevenue}
                 fakeData={fakeData}
               />
             </Grid>
@@ -71,7 +66,7 @@ function RevenueOverview() {
                 subtitleHeader="Đơn vị (Hóa đơn)"
                 bc="reportPalette.blue1"
                 bch="reportPalette.blue2"
-                data={config.totalSalesInvoice}
+                columnData={config.totalSalesInvoice}
                 fakeData={fakeData}
               />
             </Grid>
@@ -81,7 +76,9 @@ function RevenueOverview() {
 
       {/* II. Nạp thẻ */}
       <Stack spacing={2}>
-        <Typography variant="h4">II. Nạp thẻ</Typography>
+        <Typography pl={1} variant="h4">
+          II. Nạp thẻ
+        </Typography>
         <Box>
           <Grid container spacing={2}>
             <Grid item xs={6}>
@@ -90,7 +87,7 @@ function RevenueOverview() {
                 subtitleHeader="Đơn vị (VNĐ)"
                 bc="reportPalette.green1"
                 bch="reportPalette.green2"
-                data={config.TotalRevenueCardRecharge}
+                columnData={config.TotalRevenueCardRecharge}
                 fakeData={fakeData}
               />
             </Grid>
@@ -100,7 +97,7 @@ function RevenueOverview() {
                 subtitleHeader="Đơn vị (Hóa đơn)"
                 bc="reportPalette.blue1"
                 bch="reportPalette.blue2"
-                data={config.totalBillOfCard}
+                columnData={config.totalBillOfCard}
                 fakeData={fakeData}
               />
             </Grid>
@@ -110,7 +107,9 @@ function RevenueOverview() {
 
       {/* III. Thành phần doanh thu*/}
       <Stack spacing={2}>
-        <Typography variant="h4">III. Thành phần doanh thu</Typography>
+        <Typography pl={1} variant="h4">
+          III. Thành phần doanh thu
+        </Typography>
 
         <Box>
           <Grid container spacing={2}>
@@ -157,7 +156,7 @@ function RevenueOverview() {
           </Grid>
         </Box>
 
-        <Box>
+        <Box pt={1}>
           <Grid container spacing={2}>
             <Grid item xs={6}>
               <Card>
@@ -200,45 +199,49 @@ function RevenueOverview() {
           </Grid>
         </Box>
 
-        <Box>
+        <Box pt={1}>
           <Grid container spacing={2}>
             <Grid item xs={3}>
-              <TableCardSmall
+              <TableCard
+                smallCard={true}
                 titleHeader={<HomeIcon />}
                 subtitleHeader="Tại cửa hàng"
                 bc="reportPalette.red1"
                 bch="reportPalette.red2"
-                data={config.atStore}
+                columnData={config.atStore}
                 fakeData={fakeData}
               />
             </Grid>
             <Grid item xs={3}>
-              <TableCardSmall
+              <TableCard
+                smallCard={true}
                 titleHeader={<BusinessCenterIcon />}
-                subtitleHeader="Tại cửa hàng"
+                subtitleHeader="Mang về"
                 bc="reportPalette.darkGreen1"
                 bch="reportPalette.darkGreen2"
-                data={config.atStore}
+                columnData={config.atStore}
                 fakeData={fakeData}
               />
             </Grid>
             <Grid item xs={3}>
-              <TableCardSmall
+              <TableCard
+                smallCard={true}
                 titleHeader={<DeliveryDiningIcon />}
-                subtitleHeader="Tại cửa hàng"
+                subtitleHeader="Giao hàng"
                 bc="reportPalette.yellow1"
                 bch="reportPalette.yellow2"
-                data={config.atStore}
+                columnData={config.atStore}
                 fakeData={fakeData}
               />
             </Grid>
             <Grid item xs={3}>
-              <TableCardSmall
+              <TableCard
+                smallCard={true}
                 titleHeader={<CancelIcon />}
-                subtitleHeader="Tại cửa hàng"
+                subtitleHeader="Hóa đơn hủy"
                 bc="reportPalette.green1"
                 bch="reportPalette.green2"
-                data={config.atStore}
+                columnData={config.atStore}
                 fakeData={fakeData}
               />
             </Grid>
@@ -248,30 +251,36 @@ function RevenueOverview() {
 
       {/* IV. Thanh Toán & Thu Ngân*/}
       <Stack spacing={2}>
-        <Typography variant="h4">IV. Thanh Toán & Thu Ngân</Typography>
+        <Typography pl={1} variant="h4">
+          IV. Thanh Toán & Thu Ngân
+        </Typography>
 
         <Box>
           <Grid container spacing={2}>
             <Grid item xs={6}>
               <TableCard
+                titleHeader="Tổng thanh toán"
+                subtitleHeader="(1) + (2) + (3) + (4) + (5) + (6)| Đơn vị (VNĐ)"
                 bc="reportPalette.purple1"
                 bch="reportPalette.purple2"
-                data={config.totalPayment}
+                columnData={config.totalPayment}
                 fakeData={fakeData}
               />
             </Grid>
             <Grid item xs={6}>
               <TableCard
+                titleHeader="Tổng lượt thanh toán"
+                subtitleHeader="(1) + (2) + (3) + (4) + (5) + (6)| Đơn vị (Hóa đơn)"
                 bc="reportPalette.blue1"
                 bch="reportPalette.blue2"
-                data={config.totalAmountPayment}
+                columnData={config.totalAmountPayment}
                 fakeData={fakeData}
               />
             </Grid>
           </Grid>
         </Box>
       </Stack>
-    </Box>
+    </Stack>
   );
 }
 

@@ -11,10 +11,11 @@ import ReportPage from 'pages/report/components/ReportPage';
 import React, { useState } from 'react';
 // components
 import { useNavigate } from 'react-router-dom';
-import RevenueOverview from './RevenueOverview';
-import EmployeeStatistics from './EmployeeStatistics';
-import ProductSaleDetail from './ProductSaleDetail';
-import TopStoreRevenue from './TopStoreRevenue';
+import RevenueOverview from '../components/RevenueOverview';
+import EmployeeStatistics from '../components/EmployeeStatistics';
+import ProductSaleDetail from '../components/ProductSaleDetail';
+import TopStoreRevenue from '../components/TopStoreRevenue';
+
 // icons
 export default function OverviewDate() {
   const [activeTab, setActiveTab] = useState('1');
@@ -50,7 +51,7 @@ export default function OverviewDate() {
         <ReportBtn key="export-excel" onClick={() => console.log('Export excel')} />
       ]}
     >
-      <Card>
+      <Card sx={{ paddingBottom: 5 }}>
         <TabContext value={activeTab}>
           <Box>
             <TabList onChange={handleChangeTab}>

@@ -6,7 +6,7 @@ import TimelineIcon from '@mui/icons-material/Timeline';
 // I. Bán hàng
 const totalSalesRevenue: any = [
   {
-    icon: <AttachMoneyIcon />,
+    title: <AttachMoneyIcon />,
     dataIndex: 'TotalRevenue'
   },
   {
@@ -37,7 +37,7 @@ const totalSalesRevenue: any = [
 ];
 const totalSalesInvoice: any = [
   {
-    icon: <SyncAltIcon />,
+    title: <SyncAltIcon />,
     dataIndex: 'TotalOrder'
   },
   {
@@ -59,13 +59,13 @@ const totalSalesInvoice: any = [
 // II. Nạp thẻ
 const TotalRevenueCardRecharge: any = [
   {
-    icon: <AttachMoneyIcon />,
+    title: <AttachMoneyIcon />,
     dataIndex: 'TotalRevenueOrderCard'
   }
 ];
 const totalBillOfCard: any = [
   {
-    icon: <SyncAltIcon />,
+    title: <SyncAltIcon />,
     dataIndex: 'TotalOrderCard'
   }
 ];
@@ -73,25 +73,25 @@ const totalBillOfCard: any = [
 //III. Thành phần doanh thu
 const totalRevenue: any = [
   {
-    icon: <AttachMoneyIcon />,
+    title: <AttachMoneyIcon />,
     dataIndex: 'TotalRevenue'
   }
 ];
 const totalBill: any = [
   {
-    icon: <WindowIcon />,
+    title: <WindowIcon />,
     dataIndex: 'TotalOrder'
   }
 ];
 const averageBill: any = [
   {
-    icon: <WindowIcon />,
+    title: <WindowIcon />,
     dataIndex: 'AvgRevenueOrder'
   }
 ];
 const averageProduct: any = [
   {
-    icon: <WindowIcon />,
+    title: <WindowIcon />,
     dataIndex: 'AvgProductOrder'
   }
 ];
@@ -188,7 +188,7 @@ const cancel: any = [
 // IV. Thanh Toán & Thu Ngân
 const totalPayment: any = [
   {
-    icon: <MoneyIcon />,
+    title: <MoneyIcon />,
     dataIndex: 'TotalPayment'
   },
   {
@@ -245,7 +245,7 @@ const totalPayment: any = [
     fontSize: 'small'
   },
   {
-    icon: <AttachMoneyIcon />,
+    title: <AttachMoneyIcon />,
     dataIndex: 'TotalPaymentE_Wallet'
   },
   {
@@ -260,7 +260,7 @@ const totalPayment: any = [
 ];
 const totalAmountPayment: any = [
   {
-    icon: <SyncAltIcon />,
+    title: <SyncAltIcon />,
     dataIndex: 'TotalTransactionPayment'
   },
   {
@@ -317,7 +317,7 @@ const totalAmountPayment: any = [
     fontSize: 'small'
   },
   {
-    icon: <TimelineIcon />,
+    title: <TimelineIcon />,
     dataIndex: 'TotalPaymentE_Wallet'
   },
   {

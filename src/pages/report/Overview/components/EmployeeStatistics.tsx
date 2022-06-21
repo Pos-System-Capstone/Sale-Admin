@@ -1,7 +1,6 @@
-import { TabPanel } from '@mui/lab';
 import { Box, Stack, Typography } from '@mui/material';
 import ResoTable from 'components/ResoTable/ResoTable';
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { Menu } from 'types/menu';
 import { TTableColumn } from 'types/table';
 
@@ -32,8 +31,8 @@ function EmployeeStatistics() {
     >
       {/*Thống kê doanh thu theo nhân viên*/}
       <Stack spacing={2}>
-        <Typography>
-          <TabPanel value="3">Thống kê doanh thu theo nhân viên</TabPanel>
+        <Typography pl={1} variant="h4">
+          Thống kê doanh thu theo nhân viên
         </Typography>
         <ResoTable showAction={false} columns={employeeColumns} ref={ref} />
       </Stack>
