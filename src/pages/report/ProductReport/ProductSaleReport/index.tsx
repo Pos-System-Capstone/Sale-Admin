@@ -21,6 +21,7 @@ const ProductSaleReport = () => {
   const { enqueueSnackbar } = useSnackbar();
 
   type ProductSaleDetail = {
+    storeId?: any;
     productId?: any;
     productName?: any;
     quantity?: any;
@@ -28,13 +29,15 @@ const ProductSaleReport = () => {
     totalBeforeDiscount?: any;
     discount?: any;
     totalAfterDiscount?: any;
+    checkDeal?: any;
   };
 
   const orderColumns: TTableColumn<ProductSaleDetail>[] = [
     {
       title: 'Cửa hàng',
       hideInTable: true,
-      valueType: 'select'
+      valueType: 'select',
+      dataIndex: 'storeId'
     },
     {
       title: 'Ngày',
@@ -92,6 +95,7 @@ const ProductSaleReport = () => {
     {
       title: 'Loại',
       hideInTable: true,
+
       valueEnum: [
         {
           label: 'Sản phẩm',
@@ -107,6 +111,7 @@ const ProductSaleReport = () => {
     {
       title: 'Chọn biểu đồ',
       hideInTable: true,
+      dataIndex: 'checkDeal',
       valueEnum: [
         {
           label: 'Giảm giá',
