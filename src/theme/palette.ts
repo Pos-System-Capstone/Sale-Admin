@@ -145,19 +145,31 @@ const CHART_COLORS = {
 };
 
 const REPORT_PALETTE = {
-  green1: '#4CAF50',
   green2: '#81C784',
-  blue1: '#2196F3',
-  blue2: '#03A9F4',
-  red1: '#BF4F4F',
-  red2: '#C85151',
+  green3: '#50C878',
+  green1: '#4CAF50',
+  green4: '#2D8F4E',
+  green5: '#228B22',
+  green6: '#116530',
   darkGreen1: '#536732',
   darkGreen2: '#556B2F',
+  blue3: '#30D5C8',
+  blue2: '#03A9F4',
+  blue1: '#2196F3',
+  pine1: '#009688',
+  blue4: '#1D8D84',
+  red1: '#BF4F4F',
+  red2: '#C85151',
+  red3: '#E4021B',
+  red4: '#bb0909',
+  yellow3: '#FFA500',
   yellow1: '#C3941D',
   yellow2: '#CC9B1E',
-  purple1: '#673AB7',
+  yellow4: '#A36A00',
   purple2: '#9575CD',
-  pine1: '#009688'
+  purple1: '#673AB7',
+  purple3: '#A020F0',
+  purple4: '#6C0BA9'
 };
 
 const COMMON = {

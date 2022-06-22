@@ -167,19 +167,51 @@ const DayReport = () => {
   const ChartFill = {
     options: {
       chart: {
-        id: 'basic-bar'
+        id: 'basic-line'
       },
       xaxis: {
-        categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]
+        categories: [
+          '1/6/2022',
+          '2/6/2022',
+          '3/6/2022',
+          '4/6/2022',
+          '5/6/2022',
+          '6/6/2022',
+          '7/6/2022',
+          '8/6/2022',
+          '9/6/2022'
+        ]
       }
     },
     series: [
       {
-        name: 'series-1',
-        data: [30, 40, 45, 50, 49, 60, 70, 91]
+        name: 'Mang đi',
+        data: [2742, 606, 2450, 1053, 1449, 1431, 1098, 1449, 1837]
+      },
+      {
+        name: 'Tại store',
+        data: [472, 2520, 432, 3186, 529, 953, 2366, 1802, 1217]
+      },
+      {
+        name: 'Giao hàng',
+        data: [204, 95, 12, 26, 197, 31, 34, 6, 26]
       }
     ]
   };
+
+  // const url = 'https://stg-report-api.reso.vn/api/v1/system-report';
+
+  // axios({
+  //   method: 'GET',
+  //   url: url
+  // }).then(function (response) {
+  //   Chart.updateSeries([
+  //     {
+  //       name: 'trading',
+  //       data: response.data
+  //     }
+  //   ]);
+  // });
 
   const Feature = [
     {
@@ -270,20 +302,12 @@ const DayReport = () => {
             <div className="app">
               <div className="row">
                 <div className="mixed-chart">
-                  <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                    <Grid item xs={6}>
+                  <Grid container rowSpacing={1} columnSpacing={{ xs: 12 }}>
+                    <Grid item xs={12}>
                       <Chart
                         options={ChartFill.options}
                         series={ChartFill.series}
-                        type="bar"
-                        width="500"
-                      />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <Chart
-                        options={ChartFill.options}
-                        series={ChartFill.series}
-                        type="area"
+                        type="line"
                         width="500"
                       />
                     </Grid>

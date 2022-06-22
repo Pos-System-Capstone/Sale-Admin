@@ -11,48 +11,49 @@ import peopleFill from '@iconify/icons-eva/people-fill';
 import DashboarWidgets from 'components/_dashboard/general-app/DashboarWidgets';
 import { PATH_REPORT_APP } from 'routes/reportAppPaths';
 import Page from '../../components/Page';
+import palette from 'theme/palette';
 // ----------------------------------------------------------------------
 const Widgets = [
   {
     title: 'TỔNG QUAN',
     icon: dashboardFill,
-    color: '#50C878',
-    hoverColor: '#2D8F4E',
+    color: palette.light.reportPalette.green3,
+    hoverColor: palette.light.reportPalette.green4,
     path: PATH_REPORT_APP.overviewDate
   },
   {
     title: 'THỜI GIAN',
     icon: clockOuline,
-    color: '#228B22',
-    hoverColor: '#116530',
+    color: palette.light.reportPalette.green5,
+    hoverColor: palette.light.reportPalette.green6,
     path: PATH_REPORT_APP.dayReport
   },
   {
     title: 'SẢN PHẨM',
     icon: shoppingBagFill,
-    color: '#FFA500',
-    hoverColor: '#A36A00',
+    color: palette.light.reportPalette.yellow3,
+    hoverColor: palette.light.reportPalette.yellow4,
     path: PATH_REPORT_APP.productSale
   },
   {
     title: 'DIỄN TIẾN NGÀY',
     icon: trendingUp,
-    color: '#E4021B',
-    hoverColor: '#bb0909',
+    color: palette.light.reportPalette.red3,
+    hoverColor: palette.light.reportPalette.red4,
     path: PATH_REPORT_APP.productProgress
   },
   {
     title: 'SO SÁNH SẢN PHẨM',
     icon: repeatFill,
-    color: '#30D5C8',
-    hoverColor: '#1D8D84',
+    color: palette.light.reportPalette.blue3,
+    hoverColor: palette.light.reportPalette.blue4,
     path: PATH_REPORT_APP.productProgress
   },
   {
     title: 'SO SÁNH DOANH THU',
     icon: peopleFill,
-    color: '#A020F0',
-    hoverColor: '#6C0BA9',
+    color: palette.light.reportPalette.purple3,
+    hoverColor: palette.light.reportPalette.purple4,
     path: PATH_REPORT_APP.productProgress
   }
 ];
