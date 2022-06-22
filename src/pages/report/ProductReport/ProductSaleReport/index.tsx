@@ -4,12 +4,11 @@ import { Box, Button, Card, Stack } from '@mui/material';
 import productApi from 'api/report/products';
 import ResoTable from 'components/ResoTable/ResoTable';
 import useLocales from 'hooks/useLocales';
-import moment from 'moment';
 import { useSnackbar } from 'notistack';
-import ReportBtn from 'pages/report/components/ReportBtn';
 import ReportDatePicker from 'pages/report/components/ReportDatePicker';
 import ReportPage from 'pages/report/components/ReportPage';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useForm } from 'react-hook-form';
 // components
 import { useNavigate } from 'react-router-dom';
 //
@@ -30,104 +29,6 @@ const ProductSaleReport = () => {
     discount?: any;
     totalAfterDiscount?: any;
   };
-  // const data = [
-  //   {
-  //     name: 'Iced Espresso With Milk (M)',
-  //     quantity: 3855,
-  //     radio: '30.90',
-  //     revenueBefore: 97145000,
-  //     discount: 10307000,
-  //     revenue: 86838000
-  //   },
-  //   {
-  //     name: 'Iced Espresso With Milk (M)',
-  //     quantity: 3855,
-  //     radio: '30.90',
-  //     revenueBefore: 97145000,
-  //     discount: 10307000,
-  //     revenue: 86838000
-  //   },
-  //   {
-  //     name: 'Iced Espresso With Milk (M)',
-  //     quantity: 3855,
-  //     radio: '30.90',
-  //     revenueBefore: 97145000,
-  //     discount: 10307000,
-  //     revenue: 86838000
-  //   },
-  //   {
-  //     name: 'Iced Espresso With Milk (M)',
-  //     quantity: 3855,
-  //     radio: '30.90',
-  //     revenueBefore: 97145000,
-  //     discount: 10307000,
-  //     revenue: 86838000
-  //   },
-  //   {
-  //     name: 'Iced Espresso With Milk (M)',
-  //     quantity: 3855,
-  //     radio: '30.90',
-  //     revenueBefore: 97145000,
-  //     discount: 10307000,
-  //     revenue: 86838000
-  //   },
-  //   {
-  //     name: 'Iced Espresso With Milk (M)',
-  //     quantity: 3855,
-  //     radio: '30.90',
-  //     revenueBefore: 97145000,
-  //     discount: 10307000,
-  //     revenue: 86838000
-  //   },
-  //   {
-  //     name: 'Iced Espresso With Milk (M)',
-  //     quantity: 3855,
-  //     radio: '30.90',
-  //     revenueBefore: 97145000,
-  //     discount: 10307000,
-  //     revenue: 86838000
-  //   },
-  //   {
-  //     name: 'Iced Espresso With Milk (M)',
-  //     quantity: 3855,
-  //     radio: '30.90',
-  //     revenueBefore: 97145000,
-  //     discount: 10307000,
-  //     revenue: 86838000
-  //   },
-  //   {
-  //     name: 'Iced Espresso With Milk (M)',
-  //     quantity: 3855,
-  //     radio: '30.90',
-  //     revenueBefore: 97145000,
-  //     discount: 10307000,
-  //     revenue: 86838000
-  //   },
-  //   {
-  //     name: 'Iced Espresso With Milk (M)',
-  //     quantity: 3855,
-  //     radio: '30.90 ',
-  //     revenueBefore: 97145000,
-  //     discount: 10307000,
-  //     revenue: 86838000
-  //   },
-  //   {
-  //     name: 'Iced Espresso With Milk (M)',
-  //     quantity: 3855,
-  //     radio: '30.90',
-  //     revenueBefore: 97145000,
-  //     discount: 10307000,
-  //     revenue: 86838000
-  //   },
-  //   {
-  //     name: 'Iced Espresso With Milk (M)',
-  //     quantity: 3855,
-  //     radio: '30.90',
-  //     revenueBefore: 97145000,
-  //     discount: 10307000,
-  //     revenue: 86838000
-  //   }
-  // ];
 
   const orderColumns: TTableColumn<ProductSaleDetail>[] = [
     {
@@ -222,25 +123,52 @@ const ProductSaleReport = () => {
 
   const [openChart, setOpenChart] = useState(false);
   const today = new Date();
-  const [date, setDate] = useState<Date>(today);
+  const yesterday = today.setDate(today.getDate() - 1);
+  const [fromDate, setFromDate] = useState<Date>(new Date(yesterday));
+  const [toDate, setToDate] = useState<Date>(new Date());
+
+  const ref = useRef<any>();
+  const { watch } = useForm();
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.formControl.setValue(
+        'FromDate',
+        fromDate?.toLocaleDateString('zh-Hans-CN', {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit'
+        })
+      );
+      ref.current.formControl.setValue(
+        'toDate',
+        toDate?.toLocaleDateString('zh-Hans-CN', {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit'
+        })
+      );
+    }
+  }, [fromDate, toDate]);
 
   return (
     <ReportPage
       title="Báo cáo doanh thu sản phẩm"
-      content={
-        date.toDateString() === today.toDateString()
-          ? `Tính đến: ${moment().format('hh:mm:ss')}`
-          : ''
-      }
+      // content={`${fDate(fromDate)} to ${fDate(toDate)}`}
       actions={[
         <ReportDatePicker
-          key="choose-day"
-          value={date}
+          key="choose-from-date"
+          value={fromDate || null}
           onChange={(newValue) => {
-            setDate(newValue || new Date());
+            setFromDate(newValue || new Date());
           }}
         />,
-        <ReportBtn key="export-excel" onClick={() => console.log('Export excel')} />
+        <ReportDatePicker
+          key="choose-to-date"
+          value={toDate || null}
+          onChange={(newValue) => {
+            setToDate(newValue || new Date());
+          }}
+        />
       ]}
     >
       <Card>
@@ -264,10 +192,12 @@ const ProductSaleReport = () => {
           </Stack>
 
           <ResoTable
-            showAction={false}
+            ref={ref}
             columns={orderColumns}
             getData={productApi.getProductReport}
-            // dataSource={data}
+            showAction={false}
+            pagination={true}
+            scroll={{ y: '320px' }}
           />
         </Stack>
       </Card>

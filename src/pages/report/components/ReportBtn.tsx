@@ -8,7 +8,7 @@ type ReportBtnProps = {
 };
 
 function ReportBtn(props: ReportBtnProps) {
-  const { onClick, label = 'XUẤT RA FILE EXCEL', variant = 'contained' } = props;
+  const { onClick, label = 'XUẤT FILE EXCEL', variant = 'contained' } = props;
   return (
     <Button onClick={onClick} variant={variant} startIcon={<FileDownloadIcon />}>
       {label}

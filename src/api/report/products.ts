@@ -14,7 +14,7 @@ export type TProductReportBase = {
 };
 
 const getProductReport = (params: any = {}) =>
-  request.get<BaseReponse<TProductReportBase>>('/product-report', params);
+  request.get<BaseReponse<TProductReportBase>>('/product-report', { params });
 
 const productApi = { getProductReport };
 
