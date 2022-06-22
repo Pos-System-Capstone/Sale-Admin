@@ -42,7 +42,7 @@ export const menuColumns: TTableColumn<TTradingBase>[] = [
   },
   {
     fixed: 'left',
-    title: 'Ngày',
+    title: 'Tháng',
     valueType: 'select',
     valueEnum: [
       {
@@ -177,20 +177,74 @@ const MonthReport = () => {
   const [activeTab, setActiveTab] = useState('1');
 
   const ChartFill = {
-    options: {
-      chart: {
-        id: 'basic-bar'
-      },
-      xaxis: {
-        categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]
-      }
-    },
     series: [
       {
-        name: 'series-1',
-        data: [30, 40, 45, 50, 49, 60, 70, 91]
+        name: 'Mang đi',
+        data: [139260, 124435, 171075, 179795, 185100, 128335, 0, 0, 0, 0, 0, 0]
+      },
+      {
+        name: 'Tại store',
+        data: [60744, 63131, 90132, 105611, 112283, 84831, 0, 0, 0, 0, 0, 0]
+      },
+      {
+        name: 'Giao hàng',
+        data: [3897, 2711, 4203, 4113, 4230, 3252, 0, 0, 0, 0, 0, 0]
       }
-    ]
+    ],
+    options: {
+      chart: {
+        type: 'bar',
+        height: 350,
+        stacked: true,
+        toolbar: {
+          show: true
+        },
+        zoom: {
+          enabled: true
+        }
+      },
+      responsive: [
+        {
+          breakpoint: 480,
+          options: {
+            legend: {
+              position: 'bottom',
+              offsetX: -10,
+              offsetY: 0
+            }
+          }
+        }
+      ],
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          borderRadius: 10
+        }
+      },
+      xaxis: {
+        categories: [
+          'Tháng 1',
+          'Tháng 2',
+          'Tháng 3',
+          'Tháng 4',
+          'Tháng 5',
+          'Tháng 6',
+          'Tháng 7',
+          'Tháng 8',
+          'Tháng 9',
+          'Tháng 10',
+          'Tháng 11',
+          'Tháng 12'
+        ]
+      },
+      legend: {
+        position: 'right',
+        offsetY: 40
+      },
+      fill: {
+        opacity: 1
+      }
+    }
   };
 
   const Feature = [
@@ -270,6 +324,7 @@ const MonthReport = () => {
             <Stack spacing={2}>
               <Box sx={{ paddingTop: '40px' }}>
                 <ResoTable
+                  showAction={false}
                   rowKey="trading_id"
                   ref={tableRef}
                   getData={tradingApi.getTrading}
@@ -279,30 +334,17 @@ const MonthReport = () => {
             </Stack>
           </TabPanel>
           <TabPanel value="2">
-            <div className="app">
-              <div className="row">
-                <div className="mixed-chart">
-                  <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                    <Grid item xs={6}>
-                      <Chart
-                        options={ChartFill.options}
-                        series={ChartFill.series}
-                        type="bar"
-                        width="500"
-                      />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <Chart
-                        options={ChartFill.options}
-                        series={ChartFill.series}
-                        type="area"
-                        width="500"
-                      />
-                    </Grid>
-                  </Grid>
-                </div>
-              </div>
-            </div>
+            <Grid container rowSpacing={1}>
+              <Grid item>
+                <Chart
+                  options={ChartFill.options}
+                  series={ChartFill.series}
+                  type="bar"
+                  width="1100"
+                  height="500"
+                />
+              </Grid>
+            </Grid>
           </TabPanel>
         </TabContext>
       </Card>
