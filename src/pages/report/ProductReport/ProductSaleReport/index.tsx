@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 // material
 import { Box, Button, Card, Stack } from '@mui/material';
+import productApi from 'api/report/products';
 import ResoTable from 'components/ResoTable/ResoTable';
 import useLocales from 'hooks/useLocales';
 import moment from 'moment';
@@ -21,111 +22,112 @@ const ProductSaleReport = () => {
   const { enqueueSnackbar } = useSnackbar();
 
   type ProductSaleDetail = {
-    name?: any;
+    productId?: any;
+    productName?: any;
     quantity?: any;
-    radio?: any;
-    revenueBefore?: any;
+    percent?: any;
+    totalBeforeDiscount?: any;
     discount?: any;
-    revenue?: any;
+    totalAfterDiscount?: any;
   };
-  const data = [
-    {
-      name: 'Iced Espresso With Milk (M)',
-      quantity: 3855,
-      radio: '30.90',
-      revenueBefore: 97145000,
-      discount: 10307000,
-      revenue: 86838000
-    },
-    {
-      name: 'Iced Espresso With Milk (M)',
-      quantity: 3855,
-      radio: '30.90',
-      revenueBefore: 97145000,
-      discount: 10307000,
-      revenue: 86838000
-    },
-    {
-      name: 'Iced Espresso With Milk (M)',
-      quantity: 3855,
-      radio: '30.90',
-      revenueBefore: 97145000,
-      discount: 10307000,
-      revenue: 86838000
-    },
-    {
-      name: 'Iced Espresso With Milk (M)',
-      quantity: 3855,
-      radio: '30.90',
-      revenueBefore: 97145000,
-      discount: 10307000,
-      revenue: 86838000
-    },
-    {
-      name: 'Iced Espresso With Milk (M)',
-      quantity: 3855,
-      radio: '30.90',
-      revenueBefore: 97145000,
-      discount: 10307000,
-      revenue: 86838000
-    },
-    {
-      name: 'Iced Espresso With Milk (M)',
-      quantity: 3855,
-      radio: '30.90',
-      revenueBefore: 97145000,
-      discount: 10307000,
-      revenue: 86838000
-    },
-    {
-      name: 'Iced Espresso With Milk (M)',
-      quantity: 3855,
-      radio: '30.90',
-      revenueBefore: 97145000,
-      discount: 10307000,
-      revenue: 86838000
-    },
-    {
-      name: 'Iced Espresso With Milk (M)',
-      quantity: 3855,
-      radio: '30.90',
-      revenueBefore: 97145000,
-      discount: 10307000,
-      revenue: 86838000
-    },
-    {
-      name: 'Iced Espresso With Milk (M)',
-      quantity: 3855,
-      radio: '30.90',
-      revenueBefore: 97145000,
-      discount: 10307000,
-      revenue: 86838000
-    },
-    {
-      name: 'Iced Espresso With Milk (M)',
-      quantity: 3855,
-      radio: '30.90 ',
-      revenueBefore: 97145000,
-      discount: 10307000,
-      revenue: 86838000
-    },
-    {
-      name: 'Iced Espresso With Milk (M)',
-      quantity: 3855,
-      radio: '30.90',
-      revenueBefore: 97145000,
-      discount: 10307000,
-      revenue: 86838000
-    },
-    {
-      name: 'Iced Espresso With Milk (M)',
-      quantity: 3855,
-      radio: '30.90',
-      revenueBefore: 97145000,
-      discount: 10307000,
-      revenue: 86838000
-    }
-  ];
+  // const data = [
+  //   {
+  //     name: 'Iced Espresso With Milk (M)',
+  //     quantity: 3855,
+  //     radio: '30.90',
+  //     revenueBefore: 97145000,
+  //     discount: 10307000,
+  //     revenue: 86838000
+  //   },
+  //   {
+  //     name: 'Iced Espresso With Milk (M)',
+  //     quantity: 3855,
+  //     radio: '30.90',
+  //     revenueBefore: 97145000,
+  //     discount: 10307000,
+  //     revenue: 86838000
+  //   },
+  //   {
+  //     name: 'Iced Espresso With Milk (M)',
+  //     quantity: 3855,
+  //     radio: '30.90',
+  //     revenueBefore: 97145000,
+  //     discount: 10307000,
+  //     revenue: 86838000
+  //   },
+  //   {
+  //     name: 'Iced Espresso With Milk (M)',
+  //     quantity: 3855,
+  //     radio: '30.90',
+  //     revenueBefore: 97145000,
+  //     discount: 10307000,
+  //     revenue: 86838000
+  //   },
+  //   {
+  //     name: 'Iced Espresso With Milk (M)',
+  //     quantity: 3855,
+  //     radio: '30.90',
+  //     revenueBefore: 97145000,
+  //     discount: 10307000,
+  //     revenue: 86838000
+  //   },
+  //   {
+  //     name: 'Iced Espresso With Milk (M)',
+  //     quantity: 3855,
+  //     radio: '30.90',
+  //     revenueBefore: 97145000,
+  //     discount: 10307000,
+  //     revenue: 86838000
+  //   },
+  //   {
+  //     name: 'Iced Espresso With Milk (M)',
+  //     quantity: 3855,
+  //     radio: '30.90',
+  //     revenueBefore: 97145000,
+  //     discount: 10307000,
+  //     revenue: 86838000
+  //   },
+  //   {
+  //     name: 'Iced Espresso With Milk (M)',
+  //     quantity: 3855,
+  //     radio: '30.90',
+  //     revenueBefore: 97145000,
+  //     discount: 10307000,
+  //     revenue: 86838000
+  //   },
+  //   {
+  //     name: 'Iced Espresso With Milk (M)',
+  //     quantity: 3855,
+  //     radio: '30.90',
+  //     revenueBefore: 97145000,
+  //     discount: 10307000,
+  //     revenue: 86838000
+  //   },
+  //   {
+  //     name: 'Iced Espresso With Milk (M)',
+  //     quantity: 3855,
+  //     radio: '30.90 ',
+  //     revenueBefore: 97145000,
+  //     discount: 10307000,
+  //     revenue: 86838000
+  //   },
+  //   {
+  //     name: 'Iced Espresso With Milk (M)',
+  //     quantity: 3855,
+  //     radio: '30.90',
+  //     revenueBefore: 97145000,
+  //     discount: 10307000,
+  //     revenue: 86838000
+  //   },
+  //   {
+  //     name: 'Iced Espresso With Milk (M)',
+  //     quantity: 3855,
+  //     radio: '30.90',
+  //     revenueBefore: 97145000,
+  //     discount: 10307000,
+  //     revenue: 86838000
+  //   }
+  // ];
 
   const orderColumns: TTableColumn<ProductSaleDetail>[] = [
     {
@@ -142,7 +144,7 @@ const ProductSaleReport = () => {
     {
       title: 'Tên sản phẩm',
       hideInSearch: true,
-      dataIndex: 'name'
+      dataIndex: 'productName'
     },
     {
       title: 'Số lượng',
@@ -153,13 +155,13 @@ const ProductSaleReport = () => {
     {
       title: 'Tỉ trọng (%)',
       hideInSearch: true,
-      dataIndex: 'radio',
+      dataIndex: 'percent',
       render: (value) => fPercent(value)
     },
     {
       title: 'Tổng tiền trước giảm giá',
       hideInSearch: true,
-      dataIndex: 'revenueBefore',
+      dataIndex: 'totalBeforeDiscount',
       render: (value) =>
         value.toLocaleString('vi', {
           style: 'currency',
@@ -179,7 +181,7 @@ const ProductSaleReport = () => {
     {
       title: 'Tổng tiền sau giảm giá',
       hideInSearch: true,
-      dataIndex: 'revenue',
+      dataIndex: 'totalAfterDiscount',
       render: (value) =>
         value.toLocaleString('vi', {
           style: 'currency',
@@ -261,7 +263,12 @@ const ProductSaleReport = () => {
             )}
           </Stack>
 
-          <ResoTable showAction={false} columns={orderColumns} dataSource={data} />
+          <ResoTable
+            showAction={false}
+            columns={orderColumns}
+            getData={productApi.getProductReport}
+            // dataSource={data}
+          />
         </Stack>
       </Card>
     </ReportPage>
