@@ -179,39 +179,60 @@ const DayReport = () => {
           '6/6/2022',
           '7/6/2022',
           '8/6/2022',
-          '9/6/2022'
+          '9/6/2022',
+          '10/6/2022',
+          '11/6/2022',
+          '12/6/2022',
+          '13/6/2022',
+          '14/6/2022',
+          '15/6/2022',
+          '16/6/2022',
+          '17/6/2022',
+          '18/6/2022',
+          '19/6/2022',
+          '20/6/2022',
+          '21/6/2022',
+          '22/6/2022'
         ]
       }
     },
     series: [
       {
         name: 'Mang đi',
-        data: [2742, 606, 2450, 1053, 1449, 1431, 1098, 1449, 1837]
+        data: [
+          2742, 606, 2450, 1053, 1449, 1431, 1098, 1449, 1837, 1043, 768, 1618, 2399, 2219, 2630,
+          1902, 459, 1595, 1487, 1997, 2419, 330
+        ]
       },
       {
         name: 'Tại store',
-        data: [472, 2520, 432, 3186, 529, 953, 2366, 1802, 1217]
+        data: [
+          472, 2520, 432, 3186, 529, 953, 2366, 1802, 1217, 1781, 1423, 205, 1, 1692, 73, 7, 22,
+          1567, 2, 174, 422, 339
+        ]
       },
       {
         name: 'Giao hàng',
-        data: [204, 95, 12, 26, 197, 31, 34, 6, 26]
+        data: [
+          204, 100, 12, 26, 206, 33, 35, 7, 27, 20, 51, 17, 1, 73, 27, 72, 55, 92, 11, 112, 99, 80
+        ]
       }
     ]
   };
 
-  // const url = 'https://stg-report-api.reso.vn/api/v1/system-report';
+  // const [days, setDays] = useState(null);
+  const [total, setTotal] = useState(null);
 
-  // axios({
-  //   method: 'GET',
-  //   url: url
-  // }).then(function (response) {
-  //   Chart.updateSeries([
-  //     {
-  //       name: 'trading',
-  //       data: response.data
-  //     }
-  //   ]);
-  // });
+  // useEffect(() => {
+  //   fetch('https://stg-report-api.reso.vn/api/v1/system-report')
+  //     .then((results) => results.json())
+  //     .then((res) => {
+  //       const data = res.data;
+  //       // setDays(name.storeName);
+  //       setTotal(data.totalOrderTakeAway);
+  //       console.log(data);
+  //     });
+  // }, []);
 
   const Feature = [
     {
@@ -294,27 +315,25 @@ const DayReport = () => {
                   ref={tableRef}
                   getData={tradingApi.getTrading}
                   columns={menuColumns}
+                  scroll={{ y: '500px' }}
                 />
               </Box>
             </Stack>
           </TabPanel>
           <TabPanel value="2">
-            <div className="app">
-              <div className="row">
-                <div className="mixed-chart">
-                  <Grid container rowSpacing={1} columnSpacing={{ xs: 12 }}>
-                    <Grid item xs={12}>
-                      <Chart
-                        options={ChartFill.options}
-                        series={ChartFill.series}
-                        type="line"
-                        width="500"
-                      />
-                    </Grid>
-                  </Grid>
-                </div>
-              </div>
-            </div>
+            <Grid container rowSpacing={1} columnSpacing={{ xs: 12 }}>
+              <Grid item>
+                <Chart
+                  // updateSeries={this.data.storeName}
+                  options={ChartFill.options}
+                  series={ChartFill.series}
+                  // getData={`${days} ${total}`}
+                  type="line"
+                  width="1100"
+                  height="500"
+                />
+              </Grid>
+            </Grid>
           </TabPanel>
         </TabContext>
       </Card>

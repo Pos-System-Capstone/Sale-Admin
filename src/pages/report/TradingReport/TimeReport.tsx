@@ -182,13 +182,52 @@ const TimeReport = () => {
         id: 'basic-bar'
       },
       xaxis: {
-        categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]
+        categories: [
+          '0:00 - 1:00',
+          '1:00 - 2:00',
+          '2:00 - 3:00',
+          '3:00 - 4:00',
+          '4:00 - 5:00',
+          '5:00 - 6:00',
+          '6:00 - 7:00',
+          '7:00 - 8:00',
+          '8:00 - 9:00',
+          '9:00 - 10:00',
+          '10:00 - 11:00',
+          '11:00 - 12:00',
+          '12:00 - 13:00',
+          '13:00 - 14:00',
+          '14:00 - 15:00',
+          '15:00 - 16:00',
+          '16:00 - 17:00',
+          '17:00 - 18:00',
+          '18:00 - 19:00',
+          '19:00 - 20:00',
+          '20:00 - 21:00',
+          '21:00 - 22:00',
+          '22:00 - 23:00',
+          '23:00 - 24:00'
+        ]
       }
     },
     series: [
       {
-        name: 'series-1',
-        data: [30, 40, 45, 50, 49, 60, 70, 91]
+        name: 'Mang đi',
+        data: [
+          0, 0, 0, 0, 0, 0, 282, 1128, 1425, 955, 419, 251, 483, 423, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        ]
+      },
+      {
+        name: 'Tại store',
+        data: [
+          0, 0, 0, 0, 0, 0, 282, 1128, 1425, 955, 419, 251, 483, 423, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        ]
+      },
+      {
+        name: 'Giao hàng',
+        data: [
+          0, 0, 0, 0, 0, 0, 282, 1128, 1425, 955, 419, 251, 483, 423, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        ]
       }
     ]
   };
@@ -279,30 +318,17 @@ const TimeReport = () => {
             </Stack>
           </TabPanel>
           <TabPanel value="2">
-            <div className="app">
-              <div className="row">
-                <div className="mixed-chart">
-                  <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                    <Grid item xs={6}>
-                      <Chart
-                        options={ChartFill.options}
-                        series={ChartFill.series}
-                        type="bar"
-                        width="500"
-                      />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <Chart
-                        options={ChartFill.options}
-                        series={ChartFill.series}
-                        type="area"
-                        width="500"
-                      />
-                    </Grid>
-                  </Grid>
-                </div>
-              </div>
-            </div>
+            <Grid container rowSpacing={1}>
+              <Grid item>
+                <Chart
+                  options={ChartFill.options}
+                  series={ChartFill.series}
+                  type="line"
+                  width="1100"
+                  height="500"
+                />
+              </Grid>
+            </Grid>
           </TabPanel>
         </TabContext>
       </Card>

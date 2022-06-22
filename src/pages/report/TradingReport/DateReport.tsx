@@ -178,13 +178,21 @@ const DateReport = () => {
         id: 'basic-bar'
       },
       xaxis: {
-        categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]
+        categories: ['Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy', 'Chủ Nhật']
       }
     },
     series: [
       {
-        name: 'series-1',
-        data: [30, 40, 45, 50, 49, 60, 70, 91]
+        name: 'Mang đi',
+        data: [1997, 2419, 330, 0, 0, 0, 0]
+      },
+      {
+        name: 'Tại store',
+        data: [174, 422, 339, 0, 0, 0, 0]
+      },
+      {
+        name: 'Giao hàng',
+        data: [112, 99, 80, 0, 0, 0, 0]
       }
     ]
   };
@@ -275,30 +283,17 @@ const DateReport = () => {
             </Stack>
           </TabPanel>
           <TabPanel value="2">
-            <div className="app">
-              <div className="row">
-                <div className="mixed-chart">
-                  <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                    <Grid item xs={6}>
-                      <Chart
-                        options={ChartFill.options}
-                        series={ChartFill.series}
-                        type="bar"
-                        width="500"
-                      />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <Chart
-                        options={ChartFill.options}
-                        series={ChartFill.series}
-                        type="area"
-                        width="500"
-                      />
-                    </Grid>
-                  </Grid>
-                </div>
-              </div>
-            </div>
+            <Grid container rowSpacing={1}>
+              <Grid item>
+                <Chart
+                  options={ChartFill.options}
+                  series={ChartFill.series}
+                  type="line"
+                  width="1100"
+                  height="500"
+                />
+              </Grid>
+            </Grid>
           </TabPanel>
         </TabContext>
       </Card>
