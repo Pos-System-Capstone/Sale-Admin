@@ -230,14 +230,14 @@ export const reportAppSidebarConfig = [
         icon: ICONS.calendar
       },
       {
-        title: 'report.productSale',
-        path: PATH_REPORT_APP.productSale,
-        icon: ICONS.product
-      },
-      {
         title: 'report.productProgress',
         path: PATH_REPORT_APP.productProgress,
         icon: ICONS.analytics
+      },
+      {
+        title: 'report.productSale',
+        path: PATH_REPORT_APP.productSale,
+        icon: ICONS.product
       },
       {
         title: 'report.payment',

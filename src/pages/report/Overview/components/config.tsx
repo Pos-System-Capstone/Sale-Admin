@@ -105,7 +105,7 @@ const atStore: any = [
   },
   {
     title: 'Tổng hóa đơn',
-    unit: 'hóa đơn',
+    unit: 'Hóa đơn',
     dataIndex: 'TotalOrderAtStore'
   },
   {
@@ -116,7 +116,7 @@ const atStore: any = [
   },
   {
     title: 'TB sản phẩm',
-    unit: 'Sản phẩm/Hóa đơn',
+    unit: 'SP/Hóa đơn',
     dataIndex: 'AvgProductOrderAtStore'
   }
 ];
@@ -129,7 +129,7 @@ const takeAway: any = [
   },
   {
     title: 'Tổng hóa đơn',
-    unit: 'hóa đơn',
+    unit: 'Hóa đơn',
     dataIndex: 'TotalOrderTakeAway'
   },
   {
@@ -140,7 +140,7 @@ const takeAway: any = [
   },
   {
     title: 'TB sản phẩm',
-    unit: 'Sản phẩm/Hóa đơn',
+    unit: 'SP/Hóa đơn',
     dataIndex: 'AvgProductOrderTakeAway'
   }
 ];
@@ -153,7 +153,7 @@ const delivery: any = [
   },
   {
     title: 'Tổng hóa đơn',
-    unit: 'hóa đơn',
+    unit: 'Hóa đơn',
     dataIndex: 'TotalOrderDelivery'
   },
   {
@@ -164,7 +164,7 @@ const delivery: any = [
   },
   {
     title: 'TB sản phẩm',
-    unit: 'Sản phẩm/Hóa đơn',
+    unit: 'SP/Hóa đơn',
     dataIndex: 'AvgProductOrderDelivery'
   }
 ];
@@ -177,18 +177,18 @@ const cancel: any = [
   },
   {
     title: 'Tổng hóa đơn',
-    unit: 'hóa đơn',
+    unit: 'Hóa đơn',
     dataIndex: 'TotalOrderPreCancel'
   },
   {
-    title: 'Hủy Trước Chế Biến',
+    title: 'Hủy trước chế biến',
     unit: 'VNĐ/Hóa đơn',
     dataIndex: '',
     highlight: true
   },
   {
-    title: 'Hủy Sau Chế Biến',
-    unit: 'Sản phẩm/Hóa đơn',
+    title: 'Hủy sau chế biến',
+    unit: 'SP/Hóa đơn',
     dataIndex: 'TotalOrderAfterCancel'
   }
 ];

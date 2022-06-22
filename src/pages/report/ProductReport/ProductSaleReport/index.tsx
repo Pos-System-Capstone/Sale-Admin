@@ -13,6 +13,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 //
 import { TTableColumn } from 'types/table';
+import { fNumber, fPercent } from 'utils/formatNumber';
 
 const ProductSaleReport = () => {
   const navigate = useNavigate();
@@ -29,100 +30,100 @@ const ProductSaleReport = () => {
   };
   const data = [
     {
-      name: 'eqweqweqw',
-      quantity: 321,
-      radio: '12%',
-      revenueBefore: 321312321,
-      discount: '50%',
-      revenue: 321312321321
+      name: 'Iced Espresso With Milk (M)',
+      quantity: 3855,
+      radio: '30.90',
+      revenueBefore: 97145000,
+      discount: 10307000,
+      revenue: 86838000
     },
     {
-      name: 'eqweqweqw',
-      quantity: 321,
-      radio: '12%',
-      revenueBefore: 321312321,
-      discount: '50%',
-      revenue: 321312321321
+      name: 'Iced Espresso With Milk (M)',
+      quantity: 3855,
+      radio: '30.90',
+      revenueBefore: 97145000,
+      discount: 10307000,
+      revenue: 86838000
     },
     {
-      name: 'eqweqweqw',
-      quantity: 321,
-      radio: '12%',
-      revenueBefore: 321312321,
-      discount: '50%',
-      revenue: 321312321321
+      name: 'Iced Espresso With Milk (M)',
+      quantity: 3855,
+      radio: '30.90',
+      revenueBefore: 97145000,
+      discount: 10307000,
+      revenue: 86838000
     },
     {
-      name: 'eqweqweqw',
-      quantity: 321,
-      radio: '12%',
-      revenueBefore: 321312321,
-      discount: '50%',
-      revenue: 321312321321
+      name: 'Iced Espresso With Milk (M)',
+      quantity: 3855,
+      radio: '30.90',
+      revenueBefore: 97145000,
+      discount: 10307000,
+      revenue: 86838000
     },
     {
-      name: 'eqweqweqw',
-      quantity: 321,
-      radio: '12%',
-      revenueBefore: 321312321,
-      discount: '50%',
-      revenue: 321312321321
+      name: 'Iced Espresso With Milk (M)',
+      quantity: 3855,
+      radio: '30.90',
+      revenueBefore: 97145000,
+      discount: 10307000,
+      revenue: 86838000
     },
     {
-      name: 'eqweqweqw',
-      quantity: 321,
-      radio: '12%',
-      revenueBefore: 321312321,
-      discount: '50%',
-      revenue: 321312321321
+      name: 'Iced Espresso With Milk (M)',
+      quantity: 3855,
+      radio: '30.90',
+      revenueBefore: 97145000,
+      discount: 10307000,
+      revenue: 86838000
     },
     {
-      name: 'eqweqweqw',
-      quantity: 321,
-      radio: '12%',
-      revenueBefore: 321312321,
-      discount: '50%',
-      revenue: 321312321321
+      name: 'Iced Espresso With Milk (M)',
+      quantity: 3855,
+      radio: '30.90',
+      revenueBefore: 97145000,
+      discount: 10307000,
+      revenue: 86838000
     },
     {
-      name: 'eqweqweqw',
-      quantity: 321,
-      radio: '12%',
-      revenueBefore: 321312321,
-      discount: '50%',
-      revenue: 321312321321
+      name: 'Iced Espresso With Milk (M)',
+      quantity: 3855,
+      radio: '30.90',
+      revenueBefore: 97145000,
+      discount: 10307000,
+      revenue: 86838000
     },
     {
-      name: 'eqweqweqw',
-      quantity: 321,
-      radio: '12%',
-      revenueBefore: 321312321,
-      discount: '50%',
-      revenue: 321312321321
+      name: 'Iced Espresso With Milk (M)',
+      quantity: 3855,
+      radio: '30.90',
+      revenueBefore: 97145000,
+      discount: 10307000,
+      revenue: 86838000
     },
     {
-      name: 'eqweqweqw',
-      quantity: 321,
-      radio: '12%',
-      revenueBefore: 321312321,
-      discount: '50%',
-      revenue: 321312321321
+      name: 'Iced Espresso With Milk (M)',
+      quantity: 3855,
+      radio: '30.90 ',
+      revenueBefore: 97145000,
+      discount: 10307000,
+      revenue: 86838000
     },
     {
-      name: 'eqweqweqw',
-      quantity: 321,
-      radio: '12%',
-      revenueBefore: 321312321,
-      discount: '50%',
-      revenue: 321312321321
+      name: 'Iced Espresso With Milk (M)',
+      quantity: 3855,
+      radio: '30.90',
+      revenueBefore: 97145000,
+      discount: 10307000,
+      revenue: 86838000
     },
     {
-      name: 'eqweqweqw',
-      quantity: 321,
-      radio: '12%',
-      revenueBefore: 321312321,
-      discount: '50%',
-      revenue: 321312321321
+      name: 'Iced Espresso With Milk (M)',
+      quantity: 3855,
+      radio: '30.90',
+      revenueBefore: 97145000,
+      discount: 10307000,
+      revenue: 86838000
     }
   ];
 
@@ -146,27 +147,44 @@ const ProductSaleReport = () => {
     {
       title: 'Số lượng',
       hideInSearch: true,
-      dataIndex: 'quantity'
+      dataIndex: 'quantity',
+      render: (value) => fNumber(value)
     },
     {
       title: 'Tỉ trọng (%)',
       hideInSearch: true,
-      dataIndex: 'radio'
+      dataIndex: 'radio',
+      render: (value) => fPercent(value)
     },
     {
       title: 'Tổng tiền trước giảm giá',
       hideInSearch: true,
-      dataIndex: 'revenueBefore'
+      dataIndex: 'revenueBefore',
+      render: (value) =>
+        value.toLocaleString('vi', {
+          style: 'currency',
+          currency: 'VND'
+        })
     },
     {
       title: 'Giảm giá',
       hideInSearch: true,
-      dataIndex: 'discount'
+      dataIndex: 'discount',
+      render: (value) =>
+        value.toLocaleString('vi', {
+          style: 'currency',
+          currency: 'VND'
+        })
     },
     {
       title: 'Tổng tiền sau giảm giá',
       hideInSearch: true,
-      dataIndex: 'revenue'
+      dataIndex: 'revenue',
+      render: (value) =>
+        value.toLocaleString('vi', {
+          style: 'currency',
+          currency: 'VND'
+        })
     },
     {
       title: 'Loại',
@@ -224,25 +242,26 @@ const ProductSaleReport = () => {
       ]}
     >
       <Card>
-        <Stack spacing={2}>
-          <Box sx={{ display: 'flex' }}>
-            <Box sx={{ width: '50%' }}>
+        <Stack spacing={4}>
+          <Stack spacing={2}>
+            <Box>
               <Button variant="contained" onClick={() => setOpenChart((prev) => !prev)}>
                 {openChart ? 'ẨN BIỂU ĐỒ' : 'HIỂN THỊ BIỂU ĐỒ'}
               </Button>
             </Box>
-          </Box>
-          {openChart && (
-            <Box>
-              <img
-                src="https://i.pinimg.com/originals/84/37/28/843728503b72b20cd0ebad06ce4137c9.png"
-                alt=""
-              />
-            </Box>
-          )}
-          <Box>
-            <ResoTable showAction={false} columns={orderColumns} dataSource={data} />
-          </Box>
+
+            {openChart && (
+              <Box>
+                <img
+                  style={{ borderRadius: '10px' }}
+                  src="https://i.pinimg.com/originals/84/37/28/843728503b72b20cd0ebad06ce4137c9.png"
+                  alt=""
+                />
+              </Box>
+            )}
+          </Stack>
+
+          <ResoTable showAction={false} columns={orderColumns} dataSource={data} />
         </Stack>
       </Card>
     </ReportPage>

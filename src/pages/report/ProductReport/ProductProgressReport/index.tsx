@@ -27,74 +27,74 @@ const ProductProgressReport = () => {
   };
   const data = [
     {
-      date: '2022/12/20',
-      quantity: 12,
-      revenueBefore: 21312312312,
-      discount: 12,
-      revenue: 321321312
+      date: '21/06/2022',
+      quantity: 0,
+      revenueBefore: 0,
+      discount: 0,
+      revenue: 0
     },
     {
-      date: '2022/12/20',
-      quantity: 12,
-      revenueBefore: 21312312312,
-      discount: 12,
-      revenue: 321321312
+      date: '21/06/2022',
+      quantity: 0,
+      revenueBefore: 0,
+      discount: 0,
+      revenue: 0
     },
     {
-      date: '2022/12/20',
-      quantity: 12,
-      revenueBefore: 21312312312,
-      discount: 12,
-      revenue: 321321312
+      date: '21/06/2022',
+      quantity: 0,
+      revenueBefore: 0,
+      discount: 0,
+      revenue: 0
     },
     {
-      date: '2022/12/20',
-      quantity: 12,
-      revenueBefore: 21312312312,
-      discount: 12,
-      revenue: 321321312
+      date: '21/06/2022',
+      quantity: 0,
+      revenueBefore: 0,
+      discount: 0,
+      revenue: 0
     },
     {
-      date: '2022/12/20',
-      quantity: 12,
-      revenueBefore: 21312312312,
-      discount: 12,
-      revenue: 321321312
+      date: '21/06/2022',
+      quantity: 0,
+      revenueBefore: 0,
+      discount: 0,
+      revenue: 0
     },
     {
-      date: '2022/12/20',
-      quantity: 12,
-      revenueBefore: 21312312312,
-      discount: 12,
-      revenue: 321321312
+      date: '21/06/2022',
+      quantity: 0,
+      revenueBefore: 0,
+      discount: 0,
+      revenue: 0
     },
     {
-      date: '2022/12/20',
-      quantity: 12,
-      revenueBefore: 21312312312,
-      discount: 12,
-      revenue: 321321312
+      date: '21/06/2022',
+      quantity: 0,
+      revenueBefore: 0,
+      discount: 0,
+      revenue: 0
     },
     {
-      date: '2022/12/20',
-      quantity: 12,
-      revenueBefore: 21312312312,
-      discount: 12,
-      revenue: 321321312
+      date: '21/06/2022',
+      quantity: 0,
+      revenueBefore: 0,
+      discount: 0,
+      revenue: 0
     },
     {
-      date: '2022/12/20',
-      quantity: 12,
-      revenueBefore: 21312312312,
-      discount: 12,
-      revenue: 321321312
+      date: '21/06/2022',
+      quantity: 0,
+      revenueBefore: 0,
+      discount: 0,
+      revenue: 0
     },
     {
-      date: '2022/12/20',
-      quantity: 12,
-      revenueBefore: 21312312312,
-      discount: 12,
-      revenue: 321321312
+      date: '21/06/2022',
+      quantity: 0,
+      revenueBefore: 0,
+      discount: 0,
+      revenue: 0
     }
   ];
   const orderColumns: TTableColumn<ProductSaleDetail>[] = [
@@ -105,7 +105,7 @@ const ProductProgressReport = () => {
       dataIndex: 'date'
     },
     {
-      title: 'Số',
+      title: 'Số lượng',
       hideInSearch: true,
       dataIndex: 'quantity'
     },
@@ -181,25 +181,26 @@ const ProductProgressReport = () => {
       ]}
     >
       <Card>
-        <Stack spacing={2}>
-          <Box sx={{ display: 'flex' }}>
-            <Box sx={{ width: '50%' }}>
+        <Stack spacing={4}>
+          <Stack spacing={2}>
+            <Box>
               <Button variant="contained" onClick={() => setOpenChart((prev) => !prev)}>
                 {openChart ? 'ẨN BIỂU ĐỒ' : 'HIỂN THỊ BIỂU ĐỒ'}
               </Button>
             </Box>
-          </Box>
-          {openChart && (
-            <Box>
-              <img
-                src="https://i.pinimg.com/originals/84/37/28/843728503b72b20cd0ebad06ce4137c9.png"
-                alt=""
-              />
-            </Box>
-          )}
-          <Box>
-            <ResoTable showAction={false} columns={orderColumns} dataSource={data} />
-          </Box>
+
+            {openChart && (
+              <Box>
+                <img
+                  style={{ borderRadius: '10px' }}
+                  src="https://i.pinimg.com/originals/84/37/28/843728503b72b20cd0ebad06ce4137c9.png"
+                  alt=""
+                />
+              </Box>
+            )}
+          </Stack>
+
+          <ResoTable showAction={false} columns={orderColumns} dataSource={data} />
         </Stack>
       </Card>
     </ReportPage>

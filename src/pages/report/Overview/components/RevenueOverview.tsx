@@ -219,7 +219,7 @@ function RevenueOverview() {
                 subtitleHeader="Mang về"
                 bc="reportPalette.darkGreen1"
                 bch="reportPalette.darkGreen2"
-                columnData={config.atStore}
+                columnData={config.takeAway}
                 fakeData={fakeData}
               />
             </Grid>
@@ -230,7 +230,7 @@ function RevenueOverview() {
                 subtitleHeader="Giao hàng"
                 bc="reportPalette.yellow1"
                 bch="reportPalette.yellow2"
-                columnData={config.atStore}
+                columnData={config.delivery}
                 fakeData={fakeData}
               />
             </Grid>
@@ -241,7 +241,7 @@ function RevenueOverview() {
                 subtitleHeader="Hóa đơn hủy"
                 bc="reportPalette.green1"
                 bch="reportPalette.green2"
-                columnData={config.atStore}
+                columnData={config.cancel}
                 fakeData={fakeData}
               />
             </Grid>
