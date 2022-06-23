@@ -1,3 +1,20 @@
+#### `2022-06-22` `Phuoclt:`
+###### Report system
+- 🆕 Create `products.ts` to call api report sale products
+- 🆕 Add filter report sale products with date range
+- 🛠 Remove unused file in `src/redux` 
+
+#### `2022-06-21` `Phuoclt:`
+###### Report system
+- 💄 Mock data resotable and overview date month ui
+- 🛠 Remove unused code
+
+#### `2022-06-19` `Phuoclt:`
+###### Promotion system
+- 🆕 Handle submit create promotion with react-hook-form and watch data to preview section
+###### Report system
+- 💄 Fix UI overview date and optimize table card component
+- 🆕 Add new palete (report paletes)
 #### `2022-06-17` `Phuoclt:`
 
 - 🌐 Update locale promotion system
