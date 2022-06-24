@@ -20,9 +20,8 @@ import confirm from 'components/Modal/confirm';
 // import ModalForm from 'components/ModalForm/ModalForm';
 import ResoTable from 'components/ResoTable/ResoTable';
 import MenuWidgets from 'components/_dashboard/general-app/MenuWidgets';
-import moment from 'moment';
 import { useSnackbar } from 'notistack';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Chart from 'react-apexcharts';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
@@ -30,7 +29,6 @@ import { PATH_REPORT_APP } from 'routes/reportAppPaths';
 import { Menu } from 'types/menu';
 import { TTradingBase } from 'types/report/trading';
 import { TTableColumn } from 'types/table';
-import ReportBtn from '../components/ReportBtn';
 import ReportDatePicker from '../components/ReportDatePicker';
 import ReportPage from '../components/ReportPage';
 // import Page from './components/Page';
@@ -208,22 +206,22 @@ const DayReport = () => {
       {
         name: 'Mang đi',
         data: [
-          2742, 606, 2450, 1053, 1449, 1431, 1098, 1449, 1837, 1043, 768, 1618, 2399, 2219, 2630,
-          1902, 459, 1595, 1487, 1997, 2419, 330, 0, 0, 0, 0, 0, 0, 0, 0
+          6822, 6154, 6555, 4517, 3651, 6862, 6860, 6793, 6535, 6618, 4598, 3481, 6707, 6706, 6466,
+          6634, 6222, 4471, 3031, 6646, 6523, 6369, 5146, 0, 0, 0, 0, 0, 0, 0
         ]
       },
       {
         name: 'Tại store',
         data: [
-          472, 2520, 432, 3186, 529, 953, 2366, 1802, 1217, 1781, 1423, 205, 1, 1692, 73, 7, 22,
-          1567, 2, 174, 422, 339, 0, 0, 0, 0, 0, 0, 0, 0
+          4315, 4087, 4065, 3426, 3077, 4136, 4230, 4287, 4227, 4238, 3440, 2670, 4249, 4448, 4546,
+          4223, 4086, 3086, 2843, 3864, 3963, 4165, 3317, 0, 0, 0, 0, 0, 0, 0
         ]
       },
       {
         name: 'Giao hàng',
         data: [
-          204, 100, 12, 26, 206, 33, 35, 7, 27, 20, 51, 17, 1, 73, 27, 72, 55, 92, 11, 112, 99, 80,
-          0, 0, 0, 0, 0, 0, 0, 0
+          177, 163, 181, 122, 74, 174, 178, 178, 167, 164, 102, 87, 170, 173, 171, 164, 161, 97, 75,
+          188, 162, 147, 126, 0, 0, 0, 0, 0, 0, 0
         ]
       }
     ]
@@ -277,6 +275,33 @@ const DayReport = () => {
   const current = new Date();
   const [day, setDay] = useState<Date>(current);
 
+  const today = new Date();
+  const yesterday = today.setDate(today.getDate() - 1);
+  const [fromDate, setFromDate] = useState<Date>(new Date(yesterday));
+  const [toDate, setToDate] = useState<Date>(new Date());
+
+  const ref = useRef<any>();
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.formControl.setValue(
+        'FromDate',
+        fromDate?.toLocaleDateString('zh-Hans-CN', {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit'
+        })
+      );
+      ref.current.formControl.setValue(
+        'toDate',
+        toDate?.toLocaleDateString('zh-Hans-CN', {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit'
+        })
+      );
+    }
+  }, [fromDate, toDate]);
+
   return (
     <ReportPage
       // title="Báo cáo doanh thu theo ngày"
@@ -285,18 +310,24 @@ const DayReport = () => {
         month: '2-digit',
         day: '2-digit'
       })}`}
-      content={
-        day.getDate() === current.getDate() ? `Tính đến: ${moment().format('hh:mm:ss')}` : ''
-      }
+      // content={
+      //   day.getDate() === current.getDate() ? `Tính đến: ${moment().format('hh:mm:ss')}` : ''
+      // }
       actions={[
         <ReportDatePicker
-          key="choose-day"
-          value={day}
+          key="choose-from-date"
+          value={fromDate || null}
           onChange={(newValue) => {
-            setDay(newValue || new Date());
+            setFromDate(newValue || new Date());
           }}
         />,
-        <ReportBtn key="export-excel" onClick={() => console.log('Export excel')} />
+        <ReportDatePicker
+          key="choose-to-date"
+          value={toDate || null}
+          onChange={(newValue) => {
+            setToDate(newValue || new Date());
+          }}
+        />
       ]}
     >
       <Box sx={{ width: '100%', paddingBottom: '20px' }}>

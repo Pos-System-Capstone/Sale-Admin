@@ -22,7 +22,7 @@ import ResoTable from 'components/ResoTable/ResoTable';
 import MenuWidgets from 'components/_dashboard/general-app/MenuWidgets';
 import moment from 'moment';
 import { useSnackbar } from 'notistack';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Chart from 'react-apexcharts';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
@@ -30,7 +30,6 @@ import { PATH_REPORT_APP } from 'routes/reportAppPaths';
 import { Menu } from 'types/menu';
 import { TTradingBase } from 'types/report/trading';
 import { TTableColumn } from 'types/table';
-import ReportBtn from '../components/ReportBtn';
 import ReportDatePicker from '../components/ReportDatePicker';
 import ReportPage from '../components/ReportPage';
 // import Page from './components/Page';
@@ -184,15 +183,15 @@ const DateReport = () => {
     series: [
       {
         name: 'Mang đi',
-        data: [1997, 2419, 330, 0, 0, 0, 0]
+        data: [6668, 6651, 6444, 5113, 0, 0, 0]
       },
       {
         name: 'Tại store',
-        data: [174, 422, 339, 0, 0, 0, 0]
+        data: [3887, 4001, 4221, 3280, 0, 0, 0]
       },
       {
         name: 'Giao hàng',
-        data: [112, 99, 80, 0, 0, 0, 0]
+        data: [189, 178, 150, 126, 0, 0, 0]
       }
     ]
   };
@@ -231,6 +230,33 @@ const DateReport = () => {
   const current = new Date();
   const [day, setDay] = useState<Date>(current);
 
+  const today = new Date();
+  const yesterday = today.setDate(today.getDate() - 1);
+  const [fromDate, setFromDate] = useState<Date>(new Date(yesterday));
+  const [toDate, setToDate] = useState<Date>(new Date());
+
+  const ref = useRef<any>();
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.formControl.setValue(
+        'FromDate',
+        fromDate?.toLocaleDateString('zh-Hans-CN', {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit'
+        })
+      );
+      ref.current.formControl.setValue(
+        'toDate',
+        toDate?.toLocaleDateString('zh-Hans-CN', {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit'
+        })
+      );
+    }
+  }, [fromDate, toDate]);
+
   return (
     <ReportPage
       // title="Báo cáo doanh thu theo ngày"
@@ -244,13 +270,19 @@ const DateReport = () => {
       }
       actions={[
         <ReportDatePicker
-          key="choose-day"
-          value={day}
+          key="choose-from-date"
+          value={fromDate || null}
           onChange={(newValue) => {
-            setDay(newValue || new Date());
+            setFromDate(newValue || new Date());
           }}
         />,
-        <ReportBtn key="export-excel" onClick={() => console.log('Export excel')} />
+        <ReportDatePicker
+          key="choose-to-date"
+          value={toDate || null}
+          onChange={(newValue) => {
+            setToDate(newValue || new Date());
+          }}
+        />
       ]}
     >
       <Box sx={{ width: '100%', paddingBottom: '20px' }}>
@@ -274,6 +306,7 @@ const DateReport = () => {
             <Stack spacing={2}>
               <Box sx={{ paddingTop: '40px' }}>
                 <ResoTable
+                  showAction={false}
                   rowKey="trading_id"
                   ref={tableRef}
                   getData={tradingApi.getTrading}

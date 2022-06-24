@@ -248,6 +248,7 @@ const PromotionReport = () => {
       <Card>
         <Stack spacing={2}>
           <ResoTable
+            showAction={false}
             rowKey="promotion-id"
             ref={tableRef}
             // getData={PromotionBase}
