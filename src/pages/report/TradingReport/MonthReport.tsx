@@ -367,7 +367,7 @@ const MonthReport = () => {
             <Grid container rowSpacing={1}>
               <Grid item>
                 <Chart
-                  options={ChartFill.options}
+                  // options={ChartFill.options}
                   series={ChartFill.series}
                   type="bar"
                   width="1100"

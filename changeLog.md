@@ -1,3 +1,8 @@
+#### `2022-06-24` `Phuoclt:`
+###### Report system
+- 🆕 Add `productSale.ts` and `productProgress` in type to manage type of productSale and productProgress
+- 🛠 Refactor code: create `config.ts` in productSale and productProgress component to manage column Resotable 
+
 #### `2022-06-22` `Phuoclt:`
 ###### Report system
 - 🆕 Create `products.ts` to call api report sale products

@@ -9,22 +9,14 @@ import ReportBtn from 'pages/report/components/ReportBtn';
 import ReportDatePicker from 'pages/report/components/ReportDatePicker';
 import ReportPage from 'pages/report/components/ReportPage';
 import { useState } from 'react';
-// components
 import { useNavigate } from 'react-router-dom';
-//
-import { TTableColumn } from 'types/table';
+import ProductProgressColumn from './column';
 
 const ProductProgressReport = () => {
   const navigate = useNavigate();
   const { translate } = useLocales();
   const { enqueueSnackbar } = useSnackbar();
-  type ProductSaleDetail = {
-    date?: any;
-    quantity?: any;
-    revenueBefore?: any;
-    discount?: any;
-    revenue?: any;
-  };
+
   const data = [
     {
       date: '21/06/2022',
@@ -97,64 +89,6 @@ const ProductProgressReport = () => {
       revenue: 0
     }
   ];
-  const orderColumns: TTableColumn<ProductSaleDetail>[] = [
-    {
-      title: 'Ngày',
-      valueType: 'select',
-      hideInSearch: true,
-      dataIndex: 'date'
-    },
-    {
-      title: 'Số lượng',
-      hideInSearch: true,
-      dataIndex: 'quantity'
-    },
-    {
-      title: 'Doanh thu trước giảm giá',
-      hideInSearch: true,
-      dataIndex: 'revenueBefore'
-    },
-    {
-      title: 'Giảm giá',
-      hideInSearch: true,
-      dataIndex: 'discount'
-    },
-    {
-      title: 'Doanh thu',
-      hideInSearch: true,
-      dataIndex: 'revenue'
-    },
-    {
-      title: 'Loại',
-      hideInTable: true,
-      valueEnum: [
-        {
-          label: 'Sản phẩm',
-          value: 'true'
-        },
-        {
-          label: 'Nhóm sản phẩm',
-          value: 'false'
-        }
-      ],
-      valueType: 'select'
-    },
-    {
-      title: 'Chọn biểu đồ',
-      hideInTable: true,
-      valueEnum: [
-        {
-          label: 'Giảm giá',
-          value: 'true'
-        },
-        {
-          label: 'Trước giảm giá',
-          value: 'false'
-        }
-      ],
-      valueType: 'select'
-    }
-  ];
 
   const [openChart, setOpenChart] = useState(false);
 
@@ -200,7 +134,7 @@ const ProductProgressReport = () => {
             )}
           </Stack>
 
-          <ResoTable showAction={false} columns={orderColumns} dataSource={data} />
+          <ResoTable showAction={false} columns={ProductProgressColumn} dataSource={data} />
         </Stack>
       </Card>
     </ReportPage>
