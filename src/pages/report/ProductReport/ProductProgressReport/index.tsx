@@ -4,13 +4,13 @@ import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { Box, Card, Tab } from '@mui/material';
 import ResoTable from 'components/ResoTable/ResoTable';
 import useLocales from 'hooks/useLocales';
-import moment from 'moment';
 import { useSnackbar } from 'notistack';
 import ReportBtn from 'pages/report/components/ReportBtn';
 import ReportDatePicker from 'pages/report/components/ReportDatePicker';
 import ReportPage from 'pages/report/components/ReportPage';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { fTime } from 'utils/formatTime';
 import ProductProgressColumn from './column';
 
 const ProductProgressReport = () => {
@@ -103,11 +103,7 @@ const ProductProgressReport = () => {
   return (
     <ReportPage
       title="Báo cáo diễn tiến sản phẩm"
-      content={
-        date.toDateString() === today.toDateString()
-          ? `Tính đến: ${moment().format('hh:mm:ss')}`
-          : ''
-      }
+      content={date.toDateString() === today.toDateString() ? `Tính đến: ${fTime(date)}` : ``}
       actions={[
         <ReportDatePicker
           key="choose-day"

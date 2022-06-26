@@ -7,8 +7,9 @@ import { useSnackbar } from 'notistack';
 // material
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { TCollection } from 'types/collection';
 import { TTableColumn } from 'types/table';
+import { fDate } from 'utils/formatTime';
+import { formatCurrency } from 'utils/utils';
 import ReportBtn from '../components/ReportBtn';
 import ReportDatePicker from '../components/ReportDatePicker';
 import ReportPage from '../components/ReportPage';
@@ -19,7 +20,6 @@ const CollectionListPage = () => {
   const { enqueueSnackbar } = useSnackbar();
 
   const [date, setDate] = useState<Date>(new Date());
-  const [currentDeleteItem, setCurrentDeleteItem] = useState<TCollection | null>(null);
 
   type ProductSaleDetail = {
     name?: any;
@@ -107,7 +107,8 @@ const CollectionListPage = () => {
     {
       title: 'Ngày',
       hideInSearch: true,
-      dataIndex: 'date'
+      dataIndex: 'date',
+      render: (value) => fDate(value)
     },
     {
       title: 'Cửa hàng',
@@ -117,22 +118,26 @@ const CollectionListPage = () => {
     {
       title: 'Tiền mặt',
       hideInSearch: true,
-      dataIndex: 'cash'
+      dataIndex: 'cash',
+      render: (value) => formatCurrency(value)
     },
     {
       title: 'Thẻ thành viên',
       hideInSearch: true,
-      dataIndex: 'memberCard'
+      dataIndex: 'memberCard',
+      render: (value) => formatCurrency(value)
     },
     {
       title: 'Ngân hàng',
       hideInSearch: true,
-      dataIndex: 'bank'
+      dataIndex: 'bank',
+      render: (value) => formatCurrency(value)
     },
     {
       title: 'Ví điện tử',
       hideInSearch: true,
-      dataIndex: 'eWallet'
+      dataIndex: 'eWallet',
+      render: (value) => formatCurrency(value)
     }
   ];
 

@@ -3,7 +3,6 @@ import { TabContext, TabList, TabPanel } from '@mui/lab';
 // material
 import { Box, Card, Tab } from '@mui/material';
 import useLocales from 'hooks/useLocales';
-import moment from 'moment';
 import { useSnackbar } from 'notistack';
 import ReportBtn from 'pages/report/components/ReportBtn';
 import { ReportMonthPicker } from 'pages/report/components/ReportDatePicker';
@@ -11,6 +10,7 @@ import ReportPage from 'pages/report/components/ReportPage';
 import React, { useEffect, useRef, useState } from 'react';
 // components
 import { useNavigate } from 'react-router-dom';
+import { fDate, fTime } from 'utils/formatTime';
 // import OverviewPage from '././components/OverviewPage';
 // import TableCard, { fakeData, MiniTableCard } from '././components/TableCard';
 import EmployeeStatistics from '../components/EmployeeStatistics';
@@ -71,26 +71,20 @@ export default function OverviewMonth() {
     if (ref.current) {
       ref.current.formControl.setValue(
         'create_at',
-        date.toLocaleDateString('zh-Hans-CN', {
-          year: 'numeric',
-          month: '2-digit',
-          day: '2-digit'
-        })
+        fDate(date)
+        // date.toLocaleDateString('zh-Hans-CN', {
+        //   year: 'numeric',
+        //   month: '2-digit',
+        //   day: '2-digit'
+        // })
       );
     }
   }, [date]);
 
   return (
     <ReportPage
-      title={`Tổng quan tháng ${date.toLocaleDateString('vi-VI', {
-        year: 'numeric',
-        month: 'numeric'
-      })}`}
-      content={
-        date.toDateString() === today.toDateString()
-          ? `Tính đến: ${moment().format('hh:mm:ss')}`
-          : ''
-      }
+      title={`Tổng quan tháng ${fDate(date)}`}
+      content={date.toDateString() === today.toDateString() ? `Tính đến: ${fTime(date)}` : ''}
       actions={[
         <ReportMonthPicker
           key="month-date-picker"

@@ -1,6 +1,7 @@
 import { ProductSaleBase } from 'types/report/productSale';
 import { TTableColumn } from 'types/table';
 import { fNumber, fPercent } from 'utils/formatNumber';
+import { formatCurrency } from 'utils/utils';
 
 const productSaleColumn: TTableColumn<ProductSaleBase>[] = [
   {
@@ -11,8 +12,8 @@ const productSaleColumn: TTableColumn<ProductSaleBase>[] = [
   },
   {
     title: 'Ngày',
-    hideInTable: true,
     valueType: 'select',
+    hideInTable: true,
     hideInSearch: true
   },
   {
@@ -36,31 +37,20 @@ const productSaleColumn: TTableColumn<ProductSaleBase>[] = [
     title: 'Tổng tiền trước giảm giá',
     hideInSearch: true,
     dataIndex: 'totalBeforeDiscount',
-    render: (value) =>
-      value.toLocaleString('vi', {
-        style: 'currency',
-        currency: 'VND'
-      })
+    // render: (value) => fCurrencyVN(value)
+    render: (value) => formatCurrency(value)
   },
   {
     title: 'Giảm giá',
     hideInSearch: true,
     dataIndex: 'discount',
-    render: (value) =>
-      value.toLocaleString('vi', {
-        style: 'currency',
-        currency: 'VND'
-      })
+    render: (value) => formatCurrency(value)
   },
   {
     title: 'Tổng tiền sau giảm giá',
     hideInSearch: true,
     dataIndex: 'totalAfterDiscount',
-    render: (value) =>
-      value.toLocaleString('vi', {
-        style: 'currency',
-        currency: 'VND'
-      })
+    render: (value) => formatCurrency(value)
   },
   // Wait api
   // {

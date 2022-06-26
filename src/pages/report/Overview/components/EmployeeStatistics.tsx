@@ -2,6 +2,7 @@ import { Stack, Typography } from '@mui/material';
 import ResoTable from 'components/ResoTable/ResoTable';
 import { useRef } from 'react';
 import { TTableColumn } from 'types/table';
+import { formatCurrency } from 'utils/utils';
 
 function EmployeeStatistics() {
   const ref = useRef<any>();
@@ -23,32 +24,38 @@ function EmployeeStatistics() {
     {
       title: 'Tiền mặt',
       hideInSearch: true,
-      dataIndex: 'cash'
+      dataIndex: 'cash',
+      render: (value) => formatCurrency(value)
     },
     {
       title: 'Thẻ thành viên',
       hideInSearch: true,
-      dataIndex: 'memberCard'
+      dataIndex: 'memberCard',
+      render: (value) => formatCurrency(value)
     },
     {
       title: 'E-Wallet',
       hideInSearch: true,
-      dataIndex: 'eWallet'
+      dataIndex: 'eWallet',
+      render: (value) => formatCurrency(value)
     },
     {
       title: 'Bank',
       hideInSearch: true,
-      dataIndex: 'bank'
+      dataIndex: 'bank',
+      render: (value) => formatCurrency(value)
     },
     {
       title: 'Khác',
       hideInSearch: true,
-      dataIndex: 'other'
+      dataIndex: 'other',
+      render: (value) => formatCurrency(value)
     },
     {
       title: 'Tổng',
       hideInSearch: true,
-      dataIndex: 'total'
+      dataIndex: 'total',
+      render: (value) => formatCurrency(value)
     }
   ];
   const data = [

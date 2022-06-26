@@ -2,6 +2,8 @@ import { Stack, Typography } from '@mui/material';
 import ResoTable from 'components/ResoTable/ResoTable';
 import { useEffect, useRef } from 'react';
 import { TTableColumn } from 'types/table';
+import { fNumber } from 'utils/formatNumber';
+import { formatCurrency } from 'utils/utils';
 function TabTwo({ date }: any) {
   const ref = useRef<any>();
 
@@ -143,22 +145,26 @@ function TabTwo({ date }: any) {
     {
       title: 'Hóa Đơn Bán Hàng',
       hideInSearch: true,
-      dataIndex: 'bill'
+      dataIndex: 'bill',
+      render: (value) => fNumber(value)
     },
     {
       title: 'Tổng sản phẩm',
       hideInSearch: true,
-      dataIndex: 'totalProduct'
+      dataIndex: 'totalProduct',
+      render: (value) => fNumber(value)
     },
     {
       title: 'DT nạp thẻ',
       hideInSearch: true,
-      dataIndex: 'billCard'
+      dataIndex: 'billCard',
+      render: (value) => formatCurrency(value)
     },
     {
       title: 'Tổng danh thu',
       hideInSearch: true,
-      dataIndex: 'saleRevenue'
+      dataIndex: 'saleRevenue',
+      render: (value) => formatCurrency(value)
     }
   ];
   return (

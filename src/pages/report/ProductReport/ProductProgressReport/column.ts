@@ -1,5 +1,7 @@
 import { ProductProgressBase } from 'types/report/productProgress';
 import { TTableColumn } from 'types/table';
+import { fPercent, fShortenNumber } from 'utils/formatNumber';
+import { formatCurrency } from 'utils/utils';
 
 const ProductProgressColumn: TTableColumn<ProductProgressBase>[] = [
   {
@@ -11,22 +13,26 @@ const ProductProgressColumn: TTableColumn<ProductProgressBase>[] = [
   {
     title: 'Số lượng',
     hideInSearch: true,
-    dataIndex: 'quantity'
+    dataIndex: 'quantity',
+    render: (value) => fShortenNumber(value)
   },
   {
     title: 'Doanh thu trước giảm giá',
     hideInSearch: true,
-    dataIndex: 'revenueBefore'
+    dataIndex: 'revenueBefore',
+    render: (value) => formatCurrency(value)
   },
   {
     title: 'Giảm giá',
     hideInSearch: true,
-    dataIndex: 'discount'
+    dataIndex: 'discount',
+    render: (value) => fPercent(value)
   },
   {
     title: 'Doanh thu',
     hideInSearch: true,
-    dataIndex: 'revenue'
+    dataIndex: 'revenue',
+    render: (value) => formatCurrency(value)
   },
   {
     title: 'Loại',
