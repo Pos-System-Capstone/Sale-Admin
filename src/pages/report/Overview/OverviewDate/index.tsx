@@ -53,7 +53,7 @@ export default function OverviewDate() {
     >
       <Card sx={{ paddingBottom: 5 }}>
         <TabContext value={activeTab}>
-          <Box>
+          <Box mb={2}>
             <TabList onChange={handleChangeTab}>
               <Tab label="Tổng quan doanh thu" value="1" />
               <Tab label="Top doanh thu cửa hàng" value="2" />

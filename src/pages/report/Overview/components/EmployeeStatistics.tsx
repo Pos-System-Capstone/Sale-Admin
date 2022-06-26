@@ -1,4 +1,4 @@
-import { Box, Stack, Typography } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 import ResoTable from 'components/ResoTable/ResoTable';
 import { useRef } from 'react';
 import { TTableColumn } from 'types/table';
@@ -135,14 +135,7 @@ function EmployeeStatistics() {
     }
   ];
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '11px',
-        mt: '30px'
-      }}
-    >
+    <Stack direction={'column'}>
       {/*Thống kê doanh thu theo nhân viên*/}
       <Stack spacing={2}>
         <Typography pl={2} variant="h4">
@@ -150,7 +143,7 @@ function EmployeeStatistics() {
         </Typography>
         <ResoTable showAction={false} columns={employeeColumns} ref={ref} dataSource={data} />
       </Stack>
-    </Box>
+    </Stack>
   );
 }
 

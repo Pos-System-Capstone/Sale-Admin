@@ -41,7 +41,7 @@ function RevenueOverview() {
     }
   };
   return (
-    <Stack spacing={4} mt={4}>
+    <Stack spacing={4}>
       {/* I. Bán hàng */}
       <Stack spacing={2}>
         <Typography pl={2} variant="h4">

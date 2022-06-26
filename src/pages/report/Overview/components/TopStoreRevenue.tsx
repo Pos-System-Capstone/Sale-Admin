@@ -1,4 +1,4 @@
-import { Box, Stack, Typography } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 import ResoTable from 'components/ResoTable/ResoTable';
 import { useRef } from 'react';
 import { TTableColumn } from 'types/table';
@@ -172,14 +172,7 @@ function TopStoreRevenue({ date }: any) {
     }
   ];
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '11px',
-        mt: '30px'
-      }}
-    >
+    <Stack direction={'column'}>
       {/* V. Top Doanh Thu Sản Phẩm*/}
       <Stack spacing={2}>
         <Typography pl={2} variant="h4">
@@ -199,7 +192,7 @@ function TopStoreRevenue({ date }: any) {
           dataSource={data}
         />
       </Stack>
-    </Box>
+    </Stack>
   );
 }
 

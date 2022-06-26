@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 // material
-import { Box, Button, Card, Stack } from '@mui/material';
+import { TabContext, TabList, TabPanel } from '@mui/lab';
+import { Box, Card, Tab } from '@mui/material';
 import productApi from 'api/report/products';
 import ResoTable from 'components/ResoTable/ResoTable';
 import useLocales from 'hooks/useLocales';
@@ -20,7 +21,13 @@ const ProductSaleReport = () => {
 
   const ref = useRef<any>();
 
-  const [openChart, setOpenChart] = useState(false);
+  //
+  const [activeTab, setActiveTab] = useState('1');
+  const handleChangeTab = (event: React.SyntheticEvent, newValue: string) => {
+    setActiveTab(newValue);
+  };
+
+  // const [openChart, setOpenChart] = useState(false);
   const today = new Date();
   const yesterday = today.setDate(today.getDate() - 1);
   const [fromDate, setFromDate] = useState<Date>(new Date(yesterday));
@@ -69,34 +76,27 @@ const ProductSaleReport = () => {
       ]}
     >
       <Card>
-        <Stack spacing={4}>
-          <Stack spacing={2}>
-            <Box>
-              <Button variant="contained" onClick={() => setOpenChart((prev) => !prev)}>
-                {openChart ? 'ẨN BIỂU ĐỒ' : 'HIỂN THỊ BIỂU ĐỒ'}
-              </Button>
-            </Box>
-
-            {openChart && (
-              <Box>
-                <img
-                  style={{ borderRadius: '10px' }}
-                  src="https://i.pinimg.com/originals/84/37/28/843728503b72b20cd0ebad06ce4137c9.png"
-                  alt=""
-                />
-              </Box>
-            )}
-          </Stack>
-
-          <ResoTable
-            ref={ref}
-            columns={productSaleColumn}
-            getData={productApi.getProductReport}
-            showAction={false}
-            pagination={true}
-            scroll={{ y: '320px' }}
-          />
-        </Stack>
+        <TabContext value={activeTab}>
+          <Box mb={2}>
+            <TabList onChange={handleChangeTab}>
+              <Tab label="Báo cáo doanh thu" value="1" />
+              <Tab label="Sơ đồ doanh thu" value="2" />
+            </TabList>
+          </Box>
+          <TabPanel value="1">
+            <ResoTable
+              ref={ref}
+              columns={productSaleColumn}
+              getData={productApi.getProductReport}
+              showAction={false}
+              pagination={true}
+              scroll={{ y: '320px' }}
+            />
+          </TabPanel>
+          <TabPanel value="2">
+            <h1>Chart here</h1>
+          </TabPanel>
+        </TabContext>
       </Card>
     </ReportPage>
   );

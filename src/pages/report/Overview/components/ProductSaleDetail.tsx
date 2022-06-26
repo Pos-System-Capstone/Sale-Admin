@@ -1,4 +1,4 @@
-import { Box, Stack, Typography } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 import ResoTable from 'components/ResoTable/ResoTable';
 import { useEffect, useRef } from 'react';
 import { TTableColumn } from 'types/table';
@@ -17,33 +17,6 @@ function TabTwo({ date }: any) {
       );
     }
   }, [date]);
-
-  const getFakeApi: any = () => {
-    return {
-      data: [
-        {
-          index: 1,
-          name: 'HCM.UN.FPTMALL.D1\r\n',
-          bill: 355,
-          billCard: 0,
-          totalProduct: 0,
-          saleRevenue: 132121,
-          billRevenue: 0,
-          totalRevenue: 132121
-        },
-        {
-          index: 2,
-          name: 'HCM.UN.FPTMALL.D1\r\n',
-          bill: 355,
-          billCard: 1,
-          totalProduct: 1,
-          saleRevenue: 132121,
-          billRevenue: 1,
-          totalRevenue: 132121
-        }
-      ]
-    };
-  };
 
   type ProductSaleDetail = {
     index?: any;
@@ -189,14 +162,7 @@ function TabTwo({ date }: any) {
     }
   ];
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '11px',
-        mt: '30px'
-      }}
-    >
+    <Stack direction={'column'}>
       {/* VI. Chi tiet Doanh Thu Sản Phẩm*/}
       <Stack spacing={2}>
         <Typography pl={2} variant="h4">
@@ -217,7 +183,7 @@ function TabTwo({ date }: any) {
           // getData={getFakeApi}
         />
       </Stack>
-    </Box>
+    </Stack>
   );
 }
 
