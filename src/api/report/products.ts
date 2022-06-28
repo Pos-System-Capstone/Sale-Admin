@@ -13,7 +13,7 @@ export type TProductReportBase = {
   totalAfterDiscount?: any;
 };
 
-const getProductReport = (params: any = {}) =>
+const getProductReport = (params?: any) =>
   request.get<BaseReponse<TProductReportBase>>('/product-report', { params });
 
 const productApi = { getProductReport };
