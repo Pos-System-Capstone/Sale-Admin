@@ -1,3 +1,10 @@
+#### `2022-06-27` `Phuoclt:`
+###### Report system
+- 🌐 Add new format date (`YYYY-MM-DD`)
+- 🐞 Fix type params api
+- 🆕 Add api store and type api
+- 🛠 Refactor code: remove `column.ts` in ProductProgressReport and unused code 
+
 #### `2022-06-25` `Phuoclt:`
 ###### Report system
 - 🛠 Refactor code: using the same format function and clear code 
