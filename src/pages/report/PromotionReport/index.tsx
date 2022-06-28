@@ -1,13 +1,10 @@
 /* eslint-disable camelcase */
 // material
 import { Card, Stack } from '@mui/material';
-import storeApi from 'api/store';
-import DeleteConfirmDialog from 'components/DelectConfirmDialog';
 import ResoTable from 'components/ResoTable/ResoTable';
 import useLocales from 'hooks/useLocales';
-import { get } from 'lodash';
 import { useSnackbar } from 'notistack';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 // components
 // import promotionApi from 'api/report/promotion';
 import { SelectField } from 'components/form';
@@ -17,6 +14,12 @@ import { TStore } from 'types/store';
 import { TTableColumn } from 'types/table';
 // import { DatePicker, LocalizationProvider } from '@mui/lab';
 // import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+import promotionApi from 'api/report/promotion';
+import storeApi from 'api/report/store';
 import ReportBtn from '../components/ReportBtn';
 import ReportDatePicker from '../components/ReportDatePicker';
 import ReportPage from '../components/ReportPage';
@@ -27,22 +30,6 @@ const PromotionReport = () => {
   const [currentDeleteItem, setCurrentDeleteItem] = useState<TStore | null>(null);
   const tableRef = useRef<any>();
 
-  const deleteStoreHandler = () =>
-    storeApi
-      .delete(currentDeleteItem?.id!)
-      .then(() => setCurrentDeleteItem(null))
-      .then(tableRef.current?.reload)
-      .then(() =>
-        enqueueSnackbar(`Xóa thành công`, {
-          variant: 'success'
-        })
-      )
-      .catch((err: any) => {
-        const errMsg = get(err.response, ['data', 'message'], `Có lỗi xảy ra. Vui lòng thử lại`);
-        enqueueSnackbar(errMsg, {
-          variant: 'error'
-        });
-      });
   type TPromotionBase = {
     CustomerName?: string;
     OrderQty?: number;
@@ -221,6 +208,27 @@ const PromotionReport = () => {
   const current = new Date();
   const [day, setDay] = useState<Date>(current);
 
+  const [store, setStore] = useState<any>([]);
+
+  useEffect(() => {
+    (async () => {
+      const { data } = await storeApi.get();
+      setStore(data);
+    })();
+  }, []);
+
+  const [storeId, setStoreId] = useState<number>(13);
+  const [api1, setApi1] = useState<any>([]);
+  useEffect(() => {
+    (async () => {
+      const { data } = await promotionApi.getPromotion(storeId);
+      setApi1(data?.data);
+    })();
+  }, [storeId]);
+  const handleChange = (e: any) => {
+    setStoreId(e.target.value);
+  };
+
   return (
     <ReportPage
       title="Báo cáo theo khuyến mãi"
@@ -235,24 +243,33 @@ const PromotionReport = () => {
         <ReportBtn key="export-excel" onClick={() => console.log('Export excel')} />
       ]}
     >
-      <DeleteConfirmDialog
-        open={Boolean(currentDeleteItem)}
-        onClose={() => setCurrentDeleteItem(null)}
-        onDelete={deleteStoreHandler}
-        title={
-          <>
-            {translate('common.confirmDeleteTitle')} <strong>{currentDeleteItem?.name}</strong>
-          </>
-        }
-      />
       <Card>
         <Stack spacing={2}>
+          <FormControl sx={{ width: '50%' }}>
+            <InputLabel id="demo-simple-select-label">Cửa hàng</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={storeId}
+              label="Cửa hàng"
+              onChange={handleChange}
+            >
+              {store?.map((i: any) => {
+                return (
+                  <MenuItem value={i.id} key={i.id}>
+                    {i.name}
+                  </MenuItem>
+                );
+              })}
+            </Select>
+          </FormControl>
           <ResoTable
             showAction={false}
             rowKey="promotion-id"
             ref={tableRef}
             // getData={PromotionBase}
-            dataSource={fakeapi}
+            // dataSouce={fakeapi}
+            dataSource={api1}
             columns={columns}
           />
         </Stack>
