@@ -6,6 +6,15 @@ export function fDate(date: string | number | Date, formatStr: string = 'dd/MM/y
   return format(new Date(date), formatStr);
 }
 
+/**
+ *
+ * @param date
+ * @returns yyyy/mm/dd
+ */
+export function formatDate(date: string | number | Date, formatStr: string = 'yyyy/MM/dd') {
+  return format(new Date(date), formatStr);
+}
+
 export function fDateTime(date: string | number | Date) {
   return format(new Date(date), 'dd/MM/yyyy HH:mm');
 }
