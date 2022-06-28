@@ -15,6 +15,7 @@ import { formatCurrency } from 'utils/utils';
 
 const ProductSaleReport = () => {
   const [store, setStore] = useState<any>([]);
+
   useEffect(() => {
     (async () => {
       const { data } = await storeApi.get();
@@ -112,8 +113,7 @@ const ProductSaleReport = () => {
   };
 
   const today = new Date();
-  const day = new Date();
-  const yesterday = day.setDate(day.getDate() - 1);
+  const yesterday = new Date(new Date().valueOf() - 1000 * 60 * 60 * 24);
   const [fromDate, setFromDate] = useState<Date>(new Date(yesterday));
   const [toDate, setToDate] = useState<Date>(new Date());
 
