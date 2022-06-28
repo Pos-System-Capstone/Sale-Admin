@@ -8,7 +8,13 @@ const productSaleColumn: TTableColumn<ProductSaleBase>[] = [
     title: 'Cửa hàng',
     hideInTable: true,
     valueType: 'select',
-    dataIndex: 'storeId'
+    dataIndex: 'storeId',
+    valueEnum: [
+      {
+        value: '1',
+        label: 'Cửa hàng 1'
+      }
+    ]
   },
   {
     title: 'Ngày',
