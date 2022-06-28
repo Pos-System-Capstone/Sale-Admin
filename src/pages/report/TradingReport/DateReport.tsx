@@ -235,10 +235,9 @@ const DateReport = () => {
   const [fromDate, setFromDate] = useState<Date>(new Date(yesterday));
   const [toDate, setToDate] = useState<Date>(new Date());
 
-  const ref = useRef<any>();
   useEffect(() => {
-    if (ref.current) {
-      ref.current.formControl.setValue(
+    if (tableRef.current) {
+      tableRef.current.formControl.setValue(
         'FromDate',
         fromDate?.toLocaleDateString('zh-Hans-CN', {
           year: 'numeric',
@@ -246,7 +245,7 @@ const DateReport = () => {
           day: '2-digit'
         })
       );
-      ref.current.formControl.setValue(
+      tableRef.current.formControl.setValue(
         'toDate',
         toDate?.toLocaleDateString('zh-Hans-CN', {
           year: 'numeric',
