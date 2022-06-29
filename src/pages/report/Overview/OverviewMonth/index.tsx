@@ -2,14 +2,11 @@
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 // material
 import { Box, Card, Tab } from '@mui/material';
-import useLocales from 'hooks/useLocales';
-import { useSnackbar } from 'notistack';
 import ReportBtn from 'pages/report/components/ReportBtn';
 import { ReportMonthPicker } from 'pages/report/components/ReportDatePicker';
 import ReportPage from 'pages/report/components/ReportPage';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 // components
-import { useNavigate } from 'react-router-dom';
 import { fDate, fTime } from 'utils/formatTime';
 // import OverviewPage from '././components/OverviewPage';
 // import TableCard, { fakeData, MiniTableCard } from '././components/TableCard';
@@ -47,39 +44,12 @@ const list: any = [
 
 export default function OverviewMonth() {
   const [activeTab, setActiveTab] = useState('1');
-  const ref = useRef<any>();
-  console.log('ref', ref);
-  const today = new Date();
-  const [date, setDate] = useState<Date>(today);
   const handleChangeTab = (event: React.SyntheticEvent, newValue: string) => {
     setActiveTab(newValue);
   };
-  const { enqueueSnackbar } = useSnackbar();
-  const navigate = useNavigate();
-  const { t } = useLocales();
 
-  useEffect(() => {
-    // console.log(today.getDate());
-    // console.log(
-    //   'date',
-    //   date.toLocaleDateString('zh-Hans-CN', {
-    //     year: 'numeric',
-    //     month: '2-digit',
-    //     day: '2-digit'
-    //   })
-    // );
-    if (ref.current) {
-      ref.current.formControl.setValue(
-        'create_at',
-        fDate(date)
-        // date.toLocaleDateString('zh-Hans-CN', {
-        //   year: 'numeric',
-        //   month: '2-digit',
-        //   day: '2-digit'
-        // })
-      );
-    }
-  }, [date]);
+  const today = new Date();
+  const [date, setDate] = useState<Date>(today);
 
   return (
     <ReportPage
@@ -111,10 +81,10 @@ export default function OverviewMonth() {
           </TabPanel>
           {/* Top doanh thu san cua hang */}
           <TabPanel value="2">
-            <TopStoreRevenue date={date} />
+            <TopStoreRevenue />
           </TabPanel>
           <TabPanel value="3">
-            <ProductSaleDetail date={date} />
+            <ProductSaleDetail />
           </TabPanel>
           <TabPanel value="4">
             <EmployeeStatistics />

@@ -1,12 +1,11 @@
 /* eslint-disable camelcase */
-import { TabContext, TabList, TabPanel } from '@mui/lab';
+import { DateRange, DateRangePicker, TabContext, TabList, TabPanel } from '@mui/lab';
 // material
-import { Box, Card, Tab } from '@mui/material';
-import ReportDatePicker from 'pages/report/components/ReportDatePicker';
+import { Box, Card, Tab, TextField } from '@mui/material';
+import ReportBtn from 'pages/report/components/ReportBtn';
 import ReportPage from 'pages/report/components/ReportPage';
 import React, { useState } from 'react';
 // components
-import { fDate, fTime } from 'utils/formatTime';
 import EmployeeStatistics from '../components/EmployeeStatistics';
 import ProductSaleDetail from '../components/ProductSaleDetail';
 import RevenueOverview from '../components/RevenueOverview';
@@ -15,24 +14,47 @@ import TopStoreRevenue from '../components/TopStoreRevenue';
 // icons
 export default function OverviewDate() {
   const [activeTab, setActiveTab] = useState('1');
-  const today = new Date();
-  const [date, setDate] = useState<Date>(today);
   const handleChangeTab = (event: React.SyntheticEvent, newValue: string) => {
     setActiveTab(newValue);
   };
 
+  const today = new Date();
+  const yesterday = new Date(new Date().valueOf() - 1000 * 60 * 60 * 24);
+  const [dateRange, setDateRange] = useState<DateRange<Date>>([yesterday, today]);
+
   return (
     <ReportPage
-      title={`Tổng quan ngày: ${fDate(date)}`}
-      content={date.toDateString() === today.toDateString() ? `Tính đến: ${fTime(date)}` : ``}
+      // title={`Tổng quan ngày: ${fDate(date)}`}
+      title={`Báo cáo tổng quan`}
+      // content={dateRange[1].getDate() === today.getDate() ? `Tính đến: ${fTime(today)}` : ``}
+      // actions={[
+      //   <ReportDatePicker
+      //     key="choose-day"
+      //     value={date}
+      //     onChange={(newValue) => {
+      //       setDate(newValue || new Date());
+      //     }}
+      //   />
+      // ]}
       actions={[
-        <ReportDatePicker
-          key="choose-day"
-          value={date}
-          onChange={(newValue) => {
-            setDate(newValue || new Date());
+        <DateRangePicker
+          disableFuture
+          value={dateRange}
+          renderInput={(startProps, endProps) => (
+            <>
+              <TextField {...startProps} label="Từ" />
+              <Box sx={{ mx: 2 }}> - </Box>
+              <TextField {...endProps} label="Đến" />
+            </>
+          )}
+          onChange={(e) => {
+            if (e[0] && e[1]) {
+              setDateRange(e);
+            }
           }}
-        />
+          key="date-range"
+        />,
+        <ReportBtn key="export-excel" onClick={() => console.log('Export excel')} />
       ]}
     >
       <Card sx={{ paddingBottom: 5 }}>
@@ -50,10 +72,10 @@ export default function OverviewDate() {
           </TabPanel>
           {/* Top doanh thu san cua hang */}
           <TabPanel value="2">
-            <TopStoreRevenue date={date} />
+            <TopStoreRevenue />
           </TabPanel>
           <TabPanel value="3">
-            <ProductSaleDetail date={date} />
+            <ProductSaleDetail />
           </TabPanel>
           <TabPanel value="4">
             <EmployeeStatistics />

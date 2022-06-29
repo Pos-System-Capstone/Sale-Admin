@@ -165,11 +165,7 @@ function RevenueOverview() {
                     Doanh thu thực tế
                   </Typography>
                   <Typography p={1} textAlign="center" variant="body1">
-                    Tông số:{' '}
-                    {fakeData.TotalRevenue.toLocaleString('vi', {
-                      style: 'currency',
-                      currency: 'VND'
-                    })}
+                    Tông số: {fNumber(fakeData.TotalRevenue)}
                   </Typography>
                 </Box>
                 <ReactApexChart

@@ -1,24 +1,11 @@
 import { Stack, Typography } from '@mui/material';
 import ResoTable from 'components/ResoTable/ResoTable';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { TTableColumn } from 'types/table';
 import { fNumber } from 'utils/formatNumber';
 import { formatCurrency } from 'utils/utils';
-function TabTwo({ date }: any) {
+function TabTwo() {
   const ref = useRef<any>();
-
-  useEffect(() => {
-    if (ref.current) {
-      ref.current.formControl.setValue(
-        'create_at',
-        date.toLocaleDateString('zh-Hans-CN', {
-          year: 'numeric',
-          month: '2-digit',
-          day: '2-digit'
-        })
-      );
-    }
-  }, [date]);
 
   type ProductSaleDetail = {
     index?: any;

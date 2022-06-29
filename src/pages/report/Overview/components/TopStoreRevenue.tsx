@@ -4,21 +4,8 @@ import { useRef } from 'react';
 import { TTableColumn } from 'types/table';
 import { fNumber } from 'utils/formatNumber';
 import { formatCurrency } from 'utils/utils';
-function TopStoreRevenue({ date }: any) {
+function TopStoreRevenue() {
   const ref = useRef<any>();
-
-  // useEffect(() => {
-  //   if (ref.current) {
-  //     ref.current.formControl.setValue(
-  //       'create_at',
-  //       date.toLocaleDateString('zh-Hans-CN', {
-  //         year: 'numeric',
-  //         month: '2-digit',
-  //         day: '2-digit'
-  //       })
-  //     );
-  //   }
-  // }, [date]);
 
   const data = [
     {
@@ -197,13 +184,6 @@ function TopStoreRevenue({ date }: any) {
           V. Top Doanh Thu Cửa Hàng
         </Typography>
         <ResoTable
-          defaultFilters={{
-            create_at: date.toLocaleDateString('zh-Hans-CN', {
-              year: 'numeric',
-              month: '2-digit',
-              day: 'numeric'
-            })
-          }}
           showAction={false}
           columns={orderColumns}
           ref={ref}
