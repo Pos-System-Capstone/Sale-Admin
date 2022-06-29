@@ -5,6 +5,7 @@ import { Box, Card, Tab, TextField } from '@mui/material';
 import productApi from 'api/report/products';
 import storeApi from 'api/report/store';
 import ResoTable from 'components/ResoTable/ResoTable';
+import ReportBtn from 'pages/report/components/ReportBtn';
 import ReportPage from 'pages/report/components/ReportPage';
 import { useEffect, useRef, useState } from 'react';
 import { ProductSaleBase } from 'types/report/productSale';
@@ -144,7 +145,8 @@ const ProductSaleReport = () => {
             }
           }}
           key="date-range"
-        />
+        />,
+        <ReportBtn key="export-excel" onClick={() => console.log('Export excel')} />
       ]}
     >
       <Card>

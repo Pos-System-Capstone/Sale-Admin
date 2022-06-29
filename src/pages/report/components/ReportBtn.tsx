@@ -4,13 +4,16 @@ import FileDownloadIcon from '@mui/icons-material/FileDownload';
 type ReportBtnProps = {
   onClick: () => void;
   label?: string;
+  title?: string;
   variant?: 'text' | 'outlined' | 'contained';
 };
 
+// label = 'XUẤT FILE EXCEL'
 function ReportBtn(props: ReportBtnProps) {
-  const { onClick, label = 'XUẤT FILE EXCEL', variant = 'contained' } = props;
+  const { onClick, variant = 'outlined', label, title = 'XUẤT FILE EXCEL' } = props;
   return (
-    <Button onClick={onClick} variant={variant} startIcon={<FileDownloadIcon />}>
+    <Button onClick={onClick} variant={variant} title={title}>
+      {<FileDownloadIcon />}
       {label}
     </Button>
   );

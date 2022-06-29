@@ -208,6 +208,7 @@ function TopStoreRevenue({ date }: any) {
           columns={orderColumns}
           ref={ref}
           dataSource={data}
+          scroll={{ y: '320px' }}
         />
       </Stack>
     </Stack>

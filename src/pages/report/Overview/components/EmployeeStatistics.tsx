@@ -148,7 +148,13 @@ function EmployeeStatistics() {
         <Typography pl={2} variant="h4">
           Thống kê doanh thu theo nhân viên
         </Typography>
-        <ResoTable showAction={false} columns={employeeColumns} ref={ref} dataSource={data} />
+        <ResoTable
+          showAction={false}
+          columns={employeeColumns}
+          ref={ref}
+          dataSource={data}
+          scroll={{ y: '320px' }}
+        />
       </Stack>
     </Stack>
   );

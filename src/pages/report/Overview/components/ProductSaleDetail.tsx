@@ -127,7 +127,6 @@ function TabTwo({ date }: any) {
   const orderColumns: TTableColumn<ProductSaleDetail>[] = [
     {
       title: 'Ngày',
-      // dataIndex: 'create_at',
       valueType: 'date',
       hideInSearch: true,
       hideInTable: true
@@ -175,18 +174,12 @@ function TabTwo({ date }: any) {
           VI. Top Doanh Thu Sản Phẩm
         </Typography>
         <ResoTable
-          defaultFilters={{
-            create_at: date.toLocaleDateString('zh-Hans-CN', {
-              year: 'numeric',
-              month: '2-digit',
-              day: 'numeric'
-            })
-          }}
           showAction={false}
           columns={orderColumns}
           ref={ref}
           dataSource={data}
           // getData={getFakeApi}
+          scroll={{ y: '320px' }}
         />
       </Stack>
     </Stack>

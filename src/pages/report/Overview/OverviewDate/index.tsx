@@ -2,14 +2,10 @@
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 // material
 import { Box, Card, Tab } from '@mui/material';
-import useLocales from 'hooks/useLocales';
-import { useSnackbar } from 'notistack';
-import ReportBtn from 'pages/report/components/ReportBtn';
 import ReportDatePicker from 'pages/report/components/ReportDatePicker';
 import ReportPage from 'pages/report/components/ReportPage';
 import React, { useState } from 'react';
 // components
-import { useNavigate } from 'react-router-dom';
 import { fDate, fTime } from 'utils/formatTime';
 import EmployeeStatistics from '../components/EmployeeStatistics';
 import ProductSaleDetail from '../components/ProductSaleDetail';
@@ -24,9 +20,6 @@ export default function OverviewDate() {
   const handleChangeTab = (event: React.SyntheticEvent, newValue: string) => {
     setActiveTab(newValue);
   };
-  const { enqueueSnackbar } = useSnackbar();
-  const navigate = useNavigate();
-  const { t } = useLocales();
 
   return (
     <ReportPage
@@ -39,8 +32,7 @@ export default function OverviewDate() {
           onChange={(newValue) => {
             setDate(newValue || new Date());
           }}
-        />,
-        <ReportBtn key="export-excel" onClick={() => console.log('Export excel')} />
+        />
       ]}
     >
       <Card sx={{ paddingBottom: 5 }}>
