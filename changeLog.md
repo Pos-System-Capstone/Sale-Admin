@@ -1,3 +1,7 @@
+#### `2022-06-29` `Phuoclt:`
+###### Report system
+- 🆕 Create `AutocompleteStore.tsx` , hook `useStore` and update `column.ts` to `column.tsx`
+- 🆕 Select store with `AutocompleteStore.tsx`
 #### `2022-06-28` `Phuoclt:`
 ###### Report system
 - 🐞 Fix date range with default and dont call with null value
