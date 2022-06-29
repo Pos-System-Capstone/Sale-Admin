@@ -114,24 +114,23 @@ const ProductSaleReport = () => {
 
   const today = new Date();
   const yesterday = new Date(new Date().valueOf() - 1000 * 60 * 60 * 24);
-  const [fromDate, setFromDate] = useState<Date>(new Date(yesterday));
-  const [toDate, setToDate] = useState<Date>(new Date());
+  const [dateRange, setDateRange] = useState<any>([yesterday, today]);
 
   useEffect(() => {
     if (ref.current) {
-      ref.current.formControl.setValue('FromDate', formatDate(fromDate!));
-      ref.current.formControl.setValue('ToDate', formatDate(toDate!));
+      ref.current.formControl.setValue('FromDate', formatDate(dateRange[0]!));
+      ref.current.formControl.setValue('ToDate', formatDate(dateRange[1]!));
     }
-  }, [fromDate, toDate]);
+  }, [dateRange]);
 
   return (
     <ReportPage
       title="Báo cáo doanh thu sản phẩm"
-      content={toDate?.getDate() === today?.getDate() ? `Tính đến ${fTime(today)}` : ''}
+      content={dateRange[1]?.getDate() === today?.getDate() ? `Tính đến ${fTime(today)}` : ''}
       actions={[
         <DateRangePicker
           disableFuture
-          value={[fromDate, toDate]}
+          value={dateRange}
           renderInput={(startProps, endProps) => (
             <>
               <TextField {...startProps} label="Từ" />
@@ -140,8 +139,9 @@ const ProductSaleReport = () => {
             </>
           )}
           onChange={(e) => {
-            setFromDate(e[0]!);
-            setToDate(e[1]!);
+            if (e[0] && e[1]) {
+              setDateRange(e);
+            }
           }}
           key="date-range"
         />

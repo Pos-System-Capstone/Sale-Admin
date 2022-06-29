@@ -245,7 +245,7 @@ const PromotionReport = () => {
     >
       <Card>
         <Stack spacing={2}>
-          <FormControl sx={{ width: '50%' }}>
+          <FormControl sx={{ width: '554px' }}>
             <InputLabel id="demo-simple-select-label">Cửa hàng</InputLabel>
             <Select
               labelId="demo-simple-select-label"
