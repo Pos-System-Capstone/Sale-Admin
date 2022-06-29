@@ -1,3 +1,8 @@
+#### `2022-06-28` `Phuoclt:`
+###### Report system
+- 🐞 Fix date range with default and dont call with null value
+- 🛠 Refactor code: remove unused code in overview component 
+
 #### `2022-06-27` `Phuoclt:`
 ###### Report system
 - 🌐 Add new format date (`YYYY-MM-DD`)
