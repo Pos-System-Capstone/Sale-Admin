@@ -20,6 +20,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import promotionApi from 'api/report/promotion';
 import storeApi from 'api/report/store';
+import { PromotionBase } from 'types/report/promotion';
 import ReportBtn from '../components/ReportBtn';
 import ReportDatePicker from '../components/ReportDatePicker';
 import ReportPage from '../components/ReportPage';
@@ -132,35 +133,128 @@ const PromotionReport = () => {
     }
   ];
 
-  const columns: TTableColumn<TPromotionBase>[] = [
+  // const fakeapi = [
+  //   {
+  //     CustomerName: 'Trần Hữu Ninh',
+  //     OrderQty: 1,
+  //     SumAmount: 25000,
+  //     SumDiscount: 25000,
+  //     SumFinal: 0,
+  //     PromoID: 1,
+  //     Id: 5795
+  //   },
+  //   {
+  //     CustomerName: 'Hồ Ngọc Ẩn',
+  //     OrderQty: 1,
+  //     SumAmount: 25000,
+  //     SumDiscount: 25000,
+  //     SumFinal: 0,
+  //     PromoID: 1,
+  //     Id: 5799
+  //   },
+  //   {
+  //     CustomerName: 'nguyễn văn thuấn',
+  //     OrderQty: 2,
+  //     SumAmount: 70000,
+  //     SumDiscount: 70000,
+  //     SumFinal: 0,
+  //     PromoID: 1,
+  //     Id: 5802
+  //   },
+  //   {
+  //     CustomerName: 'Vũ Đinh',
+  //     OrderQty: 1,
+  //     SumAmount: 19000,
+  //     SumDiscount: 19000,
+  //     SumFinal: 0,
+  //     PromoID: 1,
+  //     Id: 6533
+  //   },
+  //   {
+  //     CustomerName: 'Nguyễn Phạm Quang Trí',
+  //     OrderQty: 1,
+  //     SumAmount: 55000,
+  //     SumDiscount: 55000,
+  //     SumFinal: 0,
+  //     PromoID: 1,
+  //     Id: 11857
+  //   },
+  //   {
+  //     CustomerName: 'Võ Tuấn Thanh AM',
+  //     OrderQty: 3,
+  //     SumAmount: 135000,
+  //     SumDiscount: 135000,
+  //     SumFinal: 0,
+  //     PromoID: 1,
+  //     Id: 13957
+  //   },
+  //   {
+  //     CustomerName: 'quynh nguyen',
+  //     OrderQty: 2,
+  //     SumAmount: 150000,
+  //     SumDiscount: 150000,
+  //     SumFinal: 0,
+  //     PromoID: 1,
+  //     Id: 13986
+  //   },
+  //   {
+  //     CustomerName: 'huỳnh văn tuyển',
+  //     OrderQty: 2,
+  //     SumAmount: 60000,
+  //     SumDiscount: 60000,
+  //     SumFinal: 0,
+  //     PromoID: 1,
+  //     Id: 29424
+  //   },
+  //   {
+  //     CustomerName: 'Long',
+  //     OrderQty: 1,
+  //     SumAmount: 350000,
+  //     SumDiscount: 350000,
+  //     SumFinal: 0,
+  //     PromoID: 1,
+  //     Id: 31440
+  //   },
+  //   {
+  //     CustomerName: 'Viết Khôi',
+  //     OrderQty: 1,
+  //     SumAmount: 47000,
+  //     SumDiscount: 47000,
+  //     SumFinal: 0,
+  //     PromoID: 1,
+  //     Id: 41288
+  //   }
+  // ];
+
+  const columns: TTableColumn<PromotionBase>[] = [
     {
       title: 'Tên khách hàng',
-      dataIndex: 'CustomerName'
+      dataIndex: 'customerName'
       // hideInSearch: true
     },
     {
       title: 'Số lần sử dụng thẻ',
-      dataIndex: 'OrderQty',
+      // dataIndex: 'OrderQty',
       hideInSearch: true
     },
     {
       title: 'Số tiền',
-      dataIndex: 'SumAmount',
+      dataIndex: 'sumAmount',
       hideInSearch: true
     },
     {
       title: 'Số tiền giảm giá',
-      dataIndex: 'SumDiscount',
+      // dataIndex: 'SumDiscount',
       hideInSearch: true
     },
     {
       title: 'Thanh toán',
-      dataIndex: 'SumFinal',
+      // dataIndex: 'SumFinal',
       hideInSearch: true
     },
     {
       title: 'Xem các hóa đơn',
-      dataIndex: 'PromoID',
+      // dataIndex: 'PromoID',
       // hideInSearch: true,
       render: (isAvai: any) => (
         <Label color={isAvai ? 'success' : 'default'}>

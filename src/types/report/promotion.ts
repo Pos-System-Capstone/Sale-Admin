@@ -1,5 +1,5 @@
 export type PromotionBase = {
   customerName?: string;
-  sumAmount?: 0;
+  sumAmount?: number;
   storeName?: string;
 };

@@ -5,10 +5,10 @@ import alertCircleFill from '@iconify/icons-eva/alert-circle-fill';
 import alertTriangleFill from '@iconify/icons-eva/alert-triangle-fill';
 import clockIcon from '@iconify/icons-eva/clock-fill';
 // import { Icon } from '@iconify/react';
-import { TabContext, TabList, TabPanel } from '@mui/lab';
+import { DateRangePicker, TabContext, TabList, TabPanel } from '@mui/lab';
 // import AdapterDateFns from '@mui/lab/AdapterDateFns';
 // material
-import { Card, Stack, Tab } from '@mui/material';
+import { Card, Stack, Tab, TextField } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { Box } from '@mui/system';
 // import { TTradingBase } from '@types/report/trading';
@@ -21,8 +21,7 @@ import confirm from 'components/Modal/confirm';
 import ResoTable from 'components/ResoTable/ResoTable';
 import MenuWidgets from 'components/_dashboard/general-app/MenuWidgets';
 import { useSnackbar } from 'notistack';
-import React, { useRef, useState } from 'react';
-import { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Chart from 'react-apexcharts';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
@@ -30,7 +29,7 @@ import { PATH_REPORT_APP } from 'routes/reportAppPaths';
 import { Menu } from 'types/menu';
 import { TTradingBase } from 'types/report/trading';
 import { TTableColumn } from 'types/table';
-import ReportDatePicker from '../components/ReportDatePicker';
+import { formatDate, fTime } from 'utils/formatTime';
 import ReportPage from '../components/ReportPage';
 // import Page from './components/Page';
 export const menuColumns: TTableColumn<TTradingBase>[] = [
@@ -277,34 +276,19 @@ const MonthReport = () => {
     }
   ];
 
-  const current = new Date();
-  const [day, setDay] = useState<Date>(current);
-
   const today = new Date();
-  const yesterday = today.setDate(today.getDate() - 1);
+  const day = new Date();
+  const yesterday = day.setDate(day.getDate() - 1);
   const [fromDate, setFromDate] = useState<Date>(new Date(yesterday));
   const [toDate, setToDate] = useState<Date>(new Date());
 
   useEffect(() => {
     if (tableRef.current) {
-      tableRef.current.formControl.setValue(
-        'FromDate',
-        fromDate?.toLocaleDateString('zh-Hans-CN', {
-          year: 'numeric',
-          month: '2-digit',
-          day: '2-digit'
-        })
-      );
-      tableRef.current.formControl.setValue(
-        'toDate',
-        toDate?.toLocaleDateString('zh-Hans-CN', {
-          year: 'numeric',
-          month: '2-digit',
-          day: '2-digit'
-        })
-      );
+      tableRef.current.formControl.setValue('FromDate', formatDate(fromDate!));
+      tableRef.current.formControl.setValue('ToDate', formatDate(toDate!));
     }
   }, [fromDate, toDate]);
+
   return (
     <ReportPage
       title={`Báo cáo doanh thu theo tháng: ${day.toLocaleDateString('vi-VI', {
@@ -312,23 +296,23 @@ const MonthReport = () => {
         month: '2-digit',
         day: '2-digit'
       })}`}
-      // content={
-      //   day.getDate() === current.getDate() ? `Tính đến: ${moment().format('hh:mm:ss')}` : ''
-      // }
+      content={toDate?.getDate() === today?.getDate() ? `Tính đến ${fTime(today)}` : ''}
       actions={[
-        <ReportDatePicker
-          key="choose-from-date"
-          value={fromDate || null}
-          onChange={(newValue) => {
-            setFromDate(newValue || new Date());
+        <DateRangePicker
+          disableFuture
+          value={[fromDate, toDate]}
+          renderInput={(startProps, endProps) => (
+            <>
+              <TextField {...startProps} label="Từ" />
+              <Box sx={{ mx: 2 }}> - </Box>
+              <TextField {...endProps} label="Đến" />
+            </>
+          )}
+          onChange={(e) => {
+            setFromDate(e[0]!);
+            setToDate(e[1]!);
           }}
-        />,
-        <ReportDatePicker
-          key="choose-to-date"
-          value={toDate || null}
-          onChange={(newValue) => {
-            setToDate(newValue || new Date());
-          }}
+          key="date-range"
         />
       ]}
     >
