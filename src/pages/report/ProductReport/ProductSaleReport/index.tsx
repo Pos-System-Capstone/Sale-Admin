@@ -7,6 +7,7 @@ import ResoTable from 'components/ResoTable/ResoTable';
 import ReportBtn from 'pages/report/components/ReportBtn';
 import ReportPage from 'pages/report/components/ReportPage';
 import { useEffect, useRef, useState } from 'react';
+import ReactApexChart from 'react-apexcharts';
 import { formatDate, fTime } from 'utils/formatTime';
 import { productSaleColumn } from './column';
 
@@ -121,6 +122,41 @@ const ProductSaleReport = () => {
     }
   }, [dateRange]);
 
+  //chart
+  const chartFill = {
+    series: [44, 55, 13, 43, 22],
+    options: {
+      title: {
+        text: 'Doanh thu sản phẩm',
+        align: 'center'
+      },
+      chart: {
+        width: 380,
+        type: 'pie'
+      },
+      labels: [
+        'Iced Espresso (M)',
+        'Iced Espresso With Milk (M)',
+        'Card 200K',
+        'Iced Espresso With Milk (L)',
+        'Phần còn lại'
+      ],
+      responsive: [
+        {
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 200
+            },
+            legend: {
+              position: 'bottom'
+            }
+          }
+        }
+      ]
+    }
+  };
+
   return (
     <ReportPage
       title="Báo cáo doanh thu sản phẩm"
@@ -168,7 +204,12 @@ const ProductSaleReport = () => {
             />
           </TabPanel>
           <TabPanel value="2">
-            <h1>Chart here</h1>
+            <ReactApexChart
+              options={chartFill.options}
+              series={chartFill.series}
+              type="pie"
+              height={380}
+            />
           </TabPanel>
         </TabContext>
       </Card>
