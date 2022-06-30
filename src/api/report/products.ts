@@ -1,21 +1,12 @@
+import { TProductSaleReportBase } from 'types/report/productSale';
 import { BaseReponse } from 'types/response';
 import { axiosInstances } from 'utils/axios';
 
 const request = axiosInstances.report;
 
-export type TProductReportBase = {
-  productId?: any;
-  productName?: any;
-  quantity?: any;
-  percent?: any;
-  totalBeforeDiscount?: any;
-  discount?: any;
-  totalAfterDiscount?: any;
-};
+const getProductSale = (params?: any) =>
+  request.get<BaseReponse<TProductSaleReportBase>>('/product-report', { params });
 
-const getProductReport = (params?: any) =>
-  request.get<BaseReponse<TProductReportBase>>('/product-report', { params });
-
-const productApi = { getProductReport };
+const productApi = { getProductSale };
 
 export default productApi;

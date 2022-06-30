@@ -1,5 +1,4 @@
-export type ProductSaleBase = {
-  storeId?: any;
+export type TProductSaleReportBase = {
   productId?: any;
   productName?: any;
   quantity?: any;
@@ -8,4 +7,5 @@ export type ProductSaleBase = {
   discount?: any;
   totalAfterDiscount?: any;
   checkDeal?: any;
+  storeId?: any;
 };

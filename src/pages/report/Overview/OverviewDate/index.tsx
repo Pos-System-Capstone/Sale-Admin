@@ -11,7 +11,6 @@ import ProductSaleDetail from '../components/ProductSaleDetail';
 import RevenueOverview from '../components/RevenueOverview';
 import TopStoreRevenue from '../components/TopStoreRevenue';
 
-// icons
 export default function OverviewDate() {
   const [activeTab, setActiveTab] = useState('1');
   const handleChangeTab = (event: React.SyntheticEvent, newValue: string) => {
@@ -21,23 +20,14 @@ export default function OverviewDate() {
   const today = new Date();
   const yesterday = new Date(new Date().valueOf() - 1000 * 60 * 60 * 24);
   const [dateRange, setDateRange] = useState<DateRange<Date>>([yesterday, today]);
-
+  const [done, setDone] = useState(true);
+  const [loading, setLoading] = useState(true);
   return (
     <ReportPage
-      // title={`Tổng quan ngày: ${fDate(date)}`}
       title={`Báo cáo tổng quan`}
-      // content={dateRange[1].getDate() === today.getDate() ? `Tính đến: ${fTime(today)}` : ``}
-      // actions={[
-      //   <ReportDatePicker
-      //     key="choose-day"
-      //     value={date}
-      //     onChange={(newValue) => {
-      //       setDate(newValue || new Date());
-      //     }}
-      //   />
-      // ]}
       actions={[
         <DateRangePicker
+          disabled={loading}
           disableFuture
           value={dateRange}
           renderInput={(startProps, endProps) => (
@@ -52,6 +42,8 @@ export default function OverviewDate() {
               setDateRange(e);
             }
           }}
+          onOpen={() => setDone(false)}
+          onClose={() => setDone(true)}
           key="date-range"
         />,
         <ReportBtn key="export-excel" onClick={() => console.log('Export excel')} />
@@ -67,16 +59,24 @@ export default function OverviewDate() {
               <Tab label="Thống kê nhân viên" value="4" />
             </TabList>
           </Box>
+
           <TabPanel value="1">
-            <RevenueOverview />
+            <RevenueOverview
+              dateRange={dateRange}
+              done={done}
+              loading={loading}
+              setLoading={setLoading}
+            />
           </TabPanel>
-          {/* Top doanh thu san cua hang */}
+
           <TabPanel value="2">
             <TopStoreRevenue />
           </TabPanel>
+
           <TabPanel value="3">
             <ProductSaleDetail />
           </TabPanel>
+
           <TabPanel value="4">
             <EmployeeStatistics />
           </TabPanel>

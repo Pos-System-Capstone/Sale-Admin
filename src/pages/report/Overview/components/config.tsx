@@ -7,51 +7,51 @@ import TimelineIcon from '@mui/icons-material/Timeline';
 const totalSalesRevenue: any = [
   {
     title: <AttachMoneyIcon />,
-    dataIndex: 'TotalRevenue'
+    dataIndex: 'totalRevenue'
   },
   {
     title: 'Doanh thu trước giảm giá (1)',
-    dataIndex: 'TotalRevenueWithDiscount',
+    dataIndex: 'totalRevenueWithDiscount',
     highlight: true
   },
   {
     title: 'Giảm giá Passio100 (2.1)',
-    dataIndex: 'TotalDiscount100',
+    dataIndex: 'totalDiscount100',
     fontSize: 'small'
   },
   {
     title: 'Giảm giá bán hàng (2.2)',
-    dataIndex: 'TotalDiscount',
+    dataIndex: 'totalDiscount',
     fontSize: 'small'
   },
   {
     title: 'Tổng giảm giá bán hàng (2) = (2.1) + (2.2)',
-    dataIndex: 'TotalDiscount',
+    dataIndex: 'totalDiscount',
     fontSize: 'small'
   },
   {
     title: 'Doanh thu Thực Tế (3)',
-    dataIndex: 'TotalRevenue',
+    dataIndex: 'totalRevenue',
     highlight: true
   }
 ];
 const totalSalesInvoice: any = [
   {
     title: <SyncAltIcon />,
-    dataIndex: 'TotalOrder'
+    dataIndex: 'totalOrder'
   },
   {
     title: 'Tại quán (1)',
-    dataIndex: 'TotalOrderAtStore',
+    dataIndex: 'totalOrderAtStore',
     highlight: true
   },
   {
     title: 'Mang đi (2)',
-    dataIndex: 'TotalOrderTakeAway'
+    dataIndex: 'totalOrderTakeAway'
   },
   {
     title: 'Giao hàng (3)',
-    dataIndex: 'TotalOrderDelivery',
+    dataIndex: 'totalOrderDelivery',
     highlight: true
   }
 ];
@@ -60,13 +60,13 @@ const totalSalesInvoice: any = [
 const TotalRevenueCardRecharge: any = [
   {
     title: <AttachMoneyIcon />,
-    dataIndex: 'TotalRevenueOrderCard'
+    dataIndex: 'totalRevenueOrderCard'
   }
 ];
 const totalBillOfCard: any = [
   {
     title: <SyncAltIcon />,
-    dataIndex: 'TotalOrderCard'
+    dataIndex: 'totalOrderCard'
   }
 ];
 
@@ -74,25 +74,25 @@ const totalBillOfCard: any = [
 const totalRevenue: any = [
   {
     title: <AttachMoneyIcon />,
-    dataIndex: 'TotalRevenue'
+    dataIndex: 'totalRevenue'
   }
 ];
 const totalBill: any = [
   {
     title: <WindowIcon />,
-    dataIndex: 'TotalOrder'
+    dataIndex: 'totalOrder'
   }
 ];
 const averageBill: any = [
   {
     title: <WindowIcon />,
-    dataIndex: 'AvgRevenueOrder'
+    dataIndex: 'avgRevenueOrder'
   }
 ];
 const averageProduct: any = [
   {
     title: <WindowIcon />,
-    dataIndex: 'AvgProductOrder'
+    dataIndex: 'avgProductOrder'
   }
 ];
 
@@ -100,13 +100,13 @@ const atStore: any = [
   {
     title: 'Doanh thu',
     unit: 'VNĐ',
-    dataIndex: 'TotalRevenueAtStore',
+    dataIndex: 'totalRevenueAtStore',
     highlight: true
   },
   {
     title: 'Tổng hóa đơn',
     unit: 'Hóa đơn',
-    dataIndex: 'TotalOrderAtStore'
+    dataIndex: 'totalOrderAtStore'
   },
   {
     title: 'TB hóa đơn',
@@ -117,20 +117,20 @@ const atStore: any = [
   {
     title: 'TB sản phẩm',
     unit: 'SP/Hóa đơn',
-    dataIndex: 'AvgProductOrderAtStore'
+    dataIndex: 'avgProductOrderAtStore'
   }
 ];
 const takeAway: any = [
   {
     title: 'Doanh thu',
     unit: 'VNĐ',
-    dataIndex: 'TotalRevenueTakeAway',
+    dataIndex: 'totalRevenueTakeAway',
     highlight: true
   },
   {
     title: 'Tổng hóa đơn',
     unit: 'Hóa đơn',
-    dataIndex: 'TotalOrderTakeAway'
+    dataIndex: 'totalOrderTakeAway'
   },
   {
     title: 'TB hóa đơn',
@@ -141,20 +141,20 @@ const takeAway: any = [
   {
     title: 'TB sản phẩm',
     unit: 'SP/Hóa đơn',
-    dataIndex: 'AvgProductOrderTakeAway'
+    dataIndex: 'avgProductOrderTakeAway'
   }
 ];
 const delivery: any = [
   {
     title: 'Doanh thu',
     unit: 'VNĐ',
-    dataIndex: 'TotalRevenueDelivery',
+    dataIndex: 'totalRevenueDelivery',
     highlight: true
   },
   {
     title: 'Tổng hóa đơn',
     unit: 'Hóa đơn',
-    dataIndex: 'TotalOrderDelivery'
+    dataIndex: 'totalOrderDelivery'
   },
   {
     title: 'TB hóa đơn',
@@ -165,20 +165,20 @@ const delivery: any = [
   {
     title: 'TB sản phẩm',
     unit: 'SP/Hóa đơn',
-    dataIndex: 'AvgProductOrderDelivery'
+    dataIndex: 'avgProductOrderDelivery'
   }
 ];
 const cancel: any = [
   {
     title: 'Tổng giá trị',
     unit: 'VNĐ',
-    dataIndex: 'TotalRevenuePrecancel',
+    dataIndex: 'totalRevenuePrecancel',
     highlight: true
   },
   {
     title: 'Tổng hóa đơn',
     unit: 'Hóa đơn',
-    dataIndex: 'TotalOrderPreCancel'
+    dataIndex: 'totalOrderPreCancel'
   },
   {
     title: 'Hủy trước chế biến',
@@ -189,7 +189,7 @@ const cancel: any = [
   {
     title: 'Hủy sau chế biến',
     unit: 'SP/Hóa đơn',
-    dataIndex: 'TotalOrderAfterCancel'
+    dataIndex: 'totalOrderAfterCancel'
   }
 ];
 
@@ -197,20 +197,20 @@ const cancel: any = [
 const totalPayment: any = [
   {
     title: <MoneyIcon />,
-    dataIndex: 'TotalPayment'
+    dataIndex: 'totalPayment'
   },
   {
     title: 'Tiền mặt [bán hàng] (1)',
-    dataIndex: 'TotalPaymentForSales',
+    dataIndex: 'totalPaymentForSales',
     highlight: true
   },
   {
     title: 'Tiền mặt [nạp thẻ] (2)',
-    dataIndex: 'TotalPaymentCard'
+    dataIndex: 'totalPaymentCard'
   },
   {
     title: 'Thẻ thành viên (3)',
-    dataIndex: 'TotalPaymentBuyCard',
+    dataIndex: 'totalPaymentBuyCard',
     highlight: true
   },
   {
@@ -219,70 +219,70 @@ const totalPayment: any = [
   },
   {
     title: 'Momo:',
-    dataIndex: 'TotalPaymentE_Wallet_Momo',
+    dataIndex: 'totalPaymentE_Wallet_Momo',
     fontSize: 'small'
   },
   {
     title: 'Grab Pay',
-    dataIndex: 'TotalPaymentE_Wallet_GrabPay',
+    dataIndex: 'totalPaymentE_Wallet_GrabPay',
     fontSize: 'small'
   },
   {
     title: 'Grab Food',
-    dataIndex: 'TotalPaymentE_Wallet_GrabFood',
+    dataIndex: 'totalPaymentE_Wallet_GrabFood',
     fontSize: 'small'
   },
   {
     title: 'VN Pay',
-    dataIndex: 'TotalPaymentE_Wallet_VNPay',
+    dataIndex: 'totalPaymentE_Wallet_VNPay',
     fontSize: 'small'
   },
   {
     title: 'Baemin',
-    dataIndex: 'TotalPaymentE_Wallet_Baemin',
+    dataIndex: 'totalPaymentE_Wallet_Baemin',
     fontSize: 'small'
   },
   {
     title: 'Shopee pay',
-    dataIndex: 'TotalPaymentE_Wallet_Shopeepay',
+    dataIndex: 'totalPaymentE_Wallet_Shopeepay',
     fontSize: 'small'
   },
   {
     title: 'Zalo pay',
-    dataIndex: 'TotalPaymentE_Wallet_ZaloPay',
+    dataIndex: 'totalPaymentE_Wallet_ZaloPay',
     fontSize: 'small'
   },
   {
     title: <AttachMoneyIcon />,
-    dataIndex: 'TotalPaymentE_Wallet'
+    dataIndex: 'totalPaymentE_Wallet'
   },
   {
     title: 'Ngân hàng (5)',
-    dataIndex: 'TotalPaymentBank',
+    dataIndex: 'totalPaymentBank',
     highlight: true
   },
   {
     title: 'Thanh toán khác (6)',
-    dataIndex: 'TotalPaymentOther'
+    dataIndex: 'totalPaymentOther'
   }
 ];
 const totalAmountPayment: any = [
   {
     title: <SyncAltIcon />,
-    dataIndex: 'TotalTransactionPayment'
+    dataIndex: 'totalTransactionPayment'
   },
   {
     title: 'Tiền mặt [bán hàng] (1)',
-    dataIndex: 'TotalTransactionPaymentForSales',
+    dataIndex: 'totalTransactionPaymentForSales',
     highlight: true
   },
   {
     title: 'Tiền mặt [nạp thẻ] (2)',
-    dataIndex: 'TotalTransactionPaymentCard'
+    dataIndex: 'totalTransactionPaymentCard'
   },
   {
     title: 'Thẻ thành viên (3)',
-    dataIndex: 'TotalTransactionPaymentBuyCard',
+    dataIndex: 'totalTransactionPaymentBuyCard',
     highlight: true
   },
   {
@@ -291,51 +291,51 @@ const totalAmountPayment: any = [
   },
   {
     title: 'Momo:',
-    dataIndex: 'TotalTransactionPaymentE_Wallet_Momo',
+    dataIndex: 'totalTransactionPaymentE_Wallet_Momo',
     fontSize: 'small'
   },
   {
     title: 'Grab Pay',
-    dataIndex: 'TotalTransactionPaymentE_Wallet_GrabPay',
+    dataIndex: 'totalTransactionPaymentE_Wallet_GrabPay',
     fontSize: 'small'
   },
   {
     title: 'Grab Food',
-    dataIndex: 'TotalTransactionPaymentE_Wallet_GrabFood',
+    dataIndex: 'totalTransactionPaymentE_Wallet_GrabFood',
     fontSize: 'small'
   },
   {
     title: 'VN Pay',
-    dataIndex: 'TotalTransactionPaymentE_Wallet_VNPay',
+    dataIndex: 'totalTransactionPaymentE_Wallet_VNPay',
     fontSize: 'small'
   },
   {
     title: 'Baemin',
-    dataIndex: 'TotalTransactionPaymentE_Wallet_Baemin',
+    dataIndex: 'totalTransactionPaymentE_Wallet_Baemin',
     fontSize: 'small'
   },
   {
     title: 'Shopee pay',
-    dataIndex: 'TotalTransactionPaymentE_Wallet_Shopeepay',
+    dataIndex: 'totalTransactionPaymentE_Wallet_Shopeepay',
     fontSize: 'small'
   },
   {
     title: 'Zalo pay',
-    dataIndex: 'TotalTransactionPaymentE_Wallet_ZaloPay',
+    dataIndex: 'totalTransactionPaymentE_Wallet_ZaloPay',
     fontSize: 'small'
   },
   {
     title: <TimelineIcon />,
-    dataIndex: 'TotalPaymentE_Wallet'
+    dataIndex: 'totalPaymentE_Wallet'
   },
   {
     title: 'Ngân hàng (5)',
-    dataIndex: 'TotalPaymentBank',
+    dataIndex: 'totalPaymentBank',
     highlight: true
   },
   {
     title: 'Thanh toán khác (6)',
-    dataIndex: 'TotalPaymentOther'
+    dataIndex: 'totalPaymentOther'
   }
 ];
 

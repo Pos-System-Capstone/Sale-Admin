@@ -1,17 +1,16 @@
-import { ProductSaleBase } from 'types/report/productSale';
+import { TProductSaleReportBase } from 'types/report/productSale';
 import { TTableColumn } from 'types/table';
 import { fNumber, fPercent } from 'utils/formatNumber';
 import { formatCurrency } from 'utils/utils';
 import AutocompleteStore from 'components/form/common/report/AutocompleteStore';
 
-export const productSaleColumn: TTableColumn<ProductSaleBase>[] = [
+export const productSaleColumn: TTableColumn<TProductSaleReportBase>[] = [
   {
     title: 'Cửa hàng',
     hideInTable: true,
     valueType: 'select',
     dataIndex: 'storeId',
     renderFormItem: () => <AutocompleteStore name="storeId" label="Cửa hàng" />
-    // valueEnum: store
   },
   {
     title: 'Tên sản phẩm',

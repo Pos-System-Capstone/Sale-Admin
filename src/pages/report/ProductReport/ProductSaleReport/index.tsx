@@ -158,7 +158,7 @@ const ProductSaleReport = () => {
             <ResoTable
               ref={ref}
               columns={productSaleColumn}
-              getData={productApi.getProductReport}
+              getData={productApi.getProductSale}
               showAction={false}
               pagination={true}
               scroll={{ y: '320px' }}
