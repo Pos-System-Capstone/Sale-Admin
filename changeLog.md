@@ -1,3 +1,10 @@
+#### `2022-06-30` `Phuoclt:`
+###### Report system
+- 🔥 Setup and call overview-report api. Create `revenueOverview.ts` type and `revenue.ts` api
+- 🆕 Update `TableCard.tsx` and add loading screen wait api
+- 🐞 Fix only call api if user finish pick daterange and disable if api is loading
+- 🛠 Update type and name productSaleReport section
+
 #### `2022-06-29` `Phuoclt:`
 ###### Report system
 - 🆕 Create `AutocompleteStore.tsx` , hook `useStore` and update `column.ts` to `column.tsx`

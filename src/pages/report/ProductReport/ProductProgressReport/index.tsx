@@ -9,7 +9,6 @@ import ReportBtn from 'pages/report/components/ReportBtn';
 import ReportDatePicker from 'pages/report/components/ReportDatePicker';
 import ReportPage from 'pages/report/components/ReportPage';
 import { useState } from 'react';
-import ReactApexChart from 'react-apexcharts';
 import { useNavigate } from 'react-router-dom';
 import { fTime } from 'utils/formatTime';
 import ProductProgressColumn from './column';
@@ -166,12 +165,12 @@ const ProductProgressReport = () => {
             <ResoTable showAction={false} columns={ProductProgressColumn} dataSource={data} />
           </TabPanel>
           <TabPanel value="2">
-            <ReactApexChart
-              options={chartFill.options}
+            {/* <ReactApexChart
+              option={chartFill.options}
               series={chartFill.series}
               type="line"
               height={350}
-            />
+            /> */}
           </TabPanel>
         </TabContext>
       </Card>
