@@ -162,7 +162,12 @@ const ProductProgressReport = () => {
             </TabList>
           </Box>
           <TabPanel value="1">
-            <ResoTable showAction={false} columns={ProductProgressColumn} dataSource={data} />
+            <ResoTable
+              showAction={false}
+              columns={ProductProgressColumn}
+              dataSource={data}
+              scroll={{ y: '320px' }}
+            />
           </TabPanel>
           <TabPanel value="2">
             {/* <ReactApexChart

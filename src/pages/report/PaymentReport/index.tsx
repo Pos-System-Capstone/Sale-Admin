@@ -157,7 +157,12 @@ const CollectionListPage = () => {
     >
       <Card>
         <Stack spacing={2}>
-          <ResoTable showAction={false} columns={orderColumns} dataSource={data} />
+          <ResoTable
+            showAction={false}
+            columns={orderColumns}
+            dataSource={data}
+            scroll={{ y: '320px' }}
+          />
         </Stack>
       </Card>
     </ReportPage>
