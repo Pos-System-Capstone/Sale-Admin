@@ -1,3 +1,13 @@
+#### `2022-07-01` `Phuoclt:`
+
+###### Report system
+
+- 🔥 Setup and call category api `category.ts` and type `productSaleCategory.ts`, update `column` to call api to resotable
+- 🔥 Setup and call product progress api `getProductLine` and type `TProductLineBase`, update `column` to call api to resotable
+- 🔥 Setup and call payment api `payment.ts` and type `payment.ts`, update `column` to call api to resotable
+- 🛠 Remove `types/report/productProgress.ts` and `types/report/productSale.ts`
+- 🆕 Add picker date to ProductProgressReport, ProductSaleReport, Payment component
+
 #### `2022-06-30` `Phuoclt:`
 
 ###### Report system
