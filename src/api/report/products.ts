@@ -7,6 +7,6 @@ const request = axiosInstances.report;
 const getProductSale = (params?: any) =>
   request.get<BaseReponse<TProductSaleReportBase>>('/product-report', { params });
 
-const productApi = { getProductSale };
+const productSaleApi = { getProductSale };
 
-export default productApi;
+export default productSaleApi;

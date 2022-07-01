@@ -1,4 +1,4 @@
-export type TProductCategoryBase = {
+export type TCategorySaleReportBase = {
   categoryId?: number;
   categoryName?: string;
   quantity?: number;
