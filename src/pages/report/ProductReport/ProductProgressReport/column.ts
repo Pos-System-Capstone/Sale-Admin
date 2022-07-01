@@ -1,14 +1,13 @@
-import { ProductProgressBase } from 'types/report/productProgress';
+import { TProductLineBase } from 'types/report/product';
 import { TTableColumn } from 'types/table';
 import { fPercent, fShortenNumber } from 'utils/formatNumber';
 import { formatCurrency } from 'utils/utils';
 
-const ProductProgressColumn: TTableColumn<ProductProgressBase>[] = [
+const productProgressColumns: TTableColumn<TProductLineBase>[] = [
   {
     title: 'Ngày',
-    valueType: 'select',
     hideInSearch: true,
-    dataIndex: 'date'
+    dataIndex: 'startTime'
   },
   {
     title: 'Số lượng',
@@ -16,12 +15,12 @@ const ProductProgressColumn: TTableColumn<ProductProgressBase>[] = [
     dataIndex: 'quantity',
     render: (value) => fShortenNumber(value)
   },
-  {
-    title: 'Doanh thu trước giảm giá',
-    hideInSearch: true,
-    dataIndex: 'revenueBefore',
-    render: (value) => formatCurrency(value)
-  },
+  // {
+  //   title: 'Doanh thu trước giảm giá',
+  //   hideInSearch: true,
+  //   dataIndex: 'revenueBefore',
+  //   render: (value) => formatCurrency(value)
+  // },
   {
     title: 'Giảm giá',
     hideInSearch: true,
@@ -31,39 +30,9 @@ const ProductProgressColumn: TTableColumn<ProductProgressBase>[] = [
   {
     title: 'Doanh thu',
     hideInSearch: true,
-    dataIndex: 'revenue',
+    dataIndex: 'totalPrice',
     render: (value) => formatCurrency(value)
-  },
-  {
-    title: 'Loại',
-    hideInTable: true,
-    valueEnum: [
-      {
-        label: 'Sản phẩm',
-        value: 'true'
-      },
-      {
-        label: 'Nhóm sản phẩm',
-        value: 'false'
-      }
-    ],
-    valueType: 'select'
-  },
-  {
-    title: 'Chọn biểu đồ',
-    hideInTable: true,
-    valueEnum: [
-      {
-        label: 'Giảm giá',
-        value: 'true'
-      },
-      {
-        label: 'Trước giảm giá',
-        value: 'false'
-      }
-    ],
-    valueType: 'select'
   }
 ];
 
-export default ProductProgressColumn;
+export default productProgressColumns;

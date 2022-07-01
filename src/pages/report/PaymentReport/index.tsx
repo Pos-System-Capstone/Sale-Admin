@@ -1,156 +1,49 @@
 /* eslint-disable camelcase */
-import { Card, Stack } from '@mui/material';
+import { DateRangePicker } from '@mui/lab';
+import { Box, Card, Stack, TextField } from '@mui/material';
+import paymentApi from 'api/report/payment';
 // components
 import ResoTable from 'components/ResoTable/ResoTable';
-import useLocales from 'hooks/useLocales';
-import { useSnackbar } from 'notistack';
 // material
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { TTableColumn } from 'types/table';
-import { fDate } from 'utils/formatTime';
-import { formatCurrency } from 'utils/utils';
+import { useEffect, useRef, useState } from 'react';
+import { formatDate } from 'utils/formatTime';
 import ReportBtn from '../components/ReportBtn';
-import ReportDatePicker from '../components/ReportDatePicker';
 import ReportPage from '../components/ReportPage';
+import { paymentColumns } from './column';
 
 const CollectionListPage = () => {
-  const navigate = useNavigate();
-  const { translate } = useLocales();
-  const { enqueueSnackbar } = useSnackbar();
+  const ref = useRef<any>();
+  const today = new Date();
+  const yesterday = new Date(new Date().valueOf() - 1000 * 60 * 60 * 24);
+  const [dateRange, setDateRange] = useState<any>([yesterday, today]);
 
-  const [date, setDate] = useState<Date>(new Date());
-
-  type ProductSaleDetail = {
-    name?: any;
-    date?: any;
-    cash?: any;
-    memberCard?: any;
-    bank?: any;
-    eWallet?: any;
-  };
-  const data = [
-    {
-      name: 'รายการที่ 1',
-      date: '2022/12/20',
-      cash: 12321,
-      memberCard: 1,
-      bank: 12321,
-      eWallet: 123
-    },
-    {
-      name: 'รายการที่ 1',
-      date: '2022/12/20',
-      cash: 12321,
-      memberCard: 1,
-      bank: 12321,
-      eWallet: 123
-    },
-    {
-      name: 'รายการที่ 1',
-      date: '2022/12/20',
-      cash: 12321,
-      memberCard: 1,
-      bank: 12321,
-      eWallet: 123
-    },
-    {
-      name: 'รายการที่ 1',
-      date: '2022/12/20',
-      cash: 12321,
-      memberCard: 1,
-      bank: 12321,
-      eWallet: 123
-    },
-    {
-      name: 'รายการที่ 1',
-      date: '2022/12/20',
-      cash: 12321,
-      memberCard: 1,
-      bank: 12321,
-      eWallet: 123
-    },
-    {
-      name: 'รายการที่ 1',
-      date: '2022/12/20',
-      cash: 12321,
-      memberCard: 1,
-      bank: 12321,
-      eWallet: 123
-    },
-    {
-      name: 'รายการที่ 1',
-      date: '2022/12/20',
-      cash: 12321,
-      memberCard: 1,
-      bank: 12321,
-      eWallet: 123
-    },
-    {
-      name: 'รายการที่ 1',
-      date: '2022/12/20',
-      cash: 12321,
-      memberCard: 1,
-      bank: 12321,
-      eWallet: 123
-    },
-    {
-      name: 'รายการที่ 1',
-      date: '2022/12/20',
-      cash: 12321,
-      memberCard: 1,
-      bank: 12321,
-      eWallet: 123
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.formControl.setValue('FromDate', formatDate(dateRange[0]!));
+      ref.current.formControl.setValue('ToDate', formatDate(dateRange[1]!));
     }
-  ];
-  const orderColumns: TTableColumn<ProductSaleDetail>[] = [
-    {
-      title: 'Ngày',
-      hideInSearch: true,
-      dataIndex: 'date',
-      render: (value) => fDate(value)
-    },
-    {
-      title: 'Cửa hàng',
-      valueType: 'select',
-      hideInTable: true
-    },
-    {
-      title: 'Tiền mặt',
-      hideInSearch: true,
-      dataIndex: 'cash',
-      render: (value) => formatCurrency(value)
-    },
-    {
-      title: 'Thẻ thành viên',
-      hideInSearch: true,
-      dataIndex: 'memberCard',
-      render: (value) => formatCurrency(value)
-    },
-    {
-      title: 'Ngân hàng',
-      hideInSearch: true,
-      dataIndex: 'bank',
-      render: (value) => formatCurrency(value)
-    },
-    {
-      title: 'Ví điện tử',
-      hideInSearch: true,
-      dataIndex: 'eWallet',
-      render: (value) => formatCurrency(value)
-    }
-  ];
+  }, [dateRange]);
 
   return (
     <ReportPage
       title="Báo cáo theo hình thức thanh toán"
       actions={[
-        <ReportDatePicker
-          key="choose-day"
-          value={date}
-          onChange={(newValue) => {
-            setDate(newValue || new Date());
+        <DateRangePicker
+          disableFuture
+          value={dateRange}
+          renderInput={(startProps, endProps) => (
+            <>
+              <TextField {...startProps} label="Từ" />
+              <Box sx={{ mx: 2 }}> - </Box>
+              <TextField {...endProps} label="Đến" />
+            </>
+          )}
+          onChange={(e) => {
+            if (e[0] && e[1]) {
+              setDateRange(e);
+            }
           }}
+          key="date-range"
         />,
         <ReportBtn key="export-excel" onClick={() => console.log('Export excel')} />
       ]}
@@ -159,9 +52,15 @@ const CollectionListPage = () => {
         <Stack spacing={2}>
           <ResoTable
             showAction={false}
-            columns={orderColumns}
-            dataSource={data}
-            scroll={{ y: '320px' }}
+            columns={paymentColumns}
+            getData={paymentApi.get}
+            // dataSource={data}
+            ref={ref}
+            scroll={{ y: '400px' }}
+            defaultFilters={{
+              FromDate: formatDate(dateRange[0]!),
+              ToDate: formatDate(dateRange[1]!)
+            }}
           />
         </Stack>
       </Card>

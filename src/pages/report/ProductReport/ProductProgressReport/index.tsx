@@ -1,104 +1,31 @@
 /* eslint-disable camelcase */
 // material
-import { TabContext, TabList, TabPanel } from '@mui/lab';
-import { Box, Card, Tab } from '@mui/material';
+import { DateRangePicker, TabContext, TabList, TabPanel } from '@mui/lab';
+import { Box, Card, Tab, TextField } from '@mui/material';
+import productSaleApi from 'api/report/products';
 import ResoTable from 'components/ResoTable/ResoTable';
-import useLocales from 'hooks/useLocales';
-import { useSnackbar } from 'notistack';
 import ReportBtn from 'pages/report/components/ReportBtn';
-import ReportDatePicker from 'pages/report/components/ReportDatePicker';
 import ReportPage from 'pages/report/components/ReportPage';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { fTime } from 'utils/formatTime';
-import ProductProgressColumn from './column';
+import { useEffect, useRef, useState } from 'react';
+import { formatDate, fTime } from 'utils/formatTime';
+import productProgressColumns from './column';
 
 const ProductProgressReport = () => {
-  const navigate = useNavigate();
-  const { translate } = useLocales();
-  const { enqueueSnackbar } = useSnackbar();
-
-  const data = [
-    {
-      date: '21/06/2022',
-      quantity: 0,
-      revenueBefore: 0,
-      discount: 0,
-      revenue: 0
-    },
-    {
-      date: '21/06/2022',
-      quantity: 0,
-      revenueBefore: 0,
-      discount: 0,
-      revenue: 0
-    },
-    {
-      date: '21/06/2022',
-      quantity: 0,
-      revenueBefore: 0,
-      discount: 0,
-      revenue: 0
-    },
-    {
-      date: '21/06/2022',
-      quantity: 0,
-      revenueBefore: 0,
-      discount: 0,
-      revenue: 0
-    },
-    {
-      date: '21/06/2022',
-      quantity: 0,
-      revenueBefore: 0,
-      discount: 0,
-      revenue: 0
-    },
-    {
-      date: '21/06/2022',
-      quantity: 0,
-      revenueBefore: 0,
-      discount: 0,
-      revenue: 0
-    },
-    {
-      date: '21/06/2022',
-      quantity: 0,
-      revenueBefore: 0,
-      discount: 0,
-      revenue: 0
-    },
-    {
-      date: '21/06/2022',
-      quantity: 0,
-      revenueBefore: 0,
-      discount: 0,
-      revenue: 0
-    },
-    {
-      date: '21/06/2022',
-      quantity: 0,
-      revenueBefore: 0,
-      discount: 0,
-      revenue: 0
-    },
-    {
-      date: '21/06/2022',
-      quantity: 0,
-      revenueBefore: 0,
-      discount: 0,
-      revenue: 0
-    }
-  ];
-
-  //
   const [activeTab, setActiveTab] = useState('1');
   const handleChangeTab = (event: React.SyntheticEvent, newValue: string) => {
     setActiveTab(newValue);
   };
-
+  const ref = useRef<any>();
   const today = new Date();
-  const [date, setDate] = useState<Date>(today);
+  const yesterday = new Date(new Date().valueOf() - 1000 * 60 * 60 * 24);
+  const [dateRange, setDateRange] = useState<any>([yesterday, today]);
+
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.formControl.setValue('FromDate', formatDate(dateRange[0]!));
+      ref.current.formControl.setValue('ToDate', formatDate(dateRange[1]!));
+    }
+  }, [dateRange]);
 
   //charts
   const chartFill = {
@@ -141,14 +68,24 @@ const ProductProgressReport = () => {
   return (
     <ReportPage
       title="Báo cáo diễn tiến sản phẩm"
-      content={date.toDateString() === today.toDateString() ? `Tính đến: ${fTime(date)}` : ``}
+      content={dateRange[1]?.getDate() === today?.getDate() ? `Tính đến ${fTime(today)}` : ''}
       actions={[
-        <ReportDatePicker
-          key="choose-day"
-          value={date}
-          onChange={(newValue) => {
-            setDate(newValue || new Date());
+        <DateRangePicker
+          disableFuture
+          value={dateRange}
+          renderInput={(startProps, endProps) => (
+            <>
+              <TextField {...startProps} label="Từ" />
+              <Box sx={{ mx: 2 }}> - </Box>
+              <TextField {...endProps} label="Đến" />
+            </>
+          )}
+          onChange={(e) => {
+            if (e[0] && e[1]) {
+              setDateRange(e);
+            }
           }}
+          key="date-range"
         />,
         <ReportBtn key="export-excel" onClick={() => console.log('Export excel')} />
       ]}
@@ -163,10 +100,17 @@ const ProductProgressReport = () => {
           </Box>
           <TabPanel value="1">
             <ResoTable
+              ref={ref}
               showAction={false}
-              columns={ProductProgressColumn}
-              dataSource={data}
+              columns={productProgressColumns}
               scroll={{ y: '320px' }}
+              getData={productSaleApi.getProductLine}
+              defaultFilters={{
+                brandId: 1,
+                productId: 1,
+                FromDate: formatDate(dateRange[0]!),
+                ToDate: formatDate(dateRange[1]!)
+              }}
             />
           </TabPanel>
           <TabPanel value="2">

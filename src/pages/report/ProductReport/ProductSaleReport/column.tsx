@@ -1,4 +1,4 @@
-import { TProductSaleReportBase } from 'types/report/productSale';
+import { TProductSaleReportBase } from 'types/report/product';
 import { TTableColumn } from 'types/table';
 import { fNumber, fPercent } from 'utils/formatNumber';
 import { formatCurrency } from 'utils/utils';
