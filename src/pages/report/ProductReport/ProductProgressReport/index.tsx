@@ -2,7 +2,7 @@
 // material
 import { DateRangePicker, TabContext, TabList, TabPanel } from '@mui/lab';
 import { Box, Card, Tab, TextField } from '@mui/material';
-import productSaleApi from 'api/report/products';
+import productApi from 'api/report/products';
 import ResoTable from 'components/ResoTable/ResoTable';
 import ReportBtn from 'pages/report/components/ReportBtn';
 import ReportPage from 'pages/report/components/ReportPage';
@@ -104,7 +104,7 @@ const ProductProgressReport = () => {
               showAction={false}
               columns={productProgressColumns}
               scroll={{ y: '320px' }}
-              getData={productSaleApi.getProductLine}
+              getData={productApi.getProductLine}
               defaultFilters={{
                 brandId: 1,
                 productId: 1,

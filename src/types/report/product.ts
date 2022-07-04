@@ -25,3 +25,8 @@ export type TProductLineBase = {
   discount?: number;
   totalOrder?: number;
 };
+
+export type TProductListBase = {
+  productId?: number;
+  productName?: any;
+};

@@ -122,6 +122,9 @@ const PromotionReport = () => {
             rowKey="promotion-id"
             ref={tableRef}
             getData={({ storeId, ...params }: any) => promotionApi.getPromotion(storeId, params)}
+            defaultFilters={{
+              storeId: 0
+            }}
             columns={columns}
           />
         </Stack>

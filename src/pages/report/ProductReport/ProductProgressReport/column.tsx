@@ -1,9 +1,17 @@
+import AutocompleteProduct from 'components/form/common/report/AutocompleteProduct';
 import { TProductLineBase } from 'types/report/product';
 import { TTableColumn } from 'types/table';
 import { fPercent, fShortenNumber } from 'utils/formatNumber';
 import { formatCurrency } from 'utils/utils';
 
 const productProgressColumns: TTableColumn<TProductLineBase>[] = [
+  {
+    title: 'Sản phẩm',
+    dataIndex: 'productId',
+    valueType: 'select',
+    hideInTable: true,
+    renderFormItem: () => <AutocompleteProduct name="productId" label="Sản phẩm" />
+  },
   {
     title: 'Ngày',
     hideInSearch: true,

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useQuery } from 'react-query';
 /** Get list root categories */
-const useTrading = (params?: any) => {
+const useTrading = (params = {}) => {
   return useQuery(
     ['trading', params],
     () =>

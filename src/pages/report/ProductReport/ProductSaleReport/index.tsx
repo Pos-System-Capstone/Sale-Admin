@@ -2,7 +2,7 @@
 // material
 import { DateRangePicker, TabContext, TabList, TabPanel } from '@mui/lab';
 import { Box, Card, Tab, TextField } from '@mui/material';
-import productSaleApi from 'api/report/products';
+import productApi from 'api/report/products';
 import ResoTable from 'components/ResoTable/ResoTable';
 import ReportBtn from 'pages/report/components/ReportBtn';
 import ReportPage from 'pages/report/components/ReportPage';
@@ -101,7 +101,7 @@ const ProductSaleReport = () => {
             <ResoTable
               ref={ref}
               columns={productSaleColumn}
-              getData={productSaleApi.getProductSale}
+              getData={productApi.getProductSale}
               showAction={false}
               pagination={true}
               scroll={{ y: '320px' }}
