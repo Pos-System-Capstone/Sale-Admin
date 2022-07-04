@@ -1,3 +1,11 @@
+#### `2022-07-04` `Phuoclt:`
+
+###### Report system
+
+- 🆕 Setup api get list product
+- 🆕 Setup and create `AutocompleteProduct` , create `useProduct` hook and fix default param in `useStore` and `useTrading`
+- 🆕 Update `comlun.ts` in productProgress to `comlumn.tsx` to using react element
+- 🐞 Fix defaultfitlers resotable promotion
 #### `2022-07-01` `Phuoclt:`
 
 ###### Report system
