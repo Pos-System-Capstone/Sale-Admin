@@ -7,6 +7,7 @@ import ResoTable from 'components/ResoTable/ResoTable';
 import ReportBtn from 'pages/report/components/ReportBtn';
 import ReportPage from 'pages/report/components/ReportPage';
 import { useEffect, useRef, useState } from 'react';
+import ReactApexChart from 'react-apexcharts';
 import { formatDate, fTime } from 'utils/formatTime';
 import { productSaleColumn } from './column';
 
@@ -113,12 +114,12 @@ const ProductSaleReport = () => {
             />
           </TabPanel>
           <TabPanel value="2">
-            {/* <ReactApexChart
+            <ReactApexChart
               options={chartFill.options}
               series={chartFill.series}
               type="pie"
               height={380}
-            /> */}
+            />
           </TabPanel>
         </TabContext>
       </Card>

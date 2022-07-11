@@ -18,23 +18,40 @@ export const productSaleColumn: TTableColumn<TProductSaleReportBase>[] = [
     dataIndex: 'productName'
   },
   {
+    title: 'Mã sản phẩm',
+    hideInSearch: true
+    // dataIndex: 'productName'
+  },
+  {
     title: 'Số lượng',
     hideInSearch: true,
     dataIndex: 'quantity',
     render: (value) => fNumber(value)
   },
+  // {
+  //   title: 'Tỉ trọng (%)',
+  //   hideInSearch: true,
+  //   dataIndex: 'percent',
+  //   render: (value) => fPercent(value)
+  // },
   {
-    title: 'Tỉ trọng (%)',
+    title: 'Đơn giá',
     hideInSearch: true,
     dataIndex: 'percent',
     render: (value) => fPercent(value)
   },
   {
-    title: 'Tổng tiền trước giảm giá',
+    title: 'Thành tiền',
     hideInSearch: true,
-    dataIndex: 'totalBeforeDiscount',
-    render: (value) => formatCurrency(value)
+    dataIndex: 'percent',
+    render: (value) => fPercent(value)
   },
+  // {
+  //   title: 'Tổng tiền trước giảm giá',
+  //   hideInSearch: true,
+  //   dataIndex: 'totalBeforeDiscount',
+  //   render: (value) => formatCurrency(value)
+  // },
   {
     title: 'Giảm giá',
     hideInSearch: true,
@@ -42,7 +59,19 @@ export const productSaleColumn: TTableColumn<TProductSaleReportBase>[] = [
     render: (value) => formatCurrency(value)
   },
   {
-    title: 'Tổng tiền sau giảm giá',
+    title: 'TT sau giảm giá (chưa VAT)',
+    hideInSearch: true,
+    dataIndex: 'totalAfterDiscount',
+    render: (value) => formatCurrency(value)
+  },
+  {
+    title: 'VAT',
+    hideInSearch: true,
+    dataIndex: 'totalAfterDiscount',
+    render: (value) => formatCurrency(value)
+  },
+  {
+    title: 'Tổng thanh toán',
     hideInSearch: true,
     dataIndex: 'totalAfterDiscount',
     render: (value) => formatCurrency(value)
