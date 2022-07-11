@@ -224,11 +224,11 @@ export const reportAppSidebarConfig = [
         path: PATH_REPORT_APP.overviewDate,
         icon: ICONS.calendar
       },
-      {
-        title: 'report.overviewMonth',
-        path: PATH_REPORT_APP.overviewMonth,
-        icon: ICONS.calendar
-      },
+      // {
+      //   title: 'report.overviewMonth',
+      //   path: PATH_REPORT_APP.overviewMonth,
+      //   icon: ICONS.calendar
+      // },
       {
         title: 'report.productProgress',
         path: PATH_REPORT_APP.productProgress,
