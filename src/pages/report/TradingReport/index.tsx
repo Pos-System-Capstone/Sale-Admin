@@ -42,6 +42,7 @@ export const menuColumns: TTableColumn<TTradingBase>[] = [
     fixed: 'left',
     title: 'Ngày',
     valueType: 'select',
+    hideInTable: true,
     valueEnum: [
       {
         label: 'Tháng này',
@@ -227,20 +228,6 @@ const DayReport = () => {
     ]
   };
 
-  // const [days, setDays] = useState(null);
-  const [total, setTotal] = useState(null);
-
-  // useEffect(() => {
-  //   fetch('https://stg-report-api.reso.vn/api/v1/system-report')
-  //     .then((results) => results.json())
-  //     .then((res) => {
-  //       const data = res.data;
-  //       // setDays(name.storeName);
-  //       setTotal(data.totalOrderTakeAway);
-  //       console.log(data);
-  //     });
-  // }, []);
-
   const Feature = [
     {
       title: 'GIỜ',
@@ -272,7 +259,6 @@ const DayReport = () => {
     }
   ];
 
-  const today = new Date();
   const day = new Date();
   const yesterday = day.setDate(day.getDate() - 1);
   const [fromDate, setFromDate] = useState<Date>(new Date(yesterday));
@@ -287,7 +273,6 @@ const DayReport = () => {
 
   return (
     <ReportPage
-      // title="Báo cáo doanh thu theo ngày"
       title={`Báo cáo doanh thu theo ngày: ${day.toLocaleDateString('vi-VI', {
         year: 'numeric',
         month: '2-digit',
