@@ -1,3 +1,11 @@
+
+#### `2022-07-05` `Phuoclt:`
+
+###### Report system
+
+- 🆕 Update column in product-report
+- 🆕 Update type `TProductSaleReportBase` in product-report (new api)
+- 🐞 Fix only fetch overview api when finish before fetching and disable choose date when fetching api in `RevenueOverview.tsx`
 #### `2022-07-04` `Phuoclt:`
 
 ###### Report system

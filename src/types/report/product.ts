@@ -1,13 +1,17 @@
 export type TProductSaleReportBase = {
-  productId?: any;
   productName?: any;
+  productCode?: any;
+  productId?: any;
   quantity?: any;
+  unitPrice?: any;
+  totalPriceBeforeVat?: any;
+  vat?: any;
+  discount?: any;
   percent?: any;
   totalBeforeDiscount?: any;
-  discount?: any;
   totalAfterDiscount?: any;
-  checkDeal?: any;
   storeId?: any;
+  checkDeal?: any;
 };
 
 export type TProductLineBase = {

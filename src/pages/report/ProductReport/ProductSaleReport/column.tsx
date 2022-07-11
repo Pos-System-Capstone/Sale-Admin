@@ -1,8 +1,8 @@
+import AutocompleteStore from 'components/form/common/report/AutocompleteStore';
 import { TProductSaleReportBase } from 'types/report/product';
 import { TTableColumn } from 'types/table';
-import { fNumber, fPercent } from 'utils/formatNumber';
+import { fNumber } from 'utils/formatNumber';
 import { formatCurrency } from 'utils/utils';
-import AutocompleteStore from 'components/form/common/report/AutocompleteStore';
 
 export const productSaleColumn: TTableColumn<TProductSaleReportBase>[] = [
   {
@@ -12,86 +12,6 @@ export const productSaleColumn: TTableColumn<TProductSaleReportBase>[] = [
     dataIndex: 'storeId',
     renderFormItem: () => <AutocompleteStore name="storeId" label="Cửa hàng" />
   },
-  {
-    title: 'Tên sản phẩm',
-    hideInSearch: true,
-    dataIndex: 'productName'
-  },
-  {
-    title: 'Mã sản phẩm',
-    hideInSearch: true
-    // dataIndex: 'productName'
-  },
-  {
-    title: 'Số lượng',
-    hideInSearch: true,
-    dataIndex: 'quantity',
-    render: (value) => fNumber(value)
-  },
-  // {
-  //   title: 'Tỉ trọng (%)',
-  //   hideInSearch: true,
-  //   dataIndex: 'percent',
-  //   render: (value) => fPercent(value)
-  // },
-  {
-    title: 'Đơn giá',
-    hideInSearch: true,
-    dataIndex: 'percent',
-    render: (value) => fPercent(value)
-  },
-  {
-    title: 'Thành tiền',
-    hideInSearch: true,
-    dataIndex: 'percent',
-    render: (value) => fPercent(value)
-  },
-  // {
-  //   title: 'Tổng tiền trước giảm giá',
-  //   hideInSearch: true,
-  //   dataIndex: 'totalBeforeDiscount',
-  //   render: (value) => formatCurrency(value)
-  // },
-  {
-    title: 'Giảm giá',
-    hideInSearch: true,
-    dataIndex: 'discount',
-    render: (value) => formatCurrency(value)
-  },
-  {
-    title: 'TT sau giảm giá (chưa VAT)',
-    hideInSearch: true,
-    dataIndex: 'totalAfterDiscount',
-    render: (value) => formatCurrency(value)
-  },
-  {
-    title: 'VAT',
-    hideInSearch: true,
-    dataIndex: 'totalAfterDiscount',
-    render: (value) => formatCurrency(value)
-  },
-  {
-    title: 'Tổng thanh toán',
-    hideInSearch: true,
-    dataIndex: 'totalAfterDiscount',
-    render: (value) => formatCurrency(value)
-  },
-  // Wait api
-  // {
-  //   title: 'Loại',
-  //   hideInTable: true,
-  //   valueEnum: [
-  //     {
-  //       label: 'Sản phẩm',
-  //       value: 'true'
-  //     },
-  //     {
-  //       label: 'Nhóm sản phẩm',
-  //       value: 'false'
-  //     }
-  //   ],
-  //   valueType: 'select'
-  // },
   {
     title: 'Chọn biểu đồ',
     hideInTable: true,
@@ -107,5 +27,45 @@ export const productSaleColumn: TTableColumn<TProductSaleReportBase>[] = [
         value: 'afterDeal'
       }
     ]
+  },
+  {
+    title: 'Tên sản phẩm',
+    hideInSearch: true,
+    dataIndex: 'productName'
+  },
+  {
+    title: 'Đơn vị tính',
+    hideInSearch: true,
+    dataIndex: 'unitPrice'
+  },
+  {
+    title: 'Số lượng bán ra',
+    hideInSearch: true,
+    dataIndex: 'quantity',
+    render: (value) => fNumber(value)
+  },
+  {
+    title: 'Đơn giá (Chưa VAT)',
+    hideInSearch: true
+    // dataIndex: 'unitPrice',
+    // render: (value) => fNumber(value)
+  },
+  {
+    title: 'Đơn giá (Đã VAT)',
+    hideInSearch: true
+    // dataIndex: 'unitPrice',
+    // render: (value) => fNumber(value)
+  },
+  {
+    title: 'Doanh thu (Chưa VAT)',
+    hideInSearch: true,
+    dataIndex: 'totalPriceBeforeVat',
+    render: (value) => formatCurrency(value)
+  },
+  {
+    title: 'Doanh thu (Đã VAT)',
+    hideInSearch: true,
+    // dataIndex: 'totalPriceAfterVat',
+    render: (value) => formatCurrency(value)
   }
 ];

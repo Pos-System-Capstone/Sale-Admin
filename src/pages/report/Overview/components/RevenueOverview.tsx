@@ -5,7 +5,6 @@ import HomeIcon from '@mui/icons-material/Home';
 import { Box, Card, Grid, Stack, Typography } from '@mui/material';
 import revenueApi from 'api/report/revenue';
 import LoadingScreen from 'components/LoadingScreen';
-import { useEffect } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { useQuery } from 'react-query';
 import palette from 'theme/palette';
@@ -14,33 +13,44 @@ import TableCard, { MiniTableCard } from '../components/TableCard';
 import config from './config';
 
 function RevenueOverview({ dateRange, done, setLoading, loading }: any) {
-  // const [revenueData, setRevenueOverview] = useState<TRevenueOverviewBase[]>([]);
-  // const [paymentOverview, setPaymentOverview] = useState<TPaymentOverviewBase[]>([]);
-
-  const { data: revenueData, isSuccess: isSuccess1 } = useQuery('revenue', () =>
-    revenueApi
-      .getRevenueOverview({
-        FromDate: formatDate(dateRange[0]),
-        ToDate: formatDate(dateRange[1])
-      })
-      .then((res) => res.data)
+  const {
+    data: revenueData,
+    isFetched: isFetched1,
+    isFetching: isFetching1
+  } = useQuery(
+    'revenue',
+    () =>
+      revenueApi
+        .getRevenueOverview({
+          FromDate: formatDate(dateRange[0]),
+          ToDate: formatDate(dateRange[1])
+        })
+        .then((res) => res.data),
+    { enabled: done }
   );
 
-  const { data: paymentData, isSuccess: isSuccess2 } = useQuery('payment', () =>
-    revenueApi
-      .getPaymentOverview({
-        FromDate: formatDate(dateRange[0]),
-        ToDate: formatDate(dateRange[1])
-      })
-      .then((res) => res.data)
+  const {
+    data: paymentData,
+    isFetched: isFetched2,
+    isFetching: isFetching2
+  } = useQuery(
+    'payment',
+    () =>
+      revenueApi
+        .getPaymentOverview({
+          FromDate: formatDate(dateRange[0]),
+          ToDate: formatDate(dateRange[1])
+        })
+        .then((res) => res.data),
+    { enabled: done }
   );
 
-  useEffect(() => {
-    if (isSuccess1 && isSuccess2) {
-      setLoading(false);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSuccess1, isSuccess2]);
+  if (isFetched1 && isFetched2) {
+    setLoading(false);
+  }
+  if (isFetching1 || isFetching2) {
+    setLoading(true);
+  }
 
   // Chart
   const actualRevenueChart = {
