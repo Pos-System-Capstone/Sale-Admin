@@ -29,14 +29,30 @@ export const productSaleColumn: TTableColumn<TProductSaleReportBase>[] = [
     ]
   },
   {
+    title: 'STT',
+    hideInSearch: true,
+    dataIndex: 'index'
+  },
+  {
+    title: 'Mã sản phẩm',
+    hideInSearch: true,
+    dataIndex: 'productCode'
+  },
+  {
     title: 'Tên sản phẩm',
     hideInSearch: true,
     dataIndex: 'productName'
   },
   {
+    title: 'Danh mục',
+    hideInSearch: true,
+    dataIndex: 'cateName'
+  },
+  {
     title: 'Đơn vị tính',
     hideInSearch: true,
-    dataIndex: 'unitPrice'
+    dataIndex: 'unitPrice',
+    render: (value) => fNumber(value)
   },
   {
     title: 'Số lượng bán ra',
