@@ -30,6 +30,12 @@ const productProgressColumns: TTableColumn<TProductLineBase>[] = [
   //   render: (value) => formatCurrency(value)
   // },
   {
+    title: 'Doanh thu trước giảm giá',
+    hideInSearch: true,
+    // dataIndex: ''
+    render: (value) => fShortenNumber(value)
+  },
+  {
     title: 'Giảm giá',
     hideInSearch: true,
     dataIndex: 'discount',

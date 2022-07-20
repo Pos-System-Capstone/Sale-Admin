@@ -19,7 +19,7 @@ export const paymentColumns: TTableColumn<TPaymentReportBase>[] = [
     hideInSearch: true
   },
   {
-    title: 'Ngần hàng',
+    title: 'Ngân hàng',
     dataIndex: 'bank',
     hideInSearch: true
   },
@@ -29,17 +29,17 @@ export const paymentColumns: TTableColumn<TPaymentReportBase>[] = [
     hideInSearch: true
   },
   {
-    title: 'Grabpay',
+    title: 'GrabPay',
     dataIndex: 'grabpay',
     hideInSearch: true
   },
   {
-    title: 'Grabfood',
+    title: 'GrabFood',
     dataIndex: 'grabfood',
     hideInSearch: true
   },
   {
-    title: 'Vnpay',
+    title: 'VnPay',
     dataIndex: 'vnpay',
     hideInSearch: true
   },
@@ -49,8 +49,13 @@ export const paymentColumns: TTableColumn<TPaymentReportBase>[] = [
     hideInSearch: true
   },
   {
-    title: 'Shopeepay',
+    title: 'ShopeePay',
     dataIndex: 'shopeepay',
+    hideInSearch: true
+  },
+  {
+    title: 'ZaloPay',
+    // dataIndex: '',
     hideInSearch: true
   }
 ];

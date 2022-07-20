@@ -7,7 +7,6 @@ import ReportPage from 'pages/report/components/ReportPage';
 import React, { useState } from 'react';
 // components
 import EmployeeStatistics from '../components/EmployeeStatistics';
-import ProductSaleDetail from '../components/ProductSaleDetail';
 import RevenueOverview from '../components/RevenueOverview';
 import TopStoreRevenue from '../components/TopStoreRevenue';
 
@@ -55,7 +54,7 @@ export default function OverviewDate() {
             <TabList onChange={handleChangeTab}>
               <Tab label="Tổng quan doanh thu" value="1" />
               <Tab label="Top doanh thu cửa hàng" value="2" />
-              <Tab label="Chi tiết doanh thu sản phẩm" value="3" />
+              {/* <Tab label="Chi tiết doanh thu sản phẩm" value="3" /> */}
               <Tab label="Thống kê nhân viên" value="4" />
             </TabList>
           </Box>
@@ -73,9 +72,9 @@ export default function OverviewDate() {
             <TopStoreRevenue />
           </TabPanel>
 
-          <TabPanel value="3">
+          {/* <TabPanel value="3">
             <ProductSaleDetail />
-          </TabPanel>
+          </TabPanel> */}
 
           <TabPanel value="4">
             <EmployeeStatistics />
