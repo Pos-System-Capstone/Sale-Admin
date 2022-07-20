@@ -46,15 +46,15 @@ export const productSaleColumn: TTableColumn<TProductSaleReportBase>[] = [
   },
   {
     title: 'Đơn giá (Chưa VAT)',
-    hideInSearch: true
-    // dataIndex: 'unitPrice',
-    // render: (value) => fNumber(value)
+    hideInSearch: true,
+    dataIndex: 'unitPriceNoVat',
+    render: (value) => fNumber(value)
   },
   {
     title: 'Đơn giá (Đã VAT)',
-    hideInSearch: true
-    // dataIndex: 'unitPrice',
-    // render: (value) => fNumber(value)
+    hideInSearch: true,
+    dataIndex: 'unitPrice',
+    render: (value) => fNumber(value)
   },
   {
     title: 'Doanh thu (Chưa VAT)',

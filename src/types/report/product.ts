@@ -1,9 +1,12 @@
 export type TProductSaleReportBase = {
   productName?: any;
   productCode?: any;
+  cateName?: any;
   productId?: any;
   quantity?: any;
   unitPrice?: any;
+  unitPriceNoVat?: any;
+  unit?: any;
   totalPriceBeforeVat?: any;
   vat?: any;
   discount?: any;
