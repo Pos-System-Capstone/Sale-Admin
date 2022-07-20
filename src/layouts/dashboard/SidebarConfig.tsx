@@ -253,6 +253,11 @@ export const reportAppSidebarConfig = [
         title: 'report.promotion',
         path: PATH_REPORT_APP.promotion,
         icon: ICONS.kanban
+      },
+      {
+        title: 'report.stores',
+        path: PATH_REPORT_APP.stores,
+        icon: ICONS.store
       }
     ]
   }

@@ -14,7 +14,7 @@ import { Box } from '@mui/system';
 // import { TTradingBase } from '@types/report/trading';
 import menuApi from 'api/menu';
 import tradingApi from 'api/report/trading';
-import AutocompleteTrading from 'components/form/common/Category/AutocompleteTrading';
+import AutocompleteTrading from 'components/form/common/report/AutocompleteTrading';
 import { menuSchema } from 'components/form/Menu/helper';
 import confirm from 'components/Modal/confirm';
 // import ModalForm from 'components/ModalForm/ModalForm';
@@ -29,6 +29,7 @@ import { PATH_REPORT_APP } from 'routes/reportAppPaths';
 import { Menu } from 'types/menu';
 import { TTradingBase } from 'types/report/trading';
 import { TTableColumn } from 'types/table';
+import { fNumber } from 'utils/formatNumber';
 import { formatDate, fTime } from 'utils/formatTime';
 import ReportPage from '../components/ReportPage';
 // import Page from './components/Page';
@@ -72,17 +73,20 @@ export const menuColumns: TTableColumn<TTradingBase>[] = [
   {
     title: 'Mang đi',
     dataIndex: 'totalOrderTakeAway',
-    hideInSearch: true
+    hideInSearch: true,
+    render: (x) => fNumber(x)
   },
   {
     title: 'Tại store',
     dataIndex: 'totalOrderAtStore',
-    hideInSearch: true
+    hideInSearch: true,
+    render: (x) => fNumber(x)
   },
   {
     title: 'Giao hàng',
     dataIndex: 'totalOrderDelivery',
-    hideInSearch: true
+    hideInSearch: true,
+    render: (x) => fNumber(x)
   },
   {
     title: 'Cửa hàng',
@@ -93,7 +97,8 @@ export const menuColumns: TTableColumn<TTradingBase>[] = [
   {
     title: 'Tổng số bill',
     dataIndex: 'totalBills',
-    hideInSearch: true
+    hideInSearch: true,
+    render: (x) => fNumber(x)
   },
   {
     title: 'Tổng doanh thu',

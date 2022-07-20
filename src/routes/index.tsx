@@ -227,6 +227,10 @@ export default function Router() {
         {
           path: 'promotion',
           children: [{ path: '', element: <PromotionReport /> }]
+        },
+        {
+          path: 'stores',
+          children: [{ path: '', element: <StoreReport /> }]
         }
       ]
     },
@@ -414,6 +418,7 @@ const ProductProgressReport = Loadable(
   lazy(() => import('../pages/report/ProductReport/ProductProgressReport'))
 );
 const PaymentReport = Loadable(lazy(() => import('../pages/report/PaymentReport')));
+const StoreReport = Loadable(lazy(() => import('../pages/report/StoreReport')));
 
 // Promotion system
 // const PromotionDash = Loadable(lazy(() => import('../pages/dashboard/PromotionSystemDashboard')));

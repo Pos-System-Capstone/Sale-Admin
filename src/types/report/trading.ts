@@ -1,4 +1,5 @@
 export type TTradingBase = {
+  storeId?: any;
   storeName?: string;
   totalOrderAtStore?: number;
   totalOrderTakeAway?: number;

@@ -35,5 +35,6 @@ export const PATH_REPORT_APP = {
   dayReport: path(ROOTS_DASHBOARD, '/day-report'),
   timeReport: path(ROOTS_DASHBOARD, '/day-report/time-report'),
   dateReport: path(ROOTS_DASHBOARD, '/day-report/date-report'),
-  monthReport: path(ROOTS_DASHBOARD, '/day-report/month-report')
+  monthReport: path(ROOTS_DASHBOARD, '/day-report/month-report'),
+  stores: path(ROOTS_DASHBOARD, '/stores')
 };

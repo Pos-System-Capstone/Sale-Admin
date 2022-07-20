@@ -14,7 +14,7 @@ const AutocompleteTrading = (props: Props) => {
   const extraOptions = extras.map((c: any) => ({ label: c.storeName, value: c.storeName }));
   const getOpObj = (option: any) => {
     if (!option) return option;
-    if (!option.value) return extraOptions.find((opt: any) => opt.value === option);
+    if (!option.label) return extraOptions.find((opt: any) => opt.label === option);
     return option;
   };
 
@@ -26,9 +26,9 @@ const AutocompleteTrading = (props: Props) => {
       }}
       isOptionEqualToValue={(option: any, value: any) => {
         if (!option) return option;
-        return option.value === getOpObj(value)?.value;
+        return option.label === getOpObj(value)?.label;
       }}
-      transformValue={(opt: any) => opt.value}
+      transformValue={(opt: any) => opt.label}
       size="small"
       type="text"
       {...props}

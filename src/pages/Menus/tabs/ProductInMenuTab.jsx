@@ -21,7 +21,7 @@ import {
 } from 'redux/menu/api';
 import { formatCurrency } from 'utils/utils';
 import ProductInMenuDialog from '../components/EditProductDialog';
-import AutocompleteTrading from 'components/form/common/Category/AutocompleteTrading';
+import AutocompleteTrading from 'components/form/common/report/AutocompleteTrading';
 
 const ProductInMenuTab = ({ id }) => {
   const [currentCate, setCurrentCate] = React.useState(null);
