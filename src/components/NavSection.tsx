@@ -198,7 +198,7 @@ function NavItem({ item, isShow }: { item: NavItemProps; isShow?: boolean | unde
 
 interface NavSectionProps extends BoxProps {
   isShow?: boolean | undefined;
-  navConfig: {
+  navConfig?: {
     subheader: string;
     items: NavItemProps[];
   }[];
@@ -209,7 +209,7 @@ export default function NavSection({ navConfig, isShow = true, ...other }: NavSe
 
   return (
     <Box {...other}>
-      {navConfig.map((list) => {
+      {navConfig?.map((list) => {
         const { subheader, items } = list;
         return (
           <List key={subheader} disablePadding>

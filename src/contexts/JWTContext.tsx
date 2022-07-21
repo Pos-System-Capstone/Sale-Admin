@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useEffect, useReducer } from 'react';
 // utils
-import axios from '../utils/axios';
+import axios, { axiosInstances } from '../utils/axios';
 import { isValidToken, setSession } from '../utils/jwt';
 import { getUserInfo, setUserInfo } from '../utils/utils';
 // @types
@@ -147,7 +147,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const login = async (user_name: string, password: string) => {
-    const response = await axios.post('/admin/login', {
+    const response = await axiosInstances.login.post('/admin/login', {
       user_name,
       password
     });
