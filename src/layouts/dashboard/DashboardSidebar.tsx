@@ -2,7 +2,9 @@ import { Box, CardActionArea, Drawer, Link, Stack, Tooltip, Typography } from '@
 // material
 import { alpha, styled } from '@mui/material/styles';
 import { useEffect, useMemo } from 'react';
+import { useSelector } from 'react-redux';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
+import { RootState } from 'redux/store';
 import { MHidden } from '../../components/@material-extend';
 // components
 import Logo from '../../components/Logo';
@@ -101,21 +103,25 @@ type DashboardSidebarProps = {
 };
 
 export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }: DashboardSidebarProps) {
+  const system = useSelector((state: RootState) => state.system);
+  console.log('system', system);
   const { pathname } = useLocation();
   const { user } = useAuth();
-
   const sidebarConfig = useMemo(() => {
-    if (user?.roles.includes('admin')) {
+    if (system === 2) return reportAppSidebarConfig;
+    if (system === 3) return promotionAppSidebarConfig;
+    if (user?.roles?.includes('admin')) {
       return adminSidebarConfig;
       // eslint-disable-next-line no-else-return
-    } else if (user?.roles.includes('store-admin')) {
+    } else if (user?.roles?.includes('store-admin')) {
       return storeAppSidebarConfig;
-    } else if (user?.roles.includes('report-admin')) {
+    } else if (user?.roles?.includes('report-admin')) {
       return reportAppSidebarConfig;
-    } else if (user?.roles.includes('promotion-admin')) {
+    } else if (user?.roles?.includes('promotion-admin')) {
       return promotionAppSidebarConfig;
     }
-  }, [user?.roles]);
+    return reportAppSidebarConfig;
+  }, [user?.roles, system]);
 
   const { isCollapse, collapseClick, collapseHover, onToggleCollapse, onHoverEnter, onHoverLeave } =
     useCollapseDrawer();
@@ -169,10 +175,10 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }: Dash
               <MyAvatar />
               <Box sx={{ ml: 2 }}>
                 <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                  {user?.displayName}
+                  {/* {user?.displayName} */} User
                 </Typography>
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                  {user?.roles[0]}
+                  {/* {user?.roles[0]} */}\ Admin
                 </Typography>
               </Box>
             </AccountStyle>

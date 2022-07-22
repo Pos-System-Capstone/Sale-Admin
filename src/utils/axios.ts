@@ -82,10 +82,7 @@ requestReport.interceptors.response.use(
 
 const requestPromotion = axios.create({
   baseURL: promotion,
-  paramsSerializer: parseParams,
-  headers: {
-    authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImJlYW5vaSIsInJvbGUiOiJCcmFuZCBNYW5hZ2VyIiwibmJmIjoxNjU1NDMwNjU2LCJleHAiOjE2NTYwMzU0NTYsImlhdCI6MTY1NTQzMDY1Nn0.6lPO0wywVEKb3zIXQjObUXAxoV7uJDH_qI03RCBB7SU`
-  }
+  paramsSerializer: parseParams
 });
 
 requestPromotion.interceptors.request.use((options) => {
@@ -102,10 +99,7 @@ requestPromotion.interceptors.request.use((options) => {
 
 const requestLogin = axios.create({
   baseURL: account,
-  paramsSerializer: parseParams,
-  headers: {
-    authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImJlYW5vaSIsInJvbGUiOiJCcmFuZCBNYW5hZ2VyIiwibmJmIjoxNjU1NDMwNjU2LCJleHAiOjE2NTYwMzU0NTYsImlhdCI6MTY1NTQzMDY1Nn0.6lPO0wywVEKb3zIXQjObUXAxoV7uJDH_qI03RCBB7SU`
-  }
+  paramsSerializer: parseParams
 });
 
 requestLogin.interceptors.request.use((options) => {
@@ -153,7 +147,7 @@ class AxiosClientFactory {
       case 'promotion':
         return requestPromotion;
       case 'login':
-        return requestPromotion;
+        return requestLogin;
       default:
         return request;
     }
@@ -165,8 +159,8 @@ const axiosClientFactory = new AxiosClientFactory();
  * Singleton Pattern for Axios Request
  */
 const axiosInstances = {
-  login: axiosClientFactory.getAxiosClient(AxiosClientFactoryEnum.REPORT),
-  report: axiosClientFactory.getAxiosClient(AxiosClientFactoryEnum.LOGIN),
+  login: axiosClientFactory.getAxiosClient(AxiosClientFactoryEnum.LOGIN),
+  report: axiosClientFactory.getAxiosClient(AxiosClientFactoryEnum.REPORT),
   sale: axiosClientFactory.getAxiosClient(AxiosClientFactoryEnum.SALE),
   promotion: axiosClientFactory.getAxiosClient(AxiosClientFactoryEnum.PROMOTION)
 };

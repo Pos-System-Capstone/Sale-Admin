@@ -9,7 +9,9 @@ import StoreNavigationDialog from 'components/StoreNavigationDialog';
 import useAuth from 'hooks/useAuth';
 import useLocales from 'hooks/useLocales';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
+import { toPromotionSystem, toReportSystem } from 'redux/slices/system';
 import { TStore } from 'types/store';
 import { getAppToken } from 'utils/utils';
 import { MHidden } from '../../components/@material-extend';
@@ -83,6 +85,7 @@ export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps)
   const { translate } = useLocales();
   const { changeUser } = useAuth();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [open, setOpen] = useState(false);
 
@@ -137,6 +140,25 @@ export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps)
           <Label color={envLabelColor(process.env.REACT_APP_ENVIROMENT)}>
             {process.env.REACT_APP_ENVIROMENT}
           </Label>
+          <Button
+            onClick={() => {
+              const action = toReportSystem();
+              dispatch(action);
+              navigate('/report');
+            }}
+          >
+            Report
+          </Button>
+          <Button
+            onClick={() => {
+              const action = toPromotionSystem();
+              dispatch(action);
+              navigate('/promotion-system');
+            }}
+          >
+            Promotion
+          </Button>
+
           <LanguagePopover />
           <Button
             onClick={handleClickOpen}
