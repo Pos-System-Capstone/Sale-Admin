@@ -2,6 +2,7 @@
 import { DateRange, DateRangePicker, TabContext, TabList, TabPanel } from '@mui/lab';
 // material
 import { Box, Card, Tab, TextField } from '@mui/material';
+import moment from 'moment';
 import ReportBtn from 'pages/report/components/ReportBtn';
 import ReportPage from 'pages/report/components/ReportPage';
 import React, { useState } from 'react';
@@ -26,6 +27,7 @@ export default function OverviewDate() {
       title={`Báo cáo tổng quan`}
       actions={[
         <DateRangePicker
+          minDate={moment(`${today.getFullYear()}/${today.getMonth() + 1}/01`).toDate()}
           disabled={loading}
           disableFuture
           value={dateRange}

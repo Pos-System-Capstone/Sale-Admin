@@ -7,12 +7,16 @@ import revenueApi from 'api/report/revenue';
 import LoadingScreen from 'components/LoadingScreen';
 import ReactApexChart from 'react-apexcharts';
 import { useQuery } from 'react-query';
+import { useSelector } from 'react-redux';
+import { RootState } from 'redux/store';
 import palette from 'theme/palette';
 import { formatDate } from 'utils/formatTime';
 import TableCard, { MiniTableCard } from '../components/TableCard';
 import config from './config';
 
 function RevenueOverview({ dateRange, done, setLoading, loading }: any) {
+  const storeId = useSelector((state: RootState) => state.store);
+  console.log(storeId);
   const {
     data: revenueData,
     isFetched: isFetched1,
@@ -22,6 +26,7 @@ function RevenueOverview({ dateRange, done, setLoading, loading }: any) {
     () =>
       revenueApi
         .getRevenueOverview({
+          storeId: storeId,
           FromDate: formatDate(dateRange[0]),
           ToDate: formatDate(dateRange[1])
         })
@@ -38,6 +43,7 @@ function RevenueOverview({ dateRange, done, setLoading, loading }: any) {
     () =>
       revenueApi
         .getPaymentOverview({
+          storeId: storeId,
           FromDate: formatDate(dateRange[0]),
           ToDate: formatDate(dateRange[1])
         })

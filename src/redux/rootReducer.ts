@@ -12,6 +12,7 @@ import kanbanReducer from './slices/kanban';
 import global from './global';
 import admin from './admin';
 import system from './slices/system';
+import store from './slices/store';
 // ----------------------------------------------------------------------
 
 const rootPersistConfig = {
@@ -44,7 +45,8 @@ const rootReducer = combineReducers({
   calendar: calendarReducer,
   kanban: kanbanReducer,
   product: persistReducer(productPersistConfig, productReducer),
-  system
+  system,
+  store
 });
 
 export { rootPersistConfig, rootReducer };
