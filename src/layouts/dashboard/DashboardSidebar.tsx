@@ -108,8 +108,9 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }: Dash
   const { pathname } = useLocation();
   const { user } = useAuth();
   const sidebarConfig = useMemo(() => {
-    if (system === 2) return reportAppSidebarConfig;
-    if (system === 3) return promotionAppSidebarConfig;
+    if (system === 'reso-sale') return storeAppSidebarConfig;
+    if (system === 'report-system') return reportAppSidebarConfig;
+    if (system === 'promotion-system') return promotionAppSidebarConfig;
     if (user?.roles?.includes('admin')) {
       return adminSidebarConfig;
       // eslint-disable-next-line no-else-return

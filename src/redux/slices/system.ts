@@ -2,18 +2,21 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const slice = createSlice({
   name: 'system',
-  initialState: 2,
+  initialState: '',
   reducers: {
-    toReportSystem() {
-      return 2;
+    ResoSale() {
+      return 'reso-sale';
     },
-    toPromotionSystem() {
-      return 3;
+    ResoReport() {
+      return 'report-system';
+    },
+    ResoPromotion() {
+      return 'promotion-system';
     }
   }
 });
 
 const { actions, reducer } = slice;
-export const { toPromotionSystem, toReportSystem } = actions;
+export const { ResoSale, ResoReport, ResoPromotion } = actions;
 
 export default reducer;
