@@ -19,10 +19,12 @@ import { TStore } from 'types/store';
 import { TransitionProps } from '@mui/material/transitions';
 import ArrowForward from '@mui/icons-material/ArrowForward';
 import CloseIcon from '@mui/icons-material/Close';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'redux/store';
 import { chunk } from 'lodash';
 import { useDebounceFn } from 'ahooks';
+import useStore from 'hooks/report/useStore';
+import { setStoreId } from 'redux/slices/store';
 
 const Transition = forwardRef(
   (
@@ -65,6 +67,8 @@ const StoreNavigationDialog: React.FC<Props> = ({ open, onClose, onSelectStore }
     return groupStores;
   }, [filterName, stores]);
 
+  const { data: storeData } = useStore();
+  const dispatch = useDispatch();
   return (
     <Dialog
       fullWidth
@@ -153,6 +157,21 @@ const StoreNavigationDialog: React.FC<Props> = ({ open, onClose, onSelectStore }
               </Box>
             )
         )}
+      </DialogContent>
+      <DialogContent dividers>
+        {storeData?.map((item) => (
+          <Button
+            onClick={(e) => {
+              const id = item.id;
+              const action = setStoreId(id);
+              dispatch(action);
+              onClose();
+            }}
+            key={item.id}
+          >
+            {item.name}
+          </Button>
+        ))}
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>Quay lại</Button>
