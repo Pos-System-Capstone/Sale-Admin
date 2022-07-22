@@ -4,7 +4,8 @@ import axios, { AxiosRequestConfig } from 'axios';
 export enum AxiosClientFactoryEnum {
   REPORT = 'report',
   SALE = 'sale',
-  PROMOTION = 'promotion'
+  PROMOTION = 'promotion',
+  LOGIN = 'login'
 }
 
 // ----------------------------------------------------------------------
@@ -32,6 +33,7 @@ const parseParams = (params: any) => {
   return options ? options.slice(0, -1) : options;
 };
 const report = `${process.env.REACT_APP_REPORT_BASE_URL}`;
+const account = `${process.env.REACT_APP_LOGIN_BASE_URL}`;
 const sale = `${process.env.REACT_APP_BASE_URL}`;
 const promotion = `${process.env.REACT_APP_PROMOTION_BASE_URL}`;
 const request = axios.create({
@@ -80,13 +82,27 @@ requestReport.interceptors.response.use(
 
 const requestPromotion = axios.create({
   baseURL: promotion,
-  paramsSerializer: parseParams,
-  headers: {
-    authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImJlYW5vaSIsInJvbGUiOiJCcmFuZCBNYW5hZ2VyIiwibmJmIjoxNjU1NDMwNjU2LCJleHAiOjE2NTYwMzU0NTYsImlhdCI6MTY1NTQzMDY1Nn0.6lPO0wywVEKb3zIXQjObUXAxoV7uJDH_qI03RCBB7SU`
-  }
+  paramsSerializer: parseParams
 });
 
 requestPromotion.interceptors.request.use((options) => {
+  const { method } = options;
+
+  if (method === 'put' || method === 'post') {
+    Object.assign(options.headers, {
+      'Content-Type': 'application/json;charset=UTF-8'
+    });
+  }
+
+  return options;
+});
+
+const requestLogin = axios.create({
+  baseURL: account,
+  paramsSerializer: parseParams
+});
+
+requestLogin.interceptors.request.use((options) => {
   const { method } = options;
 
   if (method === 'put' || method === 'post') {
@@ -130,6 +146,8 @@ class AxiosClientFactory {
         return request;
       case 'promotion':
         return requestPromotion;
+      case 'login':
+        return requestLogin;
       default:
         return request;
     }
@@ -141,6 +159,7 @@ const axiosClientFactory = new AxiosClientFactory();
  * Singleton Pattern for Axios Request
  */
 const axiosInstances = {
+  login: axiosClientFactory.getAxiosClient(AxiosClientFactoryEnum.LOGIN),
   report: axiosClientFactory.getAxiosClient(AxiosClientFactoryEnum.REPORT),
   sale: axiosClientFactory.getAxiosClient(AxiosClientFactoryEnum.SALE),
   promotion: axiosClientFactory.getAxiosClient(AxiosClientFactoryEnum.PROMOTION)
