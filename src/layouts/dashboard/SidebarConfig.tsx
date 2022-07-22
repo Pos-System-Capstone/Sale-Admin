@@ -39,8 +39,8 @@ const sidebarConfig = [
     subheader: 'general',
     items: [
       {
-        title: 'reportDashboard',
-        path: PATH_DASHBOARD.general.reportDashboard,
+        title: 'app',
+        path: PATH_DASHBOARD.general.app,
         icon: ICONS.dashboard
       },
       {
@@ -55,7 +55,7 @@ const sidebarConfig = [
     items: [
       {
         title: 'menu-list',
-        path: PATH_DASHBOARD.tradingReport.list,
+        path: PATH_DASHBOARD.menus.root,
         icon: ICONS.menu
       },
       {
@@ -108,7 +108,7 @@ const sidebarConfig = [
     items: [
       {
         title: 'store',
-        path: PATH_DASHBOARD.promotion.list,
+        path: PATH_DASHBOARD.stores.root,
         icon: ICONS.store
       }
     ]

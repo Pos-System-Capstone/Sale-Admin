@@ -108,7 +108,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }: Dash
   const { pathname } = useLocation();
   const { user } = useAuth();
   const sidebarConfig = useMemo(() => {
-    if (system === 'reso-sale') return storeAppSidebarConfig;
+    if (system === 'reso-sale') return adminSidebarConfig;
     if (system === 'report-system') return reportAppSidebarConfig;
     if (system === 'promotion-system') return promotionAppSidebarConfig;
     if (user?.roles?.includes('admin')) {
@@ -121,7 +121,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }: Dash
     } else if (user?.roles?.includes('promotion-admin')) {
       return promotionAppSidebarConfig;
     }
-    return reportAppSidebarConfig;
+    return adminSidebarConfig;
   }, [user?.roles, system]);
 
   const { isCollapse, collapseClick, collapseHover, onToggleCollapse, onHoverEnter, onHoverLeave } =

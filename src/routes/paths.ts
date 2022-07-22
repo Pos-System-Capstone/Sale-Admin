@@ -35,7 +35,7 @@ export const PATH_PAGE = {
 export const PATH_DASHBOARD = {
   root: ROOTS_DASHBOARD,
   general: {
-    reportDashboard: path(ROOTS_DASHBOARD, '/reportDashboard'),
+    app: path(ROOTS_DASHBOARD, ''),
     ecommerce: path(ROOTS_DASHBOARD, '/ecommerce'),
     analytics: path(ROOTS_DASHBOARD, '/analytics')
   },
@@ -141,6 +141,10 @@ export const PATH_DASHBOARD = {
     root: path(ROOTS_DASHBOARD, '/orders'),
     list: path(ROOTS_DASHBOARD, '/orders'),
     editById: (id: any) => path(ROOTS_DASHBOARD, `/orders/${id}`)
+  },
+  stores: {
+    root: path(ROOTS_DASHBOARD, '/stores'),
+    new: path(ROOTS_DASHBOARD, '/stores/new')
   }
 };
 
