@@ -39,7 +39,7 @@ const sidebarConfig = [
     subheader: 'general',
     items: [
       {
-        title: 'app',
+        title: 'report.dashboard',
         path: PATH_DASHBOARD.general.app,
         icon: ICONS.dashboard
       },
