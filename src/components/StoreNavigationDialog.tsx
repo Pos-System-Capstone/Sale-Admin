@@ -1,3 +1,5 @@
+import ArrowForward from '@mui/icons-material/ArrowForward';
+import CloseIcon from '@mui/icons-material/Close';
 import {
   Box,
   Button,
@@ -14,17 +16,17 @@ import {
   Typography
 } from '@mui/material';
 import Slide from '@mui/material/Slide';
-import React, { forwardRef, useMemo, useState } from 'react';
-import { TStore } from 'types/store';
 import { TransitionProps } from '@mui/material/transitions';
-import ArrowForward from '@mui/icons-material/ArrowForward';
-import CloseIcon from '@mui/icons-material/Close';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from 'redux/store';
-import { chunk } from 'lodash';
 import { useDebounceFn } from 'ahooks';
 import useStore from 'hooks/report/useStore';
+import { chunk } from 'lodash';
+import React, { forwardRef, useMemo, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router';
 import { setStoreId } from 'redux/slices/store';
+import { RootState } from 'redux/store';
+import { ROOTS_DASHBOARD } from 'routes/reportAppPaths';
+import { TStore } from 'types/store';
 
 const Transition = forwardRef(
   (
@@ -68,6 +70,10 @@ const StoreNavigationDialog: React.FC<Props> = ({ open, onClose, onSelectStore }
   }, [filterName, stores]);
 
   const { data: storeData } = useStore();
+  // const store = useSelector((state: RootState) => state.store);
+  // console.log(store);
+  const system = useSelector((state: RootState) => state.system);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   return (
     <Dialog
@@ -104,75 +110,95 @@ const StoreNavigationDialog: React.FC<Props> = ({ open, onClose, onSelectStore }
           size="small"
         />
       </Box>
-      <DialogContent dividers>
-        {filteredStores.map(
-          (groupStore: TStore[], index) =>
-            !!groupStore.length && (
-              <Box key={`group${index}`} mb={2}>
-                <Typography variant="h6">Nhóm {index + 1}</Typography>
-                <Grid mt={1} container spacing={2} sx={{ width: '100%' }}>
-                  {groupStore.map((store: TStore, index) => (
-                    <Grid key={`item ${index}`} item xs={12} sm={6} md={4} lg={3}>
-                      <Card>
-                        <Stack direction="row" justifyContent="space-between" alignItems="center">
-                          <Box width="60%">
-                            <Typography variant="caption">{store.store_code ?? '-'}</Typography>
-                            <Typography variant="subtitle1" noWrap>
-                              {store.name}
-                            </Typography>
-                          </Box>
-                          <Fab
-                            onClick={() => {
-                              onSelectStore(store);
-                            }}
-                            color="primary"
-                            aria-label="add"
+      {false && (
+        <DialogContent dividers>
+          {filteredStores.map(
+            (groupStore: TStore[], index) =>
+              !!groupStore.length && (
+                <Box key={`group${index}`} mb={2}>
+                  <Typography variant="h6">Nhóm {index + 1}</Typography>
+                  <Grid mt={1} container spacing={2} sx={{ width: '100%' }}>
+                    {groupStore.map((store: TStore, index) => (
+                      <Grid key={`item ${index}`} item xs={12} sm={6} md={4} lg={3}>
+                        <Card>
+                          <Stack direction="row" justifyContent="space-between" alignItems="center">
+                            <Box width="60%">
+                              <Typography variant="caption">{store.store_code ?? '-'}</Typography>
+                              <Typography variant="subtitle1" noWrap>
+                                {store.name}
+                              </Typography>
+                            </Box>
+                            <Fab
+                              onClick={() => {
+                                onSelectStore(store);
+                              }}
+                              color="primary"
+                              aria-label="add"
+                            >
+                              <ArrowForward />
+                            </Fab>
+                          </Stack>
+                          <Stack
+                            mt={2}
+                            direction="row"
+                            justifyContent="space-between"
+                            alignItems="center"
                           >
-                            <ArrowForward />
-                          </Fab>
-                        </Stack>
-                        <Stack
-                          mt={2}
-                          direction="row"
-                          justifyContent="space-between"
-                          alignItems="center"
-                        >
-                          <Box>
-                            <Typography variant="caption">Địa chỉ</Typography>
-                            <Typography variant="body1" noWrap>
-                              QUận 1 123132
-                            </Typography>
-                          </Box>
-                          <Box>
-                            <Typography variant="caption">Người quản lý</Typography>
-                            <Typography variant="body1" noWrap>
-                              A Nhân
-                            </Typography>
-                          </Box>
-                        </Stack>
-                      </Card>
-                    </Grid>
-                  ))}
-                </Grid>
-              </Box>
-            )
-        )}
-      </DialogContent>
-      <DialogContent dividers>
-        {storeData?.map((item) => (
-          <Button
-            onClick={(e) => {
-              const id = item.id;
-              const action = setStoreId(id);
-              dispatch(action);
-              onClose();
-            }}
-            key={item.id}
-          >
-            {item.name}
-          </Button>
-        ))}
-      </DialogContent>
+                            <Box>
+                              <Typography variant="caption">Địa chỉ</Typography>
+                              <Typography variant="body1" noWrap>
+                                QUận 1 123132
+                              </Typography>
+                            </Box>
+                            <Box>
+                              <Typography variant="caption">Người quản lý</Typography>
+                              <Typography variant="body1" noWrap>
+                                A Nhân
+                              </Typography>
+                            </Box>
+                          </Stack>
+                        </Card>
+                      </Grid>
+                    ))}
+                  </Grid>
+                </Box>
+              )
+          )}
+        </DialogContent>
+      )}
+      {true && (
+        <DialogContent dividers>
+          <Grid container spacing={2}>
+            {storeData?.map((item) => (
+              <Grid item key={item.id} xs={4}>
+                <Card>
+                  <Stack direction="row" justifyContent="space-between" alignItems="center">
+                    <Box>
+                      <Typography variant="caption">{item.id ?? '-'}</Typography>
+                      <Typography variant="subtitle1" noWrap>
+                        {item.name}
+                      </Typography>
+                    </Box>
+                    <Fab
+                      color="primary"
+                      aria-label="add"
+                      onClick={() => {
+                        const id: any = item.id;
+                        const action = setStoreId(id);
+                        navigate(`${ROOTS_DASHBOARD}/${id}`);
+                        // dispatch(action);
+                        // onClose();
+                      }}
+                    >
+                      <ArrowForward />
+                    </Fab>
+                  </Stack>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        </DialogContent>
+      )}
       <DialogActions>
         <Button onClick={onClose}>Quay lại</Button>
       </DialogActions>

@@ -16,23 +16,25 @@ import RoleBasedGuard from '../guards/RoleBasedGuard';
 import DashboardLayout from '../layouts/dashboard';
 import LogoOnlyLayout from '../layouts/LogoOnlyLayout';
 // path
+import PromotionDash from 'pages/dashboard/PromotionSystemDashboard';
+import ReportDashboard from 'pages/dashboard/ReportDashboard';
+import ActionPage from 'pages/promotionEngine/Action';
+import NewActionPage from 'pages/promotionEngine/Action/create';
 import ConditionPage from 'pages/promotionEngine/Condition';
+import NewCondition from 'pages/promotionEngine/Condition/NewCondition';
 import ProfilePage from 'pages/promotionEngine/Configuration/profile';
 import SettingPage from 'pages/promotionEngine/Configuration/settings';
-import NewGiftPage from 'pages/promotionEngine/Gift/create';
 import GiftPage from 'pages/promotionEngine/Gift';
-import NewActionPage from 'pages/promotionEngine/Action/create';
-import ActionPage from 'pages/promotionEngine/Action';
-import NewCondition from 'pages/promotionEngine/Condition/NewCondition';
-import CreateVoucher from 'pages/promotionEngine/Voucher/createVoucher';
-import Voucher from 'pages/promotionEngine/Voucher';
-import PromotionDash from 'pages/dashboard/PromotionSystemDashboard';
+import NewGiftPage from 'pages/promotionEngine/Gift/create';
 import Promotion from 'pages/promotionEngine/Promotion';
 import CreatePromotion from 'pages/promotionEngine/Promotion/CreatePromotion';
-import ReportDashboard from 'pages/dashboard/ReportDashboard';
-import TimeReport from 'pages/report/TradingReport/TimeReport';
+import Voucher from 'pages/promotionEngine/Voucher';
+import CreateVoucher from 'pages/promotionEngine/Voucher/createVoucher';
 import DateReport from 'pages/report/TradingReport/DateReport';
 import MonthReport from 'pages/report/TradingReport/MonthReport';
+import TimeReport from 'pages/report/TradingReport/TimeReport';
+import { useSelector } from 'react-redux';
+import { RootState } from 'redux/store';
 
 // import ReportGeneralApp from 'pages/report/GeneralReport/GeneralApp';
 
@@ -65,6 +67,8 @@ const Loadable = (Component: any) => (props: any) => {
 };
 
 export default function Router() {
+  const storeId = useSelector((state: RootState) => state.store);
+  // const childrenRouter = storeId === 0;
   return useRoutes([
     {
       path: 'auth',
@@ -193,44 +197,50 @@ export default function Router() {
         </AuthGuard>
       ),
       children: [
-        { path: '', element: <Navigate to="/report/dashboard" replace /> },
-        { path: 'dashboard', element: <ReportDashboard /> },
+        // { path: '', element: <Navigate to="dashboard" replace /> },
         {
-          path: 'overview-date',
-          element: <OverviewDate />
-        },
-        {
-          path: 'overview-month',
-          element: <OverviewMonth />
-        },
-        {
-          path: 'payment',
-          children: [{ path: '', element: <PaymentReport /> }]
-        },
-        {
-          path: 'product-progress',
-          children: [{ path: '', element: <ProductProgressReport /> }]
-        },
-        {
-          path: 'product-sale',
-          children: [{ path: '', element: <ProductSaleReport /> }]
-        },
-        {
-          path: 'day-report',
+          path: ':storeId',
           children: [
-            { path: '', element: <DayReport /> },
-            { path: 'time-report', element: <TimeReport /> },
-            { path: 'date-report', element: <DateReport /> },
-            { path: 'month-report', element: <MonthReport /> }
+            { path: '', element: <Navigate to="dashboard" replace /> },
+            { path: 'dashboard', element: <ReportDashboard /> },
+            {
+              path: 'overview-date',
+              element: <OverviewDate />
+            },
+            {
+              path: 'overview-month',
+              element: <OverviewMonth />
+            },
+            {
+              path: 'payment',
+              children: [{ path: '', element: <PaymentReport /> }]
+            },
+            {
+              path: 'product-progress',
+              children: [{ path: '', element: <ProductProgressReport /> }]
+            },
+            {
+              path: 'product-sale',
+              children: [{ path: '', element: <ProductSaleReport /> }]
+            },
+            {
+              path: 'day-report',
+              children: [
+                { path: '', element: <DayReport /> },
+                { path: 'time-report', element: <TimeReport /> },
+                { path: 'date-report', element: <DateReport /> },
+                { path: 'month-report', element: <MonthReport /> }
+              ]
+            },
+            {
+              path: 'promotion',
+              children: [{ path: '', element: <PromotionReport /> }]
+            },
+            {
+              path: 'stores',
+              children: [{ path: '', element: <StoreReport /> }]
+            }
           ]
-        },
-        {
-          path: 'promotion',
-          children: [{ path: '', element: <PromotionReport /> }]
-        },
-        {
-          path: 'stores',
-          children: [{ path: '', element: <StoreReport /> }]
         }
       ]
     },

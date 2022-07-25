@@ -5,7 +5,7 @@ function path(root: string, sublink: string) {
 }
 
 const ROOTS_AUTH = '/auth';
-const ROOTS_DASHBOARD = '/report';
+export const ROOTS_DASHBOARD = `/report`;
 
 // ----------------------------------------------------------------------
 
@@ -22,9 +22,7 @@ export const PATH_AUTH = {
 export const PATH_REPORT_APP = {
   root: ROOTS_DASHBOARD,
   general: {
-    reportDashboard: path(ROOTS_DASHBOARD, '/dashboard'),
-    ecommerce: path(ROOTS_DASHBOARD, '/ecommerce'),
-    analytics: path(ROOTS_DASHBOARD, '/analytics')
+    reportDashboard: path(ROOTS_DASHBOARD, '/dashboard')
   },
   overviewDate: path(ROOTS_DASHBOARD, '/overview-date'),
   overviewMonth: path(ROOTS_DASHBOARD, '/overview-month'),

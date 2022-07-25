@@ -11,7 +11,7 @@ import useLocales from 'hooks/useLocales';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
-import { ResoSale, ResoReport, ResoPromotion } from 'redux/slices/system';
+import { ResoPromotion, ResoReport, ResoSale } from 'redux/slices/system';
 import { TStore } from 'types/store';
 import { getAppToken } from 'utils/utils';
 import { MHidden } from '../../components/@material-extend';
@@ -86,7 +86,6 @@ export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps)
   const { changeUser } = useAuth();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -143,7 +142,8 @@ export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps)
           <Button
             onClick={() => {
               const action = ResoSale();
-              dispatch(action);
+              // dispatch(action);
+              localStorage.setItem('system', 'sale');
               navigate('/dashboard');
             }}
           >
@@ -152,7 +152,8 @@ export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps)
           <Button
             onClick={() => {
               const action = ResoReport();
-              dispatch(action);
+              // dispatch(action);
+              localStorage.setItem('system', 'report');
               navigate('/report');
             }}
           >
@@ -161,7 +162,8 @@ export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps)
           <Button
             onClick={() => {
               const action = ResoPromotion();
-              dispatch(action);
+              // dispatch(action);
+              localStorage.setItem('system', 'promotion');
               navigate('/promotion-system');
             }}
           >

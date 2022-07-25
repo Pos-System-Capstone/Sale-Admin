@@ -15,7 +15,10 @@ import Scrollbar from '../../components/Scrollbar';
 import useAuth from '../../hooks/useAuth';
 import useCollapseDrawer from '../../hooks/useCollapseDrawer';
 // routes
-import { PATH_DASHBOARD } from '../../routes/paths';
+import { ROOTS_DASHBOARD as ROOTS_DASHBOARD_REPORT } from 'routes/reportAppPaths';
+import { ROOTS_DASHBOARD as ROOTS_DASHBOARD_PROMOTION } from 'routes/promotionAppPaths';
+import { PATH_DASHBOARD, ROOTS_DASHBOARD as ROOTS_DASHBOARD_SALE } from '../../routes/paths';
+
 //
 import adminSidebarConfig, {
   promotionAppSidebarConfig,
@@ -104,25 +107,43 @@ type DashboardSidebarProps = {
 
 export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }: DashboardSidebarProps) {
   const system = useSelector((state: RootState) => state.system);
-  console.log('system', system);
   const { pathname } = useLocation();
   const { user } = useAuth();
+  // const systems = localStorage.getItem('system');
   const sidebarConfig = useMemo(() => {
-    if (system === 'reso-sale') return adminSidebarConfig;
-    if (system === 'report-system') return reportAppSidebarConfig;
-    if (system === 'promotion-system') return promotionAppSidebarConfig;
+    const firstElementOfPath = pathname.split('/')[1];
+    if (firstElementOfPath === ROOTS_DASHBOARD_SALE.substring(1)) return adminSidebarConfig;
+    if (firstElementOfPath === ROOTS_DASHBOARD_REPORT.substring(1)) return reportAppSidebarConfig;
+    if (firstElementOfPath === ROOTS_DASHBOARD_PROMOTION.substring(1))
+      return promotionAppSidebarConfig;
+    // if (systems === 'sale') return adminSidebarConfig;
+    // if (systems === 'report') return reportAppSidebarConfig;
+    // if (systems === 'promotion') return promotionAppSidebarConfig;
+
+    // if (system === '') {
+    //   if (firstElementOfPath === 'dashboard') return adminSidebarConfig;
+    //   if (firstElementOfPath === 'report') return reportAppSidebarConfig;
+    //   if (firstElementOfPath === 'promotion-system') return promotionAppSidebarConfig;
+    // } else {
+    //   if (system === 'reso-sale') return adminSidebarConfig;
+    //   if (system === 'report-system') return reportAppSidebarConfig;
+    //   if (system === 'promotion-system') return promotionAppSidebarConfig;
+    // }
+
     if (user?.roles?.includes('admin')) {
       return adminSidebarConfig;
-      // eslint-disable-next-line no-else-return
-    } else if (user?.roles?.includes('store-admin')) {
+    }
+    if (user?.roles?.includes('store-admin')) {
       return storeAppSidebarConfig;
-    } else if (user?.roles?.includes('report-admin')) {
+    }
+    if (user?.roles?.includes('report-admin')) {
       return reportAppSidebarConfig;
-    } else if (user?.roles?.includes('promotion-admin')) {
+    }
+    if (user?.roles?.includes('promotion-admin')) {
       return promotionAppSidebarConfig;
     }
     return adminSidebarConfig;
-  }, [user?.roles, system]);
+  }, [user?.roles, pathname]);
 
   const { isCollapse, collapseClick, collapseHover, onToggleCollapse, onHoverEnter, onHoverLeave } =
     useCollapseDrawer();

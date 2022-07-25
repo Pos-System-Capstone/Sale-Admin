@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const slice = createSlice({
-  name: 'system',
+  name: 'store',
   initialState: 0,
   reducers: {
     setStoreId(state, action) {
