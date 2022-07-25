@@ -115,6 +115,7 @@ export const PROMOTION_TYPE_DATA = () => {
 // }
 
 export type TPromotionBase = {
+  BrandId?: any;
   promotionId?: string;
   brandId?: string;
   promotionCode?: string;

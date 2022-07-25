@@ -112,9 +112,9 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }: Dash
   // const systems = localStorage.getItem('system');
   const sidebarConfig = useMemo(() => {
     const firstElementOfPath = pathname.split('/')[1];
-    if (firstElementOfPath === ROOTS_DASHBOARD_SALE.substring(1)) return adminSidebarConfig;
-    if (firstElementOfPath === ROOTS_DASHBOARD_REPORT.substring(1)) return reportAppSidebarConfig;
-    if (firstElementOfPath === ROOTS_DASHBOARD_PROMOTION.substring(1))
+    if (firstElementOfPath === ROOTS_DASHBOARD_SALE.split('/')[1]) return adminSidebarConfig;
+    if (firstElementOfPath === ROOTS_DASHBOARD_REPORT.split('/')[1]) return reportAppSidebarConfig;
+    if (firstElementOfPath === ROOTS_DASHBOARD_PROMOTION.split('/')[1])
       return promotionAppSidebarConfig;
     // if (systems === 'sale') return adminSidebarConfig;
     // if (systems === 'report') return reportAppSidebarConfig;

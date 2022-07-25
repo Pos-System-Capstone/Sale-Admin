@@ -143,7 +143,7 @@ export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps)
             onClick={() => {
               const action = ResoSale();
               // dispatch(action);
-              localStorage.setItem('system', 'sale');
+              // localStorage.setItem('system', 'sale');
               navigate('/dashboard');
             }}
           >
@@ -153,8 +153,8 @@ export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps)
             onClick={() => {
               const action = ResoReport();
               // dispatch(action);
-              localStorage.setItem('system', 'report');
-              navigate('/report');
+              // localStorage.setItem('system', 'report');
+              navigate('/report/0/dashboard');
             }}
           >
             Report
@@ -163,7 +163,7 @@ export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps)
             onClick={() => {
               const action = ResoPromotion();
               // dispatch(action);
-              localStorage.setItem('system', 'promotion');
+              // localStorage.setItem('system', 'promotion');
               navigate('/promotion-system');
             }}
           >

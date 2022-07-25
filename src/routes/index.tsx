@@ -67,7 +67,12 @@ const Loadable = (Component: any) => (props: any) => {
 };
 
 export default function Router() {
-  const storeId = useSelector((state: RootState) => state.store);
+  const store = useSelector((state: RootState) => state.store);
+  // const { storeId } = useParams();
+  // useEffect(() => {
+  //   localStorage.setItem('storeId', JSON.stringify(storeId));
+  // }, [storeId]);
+
   // const childrenRouter = storeId === 0;
   return useRoutes([
     {
@@ -197,11 +202,11 @@ export default function Router() {
         </AuthGuard>
       ),
       children: [
-        // { path: '', element: <Navigate to="dashboard" replace /> },
+        { path: '', element: <Navigate to="dashboard" replace /> },
         {
           path: ':storeId',
           children: [
-            { path: '', element: <Navigate to="dashboard" replace /> },
+            // { path: '', element: <Navigate to="dashboard" replace /> },
             { path: 'dashboard', element: <ReportDashboard /> },
             {
               path: 'overview-date',

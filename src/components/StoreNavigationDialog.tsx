@@ -18,14 +18,15 @@ import {
 import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
 import { useDebounceFn } from 'ahooks';
+import useBrands from 'hooks/promotion/useBrands';
 import useStore from 'hooks/report/useStore';
 import { chunk } from 'lodash';
 import React, { forwardRef, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
+import { setBrandId } from 'redux/slices/brand';
 import { setStoreId } from 'redux/slices/store';
 import { RootState } from 'redux/store';
-import { ROOTS_DASHBOARD } from 'routes/reportAppPaths';
 import { TStore } from 'types/store';
 
 const Transition = forwardRef(
@@ -70,9 +71,10 @@ const StoreNavigationDialog: React.FC<Props> = ({ open, onClose, onSelectStore }
   }, [filterName, stores]);
 
   const { data: storeData } = useStore();
-  // const store = useSelector((state: RootState) => state.store);
-  // console.log(store);
-  const system = useSelector((state: RootState) => state.system);
+  const { data: brandData } = useBrands();
+  const store = useSelector((state: RootState) => state.store);
+  const { pathname } = useLocation();
+  const firstElementOfPath = pathname.split('/')[1];
   const navigate = useNavigate();
   const dispatch = useDispatch();
   return (
@@ -110,7 +112,7 @@ const StoreNavigationDialog: React.FC<Props> = ({ open, onClose, onSelectStore }
           size="small"
         />
       </Box>
-      {false && (
+      {firstElementOfPath === 'dashboard' && (
         <DialogContent dividers>
           {filteredStores.map(
             (groupStore: TStore[], index) =>
@@ -166,11 +168,11 @@ const StoreNavigationDialog: React.FC<Props> = ({ open, onClose, onSelectStore }
           )}
         </DialogContent>
       )}
-      {true && (
+      {firstElementOfPath === 'report' && (
         <DialogContent dividers>
           <Grid container spacing={2}>
             {storeData?.map((item) => (
-              <Grid item key={item.id} xs={4}>
+              <Grid item key={item.id} md={4} xs={6}>
                 <Card>
                   <Stack direction="row" justifyContent="space-between" alignItems="center">
                     <Box>
@@ -184,10 +186,51 @@ const StoreNavigationDialog: React.FC<Props> = ({ open, onClose, onSelectStore }
                       aria-label="add"
                       onClick={() => {
                         const id: any = item.id;
+                        // save store
                         const action = setStoreId(id);
-                        navigate(`${ROOTS_DASHBOARD}/${id}`);
-                        // dispatch(action);
-                        // onClose();
+                        dispatch(action);
+                        localStorage.setItem('storeId', id);
+
+                        // replace url
+                        const a = pathname.split('/');
+                        a[2] = id;
+                        const b = a.join('/');
+
+                        //
+                        navigate(`${b}`);
+                        onClose();
+                      }}
+                    >
+                      <ArrowForward />
+                    </Fab>
+                  </Stack>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        </DialogContent>
+      )}
+      {firstElementOfPath === 'promotion-system' && (
+        <DialogContent dividers>
+          <Grid container spacing={2}>
+            {brandData?.map((item) => (
+              <Grid item key={item.brandId} md={4} xs={6}>
+                <Card>
+                  <Stack direction="row" justifyContent="space-between" alignItems="center">
+                    <Box>
+                      {/* <Typography variant="caption">{item.address ?? '-'}</Typography> */}
+                      <Typography variant="subtitle1" noWrap>
+                        {item.brandName.charAt(0).toUpperCase() + item.brandName.slice(1)}
+                      </Typography>
+                    </Box>
+                    <Fab
+                      color="primary"
+                      aria-label="add"
+                      onClick={() => {
+                        const id: any = item.brandId;
+                        const action = setBrandId(id);
+                        dispatch(action);
+                        onClose();
                       }}
                     >
                       <ArrowForward />

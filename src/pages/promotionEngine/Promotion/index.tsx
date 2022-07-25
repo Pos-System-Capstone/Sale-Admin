@@ -13,7 +13,9 @@ import ResoTable from 'components/ResoTable/ResoTable';
 import useLocales from 'hooks/useLocales';
 import { useSnackbar } from 'notistack';
 import { useRef } from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
+import { RootState } from 'redux/store';
 import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
 import { TTableColumn } from 'types/table';
 import { fDate } from 'utils/formatTime';
@@ -27,10 +29,15 @@ const Promotion = (props: Props) => {
   const navigate = useNavigate();
   const ref = useRef<any>();
 
+  const brandId = useSelector((state: RootState) => state.brand);
+  console.log(brandId);
+
   const DISCOUNT_TYPE_ENUM = DISCOUNT_TYPE_DATA();
   const STATUS_TYPE_ENUM = STATUS_TYPE_DATA();
   const PROMOTION_TYPE_ENUM = PROMOTION_TYPE_DATA();
+
   const promotionColumn: TTableColumn<TPromotionBase>[] = [
+    { title: 'brandId', dataIndex: 'BrandId', hideInTable: true, hideInSearch: true },
     {
       title: `${translate('promotionSystem.promotion.table.no')}`,
       dataIndex: 'index',
@@ -133,7 +140,7 @@ const Promotion = (props: Props) => {
             ref={ref}
             getData={() =>
               promotionApi.getPromotion({
-                BrandId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+                BrandId: brandId,
                 status: 0
               })
             }
