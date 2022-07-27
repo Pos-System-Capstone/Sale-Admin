@@ -1,6 +1,10 @@
 import { MenuItem, Stack, Typography } from '@mui/material';
 import { CheckBoxField, RadioGroupField, SelectField } from 'components/form';
+import CheckGroupBoxField from 'components/form/CheckGroupBoxField';
+// import CheckGroupBoxField from 'components/form/CheckGroupBoxField';
 import useLocales from 'hooks/useLocales';
+import { useFormContext } from 'react-hook-form';
+// import { Controller } from 'react-hook-form';
 import { Card } from '../components/Card';
 import {
   applyByList,
@@ -23,8 +27,11 @@ export default function StepTwo({ watch }: any) {
   const applyBy = applyByList();
   const memberLevel = memberLevelList();
   const exclusives = exclusiveList();
+  const { control } = useFormContext();
 
   const [isMember] = watch(['membership']);
+  console.log(watch('checkArr'));
+
   return (
     <Stack p={1} spacing={3} width="100%">
       <Typography px={2} variant="h3" sx={{ textTransform: 'uppercase' }} textAlign={'left'}>
@@ -36,14 +43,7 @@ export default function StepTwo({ watch }: any) {
             title={`${translate('promotionSystem.promotion.settings.paymentMethod')}`}
             subtitle={`${translate('promotionSystem.promotion.settings.helperPaymentMethod')}`}
           >
-            {paymentMethod?.map((item) => (
-              <CheckBoxField
-                key={item.value}
-                name={item.value}
-                label={item.label}
-                helperText="Please choose at least one payment"
-              />
-            ))}
+            <CheckGroupBoxField name={'checkArr'} arr={paymentMethod} control={control} />
           </FormBox>
         </Stack>
       </Card>
