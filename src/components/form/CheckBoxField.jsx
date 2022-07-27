@@ -16,9 +16,6 @@ const CheckBoxField = ({ name, label, rules = null, defaultValue = false, ...pro
               helperText={fieldState.error ? fieldState.error.message : props.helperText}
               {...field}
               error={Boolean(fieldState.isTouched && fieldState.error)}
-              onChange={() => {
-                console.log(field.value);
-              }}
               inputRef={field.ref}
               icon={props.icon}
               checkedIcon={props.checkedIcon}

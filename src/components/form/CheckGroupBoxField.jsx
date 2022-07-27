@@ -6,26 +6,30 @@ import { Controller, useFormContext } from 'react-hook-form';
 
 const CheckGroupBoxField = ({ name, arr = [], rules = null, defaultValue = false, ...props }) => {
   const { control } = useFormContext();
-  //   const paymentMethod = paymentMethodList();
+
   return (
     <Controller
-      name={name}
-      render={({ field }) => (
-        <div>
+      render={({ field, fieldState }) => (
+        <>
           {arr.map((item) => {
             return (
               <FormControlLabel
+                {...props}
                 key={item.value}
                 control={
                   <Checkbox
+                    helperText={fieldState.error ? fieldState.error.message : props.helperText}
+                    {...field}
+                    error={Boolean(fieldState.isTouched && fieldState.error)}
                     onChange={(e) => {
                       if (e.target.checked) {
-                        const updatedValue = [...(field.value ?? []), item.value];
+                        const updatedValue = [...(field.value ?? []), field.value];
                         field.onChange(updatedValue);
                       } else {
-                        const updatedValue = [...(field.value ?? [])];
-                        const reUpdateValue = updatedValue.filter((item) => item === item.value);
-                        field.onChange(reUpdateValue);
+                        const updatedValue = [...(field.value ?? [])].filter(
+                          (x) => x !== item.value
+                        );
+                        field.onChange(updatedValue);
                       }
                     }}
                     inputRef={field.ref}
@@ -37,9 +41,11 @@ const CheckGroupBoxField = ({ name, arr = [], rules = null, defaultValue = false
               />
             );
           })}
-        </div>
+        </>
       )}
+      name={name}
       control={control}
+      rules={rules}
     />
   );
 };
