@@ -1,9 +1,8 @@
 import { MenuItem, Stack, Typography } from '@mui/material';
-import { CheckBoxField, RadioGroupField, SelectField } from 'components/form';
+import { RadioGroupField, SelectField } from 'components/form';
 import CheckGroupBoxField from 'components/form/CheckGroupBoxField';
 // import CheckGroupBoxField from 'components/form/CheckGroupBoxField';
 import useLocales from 'hooks/useLocales';
-import { useFormContext } from 'react-hook-form';
 // import { Controller } from 'react-hook-form';
 import { Card } from '../components/Card';
 import {
@@ -27,10 +26,8 @@ export default function StepTwo({ watch }: any) {
   const applyBy = applyByList();
   const memberLevel = memberLevelList();
   const exclusives = exclusiveList();
-  const { control } = useFormContext();
 
   const [isMember] = watch(['membership']);
-  console.log(watch('checkArr'));
 
   return (
     <Stack p={1} spacing={3} width="100%">
@@ -43,7 +40,7 @@ export default function StepTwo({ watch }: any) {
             title={`${translate('promotionSystem.promotion.settings.paymentMethod')}`}
             subtitle={`${translate('promotionSystem.promotion.settings.helperPaymentMethod')}`}
           >
-            <CheckGroupBoxField name={'checkArr'} arr={paymentMethod} control={control} />
+            <CheckGroupBoxField name={'paymentMethod'} options={paymentMethod} />
           </FormBox>
         </Stack>
       </Card>
@@ -62,9 +59,7 @@ export default function StepTwo({ watch }: any) {
             sizeGrid={4}
             minHeight="44px"
           >
-            {targetCustomer?.map((item) => (
-              <CheckBoxField key={item.value} name={item.value} label={item.label} />
-            ))}
+            <CheckGroupBoxField name={'targetCustomer'} options={targetCustomer} />
           </FormBox>
           <FormBox
             title={`${translate('promotionSystem.promotion.settings.memberShipLevel')}`}
@@ -74,7 +69,7 @@ export default function StepTwo({ watch }: any) {
           >
             <SelectField
               disabled={!isMember}
-              name="membership level"
+              name="membership_level"
               label={`${translate('promotionSystem.promotion.select')}`}
               fullWidth
               multiple
@@ -92,9 +87,7 @@ export default function StepTwo({ watch }: any) {
             sizeGrid={4}
             minHeight="44px"
           >
-            {gender.map((item) => (
-              <CheckBoxField key={item.value} name={item.value} label={item.label} />
-            ))}
+            <CheckGroupBoxField name={'gender'} options={gender} />
           </FormBox>
         </Stack>
       </Card>
@@ -106,9 +99,7 @@ export default function StepTwo({ watch }: any) {
             sizeGrid={4}
             minHeight="44px"
           >
-            {saleMode.map((item) => (
-              <CheckBoxField key={item.value} name={item.value} label={item.label} />
-            ))}
+            <CheckGroupBoxField name={'saleMode'} options={saleMode} />
           </FormBox>
           <FormBox
             title={`${translate('promotionSystem.promotion.settings.applyBy')}`}
@@ -116,9 +107,7 @@ export default function StepTwo({ watch }: any) {
             sizeGrid={4}
             minHeight="44px"
           >
-            {applyBy.map((item) => (
-              <CheckBoxField key={item.value} name={item.value} label={item.label} />
-            ))}
+            <CheckGroupBoxField name={'applyBy'} options={applyBy} />
           </FormBox>
           <FormBox
             title={`${translate('promotionSystem.promotion.settings.exclusive')}`}
@@ -141,7 +130,17 @@ export default function StepTwo({ watch }: any) {
           <FormBox
             title={`${translate('promotionSystem.promotion.settings.storeConfig')}`}
             subtitle={`${translate('promotionSystem.promotion.settings.helperStoreConfig')}`}
-          />
+          >
+            <CheckGroupBoxField
+              name={'storeConfig'}
+              options={[
+                { label: 'Store 1', value: 'Store 1' },
+                { label: 'Store 2', value: 'Store 2' },
+                { label: 'Store 3', value: 'Store 3' },
+                { label: 'Store 4', value: 'Store 4' }
+              ]}
+            />
+          </FormBox>
         </Stack>
       </Card>
     </Stack>

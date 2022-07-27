@@ -6,6 +6,7 @@ import {
   RadioGroupField,
   SelectField
 } from 'components/form';
+import CheckGroupBoxField from 'components/form/CheckGroupBoxField';
 import DateTimePickerField from 'components/form/DateTimePickerField';
 import useLocales from 'hooks/useLocales';
 import { useState } from 'react';
@@ -46,11 +47,6 @@ export default function StepOne({ watch }: any) {
   ]);
   return (
     <Stack p={1} spacing={3}>
-      {/* <Card id="promotion-create">
-        <Typography px={2} variant="h3" textAlign="left" sx={{ textTransform: 'uppercase' }}>
-          {translate('promotionSystem.promotion.createPromotion.promotionType')}
-        </Typography>
-      </Card> */}
       <Typography px={2} variant="h3" textAlign="left" sx={{ textTransform: 'uppercase' }}>
         {translate('promotionSystem.promotion.createPromotion.promotionType')}
       </Typography>
@@ -163,7 +159,7 @@ export default function StepOne({ watch }: any) {
               {`${translate('promotionSystem.promotion.createPromotion.validInThisTimeFrameOnly')}`}
               <Switch checked={timeFrameChecked} onChange={handleTimeFrameChecked} />
             </Typography>
-            {timeFrameChecked && (
+            {/* {timeFrameChecked && (
               <Grid container spacing={2} width={'100%'} py={1}>
                 {timeFrameList?.map((timeFrame, index) => (
                   <Grid xs={3} md={2} item key={index}>
@@ -171,6 +167,9 @@ export default function StepOne({ watch }: any) {
                   </Grid>
                 ))}
               </Grid>
+            )} */}
+            {timeFrameChecked && (
+              <CheckGroupBoxField name={'timeFrameList'} options={timeFrameList} />
             )}
           </Box>
           <Box>
@@ -178,7 +177,7 @@ export default function StepOne({ watch }: any) {
               {`${translate('promotionSystem.promotion.createPromotion.validOnParticularDayOnly')}`}
               <Switch checked={particularDay} onChange={handleParticularDay} />
             </Typography>
-            {particularDay && (
+            {/* {particularDay && (
               <Grid container spacing={2} columns={7} width={'100%'} py={1}>
                 {particularDays?.map((item, index) => (
                   <Grid xs={3} md={1} item key={index}>
@@ -186,6 +185,9 @@ export default function StepOne({ watch }: any) {
                   </Grid>
                 ))}
               </Grid>
+            )} */}
+            {particularDay && (
+              <CheckGroupBoxField name={'particularDays'} options={particularDays} />
             )}
           </Box>
         </Stack>

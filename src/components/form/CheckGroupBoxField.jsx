@@ -4,18 +4,24 @@ import { Checkbox, FormControlLabel } from '@mui/material';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
-const CheckGroupBoxField = ({ name, arr = [], rules = null, defaultValue = false, ...props }) => {
+const CheckGroupBoxField = ({
+  name,
+  options = [],
+  rules = null,
+  defaultValue = false,
+  ...props
+}) => {
   const { control } = useFormContext();
 
   return (
     <Controller
       render={({ field, fieldState }) => (
         <>
-          {arr.map((item) => {
+          {options.map((item) => {
             return (
               <FormControlLabel
                 {...props}
-                key={item.value}
+                key={item.value || item}
                 control={
                   <Checkbox
                     helperText={fieldState.error ? fieldState.error.message : props.helperText}
@@ -27,7 +33,7 @@ const CheckGroupBoxField = ({ name, arr = [], rules = null, defaultValue = false
                         field.onChange(updatedValue);
                       } else {
                         const updatedValue = [...(field.value ?? [])].filter(
-                          (x) => x !== item.value
+                          (x) => x !== item.value || item
                         );
                         field.onChange(updatedValue);
                       }
@@ -37,7 +43,7 @@ const CheckGroupBoxField = ({ name, arr = [], rules = null, defaultValue = false
                     checkedIcon={props.checkedIcon}
                   />
                 }
-                label={item.label}
+                label={item.label || item}
               />
             );
           })}
