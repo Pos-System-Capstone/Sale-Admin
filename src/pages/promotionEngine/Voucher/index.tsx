@@ -19,12 +19,15 @@ import voucherApi, { TVoucherBase } from 'api/promotion/voucher';
 import { deleteProdById } from 'redux/product/api';
 import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
 import { TTableColumn } from 'types/table';
+import { useSelector } from 'react-redux';
+import { RootState } from 'redux/store';
 
 // ----------------------------------------------------------------------
 
 export default function Voucher() {
   const [activeTab, setActiveTab] = useState('1');
   const ref = useRef<any>();
+  const brandId = useSelector((state: RootState) => state.brand);
 
   const handleChangeTab = (event: React.SyntheticEvent, newValue: string) => {
     setActiveTab(newValue);
@@ -149,25 +152,14 @@ export default function Voucher() {
   };
 
   useEffect(() => {
-    const form = ref.current?.formControl;
-    if (!form) return;
-    form.setValue('is-extra-cate', activeTab === '2');
-  }, [activeTab, ref]);
-
+    if (ref.current) {
+      ref.current.formControl.setValue('BrandId', brandId!);
+    }
+  }, [brandId]);
   return (
     <Page
       title={`${t('promotionSystem.voucher.title')}`}
       actions={() => [
-        // <Button
-        //   key="add-product-extra"
-        //   onClick={() => {
-        //     navigate(`${PATH_DASHBOARD.products.newProduct}?productType=${ProductTypeEnum.Extra}`);
-        //   }}
-        //   variant="outlined"
-        //   startIcon={<Icon icon={plusFill} />}
-        // >
-        //   Thêm extra
-        // </Button>,
         <Button
           key="add-product"
           onClick={() => {
@@ -193,15 +185,15 @@ export default function Voucher() {
             pagination
             getData={() =>
               voucherApi.getVoucher({
-                brandId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+                brandId,
                 ActionType: 0,
                 PostActionType: 0
               })
             }
-            onEdit={editProuct}
-            onDelete={onDelete}
+            onEdit={() => console.log('edit')}
+            onDelete={() => console.log('delete')}
             columns={productColumns}
-            rowKey="product_id"
+            rowKey="voucher_id"
           />
         </TabContext>
       </Card>

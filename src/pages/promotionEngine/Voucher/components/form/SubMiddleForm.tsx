@@ -10,12 +10,14 @@ import {
   Select,
   SelectChangeEvent,
   Stack,
-  TextField
+  TextField,
+  Typography
 } from '@mui/material';
 import { CheckBoxField } from 'components/form';
 import useLocales from 'hooks/useLocales';
 import React from 'react';
 import { useState } from 'react';
+// import Typography from 'theme/overrides/Typography';
 import { CardTitle } from '../Card';
 interface Props {
   hasVariant: any;
@@ -102,7 +104,8 @@ const SubMiddleForm: React.FC<Props> = ({ hasVariant }) => {
               <Box
                 sx={{
                   width: 600,
-                  maxWidth: '100%'
+                  maxWidth: '100%',
+                  position: 'relative'
                 }}
               >
                 <TextField
@@ -111,16 +114,29 @@ const SubMiddleForm: React.FC<Props> = ({ hasVariant }) => {
                   id="fullWidth"
                   autoComplete="off"
                   inputProps={{ maxLength: 10 }}
-                  helperText={`${count}/10`}
+                  // helperText={`${count}/10`}
                   onChange={(e) => setCount(e.target.value.length)}
                 />
+                <Typography
+                  variant={'caption'}
+                  sx={{
+                    position: 'absolute',
+                    top: '50%',
+                    right: '12px',
+                    zIndex: 9999,
+                    transform: 'translateY(-50%)'
+                  }}
+                >
+                  {`${count}/10`}
+                </Typography>
               </Box>
             </Grid>
             <Grid item xs={6}>
               <Box
                 sx={{
                   width: 600,
-                  maxWidth: '100%'
+                  maxWidth: '100%',
+                  position: 'relative'
                 }}
               >
                 <TextField
@@ -129,9 +145,21 @@ const SubMiddleForm: React.FC<Props> = ({ hasVariant }) => {
                   id="fullWidth"
                   autoComplete="off"
                   inputProps={{ maxLength: 10 }}
-                  helperText={`${count}/10`}
+                  // helperText={`${count}/10`}
                   onChange={(e) => setCount(e.target.value.length)}
                 />
+                <Typography
+                  variant={'caption'}
+                  sx={{
+                    position: 'absolute',
+                    top: '50%',
+                    right: '12px',
+                    zIndex: 9999,
+                    transform: 'translateY(-50%)'
+                  }}
+                >
+                  {`${count}/10`}
+                </Typography>
               </Box>
             </Grid>
           </Grid>

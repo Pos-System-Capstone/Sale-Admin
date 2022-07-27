@@ -3,6 +3,8 @@ import plusFill from '@iconify/icons-eva/plus-fill';
 import { Icon } from '@iconify/react';
 // material
 import { Button, Card, Stack } from '@mui/material';
+import actionApi from 'api/promotion/actions';
+import { GIFT_TYPE_DATA } from 'api/promotion/promotion';
 import storeApi from 'api/store';
 import DeleteConfirmDialog from 'components/DelectConfirmDialog';
 // import { SelectField } from 'components/form';
@@ -12,19 +14,23 @@ import ResoTable from 'components/ResoTable/ResoTable';
 import useLocales from 'hooks/useLocales';
 import { get } from 'lodash';
 import { useSnackbar } from 'notistack';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 // components
 import { useNavigate } from 'react-router-dom';
-import { getStores } from 'redux/store/api';
+import { RootState } from 'redux/store';
 import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
 import { TStore } from 'types/store';
+import { fDateTime } from 'utils/formatTime';
 const ActionPage = () => {
+  const GIFT_TYPE_ENUM = GIFT_TYPE_DATA();
+
   const navigate = useNavigate();
   const { translate } = useLocales();
   const { enqueueSnackbar } = useSnackbar();
   const [currentDeleteItem, setCurrentDeleteItem] = useState<TStore | null>(null);
   const tableRef = useRef<any>();
-
+  const brandId = useSelector((state: RootState) => state.brand);
   const deleteStoreHandler = () =>
     storeApi
       .delete(currentDeleteItem?.id!)
@@ -44,62 +50,39 @@ const ActionPage = () => {
   const columns = [
     {
       title: 'No',
-      dataIndex: '',
+      dataIndex: 'index',
       hideInSearch: true
     },
     {
       title: 'Name',
-      dataIndex: '',
+      dataIndex: 'name',
       hideInSearch: true
     },
     {
       title: 'Type',
-      dataIndex: '',
-      hideInSearch: true
+      dataIndex: 'actionType',
+      hideInSearch: true,
+      valueEnum: GIFT_TYPE_ENUM
     },
     {
       title: 'Created date',
-      dataIndex: '',
+      dataIndex: 'insDate',
+      render: (values: any) => fDateTime(values),
       hideInSearch: true
     },
     {
       title: 'Updated date',
-      dataIndex: '',
+      dataIndex: 'updDate',
+      render: (values: any) => fDateTime(values),
       hideInSearch: true
     }
-    // {
-    //   title: translate('pages.stores.table.isAvailable'),
-    //   dataIndex: 'is_available',
-    //   render: (isAvai: any) => (
-    //     <Label color={isAvai ? 'success' : 'default'}>
-    //       {isAvai ? translate('common.available') : translate('common.notAvailable')}
-    //     </Label>
-    //   ),
-    //   renderFormItem: () => (
-    //     <SelectField
-    //       fullWidth
-    //       sx={{ minWidth: '150px' }}
-    //       options={[
-    //         {
-    //           label: translate('common.all'),
-    //           value: ''
-    //         },
-    //         {
-    //           label: translate('common.available'),
-    //           value: 'true'
-    //         },
-    //         {
-    //           label: translate('common.notAvailable'),
-    //           value: 'false'
-    //         }
-    //       ]}
-    //       name="is-available"
-    //       size="small"
-    //       label={translate('pages.stores.table.isAvailable')}
-    //     />
-    //   )
-    // }
   ];
+
+  useEffect(() => {
+    if (tableRef.current) {
+      tableRef.current.formControl.setValue('BrandId', brandId!);
+    }
+  }, [brandId]);
 
   return (
     <Page
@@ -133,7 +116,12 @@ const ActionPage = () => {
             rowKey="id"
             ref={tableRef}
             onEdit={(stores: any) => navigate(`${PATH_PROMOTION_APP.action.root}/${stores.id}`)}
-            getData={getStores}
+            getData={() =>
+              actionApi.get({
+                brandId,
+                ActionType: 0
+              })
+            }
             onDelete={setCurrentDeleteItem}
             columns={columns}
           />

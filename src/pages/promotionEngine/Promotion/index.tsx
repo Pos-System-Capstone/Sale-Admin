@@ -12,7 +12,7 @@ import Page from 'components/Page';
 import ResoTable from 'components/ResoTable/ResoTable';
 import useLocales from 'hooks/useLocales';
 import { useSnackbar } from 'notistack';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { RootState } from 'redux/store';
@@ -76,6 +76,7 @@ const Promotion = (props: Props) => {
         </Label>
       )
     },
+    // TODO: If actionType = 0 <=> use postActionType
     {
       title: `${translate('promotionSystem.promotion.table.action')}`,
       hideInSearch: true,
@@ -114,6 +115,12 @@ const Promotion = (props: Props) => {
       )
     }
   ];
+
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.formControl.setValue('BrandId', brandId!);
+    }
+  }, [brandId]);
 
   return (
     <Page

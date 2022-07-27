@@ -3,6 +3,7 @@ import plusFill from '@iconify/icons-eva/plus-fill';
 import { Icon } from '@iconify/react';
 // material
 import { Button, Card, Stack } from '@mui/material';
+import conditionApi, { TConditionBase } from 'api/promotion/condition';
 import CategoryModal from 'components/CategoryModal';
 import DeleteConfirmDialog from 'components/DelectConfirmDialog';
 import Page from 'components/Page';
@@ -11,54 +12,56 @@ import useLocales from 'hooks/useLocales';
 import { get } from 'lodash';
 import { useSnackbar } from 'notistack';
 import { useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 // components
 import { useNavigate } from 'react-router-dom';
-import { addCategoy, deleteCategoyById, editCategory, getCategories } from 'redux/category/api';
-import { PATH_DASHBOARD } from 'routes/paths';
+import { addCategoy, deleteCategoyById, editCategory } from 'redux/category/api';
+import { RootState } from 'redux/store';
 import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
 import { TCategory } from 'types/category';
 import { TTableColumn } from 'types/table';
+import { fDateTime } from 'utils/formatTime';
 
 const ConditionPage = ({ isExtra = false }: { isExtra?: boolean }) => {
   const navigate = useNavigate();
   const { translate } = useLocales();
   const { enqueueSnackbar } = useSnackbar();
-  console.log(`isExtra`, isExtra);
 
   const tableRef = useRef<any>();
   const [formModal, setFormModal] = useState(false);
   const [updateCateId, setUpdateCateId] = useState<number | null>(null);
   const [currentDeleteItem, setCurrentDeleteItem] = useState<TCategory | null>(null);
-
-  const columns: TTableColumn<TCategory>[] = [
+  const brandId = useSelector((state: RootState) => state.brand);
+  console.log(brandId);
+  const columns: TTableColumn<TConditionBase>[] = [
     {
       title: 'NO',
-      dataIndex: 'position',
+      dataIndex: 'index',
       hideInSearch: true
     },
     {
       title: 'NAME',
-      dataIndex: 'position',
+      dataIndex: 'ruleName',
       hideInSearch: true
     },
     {
       title: 'DESCRIDTION',
-      dataIndex: 'position',
+      dataIndex: 'description',
       hideInSearch: true
     },
     {
       title: 'Updated date',
-      dataIndex: 'position',
+      dataIndex: 'updDate',
+      render: (value) => fDateTime(value),
       hideInSearch: true
     }
   ];
 
   useEffect(() => {
-    const form = tableRef.current?.formControl;
-    if (form) {
-      form.setValue('is-extra', isExtra);
+    if (tableRef.current) {
+      tableRef.current.formControl.setValue('BrandId', brandId!);
     }
-  }, [isExtra, tableRef]);
+  }, [brandId]);
 
   const addCategoryHander = (values: TCategory) =>
     addCategoy(values)
@@ -145,16 +148,15 @@ const ConditionPage = ({ isExtra = false }: { isExtra?: boolean }) => {
       <Card>
         <Stack spacing={2}>
           <ResoTable
-            defaultFilters={{
-              'is-extra': isExtra
-            }}
             ref={tableRef}
-            onEdit={(cate: TCategory) => {
-              navigate(`${PATH_DASHBOARD.categories.editById(cate.cate_id)}`);
+            onEdit={() => {
+              console.log('edit');
             }}
-            onDelete={(cate: TCategory) => setCurrentDeleteItem(cate)}
-            rowKey="cate_id"
-            getData={getCategories}
+            onDelete={() => {
+              console.log('delete');
+            }}
+            rowKey="condition_id"
+            getData={() => conditionApi.getConditionRules({ BrandId: brandId })}
             columns={columns}
           />
         </Stack>
