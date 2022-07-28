@@ -6,7 +6,7 @@ import {
   RadioGroupField,
   SelectField
 } from 'components/form';
-import CheckGroupBoxField from 'components/form/CheckGroupBoxField';
+import CheckGroupBoxField from 'components/form/CheckBoxGroupField';
 import DateTimePickerField from 'components/form/DateTimePickerField';
 import useLocales from 'hooks/useLocales';
 import { useState } from 'react';
@@ -45,6 +45,9 @@ export default function StepOne({ watch }: any) {
     'promotion-action',
     'unlimited'
   ]);
+  const [tf, pd] = watch(['timeFrameList', 'particularDays']);
+  console.log('1', tf);
+  console.log('2', pd);
   return (
     <Stack p={1} spacing={3}>
       <Typography px={2} variant="h3" textAlign="left" sx={{ textTransform: 'uppercase' }}>

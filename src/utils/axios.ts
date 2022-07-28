@@ -36,6 +36,7 @@ const report = `${process.env.REACT_APP_REPORT_BASE_URL}`;
 const account = `${process.env.REACT_APP_LOGIN_BASE_URL}`;
 const sale = `${process.env.REACT_APP_BASE_URL}`;
 const promotion = `${process.env.REACT_APP_PROMOTION_BASE_URL}`;
+
 const request = axios.create({
   baseURL: sale,
   paramsSerializer: parseParams
@@ -101,6 +102,11 @@ requestPromotion.interceptors.request.use((options) => {
   return options;
 });
 
+requestPromotion.interceptors.response.use(
+  (response) => response,
+  (error) => Promise.reject((error.response && error.response.data) || 'Có lỗi xảy ra')
+);
+
 const requestLogin = axios.create({
   baseURL: account,
   paramsSerializer: parseParams
@@ -118,7 +124,7 @@ requestLogin.interceptors.request.use((options) => {
   return options;
 });
 
-requestPromotion.interceptors.response.use(
+requestLogin.interceptors.response.use(
   (response) => response,
   (error) => Promise.reject((error.response && error.response.data) || 'Có lỗi xảy ra')
 );

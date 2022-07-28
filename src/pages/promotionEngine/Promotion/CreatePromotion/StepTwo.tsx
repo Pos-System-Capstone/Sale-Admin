@@ -1,6 +1,6 @@
 import { MenuItem, Stack, Typography } from '@mui/material';
 import { RadioGroupField, SelectField } from 'components/form';
-import CheckGroupBoxField from 'components/form/CheckGroupBoxField';
+import CheckGroupBoxField from 'components/form/CheckBoxGroupField';
 // import CheckGroupBoxField from 'components/form/CheckGroupBoxField';
 import useLocales from 'hooks/useLocales';
 // import { Controller } from 'react-hook-form';
@@ -28,7 +28,7 @@ export default function StepTwo({ watch }: any) {
   const exclusives = exclusiveList();
 
   const [isMember] = watch(['membership']);
-
+  console.log(watch('paymentMethod'));
   return (
     <Stack p={1} spacing={3} width="100%">
       <Typography px={2} variant="h3" sx={{ textTransform: 'uppercase' }} textAlign={'left'}>

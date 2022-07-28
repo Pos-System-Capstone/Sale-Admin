@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 // import { Checkbox, FormControlLabel } from '@mui/material';
 import { Checkbox, FormControlLabel } from '@mui/material';
-import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
 const CheckGroupBoxField = ({
@@ -29,11 +28,11 @@ const CheckGroupBoxField = ({
                     error={Boolean(fieldState.isTouched && fieldState.error)}
                     onChange={(e) => {
                       if (e.target.checked) {
-                        const updatedValue = [...(field.value ?? []), field.value];
+                        const updatedValue = [...(field.value ?? []), item.value ?? item];
                         field.onChange(updatedValue);
                       } else {
                         const updatedValue = [...(field.value ?? [])].filter(
-                          (x) => x !== item.value || item
+                          (x) => x !== (item.value ?? item)
                         );
                         field.onChange(updatedValue);
                       }
