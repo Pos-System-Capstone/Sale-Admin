@@ -144,6 +144,7 @@ export const storeAppSidebarConfig = [
     ]
   }
 ];
+
 export const promotionAppSidebarConfig = [
   // GENERAL
   // ----------------------------------------------------------------------
@@ -203,6 +204,8 @@ export const promotionAppSidebarConfig = [
     ]
   }
 ];
+
+const PATH_REPORT = PATH_REPORT_APP();
 export const reportAppSidebarConfig = [
   // GENERAL
   // ----------------------------------------------------------------------
@@ -211,7 +214,7 @@ export const reportAppSidebarConfig = [
     items: [
       {
         title: 'report.dashboard',
-        path: PATH_REPORT_APP.general.reportDashboard,
+        path: PATH_REPORT.general.reportDashboard,
         icon: ICONS.dashboard
       }
     ]
@@ -221,42 +224,42 @@ export const reportAppSidebarConfig = [
     items: [
       {
         title: 'report.overviewDate',
-        path: PATH_REPORT_APP.overviewDate,
+        path: PATH_REPORT.overviewDate,
         icon: ICONS.calendar
       },
       // {
       //   title: 'report.overviewMonth',
-      //   path: PATH_REPORT_APP.overviewMonth,
+      //   path: PATH_REPORT.overviewMonth,
       //   icon: ICONS.calendar
       // },
-      {
-        title: 'report.productProgress',
-        path: PATH_REPORT_APP.productProgress,
-        icon: ICONS.analytics
-      },
+      // {
+      //   title: 'report.productProgress',
+      //   path: PATH_REPORT.productProgress,
+      //   icon: ICONS.analytics
+      // },
       {
         title: 'report.productSale',
-        path: PATH_REPORT_APP.productSale,
+        path: PATH_REPORT.productSale,
         icon: ICONS.product
       },
-      {
-        title: 'report.payment',
-        path: PATH_REPORT_APP.payment,
-        icon: ICONS.ecommerce
-      },
+      // {
+      //   title: 'report.payment',
+      //   path: PATH_REPORT.payment,
+      //   icon: ICONS.ecommerce
+      // },
       {
         title: 'report.trading',
-        path: PATH_REPORT_APP.dayReport,
+        path: PATH_REPORT.dayReport,
         icon: ICONS.menu
       },
       {
         title: 'report.promotion',
-        path: PATH_REPORT_APP.promotion,
+        path: PATH_REPORT.promotion,
         icon: ICONS.kanban
       },
       {
         title: 'report.stores',
-        path: PATH_REPORT_APP.stores,
+        path: PATH_REPORT.stores,
         icon: ICONS.store
       }
     ]

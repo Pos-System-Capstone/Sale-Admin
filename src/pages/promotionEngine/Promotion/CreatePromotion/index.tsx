@@ -19,7 +19,6 @@ import StepThree from './StepThree';
 import StepTwo from './StepTwo';
 
 interface Props {}
-// const STEPS = ['Select promotion type', 'Setting', 'Save & Finish'];
 const CreatePromotion = (props: Props) => {
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
@@ -49,18 +48,6 @@ const CreatePromotion = (props: Props) => {
   });
 
   const onSubmit = (values: any) => {
-    // return createMasterProd(transformComboForm(values, CombinationModeEnum.ChoiceCombo))
-    //   .then((res) => {
-    //     enqueueSnackbar(`Tạo thành công ${values.product_name}`, {
-    //       variant: 'success'
-    //     });
-    //     navigate(`${PATH_DASHBOARD.combos.editById(res.data)}`);
-    //   })
-    //   .catch((err) => {
-    //     enqueueSnackbar(`Có lỗi xảy ra. Vui lòng thử lại`, {
-    //       variant: 'error'
-    //     });
-    //   });
     console.log('values', values);
     const data = {
       promotionCode: values.promotionCode,
@@ -71,34 +58,53 @@ const CreatePromotion = (props: Props) => {
     };
     const testPayload = {
       delFlg: true,
-      insDate: '2022-06-28T09:07:18.224Z',
-      updDate: '2022-06-29T09:07:18.224Z',
-      promotionId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-      brandId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-      promotionCode: 'Test code',
-      promotionName: 'Test name',
-      actionType: 1,
-      postActionType: 1,
-      imgUrl: '',
-      description: '',
-      startDate: '2022-06-28T09:07:18.224Z',
-      endDate: '2022-06-29T09:07:18.224Z',
-      exclusive: 1,
-      applyBy: 1,
-      saleMode: 1,
-      gender: 2,
-      paymentMethod: 1,
-      forHoliday: 1,
-      forMembership: 1,
-      dayFilter: 1,
-      hourFilter: 1,
-      status: 1,
+      insDate: '2022-07-29T09:19:29.543Z',
+      updDate: '2022-07-29T09:19:29.543Z',
+      promotionId: '2062d776-ca5c-4429-9652-e3a662bc8dfa',
+      brandId: '2062d776-ca5c-4429-9652-e3a662bc8dfa',
+      promotionCode: 'test 1',
+      promotionName: 'test 1',
+      actionType: 0,
+      postActionType: 0,
+      imgUrl: 'string',
+      description: 'string',
+      startDate: '2022-07-29T09:19:29.543Z',
+      endDate: '2022-07-29T09:19:29.543Z',
+      exclusive: 0,
+      applyBy: 0,
+      saleMode: 0,
+      gender: 0,
+      paymentMethod: 0,
+      forHoliday: 0,
+      forMembership: 0,
+      dayFilter: 0,
+      hourFilter: 0,
+      status: 0,
       hasVoucher: true,
       isAuto: true,
-      voucherGroupId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-      voucherQuantity: 10,
-      conditionRuleId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-      promotionType: 1
+      voucherGroupId: '2062d776-ca5c-4429-9652-e3a662bc8dfa',
+      voucherQuantity: 0,
+      conditionRuleId: '2062d776-ca5c-4429-9652-e3a662bc8dfa',
+      promotionType: 0,
+      promotionStoreMapping: [
+        {
+          delFlg: true,
+          insDate: '2022-07-29T09:19:29.543Z',
+          updDate: '2022-07-29T09:19:29.543Z',
+          id: '2062d776-ca5c-4429-9652-e3a662bc8dfa',
+          storeId: '2062d776-ca5c-4429-9652-e3a662bc8dfa',
+          promotionId: '2062d776-ca5c-4429-9652-e3a662bc8dfa'
+        }
+      ],
+      memberLevelMapping: [
+        {
+          id: '2062d776-ca5c-4429-9652-e3a662bc8dfa',
+          memberLevelId: '2062d776-ca5c-4429-9652-e3a662bc8dfa',
+          promotionId: '2062d776-ca5c-4429-9652-e3a662bc8dfa',
+          insDate: '2022-07-29T09:19:29.543Z',
+          updDate: '2022-07-29T09:19:29.543Z'
+        }
+      ]
     };
     promotionApi
       .createPromotion(testPayload)

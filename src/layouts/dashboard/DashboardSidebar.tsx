@@ -2,9 +2,7 @@ import { Box, CardActionArea, Drawer, Link, Stack, Tooltip, Typography } from '@
 // material
 import { alpha, styled } from '@mui/material/styles';
 import { useEffect, useMemo } from 'react';
-import { useSelector } from 'react-redux';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
-import { RootState } from 'redux/store';
 import { MHidden } from '../../components/@material-extend';
 // components
 import Logo from '../../components/Logo';
@@ -15,8 +13,8 @@ import Scrollbar from '../../components/Scrollbar';
 import useAuth from '../../hooks/useAuth';
 import useCollapseDrawer from '../../hooks/useCollapseDrawer';
 // routes
-import { ROOTS_DASHBOARD as ROOTS_DASHBOARD_REPORT } from 'routes/reportAppPaths';
 import { ROOTS_DASHBOARD as ROOTS_DASHBOARD_PROMOTION } from 'routes/promotionAppPaths';
+import { ROOTS_DASHBOARD as ROOTS_DASHBOARD_REPORT } from 'routes/reportAppPaths';
 import { PATH_DASHBOARD, ROOTS_DASHBOARD as ROOTS_DASHBOARD_SALE } from '../../routes/paths';
 
 //
@@ -106,9 +104,9 @@ type DashboardSidebarProps = {
 };
 
 export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }: DashboardSidebarProps) {
-  const system = useSelector((state: RootState) => state.system);
   const { pathname } = useLocation();
   const { user } = useAuth();
+  // const system = useSelector((state: RootState) => state.system);
   // const systems = localStorage.getItem('system');
   const sidebarConfig = useMemo(() => {
     const firstElementOfPath = pathname.split('/')[1];
@@ -200,7 +198,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }: Dash
                   {/* {user?.displayName} */} User
                 </Typography>
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                  {/* {user?.roles[0]} */}\ Admin
+                  {/* {user?.roles[0]} */} Admin
                 </Typography>
               </Box>
             </AccountStyle>

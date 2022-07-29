@@ -25,7 +25,6 @@ import React, { forwardRef, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router';
 import { setBrandId } from 'redux/slices/brand';
-import { setStoreId } from 'redux/slices/store';
 import { RootState } from 'redux/store';
 import { TStore } from 'types/store';
 
@@ -187,8 +186,8 @@ const StoreNavigationDialog: React.FC<Props> = ({ open, onClose, onSelectStore }
                       onClick={() => {
                         const id: any = item.id;
                         // save store
-                        const action = setStoreId(id);
-                        dispatch(action);
+                        // const action = setStoreId(id);
+                        // dispatch(action);
                         localStorage.setItem('storeId', id);
 
                         // replace url
@@ -199,6 +198,7 @@ const StoreNavigationDialog: React.FC<Props> = ({ open, onClose, onSelectStore }
                         //
                         navigate(`${b}`);
                         onClose();
+                        window.location.reload();
                       }}
                     >
                       <ArrowForward />

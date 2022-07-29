@@ -14,10 +14,8 @@ import TableCard, { MiniTableCard } from '../components/TableCard';
 import config from './config';
 
 function RevenueOverview({ dateRange, done, setLoading, loading }: any) {
-  // const storeId = useSelector((state: RootState) => state.store);
   const { storeId } = useParams();
 
-  console.log('overview store', typeof storeId);
   const {
     data: revenueData,
     isFetched: isFetched1,

@@ -3,6 +3,7 @@ import { Icon } from '@iconify/react';
 import { Button, Card, Stack } from '@mui/material';
 import promotionApi, {
   DISCOUNT_TYPE_DATA,
+  GIFT_TYPE_DATA,
   PROMOTION_TYPE_DATA,
   STATUS_TYPE_DATA,
   TPromotionBase
@@ -11,20 +12,17 @@ import Label from 'components/Label';
 import Page from 'components/Page';
 import ResoTable from 'components/ResoTable/ResoTable';
 import useLocales from 'hooks/useLocales';
-import { useSnackbar } from 'notistack';
 import { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { RootState } from 'redux/store';
 import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
 import { TTableColumn } from 'types/table';
-import { fDate } from 'utils/formatTime';
 // import { CollectionTypeEnum } from 'types/collection';
 
 interface Props {}
 
 const Promotion = (props: Props) => {
-  const { enqueueSnackbar } = useSnackbar();
   const { translate } = useLocales();
   const navigate = useNavigate();
   const ref = useRef<any>();
@@ -33,6 +31,7 @@ const Promotion = (props: Props) => {
   console.log(brandId);
 
   const DISCOUNT_TYPE_ENUM = DISCOUNT_TYPE_DATA();
+  const GIFT_TYPE_ENUM = GIFT_TYPE_DATA();
   const STATUS_TYPE_ENUM = STATUS_TYPE_DATA();
   const PROMOTION_TYPE_ENUM = PROMOTION_TYPE_DATA();
 
@@ -81,14 +80,18 @@ const Promotion = (props: Props) => {
       title: `${translate('promotionSystem.promotion.table.action')}`,
       hideInSearch: true,
       dataIndex: 'actionType',
-      valueEnum: DISCOUNT_TYPE_ENUM
-    },
-    {
-      title: `${translate('promotionSystem.promotion.table.startDate')}`,
-      dataIndex: 'startDate',
-      valueType: 'datetime',
-      hideInSearch: true,
-      render: (value) => fDate(value)
+      valueEnum: DISCOUNT_TYPE_ENUM,
+      renderFormItem: (columnSetting, formProps): any => {
+        // change dataIndex when actionType = 0
+        const dataIndex =
+          formProps.getFieldValue('actionType') === 0 ? 'postActionType' : 'actionType';
+        columnSetting.dataIndex = dataIndex;
+        columnSetting.valueEnum = dataIndex === 'actionType' ? DISCOUNT_TYPE_ENUM : GIFT_TYPE_ENUM;
+      }
+      // render: (value, row): any => {
+      //   // change dataIndex when actionType = 0
+      //   const dataIndex = row.actionType === 0 ? 'postActionType' : 'actionType';
+      // }
     },
     {
       title: `${translate('promotionSystem.promotion.table.status')}`,

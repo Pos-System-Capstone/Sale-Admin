@@ -13,48 +13,49 @@ import { PATH_REPORT_APP } from 'routes/reportAppPaths';
 import Page from '../../components/Page';
 import palette from 'theme/palette';
 // ----------------------------------------------------------------------
+const PATH_REPORT = PATH_REPORT_APP();
 const Widgets = [
   {
     title: 'TỔNG QUAN',
     icon: dashboardFill,
     color: palette.light.reportPalette.green3,
     hoverColor: palette.light.reportPalette.green4,
-    path: PATH_REPORT_APP.overviewDate
+    path: PATH_REPORT.overviewDate
   },
   {
     title: 'THỜI GIAN',
     icon: clockOuline,
     color: palette.light.reportPalette.green5,
     hoverColor: palette.light.reportPalette.green6,
-    path: PATH_REPORT_APP.dayReport
+    path: PATH_REPORT.dayReport
   },
   {
     title: 'SẢN PHẨM',
     icon: shoppingBagFill,
     color: palette.light.reportPalette.yellow3,
     hoverColor: palette.light.reportPalette.yellow4,
-    path: PATH_REPORT_APP.productSale
+    path: PATH_REPORT.productSale
   },
   {
     title: 'DIỄN TIẾN NGÀY',
     icon: trendingUp,
     color: palette.light.reportPalette.red3,
     hoverColor: palette.light.reportPalette.red4,
-    path: PATH_REPORT_APP.productProgress
+    path: PATH_REPORT.productProgress
   },
   {
     title: 'SO SÁNH SẢN PHẨM',
     icon: repeatFill,
     color: palette.light.reportPalette.blue3,
     hoverColor: palette.light.reportPalette.blue4,
-    path: PATH_REPORT_APP.productProgress
+    path: PATH_REPORT.productProgress
   },
   {
     title: 'SO SÁNH DOANH THU',
     icon: peopleFill,
     color: palette.light.reportPalette.purple3,
     hoverColor: palette.light.reportPalette.purple4,
-    path: PATH_REPORT_APP.productProgress
+    path: PATH_REPORT.productProgress
   }
 ];
 

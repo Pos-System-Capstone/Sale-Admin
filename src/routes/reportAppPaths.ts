@@ -5,8 +5,6 @@ function path(root: string, sublink: string) {
 }
 const ROOTS_AUTH = '/auth';
 export const ROOTS_DASHBOARD = `/report`;
-const id = localStorage.getItem('storeId');
-console.log(id);
 
 // ----------------------------------------------------------------------
 
@@ -20,20 +18,23 @@ export const PATH_AUTH = {
   verify: path(ROOTS_AUTH, '/verify')
 };
 
-export const PATH_REPORT_APP = {
-  root: ROOTS_DASHBOARD,
-  general: {
-    reportDashboard: path(ROOTS_DASHBOARD, '/dashboard')
-  },
-  overviewDate: path(ROOTS_DASHBOARD, '/overview-date'),
-  overviewMonth: path(ROOTS_DASHBOARD, '/overview-month'),
-  payment: path(ROOTS_DASHBOARD, '/payment'),
-  productSale: path(ROOTS_DASHBOARD, '/product-sale'),
-  productProgress: path(ROOTS_DASHBOARD, '/product-progress'),
-  promotion: path(ROOTS_DASHBOARD, '/promotion'),
-  dayReport: path(ROOTS_DASHBOARD, '/day-report'),
-  timeReport: path(ROOTS_DASHBOARD, '/day-report/time-report'),
-  dateReport: path(ROOTS_DASHBOARD, '/day-report/date-report'),
-  monthReport: path(ROOTS_DASHBOARD, '/day-report/month-report'),
-  stores: path(ROOTS_DASHBOARD, '/stores')
+export const PATH_REPORT_APP = () => {
+  const storeId = localStorage.getItem('storeId');
+  return {
+    root: ROOTS_DASHBOARD,
+    general: {
+      reportDashboard: path(ROOTS_DASHBOARD, '/dashboard')
+    },
+    overviewDate: path(ROOTS_DASHBOARD, `/${storeId}/overview-date`),
+    overviewMonth: path(ROOTS_DASHBOARD, `/${storeId}/overview-month`),
+    payment: path(ROOTS_DASHBOARD, `/${storeId}/payment`),
+    productSale: path(ROOTS_DASHBOARD, `/${storeId}/product-sale`),
+    productProgress: path(ROOTS_DASHBOARD, `/${storeId}/product-progress`),
+    promotion: path(ROOTS_DASHBOARD, `/${storeId}/promotion`),
+    dayReport: path(ROOTS_DASHBOARD, `/${storeId}/day-report`),
+    timeReport: path(ROOTS_DASHBOARD, `/${storeId}/day-report/time-report`),
+    dateReport: path(ROOTS_DASHBOARD, `/${storeId}/day-report/date-report`),
+    monthReport: path(ROOTS_DASHBOARD, `/${storeId}/day-report/month-report`),
+    stores: path(ROOTS_DASHBOARD, `/${storeId}/stores`)
+  };
 };
