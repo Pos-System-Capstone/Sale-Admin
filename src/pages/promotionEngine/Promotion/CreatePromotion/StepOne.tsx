@@ -4,7 +4,8 @@ import {
   DraftEditorField,
   InputField,
   RadioGroupField,
-  SelectField
+  SelectField,
+  SwitchField
 } from 'components/form';
 import CheckGroupBoxField from 'components/form/CheckBoxGroupField';
 import DateTimePickerField from 'components/form/DateTimePickerField';
@@ -29,10 +30,11 @@ export default function StepOne({ watch }: any) {
   const promotionType = promotionTypeList();
   const kindAction = kindActionList();
 
-  const [timeFrameChecked, setTimeFrameChecked] = useState(false);
-  const handleTimeFrameChecked = () => {
-    setTimeFrameChecked((prev) => !prev);
-  };
+  // const [timeFrameChecked, setTimeFrameChecked] = useState(false);
+  // const handleTimeFrameChecked = () => {
+  //   setTimeFrameChecked((prev) => !prev);
+  // };
+  const timeFrameChecked = watch('timeframeCheck');
   const particularDays = particularDayList();
 
   const [particularDay, setParticularDay] = useState(false);
@@ -40,14 +42,14 @@ export default function StepOne({ watch }: any) {
     setParticularDay((prev) => !prev);
   };
 
-  const [promoType = 'usingCode', promoAction = 'discount', unlimitedDate] = watch([
+  const [promoType = 'usingCode', promoAction = 'discount', unlimitedDate, timeFrame] = watch([
     'promotionType',
     'promotion-action',
-    'unlimited'
+    'unlimited',
+    'timeFrameChecked',
+    'timeFrame'
   ]);
-  const [tf, pd] = watch(['timeFrameList', 'particularDays']);
-  console.log('1', tf);
-  console.log('2', pd);
+
   return (
     <Stack p={1} spacing={3}>
       <Typography px={2} variant="h3" textAlign="left" sx={{ textTransform: 'uppercase' }}>
@@ -156,17 +158,16 @@ export default function StepOne({ watch }: any) {
               </Stack>
             </Stack>
           </FormBox>
-
           <Box>
             <Typography>
               {`${translate('promotionSystem.promotion.createPromotion.validInThisTimeFrameOnly')}`}
-              <Switch checked={timeFrameChecked} onChange={handleTimeFrameChecked} />
+              <SwitchField name="timeframeCheck" label="" />
             </Typography>
             {/* {timeFrameChecked && (
               <Grid container spacing={2} width={'100%'} py={1}>
                 {timeFrameList?.map((timeFrame, index) => (
                   <Grid xs={3} md={2} item key={index}>
-                    <CheckBoxField name={timeFrame} label={timeFrame} />
+                    <CheckBoxField name={'timeFrame'} label={timeFrame} />
                   </Grid>
                 ))}
               </Grid>
@@ -175,6 +176,7 @@ export default function StepOne({ watch }: any) {
               <CheckGroupBoxField name={'timeFrameList'} options={timeFrameList} />
             )}
           </Box>
+
           <Box>
             <Typography>
               {`${translate('promotionSystem.promotion.createPromotion.validOnParticularDayOnly')}`}

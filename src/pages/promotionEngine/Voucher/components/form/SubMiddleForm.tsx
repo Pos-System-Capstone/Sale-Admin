@@ -25,6 +25,7 @@ interface Props {
 
 const SubMiddleForm: React.FC<Props> = ({ hasVariant }) => {
   const [count, setCount] = useState(0);
+
   const [charset, setCharset] = React.useState('');
 
   const handleChange = (event: SelectChangeEvent) => {

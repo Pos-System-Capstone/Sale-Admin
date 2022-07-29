@@ -143,7 +143,7 @@ export type TPromotionBase = {
   promotionName?: string;
   actionType?: number;
   // actionType?: number[];
-  postActionType?: string;
+  postActionType?: number;
   imgUrl?: string;
   description?: string;
   startDate?: string;
@@ -166,6 +166,72 @@ export type TPromotionBase = {
   isAuto?: boolean;
   promotionType?: number;
   brand?: any;
+  gameCampaign?: [];
+  memberLevelMapping?: [];
+  promotionChannelMapping?: PromotionChannelMapping[];
+  promotionStoreMapping?: PromotionStoreMapping[];
+  promotionTier?: PromotionTier[];
+  voucher?: [];
+};
+
+export type PromotionChannelMapping = {
+  promotionChannelId?: string;
+  promotionId?: string;
+  channelId?: string;
+  insDate?: Date;
+  updDate?: Date;
+  channel?: any;
+};
+
+export type PromotionStoreMapping = {
+  id?: string;
+  storeId?: string;
+  promotionId?: string;
+  insDate?: Date;
+  updDate?: Date;
+  store?: any;
+};
+
+export type PromotionTier = {
+  promotionTierId?: string;
+  conditionRuleId?: string;
+  actionId?: string;
+  promotionId?: string;
+  giftId?: any;
+  insDate?: Date;
+  updDate?: Date;
+  summary?: any;
+  tierIndex?: number;
+  voucherGroupId?: string;
+  priority?: number;
+  voucherQuantity?: number;
+  action?: any;
+  conditionRule?: any;
+  gift?: any;
+  voucherGroup?: {
+    voucherGroupId?: string;
+    brandId?: string;
+    voucherName?: string;
+    quantity?: number;
+    usedQuantity?: number;
+    redempedQuantity?: number;
+    delFlg?: boolean;
+    insDate?: Date;
+    updDate?: Date;
+    charset?: string;
+    postfix?: string;
+    prefix?: string;
+    customCharset?: string;
+    actionId?: string;
+    giftId?: any;
+    codeLength?: number;
+    imgUrl?: any;
+    action?: any;
+    brand?: any;
+    gift?: any;
+    promotionTier?: [];
+    voucher?: [];
+  };
 };
 
 const getPromotion = (params?: any) =>

@@ -14,7 +14,12 @@ const DateTimePickerField = ({ name, label, defaultValue = '', transform, ...pro
         <DateTimePicker
           label={label}
           renderInput={(params) => (
-            <TextField error={Boolean(fieldState.error)} {...params} {...props} />
+            <TextField
+              error={fieldState.error && fieldState.error.message}
+              helperText={fieldState.error && fieldState.error.message}
+              {...params}
+              {...props}
+            />
           )}
           {...field}
           onChange={(e) => field.onChange(transform ? transform.output(e) : e)}

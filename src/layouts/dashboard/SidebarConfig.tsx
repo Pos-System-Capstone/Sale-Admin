@@ -112,6 +112,17 @@ const sidebarConfig = [
         icon: ICONS.store
       }
     ]
+  },
+
+  {
+    subheader: 'log-subheader',
+    items: [
+      {
+        title: 'log',
+        path: PATH_DASHBOARD.log.root,
+        icon: ICONS.tag
+      }
+    ]
   }
 ];
 

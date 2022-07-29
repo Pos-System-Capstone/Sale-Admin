@@ -28,7 +28,6 @@ const Promotion = (props: Props) => {
   const ref = useRef<any>();
 
   const brandId = useSelector((state: RootState) => state.brand);
-  console.log(brandId);
 
   const DISCOUNT_TYPE_ENUM = DISCOUNT_TYPE_DATA();
   const GIFT_TYPE_ENUM = GIFT_TYPE_DATA();
