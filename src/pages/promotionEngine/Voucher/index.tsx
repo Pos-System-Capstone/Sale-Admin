@@ -15,12 +15,13 @@ import { useNavigate } from 'react-router-dom';
 import { PATH_DASHBOARD } from 'routes/paths';
 import { TProductBase } from 'types/product';
 //
-import voucherApi, { TVoucherBase } from 'api/promotion/voucher';
+import voucherApi from 'api/promotion/voucher';
 import { deleteProdById } from 'redux/product/api';
 import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
 import { TTableColumn } from 'types/table';
 import { useSelector } from 'react-redux';
 import { RootState } from 'redux/store';
+import { TVoucherBase } from 'types/promotion/voucher';
 
 // ----------------------------------------------------------------------
 

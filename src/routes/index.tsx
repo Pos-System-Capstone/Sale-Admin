@@ -21,7 +21,7 @@ import ReportDashboard from 'pages/dashboard/ReportDashboard';
 import ActionPage from 'pages/promotionEngine/Action';
 import NewActionPage from 'pages/promotionEngine/Action/create';
 import ConditionPage from 'pages/promotionEngine/Condition';
-import NewCondition from 'pages/promotionEngine/Condition/NewCondition';
+import NewCondition from 'pages/promotionEngine/Condition/createCondition';
 import ProfilePage from 'pages/promotionEngine/Configuration/profile';
 import SettingPage from 'pages/promotionEngine/Configuration/settings';
 import GiftPage from 'pages/promotionEngine/Gift';

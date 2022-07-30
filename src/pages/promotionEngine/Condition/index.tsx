@@ -3,7 +3,7 @@ import plusFill from '@iconify/icons-eva/plus-fill';
 import { Icon } from '@iconify/react';
 // material
 import { Button, Card, Stack } from '@mui/material';
-import conditionApi, { TConditionBase } from 'api/promotion/condition';
+import conditionApi from 'api/promotion/condition';
 import CategoryModal from 'components/CategoryModal';
 import DeleteConfirmDialog from 'components/DelectConfirmDialog';
 import Page from 'components/Page';
@@ -19,6 +19,7 @@ import { addCategoy, deleteCategoyById, editCategory } from 'redux/category/api'
 import { RootState } from 'redux/store';
 import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
 import { TCategory } from 'types/category';
+import { TConditionBase } from 'types/promotion/condition';
 import { TTableColumn } from 'types/table';
 import { fDateTime } from 'utils/formatTime';
 
@@ -32,7 +33,6 @@ const ConditionPage = ({ isExtra = false }: { isExtra?: boolean }) => {
   const [updateCateId, setUpdateCateId] = useState<number | null>(null);
   const [currentDeleteItem, setCurrentDeleteItem] = useState<TCategory | null>(null);
   const brandId = useSelector((state: RootState) => state.brand);
-  console.log(brandId);
   const columns: TTableColumn<TConditionBase>[] = [
     {
       title: 'NO',
