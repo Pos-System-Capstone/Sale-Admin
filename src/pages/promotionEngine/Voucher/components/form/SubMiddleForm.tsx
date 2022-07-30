@@ -17,8 +17,7 @@ import { CheckBoxField } from 'components/form';
 import useLocales from 'hooks/useLocales';
 import React from 'react';
 import { useState } from 'react';
-// import Typography from 'theme/overrides/Typography';
-import { CardTitle } from '../Card';
+import { CardTitle } from 'pages/promotionEngine/Voucher/components/Card';
 interface Props {
   hasVariant: any;
 }

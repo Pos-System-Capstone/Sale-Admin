@@ -10,9 +10,10 @@ import {
 import CheckBoxGroupField from 'components/form/CheckBoxGroupField';
 import DateTimePickerField from 'components/form/DateTimePickerField';
 import useLocales from 'hooks/useLocales';
+import { Card, CardTitle } from 'pages/promotionEngine/Promotion/components/Card';
 import { useState } from 'react';
 import { Controller } from 'react-hook-form';
-import { Card, CardTitle } from '../components/Card';
+
 import {
   discountActionList,
   giftActionList,
@@ -20,8 +21,8 @@ import {
   particularDayList,
   promotionTypeList,
   timeFrameList
-} from '../components/config';
-import FormBox from '../components/FormBox';
+} from 'pages/promotionEngine/Promotion/components/config';
+import FormBox from 'pages/promotionEngine/Promotion/components/FormBox';
 
 export default function StepOne({ watch }: any) {
   const { translate } = useLocales();

@@ -3,7 +3,6 @@
 /* eslint-disable react/prop-types */
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Alert, Box, Card, FormHelperText, Grid, Paper, Stack, Typography } from '@mui/material';
-import { useTheme } from '@mui/styles';
 import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
 import Page from 'components/Page';
 import useDashboard from 'hooks/useDashboard';
@@ -16,20 +15,18 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import TreeItem from '@mui/lab/TreeItem';
 import TreeView from '@mui/lab/TreeView';
 import { InputField } from 'components/form';
+import { storeSchemaBuilder } from 'pages/report/PromotionReport/utils';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import storeApi from 'redux/store/api';
 import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
 import { TStore } from 'types/store';
-import { storeSchemaBuilder } from 'pages/report/PromotionReport/utils';
-// import { fontSize } from '@mui/system';
 
 const NewActionPage = () => {
   const { enqueueSnackbar } = useSnackbar();
   const { setNavOpen } = useDashboard();
   const navigate = useNavigate();
   const { translate } = useLocales();
-  const theme = useTheme();
 
   const methods = useForm({
     resolver: yupResolver(storeSchemaBuilder(translate)),
@@ -66,9 +63,6 @@ const NewActionPage = () => {
         </Stack>
         <DashboardNavLayout onOpenSidebar={() => setNavOpen(true)}>
           <Stack direction="row" spacing={2} justifyContent="flex-end">
-            {/* <Button onClick={() => navigate(-1)} variant="outlined">
-              {translate('common.cancel')}
-            </Button> */}
             <LoadingAsyncButton onClick={handleSubmit(onSubmit)} type="submit" variant="contained">
               + New Action
             </LoadingAsyncButton>
@@ -76,11 +70,6 @@ const NewActionPage = () => {
         </DashboardNavLayout>
         <Stack spacing={2}>
           <Card>
-            {/* <CardTitle pb={2} variant="subtitle1">
-              {isMenuCollection
-                ? translate('collections.createInfo')
-                : translate('collections.groupCollection')}
-            </CardTitle> */}
             <Box>
               <Grid container spacing={1}>
                 <Grid item xs={6} sm={8} style={{ height: '100px' }}>
@@ -109,7 +98,6 @@ const NewActionPage = () => {
                         m: '20px 0'
                       }}
                     >
-                      {/* "Cart item" */}
                       <TreeItem
                         nodeId="1"
                         label={
@@ -282,10 +270,6 @@ const NewActionPage = () => {
             </Box>
           </Card>
         </Stack>
-        {/* <Card>
-          <CardTitle>{translate('pages.stores.storeInfoTitle')}</CardTitle>
-          <StoreForm />
-        </Card> */}
       </Page>
     </FormProvider>
   );

@@ -124,7 +124,6 @@ const ConditionPage = ({ isExtra = false }: { isExtra?: boolean }) => {
           startIcon={<Icon icon={plusFill} />}
         >
           New Condition
-          {/* {translate('categories.addBtn')} */}
         </Button>
       ]}
     >

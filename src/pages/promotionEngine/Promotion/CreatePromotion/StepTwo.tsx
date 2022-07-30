@@ -4,7 +4,7 @@ import CheckBoxGroupField from 'components/form/CheckBoxGroupField';
 // import CheckGroupBoxField from 'components/form/CheckGroupBoxField';
 import useLocales from 'hooks/useLocales';
 // import { Controller } from 'react-hook-form';
-import { Card } from '../components/Card';
+import { Card } from 'pages/promotionEngine/Promotion/components/Card';
 import {
   applyByList,
   exclusiveList,
@@ -13,8 +13,8 @@ import {
   paymentMethodList,
   saleModeList,
   targetCustomerList
-} from '../components/config';
-import FormBox from '../components/FormBox';
+} from 'pages/promotionEngine/Promotion/components/config';
+import FormBox from 'pages/promotionEngine/Promotion/components/FormBox';
 
 export default function StepTwo({ watch }: any) {
   const { translate } = useLocales();

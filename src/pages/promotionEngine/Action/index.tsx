@@ -7,8 +7,6 @@ import actionApi from 'api/promotion/action';
 import { GIFT_TYPE_DATA } from 'api/promotion/promotion';
 import storeApi from 'api/store';
 import DeleteConfirmDialog from 'components/DelectConfirmDialog';
-// import { SelectField } from 'components/form';
-// import Label from 'components/Label';
 import Page from 'components/Page';
 import ResoTable from 'components/ResoTable/ResoTable';
 import useLocales from 'hooks/useLocales';
