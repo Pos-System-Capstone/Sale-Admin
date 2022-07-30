@@ -110,6 +110,11 @@ const sidebarConfig = [
         title: 'store',
         path: PATH_DASHBOARD.stores.root,
         icon: ICONS.store
+      },
+      {
+        title: 'log',
+        path: PATH_DASHBOARD.log.root,
+        icon: ICONS.tag
       }
     ]
   }
