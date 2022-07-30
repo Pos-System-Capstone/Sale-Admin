@@ -7,7 +7,7 @@ import {
   SelectField,
   SwitchField
 } from 'components/form';
-import CheckGroupBoxField from 'components/form/CheckBoxGroupField';
+import CheckBoxGroupField from 'components/form/CheckBoxGroupField';
 import DateTimePickerField from 'components/form/DateTimePickerField';
 import useLocales from 'hooks/useLocales';
 import { useState } from 'react';
@@ -173,7 +173,7 @@ export default function StepOne({ watch }: any) {
               </Grid>
             )} */}
             {timeFrameChecked && (
-              <CheckGroupBoxField name={'timeFrameList'} options={timeFrameList} />
+              <CheckBoxGroupField name={'timeFrameList'} options={timeFrameList} />
             )}
           </Box>
 
@@ -192,7 +192,7 @@ export default function StepOne({ watch }: any) {
               </Grid>
             )} */}
             {particularDay && (
-              <CheckGroupBoxField name={'particularDays'} options={particularDays} />
+              <CheckBoxGroupField name={'particularDays'} options={particularDays} />
             )}
           </Box>
         </Stack>

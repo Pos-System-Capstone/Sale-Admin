@@ -3,7 +3,7 @@ import plusFill from '@iconify/icons-eva/plus-fill';
 import { Icon } from '@iconify/react';
 // material
 import { Button, Card, Stack } from '@mui/material';
-import actionApi from 'api/promotion/actions';
+import actionApi from 'api/promotion/action';
 import { GIFT_TYPE_DATA } from 'api/promotion/promotion';
 import storeApi from 'api/store';
 import DeleteConfirmDialog from 'components/DelectConfirmDialog';

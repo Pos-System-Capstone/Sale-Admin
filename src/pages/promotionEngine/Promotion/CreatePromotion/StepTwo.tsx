@@ -1,6 +1,6 @@
 import { MenuItem, Stack, Typography } from '@mui/material';
 import { RadioGroupField, SelectField } from 'components/form';
-import CheckGroupBoxField from 'components/form/CheckBoxGroupField';
+import CheckBoxGroupField from 'components/form/CheckBoxGroupField';
 // import CheckGroupBoxField from 'components/form/CheckGroupBoxField';
 import useLocales from 'hooks/useLocales';
 // import { Controller } from 'react-hook-form';
@@ -40,7 +40,7 @@ export default function StepTwo({ watch }: any) {
             title={`${translate('promotionSystem.promotion.settings.paymentMethod')}`}
             subtitle={`${translate('promotionSystem.promotion.settings.helperPaymentMethod')}`}
           >
-            <CheckGroupBoxField name={'paymentMethod'} options={paymentMethod} />
+            <CheckBoxGroupField name={'paymentMethod'} options={paymentMethod} />
           </FormBox>
         </Stack>
       </Card>
@@ -59,7 +59,7 @@ export default function StepTwo({ watch }: any) {
             sizeGrid={4}
             minHeight="44px"
           >
-            <CheckGroupBoxField name={'targetCustomer'} options={targetCustomer} />
+            <CheckBoxGroupField name={'targetCustomer'} options={targetCustomer} />
           </FormBox>
           <FormBox
             title={`${translate('promotionSystem.promotion.settings.memberShipLevel')}`}
@@ -87,7 +87,7 @@ export default function StepTwo({ watch }: any) {
             sizeGrid={4}
             minHeight="44px"
           >
-            <CheckGroupBoxField name={'gender'} options={gender} />
+            <CheckBoxGroupField name={'gender'} options={gender} />
           </FormBox>
         </Stack>
       </Card>
@@ -99,7 +99,7 @@ export default function StepTwo({ watch }: any) {
             sizeGrid={4}
             minHeight="44px"
           >
-            <CheckGroupBoxField name={'saleMode'} options={saleMode} />
+            <CheckBoxGroupField name={'saleMode'} options={saleMode} />
           </FormBox>
           <FormBox
             title={`${translate('promotionSystem.promotion.settings.applyBy')}`}
@@ -107,7 +107,7 @@ export default function StepTwo({ watch }: any) {
             sizeGrid={4}
             minHeight="44px"
           >
-            <CheckGroupBoxField name={'applyBy'} options={applyBy} />
+            <CheckBoxGroupField name={'applyBy'} options={applyBy} />
           </FormBox>
           <FormBox
             title={`${translate('promotionSystem.promotion.settings.exclusive')}`}
@@ -131,7 +131,7 @@ export default function StepTwo({ watch }: any) {
             title={`${translate('promotionSystem.promotion.settings.storeConfig')}`}
             subtitle={`${translate('promotionSystem.promotion.settings.helperStoreConfig')}`}
           >
-            <CheckGroupBoxField
+            <CheckBoxGroupField
               name={'storeConfig'}
               options={[
                 { label: 'Store 1', value: 'Store 1' },

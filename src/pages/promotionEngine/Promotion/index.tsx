@@ -5,8 +5,7 @@ import promotionApi, {
   DISCOUNT_TYPE_DATA,
   GIFT_TYPE_DATA,
   PROMOTION_TYPE_DATA,
-  STATUS_TYPE_DATA,
-  TPromotionBase
+  STATUS_TYPE_DATA
 } from 'api/promotion/promotion';
 import Label from 'components/Label';
 import Page from 'components/Page';
@@ -17,8 +16,8 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { RootState } from 'redux/store';
 import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
+import { TPromotionBase } from 'types/promotion/promotion';
 import { TTableColumn } from 'types/table';
-// import { CollectionTypeEnum } from 'types/collection';
 
 interface Props {}
 

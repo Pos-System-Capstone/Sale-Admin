@@ -3,7 +3,7 @@
 import { Checkbox, FormControlLabel } from '@mui/material';
 import { Controller, useFormContext } from 'react-hook-form';
 
-const CheckGroupBoxField = ({
+const CheckBoxGroupField = ({
   name,
   options = [],
   rules = null,
@@ -55,4 +55,4 @@ const CheckGroupBoxField = ({
   );
 };
 
-export default CheckGroupBoxField;
+export default CheckBoxGroupField;
