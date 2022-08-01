@@ -4,6 +4,7 @@ import { DateRangePicker } from '@mui/lab';
 // material
 import { Button, Card, Stack, TextField } from '@mui/material';
 import { Box } from '@mui/system';
+import logApi from 'api/log';
 // import AutoCompleteStoreSelect from 'components/form/common/AutocompleteStoreSelect/AutocompleteStoreSelect';
 import Page from 'components/Page';
 import ResoTable from 'components/ResoTable/ResoTable';
@@ -130,7 +131,7 @@ const LogSale = () => {
           <ResoTable
             showAction={false}
             rowKey="menu_id"
-            datasource={data}
+            getData={() => logApi.getLog()}
             // getData={data}
             columns={orderColumns}
           />

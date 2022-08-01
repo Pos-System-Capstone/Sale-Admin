@@ -5,7 +5,8 @@ export enum AxiosClientFactoryEnum {
   REPORT = 'report',
   SALE = 'sale',
   PROMOTION = 'promotion',
-  LOGIN = 'login'
+  LOGIN = 'login',
+  LOG = 'log'
 }
 
 // ----------------------------------------------------------------------
@@ -36,6 +37,29 @@ const report = `${process.env.REACT_APP_REPORT_BASE_URL}`;
 const account = `${process.env.REACT_APP_LOGIN_BASE_URL}`;
 const sale = `${process.env.REACT_APP_BASE_URL}`;
 const promotion = `${process.env.REACT_APP_PROMOTION_BASE_URL}`;
+
+const requestLog = axios.create({
+  baseURL: 'https://localhost:52495/api/v1',
+  paramsSerializer: parseParams
+});
+
+requestLog.interceptors.request.use((options) => {
+  const { method } = options;
+
+  if (method === 'put' || method === 'post') {
+    Object.assign(options.headers, {
+      'Content-Type': 'application/json;charset=UTF-8'
+    });
+  }
+
+  return options;
+});
+
+requestLog.interceptors.response.use(
+  (response) => response,
+  (error) => Promise.reject((error.response && error.response.data) || 'Có lỗi xảy ra')
+);
+
 const request = axios.create({
   baseURL: sale,
   paramsSerializer: parseParams
@@ -97,6 +121,11 @@ requestPromotion.interceptors.request.use((options) => {
   return options;
 });
 
+requestPromotion.interceptors.response.use(
+  (response) => response,
+  (error) => Promise.reject((error.response && error.response.data) || 'Có lỗi xảy ra')
+);
+
 const requestLogin = axios.create({
   baseURL: account,
   paramsSerializer: parseParams
@@ -113,11 +142,6 @@ requestLogin.interceptors.request.use((options) => {
 
   return options;
 });
-
-requestPromotion.interceptors.response.use(
-  (response) => response,
-  (error) => Promise.reject((error.response && error.response.data) || 'Có lỗi xảy ra')
-);
 
 // ----------------------------------------------------------------------
 class AxiosClientFactory {
@@ -148,6 +172,8 @@ class AxiosClientFactory {
         return requestPromotion;
       case 'login':
         return requestLogin;
+      case 'log':
+        return requestLog;
       default:
         return request;
     }
@@ -162,6 +188,7 @@ const axiosInstances = {
   login: axiosClientFactory.getAxiosClient(AxiosClientFactoryEnum.LOGIN),
   report: axiosClientFactory.getAxiosClient(AxiosClientFactoryEnum.REPORT),
   sale: axiosClientFactory.getAxiosClient(AxiosClientFactoryEnum.SALE),
+  log: axiosClientFactory.getAxiosClient(AxiosClientFactoryEnum.LOG),
   promotion: axiosClientFactory.getAxiosClient(AxiosClientFactoryEnum.PROMOTION)
 };
 
