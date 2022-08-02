@@ -4,6 +4,7 @@ import { DateRangePicker } from '@mui/lab';
 // material
 import { Button, Card, IconButton, Stack, TextField, Tooltip, Typography } from '@mui/material';
 import { Box } from '@mui/system';
+import logApi from 'api/log';
 // import logApi from 'api/log';
 // import AutoCompleteStoreSelect from 'components/form/common/AutocompleteStoreSelect/AutocompleteStoreSelect';
 import Page from 'components/Page';
@@ -12,6 +13,7 @@ import useLocales from 'hooks/useLocales';
 import { useRef, useState } from 'react';
 // components
 import { useNavigate } from 'react-router-dom';
+import { TLog } from 'types/log';
 import { TTableColumn } from 'types/table';
 import LogDetailDialog from './components/LogDetailDialog';
 
@@ -19,33 +21,9 @@ const LogSale = () => {
   const navigate = useNavigate();
   const { translate } = useLocales();
 
-  const [detailLog, setDetailLog] = useState<number | null>(null);
+  const [detailLog, setDetailLog] = useState<string | null>(null);
 
-  const data = [
-    {
-      id: 1233100,
-      content:
-        'ThirdPartyAPI\n{"status":1014,"message":{"description":"Mật khẩu bạn nhập không chính xác.","transid":25744741961,"amount":22500,"phoneNumber":"0908***734","walletId":"DE66C77717A399776AE87D2C6E5A8E1728F4C207"}}',
-      store_id: 13,
-      created_date: '2022-07-01T06:07:06.913'
-    },
-    {
-      id: 1233101,
-      content:
-        'Skyconnect_POS_API \n{\r\n  "status_code": 16,\r\n  "message": "{\\"status\\":1014,\\"message\\":{\\"description\\":\\"Mật khẩu bạn nhập không chính xác.\\",\\"transid\\":25744741961,\\"amount\\":22500,\\"phoneNumber\\":\\"0908***734\\",\\"walletId\\":\\"DE66C77717A399776AE87D2C6E5A8E1728F4C207\\"}}",\r\n  "success": false\r\n}',
-      store_id: 13,
-      created_date: '2022-07-01T06:07:08.03'
-    }
-  ];
-
-  type LogSaleDetail = {
-    id: any;
-    content: any;
-    store_id: any;
-    created_date: any;
-  };
-
-  const orderColumns: TTableColumn<LogSaleDetail>[] = [
+  const orderColumns: TTableColumn<TLog>[] = [
     {
       title: 'STT',
       dataIndex: 'index',
@@ -89,7 +67,7 @@ const LogSale = () => {
       title: 'Detail',
       fixed: 'right',
       hideInSearch: true,
-      render: (_: any, content: LogSaleDetail) => (
+      render: (_: any, content: TLog) => (
         <Tooltip title="Chi tiết">
           <IconButton onClick={() => setDetailLog(content.content)} size="large">
             <Visibility />
@@ -150,8 +128,7 @@ const LogSale = () => {
             sx={{ textOverflow: 'ellipsis' }}
             showAction={false}
             rowKey="menu_id"
-            // getData={() => logApi.getLog()}
-            dataSource={data}
+            getData={logApi.getLog}
             columns={orderColumns}
           />
         </Stack>

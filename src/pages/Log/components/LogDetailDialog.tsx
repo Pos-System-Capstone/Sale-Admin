@@ -20,6 +20,7 @@ import ResoTable from 'components/ResoTable/ResoTable';
 import useLocales from 'hooks/useLocales';
 import React from 'react';
 import { useQuery } from 'react-query';
+import { TLog } from 'types/log';
 import { TTableColumn } from 'types/table';
 
 type Props = {
@@ -53,49 +54,6 @@ const LogDetailDialog: React.FC<Props> = ({ open, onClose, content }) => {
     }
   );
 
-  // const LogData = {
-  //   metadata: {
-  //     page: 1,
-  //     size: 50,
-  //     total: 52549
-  //   },
-  //   data: [
-  //     {
-  //       id: 1233100,
-  //       content: {
-  //         name: 'ThirdPartyAPI',
-  //         status: 1014,
-  //         message: {
-  //           description: 'Mật khẩu bạn nhập không chính xác.',
-  //           transid: 25744741961,
-  //           amount: 22500,
-  //           phoneNumber: '0908***734',
-  //           walletId: 'DE66C77717A399776AE87D2C6E5A8E1728F4C207'
-  //         }
-  //       },
-  //       store_id: 13,
-  //       created_date: '2022-07-01T06:07:06.913'
-  //     },
-  //     {
-  //       id: 1233101,
-  //       content: {
-  //         name: 'Skyconnect_POS_API',
-  //         status_code: 16,
-  //         status: 1014,
-  //         message: {
-  //           description: 'Mật khẩu bạn nhập không chính xác.',
-  //           transid: 25744741961,
-  //           amount: 22500,
-  //           phoneNumber: '0908***734',
-  //           walletId: 'DE66C77717A399776AE87D2C6E5A8E1728F4C207'
-  //         }
-  //       },
-  //       store_id: 13,
-  //       created_date: '2022-07-01T06:07:08.03'
-  //     }
-  //   ]
-  // };
-
   const LogTest = {
     id: 1233100,
     content: 'ThirdPartyAPI',
@@ -110,7 +68,7 @@ const LogDetailDialog: React.FC<Props> = ({ open, onClose, content }) => {
     created_date: string;
   };
 
-  const orderColumns: ResoDescriptionColumnType<LogSaleDetail>[] = [
+  const orderColumns: ResoDescriptionColumnType<TLog>[] = [
     {
       title: 'ID',
       dataIndex: 'id'

@@ -39,7 +39,7 @@ const sale = `${process.env.REACT_APP_BASE_URL}`;
 const promotion = `${process.env.REACT_APP_PROMOTION_BASE_URL}`;
 
 const requestLog = axios.create({
-  baseURL: 'https://localhost:52495/api/v1',
+  baseURL: 'https://log.reso.vn/api/v1',
   paramsSerializer: parseParams
 });
 
