@@ -54,12 +54,11 @@ const LogSale = () => {
     {
       title: 'Content',
       dataIndex: 'content',
-      width: '50',
       hideInSearch: true,
       render: (value: any) => {
         return (
           <Typography
-            width={'500px'}
+            width={'180px'}
             variant={'body1'}
             sx={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
           >
@@ -69,7 +68,7 @@ const LogSale = () => {
       }
     },
     {
-      title: 'Content',
+      title: 'Detail',
       fixed: 'right',
       hideInSearch: true,
       render: (_: any, content: LogSaleDetail) => (
