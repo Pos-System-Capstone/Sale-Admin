@@ -116,12 +116,12 @@ const LogDetailDialog: React.FC<Props> = ({ open, onClose, content }) => {
       dataIndex: 'id'
     },
     {
-      title: 'Content',
-      dataIndex: 'content'
-    },
-    {
       title: 'StoredId',
       dataIndex: 'store_id'
+    },
+    {
+      title: 'Content',
+      dataIndex: 'content'
     },
     {
       title: 'CreatedDate',

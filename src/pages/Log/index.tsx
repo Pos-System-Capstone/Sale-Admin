@@ -68,18 +68,6 @@ const LogSale = () => {
       }
     },
     {
-      title: 'Detail',
-      fixed: 'right',
-      hideInSearch: true,
-      render: (_: any, content: LogSaleDetail) => (
-        <Tooltip title="Chi tiết">
-          <IconButton onClick={() => setDetailLog(content.content)} size="large">
-            <Visibility />
-          </IconButton>
-        </Tooltip>
-      )
-    },
-    {
       title: 'Cửa hàng',
       dataIndex: 'store_id',
       valueType: 'select',
@@ -96,6 +84,18 @@ const LogSale = () => {
       title: 'CreatedDate',
       dataIndex: 'created_date',
       hideInSearch: true
+    },
+    {
+      title: 'Detail',
+      fixed: 'right',
+      hideInSearch: true,
+      render: (_: any, content: LogSaleDetail) => (
+        <Tooltip title="Chi tiết">
+          <IconButton onClick={() => setDetailLog(content.content)} size="large">
+            <Visibility />
+          </IconButton>
+        </Tooltip>
+      )
     }
   ];
 
