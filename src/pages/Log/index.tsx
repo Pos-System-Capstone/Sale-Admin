@@ -2,7 +2,7 @@
 import { FileDownload, Visibility } from '@mui/icons-material';
 import { DateRangePicker } from '@mui/lab';
 // material
-import { Button, Card, IconButton, Stack, TextField, Tooltip } from '@mui/material';
+import { Button, Card, IconButton, Stack, TextField, Tooltip, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 // import logApi from 'api/log';
 // import AutoCompleteStoreSelect from 'components/form/common/AutocompleteStoreSelect/AutocompleteStoreSelect';
@@ -54,7 +54,19 @@ const LogSale = () => {
     {
       title: 'Content',
       dataIndex: 'content',
-      hideInSearch: true
+      width: '50',
+      hideInSearch: true,
+      render: (value: any) => {
+        return (
+          <Typography
+            width={'500px'}
+            variant={'body1'}
+            sx={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
+          >
+            {value}
+          </Typography>
+        );
+      }
     },
     {
       title: 'Content',
