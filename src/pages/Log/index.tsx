@@ -1,10 +1,10 @@
 /* eslint-disable camelcase */
-import { FileDownload } from '@mui/icons-material';
+import { FileDownload, Visibility } from '@mui/icons-material';
 import { DateRangePicker } from '@mui/lab';
 // material
-import { Button, Card, Stack, TextField } from '@mui/material';
+import { Button, Card, IconButton, Stack, TextField, Tooltip } from '@mui/material';
 import { Box } from '@mui/system';
-import logApi from 'api/log';
+// import logApi from 'api/log';
 // import AutoCompleteStoreSelect from 'components/form/common/AutocompleteStoreSelect/AutocompleteStoreSelect';
 import Page from 'components/Page';
 import ResoTable from 'components/ResoTable/ResoTable';
@@ -13,39 +13,36 @@ import { useRef, useState } from 'react';
 // components
 import { useNavigate } from 'react-router-dom';
 import { TTableColumn } from 'types/table';
+import LogDetailDialog from './components/LogDetailDialog';
 
 const LogSale = () => {
   const navigate = useNavigate();
   const { translate } = useLocales();
 
-  const [detailOrder, setDetailOrder] = useState<number | null>(null);
+  const [detailLog, setDetailLog] = useState<number | null>(null);
 
   const data = [
     {
-      id: 0,
-      content: 'string',
-      store_id: 0,
-      created_date: '2022-07-28T04:06:21.225Z'
+      id: 1233100,
+      content:
+        'ThirdPartyAPI\n{"status":1014,"message":{"description":"Mật khẩu bạn nhập không chính xác.","transid":25744741961,"amount":22500,"phoneNumber":"0908***734","walletId":"DE66C77717A399776AE87D2C6E5A8E1728F4C207"}}',
+      store_id: 13,
+      created_date: '2022-07-01T06:07:06.913'
     },
     {
-      id: 1,
-      content: 'Wisky',
-      store_id: 1,
-      created_date: '2022-07-28T04:06:21.225Z'
-    },
-    {
-      id: 2,
-      content: 'Beanoi',
-      store_id: 2,
-      created_date: '2022-07-28T04:06:21.225Z'
+      id: 1233101,
+      content:
+        'Skyconnect_POS_API \n{\r\n  "status_code": 16,\r\n  "message": "{\\"status\\":1014,\\"message\\":{\\"description\\":\\"Mật khẩu bạn nhập không chính xác.\\",\\"transid\\":25744741961,\\"amount\\":22500,\\"phoneNumber\\":\\"0908***734\\",\\"walletId\\":\\"DE66C77717A399776AE87D2C6E5A8E1728F4C207\\"}}",\r\n  "success": false\r\n}',
+      store_id: 13,
+      created_date: '2022-07-01T06:07:08.03'
     }
   ];
 
   type LogSaleDetail = {
-    id: number;
-    content: string;
-    stored_id: number;
-    create_date: string;
+    id: any;
+    content: any;
+    store_id: any;
+    created_date: any;
   };
 
   const orderColumns: TTableColumn<LogSaleDetail>[] = [
@@ -60,21 +57,33 @@ const LogSale = () => {
       hideInSearch: true
     },
     {
+      title: 'Content',
+      fixed: 'right',
+      hideInSearch: true,
+      render: (_: any, content: LogSaleDetail) => (
+        <Tooltip title="Chi tiết">
+          <IconButton onClick={() => setDetailLog(content.content)} size="large">
+            <Visibility />
+          </IconButton>
+        </Tooltip>
+      )
+    },
+    {
       title: 'Cửa hàng',
-      dataIndex: 'stored_id',
+      dataIndex: 'store_id',
       valueType: 'select',
       hideInTable: true
     },
     {
       title: 'StoreId',
-      dataIndex: 'stored_id',
+      dataIndex: 'store_id',
       hideInSearch: true
       //   valueType: 'select'
       //   renderFormItem: () => <AutoCompleteStoreSelect name="store-id" label="Cửa hàng" />
     },
     {
       title: 'CreatedDate',
-      dataIndex: 'create_date',
+      dataIndex: 'created_date',
       hideInSearch: true
     }
   ];
@@ -84,13 +93,6 @@ const LogSale = () => {
   const yesterday = day.setDate(day.getDate() - 1);
   const [fromDate, setFromDate] = useState<Date>(new Date(yesterday));
   const [toDate, setToDate] = useState<Date>(new Date());
-
-  //   useEffect(() => {
-  //     if (tableRef.current) {
-  //       tableRef.current.formControl.setValue('FromDate', formatDate(fromDate!));
-  //       tableRef.current.formControl.setValue('ToDate', formatDate(toDate!));
-  //     }
-  //   }, [fromDate, toDate]);
 
   return (
     <Page
@@ -126,13 +128,19 @@ const LogSale = () => {
         </>
       ]}
     >
+      <LogDetailDialog
+        content={detailLog}
+        open={Boolean(detailLog)}
+        onClose={() => setDetailLog(null)}
+      />
       <Card>
         <Stack spacing={2}>
           <ResoTable
+            sx={{ textOverflow: 'ellipsis' }}
             showAction={false}
             rowKey="menu_id"
-            getData={() => logApi.getLog()}
-            // getData={data}
+            // getData={() => logApi.getLog()}
+            dataSource={data}
             columns={orderColumns}
           />
         </Stack>
