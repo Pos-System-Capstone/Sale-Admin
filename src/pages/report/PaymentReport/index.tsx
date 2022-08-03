@@ -29,6 +29,7 @@ const CollectionListPage = () => {
       title="Báo cáo theo hình thức thanh toán"
       actions={[
         <DateRangePicker
+          inputFormat="dd/MM/yyyy"
           disableFuture
           value={dateRange}
           renderInput={(startProps, endProps) => (

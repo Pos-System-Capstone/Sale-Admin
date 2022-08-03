@@ -1,31 +1,26 @@
-import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Button, Stack, Step, StepLabel, Stepper } from '@mui/material';
 import promotionApi from 'api/promotion/promotion';
 import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
 import Page from 'components/Page';
-import useProduct from 'hooks/products/useProduct';
 import useLocales from 'hooks/useLocales';
 import { DashboardNavLayout } from 'layouts/dashboard/DashboardNavbar';
 import { useSnackbar } from 'notistack';
-import { validationSchema } from 'pages/Products/type';
-import { normalizeProductCombo } from 'pages/Products/utils';
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
-import { CreateComboForm } from 'types/product';
+import * as Yup from 'yup';
 import StepOne from './StepOne';
 import StepThree from './StepThree';
 import StepTwo from './StepTwo';
 
 interface Props {}
-// const STEPS = ['Select promotion type', 'Setting', 'Save & Finish'];
 const CreatePromotion = (props: Props) => {
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
   const { translate } = useLocales();
-  const [searchParams] = useSearchParams();
-  const cloneProductId: any = searchParams.get('cloneProductId');
+  // const [searchParams] = useSearchParams();
+  // const clonePromoId: any = searchParams.get('clonePromoId');
 
   const STEPS = [
     `${translate('promotionSystem.promotion.selectPromotionType')}`,
@@ -34,74 +29,140 @@ const CreatePromotion = (props: Props) => {
   ];
   const [activeStep, setActiveStep] = useState(0);
 
-  const createComboForm = useForm({
-    resolver: activeStep === 0 ? yupResolver(validationSchema) : undefined
+  const validationSchema = Yup.object().shape({
+    promotionCode: Yup.string().when('promotionType', {
+      is: (promotionType: any) => promotionType !== 'automatic',
+      then: Yup.string().required('Please input Promotion Code')
+    }),
+    promotionName: Yup.string().required('Please input Promotion Name'),
+    startDate: Yup.date()
+      .default(() => new Date())
+      .required('Please choose Start date!'),
+    endDate: Yup.date()
+      .nullable()
+      .transform((curr, orig) => (orig === '' ? null : curr))
+      .when('unlimited', {
+        is: false,
+        then: Yup.date()
+          .default(() => new Date())
+          .required('Please choose End date')
+      }),
+    discountAction: Yup.string().when('promotion-action', {
+      is: 'discount',
+      then: Yup.string().required('Please choose Discount action type')
+    }),
+    giftAction: Yup.string().when('promotion-action', {
+      is: 'gift',
+      then: Yup.string().required('Please choose Gift action type')
+    }),
+    timeFrameList: Yup.string().when('timeFrameChecked', {
+      is: (timeFrameChecked: any) => timeFrameChecked === true,
+      then: Yup.string().required('Please choose at least one time frame')
+    })
   });
 
-  const { data, isLoading } = useProduct(Number(cloneProductId), {
-    select: (res) => normalizeProductCombo(res as any),
-    onSuccess: (res) => {
-      console.log(`res`, res);
-      createComboForm.reset(res as CreateComboForm);
-    },
-    enabled: Boolean(cloneProductId),
-    staleTime: Infinity
+  const validationSchema2 = Yup.object().shape({
+    paymentMethodList: Yup.object({
+      cash: Yup.boolean(),
+      creditCard: Yup.boolean(),
+      bankTransfer: Yup.boolean(),
+      eWallet: Yup.boolean(),
+      mobileBanking: Yup.boolean(),
+      cod: Yup.boolean()
+    }).test('paymentMethod', { null: true }, (obj) => {
+      if (
+        obj.cash ||
+        obj.creditCard ||
+        obj.bankTransfer ||
+        obj.eWallet ||
+        obj.mobileBanking ||
+        obj.cod
+      ) {
+        return true;
+      }
+      return new Yup.ValidationError('Please choose at least one payment', null, 'CheckBoxField');
+    })
   });
 
-  const onSubmit = (values: any) => {
-    // return createMasterProd(transformComboForm(values, CombinationModeEnum.ChoiceCombo))
-    //   .then((res) => {
-    //     enqueueSnackbar(`Tạo thành công ${values.product_name}`, {
-    //       variant: 'success'
-    //     });
-    //     navigate(`${PATH_DASHBOARD.combos.editById(res.data)}`);
-    //   })
-    //   .catch((err) => {
-    //     enqueueSnackbar(`Có lỗi xảy ra. Vui lòng thử lại`, {
-    //       variant: 'error'
-    //     });
-    //   });
-    console.log('values', values);
-    const data = {
-      promotionCode: values.promotionCode,
-      promotionName: values.promotionName,
-      brandId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-      isAuto: values.automatic,
-      exclusive: values.exclusive
-    };
-    const testPayload = {
+  const initialValues = {
+    promotionType: '',
+    promotionCode: '',
+    promotionName: '',
+    startDate: () => new Date(),
+    endDate: Date,
+    timeFrame: '',
+    paymentMethodList: ''
+  };
+  const createPromotionForm = useForm({
+    // resolver: activeStep === 0 ? yupResolver(validationSchema) : yupResolver(validationSchema2)
+  });
+
+  // const { data, isLoading } = usePromotion(Number(clonePromoId), {
+  //   select: (res) => normalizeProductCombo(res as any),
+  //   onSuccess: (res) => {
+  //     console.log(`res`, res);
+  //     createPromotionForm.reset(res as TPromotionBase);
+  //   },
+  //   enabled: Boolean(clonePromoId),
+  //   staleTime: Infinity
+  // });
+
+  const testPayLoad = [
+    {
       delFlg: true,
-      insDate: '2022-06-28T09:07:18.224Z',
-      updDate: '2022-06-29T09:07:18.224Z',
-      promotionId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-      brandId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-      promotionCode: 'Test code',
-      promotionName: 'Test name',
-      actionType: 1,
-      postActionType: 1,
-      imgUrl: '',
-      description: '',
-      startDate: '2022-06-28T09:07:18.224Z',
-      endDate: '2022-06-29T09:07:18.224Z',
-      exclusive: 1,
-      applyBy: 1,
-      saleMode: 1,
-      gender: 2,
-      paymentMethod: 1,
-      forHoliday: 1,
-      forMembership: 1,
-      dayFilter: 1,
-      hourFilter: 1,
-      status: 1,
+      insDate: '2022-07-29T09:19:29.543Z',
+      updDate: '2022-07-29T09:19:29.543Z',
+      promotionId: '2062d776-ca5c-4429-9652-e3a662bc8dfa',
+      brandId: '2062d776-ca5c-4429-9652-e3a662bc8dfa',
+      promotionCode: 'test',
+      promotionName: 'test',
+      actionType: 0,
+      postActionType: 0,
+      imgUrl: 'string',
+      description: 'string',
+      startDate: '2022-07-29T09:19:29.543Z',
+      endDate: '2022-07-29T09:19:29.543Z',
+      exclusive: 0,
+      applyBy: 0,
+      saleMode: 0,
+      gender: 0,
+      paymentMethod: 0,
+      forHoliday: 0,
+      forMembership: 0,
+      dayFilter: 0,
+      hourFilter: 0,
+      status: 0,
       hasVoucher: true,
       isAuto: true,
-      voucherGroupId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-      voucherQuantity: 10,
-      conditionRuleId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-      promotionType: 1
-    };
+      voucherGroupId: '2062d776-ca5c-4429-9652-e3a662bc8dfa',
+      voucherQuantity: 0,
+      conditionRuleId: '2062d776-ca5c-4429-9652-e3a662bc8dfa',
+      promotionType: 0,
+      promotionStoreMapping: [
+        {
+          delFlg: true,
+          insDate: '2022-07-29T09:19:29.543Z',
+          updDate: '2022-07-29T09:19:29.543Z',
+          id: '2062d776-ca5c-4429-9652-e3a662bc8dfa',
+          storeId: '2062d776-ca5c-4429-9652-e3a662bc8dfa',
+          promotionId: '2062d776-ca5c-4429-9652-e3a662bc8dfa'
+        }
+      ],
+      memberLevelMapping: [
+        {
+          id: '2062d776-ca5c-4429-9652-e3a662bc8dfa',
+          memberLevelId: '2062d776-ca5c-4429-9652-e3a662bc8dfa',
+          promotionId: '2062d776-ca5c-4429-9652-e3a662bc8dfa',
+          insDate: '2022-07-29T09:19:29.543Z',
+          updDate: '2022-07-29T09:19:29.543Z'
+        }
+      ]
+    }
+  ];
+
+  const onSubmit = (values: any) => {
     promotionApi
-      .createPromotion(testPayload)
+      .createPromotion(testPayLoad)
       .then((res) => {
         enqueueSnackbar(`Tạo thành công ${values.promotionName}`, {
           variant: 'success'
@@ -114,10 +175,12 @@ const CreatePromotion = (props: Props) => {
         });
       });
   };
-  const { handleSubmit, watch } = createComboForm;
+
+  const { handleSubmit, watch, formState } = createPromotionForm;
+
   // targetCustomer[1] = member
   return (
-    <FormProvider {...createComboForm}>
+    <FormProvider {...createPromotionForm}>
       <DashboardNavLayout>
         <Stack direction="row" spacing={2}>
           {activeStep !== 0 && (
@@ -129,7 +192,10 @@ const CreatePromotion = (props: Props) => {
             <Button
               variant="contained"
               onClick={async () => {
-                setActiveStep((prev) => prev + 1);
+                // const valid = await createPromotionForm.trigger();
+                // console.log(`valid`, valid);
+                const valid = true;
+                if (valid) setActiveStep((prev) => prev + 1);
               }}
             >
               {translate('promotionSystem.promotion.next')}

@@ -1,28 +1,33 @@
 /* eslint-disable camelcase */
 // material
-import { Card, Stack } from '@mui/material';
+import { Card, Stack, TextField } from '@mui/material';
 import ResoTable from 'components/ResoTable/ResoTable';
 import useLocales from 'hooks/useLocales';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 // components
-import { SelectField } from 'components/form';
-import Label from 'components/Label';
-import { TTableColumn } from 'types/table';
+import { DateRangePicker } from '@mui/lab';
+import { Box } from '@mui/system';
 import promotionApi from 'api/report/promotion';
+import { SelectField } from 'components/form';
 import AutocompleteStore from 'components/form/common/report/AutocompleteStore';
+import Label from 'components/Label';
+import { useParams } from 'react-router';
 import { PromotionBase } from 'types/report/promotion';
+import { TTableColumn } from 'types/table';
+import { formatDate } from 'utils/formatTime';
 import ReportBtn from '../components/ReportBtn';
-import ReportDatePicker from '../components/ReportDatePicker';
 import ReportPage from '../components/ReportPage';
 const PromotionReport = () => {
   const { translate } = useLocales();
   const tableRef = useRef<any>();
+  const { storeId } = useParams();
 
   const columns: TTableColumn<PromotionBase>[] = [
     {
       title: 'Tên khách hàng',
       dataIndex: 'storeId',
       hideInTable: true,
+      hideInSearch: storeId === '0' ? false : true,
       valueType: 'select',
       renderFormItem: () => <AutocompleteStore name="storeId" label="Cửa hàng" />
     },
@@ -95,22 +100,52 @@ const PromotionReport = () => {
           label={translate('pages.stores.table.isAvailable')}
         />
       )
+    },
+    {
+      title: 'Phiên bản (Version)',
+      hideInSearch: true
+      // dataIndex: 'saleRevenue',
+    },
+    {
+      title: 'Ngày cập nhật (Updated at)',
+      hideInSearch: true
+      // dataIndex: 'saleRevenue',
     }
   ];
 
-  const current = new Date();
-  const [day, setDay] = useState<Date>(current);
+  const ref = useRef<any>();
+  const today = new Date();
+  const yesterday = new Date(new Date().valueOf() - 1000 * 60 * 60 * 24);
+  const [dateRange, setDateRange] = useState<any>([yesterday, today]);
+
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.formControl.setValue('FromDate', formatDate(dateRange[0]!));
+      ref.current.formControl.setValue('ToDate', formatDate(dateRange[1]!));
+    }
+  }, [dateRange]);
 
   return (
     <ReportPage
       title="Báo cáo theo khuyến mãi"
       actions={[
-        <ReportDatePicker
-          key="choose-day"
-          value={day}
-          onChange={(newValue) => {
-            setDay(newValue || new Date());
+        <DateRangePicker
+          inputFormat="dd/MM/yyyy"
+          disableFuture
+          value={dateRange}
+          renderInput={(startProps, endProps) => (
+            <>
+              <TextField {...startProps} label="Từ" />
+              <Box sx={{ mx: 2 }}> - </Box>
+              <TextField {...endProps} label="Đến" />
+            </>
+          )}
+          onChange={(e) => {
+            if (e[0] && e[1]) {
+              setDateRange(e);
+            }
           }}
+          key="date-range"
         />,
         <ReportBtn key="export-excel" onClick={() => console.log('Export excel')} />
       ]}
@@ -123,7 +158,7 @@ const PromotionReport = () => {
             ref={tableRef}
             getData={({ storeId, ...params }: any) => promotionApi.getPromotion(storeId, params)}
             defaultFilters={{
-              storeId: 0
+              storeId: storeId === '0' ? 13 : storeId
             }}
             columns={columns}
           />

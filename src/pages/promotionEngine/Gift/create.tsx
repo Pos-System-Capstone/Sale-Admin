@@ -1,45 +1,28 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Box, Card, Grid, Paper, Stack } from '@mui/material';
-import FormHelperText from '@mui/material/FormHelperText';
-// import { padding } from '@mui/system';
-import { InputField } from 'components/form';
-import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
-// import ModalProductForm from 'components/ModalProductForm/ModalProductForm';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import TreeItem from '@mui/lab/TreeItem';
 import TreeView from '@mui/lab/TreeView';
+import { Box, Card, Grid, Paper, Stack } from '@mui/material';
 import Alert from '@mui/material/Alert';
+import FormHelperText from '@mui/material/FormHelperText';
+import { InputField } from 'components/form';
+import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
 import Page from 'components/Page';
 import useDashboard from 'hooks/useDashboard';
 import useLocales from 'hooks/useLocales';
 import { TFunction } from 'i18next';
 import { DashboardNavLayout } from 'layouts/dashboard/DashboardNavbar';
-import { get, unionBy } from 'lodash';
+import { get } from 'lodash';
 import { useSnackbar } from 'notistack';
 import { CardTitle } from 'pages/Products/components/Card';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { useSearchParams } from 'react-router-dom';
 import { createCollection } from 'redux/collections/api';
-import { RootState } from 'redux/store';
 import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
 import { CollectionTypeEnum, TCollection } from 'types/collection';
 import * as yup from 'yup';
-
-// import AddProductTable from './AddProductTable';
-
-const marks = [
-  {
-    value: 0,
-    label: 'Đầu tiền'
-  },
-  {
-    value: 100,
-    label: 'Cuối cùng'
-  }
-];
 
 const NewGiftPage = () => {
   const { translate } = useLocales();
@@ -75,15 +58,8 @@ const NewGiftPage = () => {
   const { enqueueSnackbar } = useSnackbar();
 
   const navigate = useNavigate();
-  const { stores } = useSelector((state: RootState) => state.admin);
 
-  const {
-    handleSubmit,
-    formState: { isDirty },
-    watch,
-    setValue,
-    control
-  } = form;
+  const { handleSubmit, watch, setValue } = form;
 
   const products = watch('products');
   const setProducts = (products: any[]) => {
@@ -104,14 +80,6 @@ const NewGiftPage = () => {
           variant: 'error'
         });
       });
-
-  const handleAddProd = (ids: number[], selectedProds: any[]) => {
-    const allSelectedProds = unionBy(products, selectedProds, 'product_id');
-    const updateSelectedProds = allSelectedProds
-      .filter(({ product_id }: { product_id: number }) => ids.includes(product_id))
-      .map((p, idx) => ({ ...p, position: idx }));
-    setProducts([...updateSelectedProds]);
-  };
 
   return (
     <Page title="GIFT BUILDER">

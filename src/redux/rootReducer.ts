@@ -13,6 +13,7 @@ import global from './global';
 import admin from './admin';
 import system from './slices/system';
 import store from './slices/store';
+import brand from './slices/brand';
 // ----------------------------------------------------------------------
 
 const rootPersistConfig = {
@@ -46,7 +47,8 @@ const rootReducer = combineReducers({
   kanban: kanbanReducer,
   product: persistReducer(productPersistConfig, productReducer),
   system,
-  store
+  store,
+  brand
 });
 
 export { rootPersistConfig, rootReducer };

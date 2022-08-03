@@ -3,20 +3,119 @@
 import { DateRangePicker, TabContext, TabList, TabPanel } from '@mui/lab';
 import { Box, Card, Tab, TextField } from '@mui/material';
 import productApi from 'api/report/products';
+import AutocompleteStore from 'components/form/common/report/AutocompleteStore';
 import ResoTable from 'components/ResoTable/ResoTable';
 import ReportBtn from 'pages/report/components/ReportBtn';
 import ReportPage from 'pages/report/components/ReportPage';
 import { useEffect, useRef, useState } from 'react';
+import { useParams } from 'react-router';
+import { TProductSaleReportBase } from 'types/report/product';
+import { TTableColumn } from 'types/table';
+import { fNumber } from 'utils/formatNumber';
 import { formatDate, fTime } from 'utils/formatTime';
-import { productSaleColumn } from './column';
-
+import { formatCurrency } from 'utils/utils';
 const ProductSaleReport = () => {
+  const { storeId } = useParams();
+
   const ref = useRef<any>();
 
   const [activeTab, setActiveTab] = useState('1');
   const handleChangeTab = (event: React.SyntheticEvent, newValue: string) => {
     setActiveTab(newValue);
   };
+
+  const productSaleColumn: TTableColumn<TProductSaleReportBase>[] = [
+    {
+      title: 'Cửa hàng',
+      hideInTable: true,
+      valueType: 'select',
+      dataIndex: 'storeId',
+      hideInSearch: storeId === '0' ? false : true,
+      renderFormItem: () => <AutocompleteStore name="storeId" label="Cửa hàng" />
+    },
+    {
+      title: 'Chọn biểu đồ',
+      hideInTable: true,
+      dataIndex: 'checkDeal',
+      valueType: 'select',
+      valueEnum: [
+        {
+          label: 'Trước giảm giá',
+          value: 'beforeDeal'
+        },
+        {
+          label: 'Giảm giá',
+          value: 'afterDeal'
+        }
+      ]
+    },
+    {
+      title: 'STT',
+      hideInSearch: true,
+      dataIndex: 'index'
+    },
+    {
+      title: 'Mã sản phẩm',
+      hideInSearch: true,
+      dataIndex: 'productCode'
+    },
+    {
+      title: 'Tên sản phẩm',
+      hideInSearch: true,
+      dataIndex: 'productName'
+    },
+    {
+      title: 'Danh mục',
+      hideInSearch: true,
+      dataIndex: 'cateName'
+    },
+    {
+      title: 'Đơn vị tính',
+      hideInSearch: true,
+      dataIndex: 'unitPrice',
+      render: (value) => fNumber(value)
+    },
+    {
+      title: 'Số lượng bán ra',
+      hideInSearch: true,
+      dataIndex: 'quantity',
+      render: (value) => fNumber(value)
+    },
+    {
+      title: 'Đơn giá (Chưa VAT)',
+      hideInSearch: true,
+      dataIndex: 'unitPriceNoVat',
+      render: (value) => fNumber(value)
+    },
+    {
+      title: 'Đơn giá (Đã VAT)',
+      hideInSearch: true,
+      dataIndex: 'unitPrice',
+      render: (value) => fNumber(value)
+    },
+    {
+      title: 'Doanh thu (Chưa VAT)',
+      hideInSearch: true,
+      dataIndex: 'totalPriceBeforeVat',
+      render: (value) => formatCurrency(value)
+    },
+    {
+      title: 'Doanh thu (Đã VAT)',
+      hideInSearch: true,
+      // dataIndex: 'totalPriceAfterVat',
+      render: (value) => formatCurrency(value)
+    },
+    {
+      title: 'Phiên bản (Version)',
+      hideInSearch: true
+      // dataIndex: 'saleRevenue',
+    },
+    {
+      title: 'Ngày cập nhật (Updated at)',
+      hideInSearch: true
+      // dataIndex: 'saleRevenue',
+    }
+  ];
 
   const today = new Date();
   const yesterday = new Date(new Date().valueOf() - 1000 * 60 * 60 * 24);
@@ -70,6 +169,7 @@ const ProductSaleReport = () => {
       content={dateRange[1]?.getDate() === today?.getDate() ? `Tính đến ${fTime(today)}` : ''}
       actions={[
         <DateRangePicker
+          inputFormat="dd/MM/yyyy"
           disableFuture
           value={dateRange}
           renderInput={(startProps, endProps) => (
@@ -106,6 +206,7 @@ const ProductSaleReport = () => {
               pagination={true}
               scroll={{ y: '320px' }}
               defaultFilters={{
+                storeId: storeId === '0' ? 13 : storeId,
                 checkDeal: 'beforeDeal',
                 FromDate: formatDate(dateRange[0]!),
                 ToDate: formatDate(dateRange[1]!)

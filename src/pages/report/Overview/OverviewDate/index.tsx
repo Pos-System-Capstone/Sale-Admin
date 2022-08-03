@@ -1,15 +1,15 @@
 /* eslint-disable camelcase */
-import { DateRange, DateRangePicker, TabContext, TabList, TabPanel } from '@mui/lab';
+import React, { useState } from 'react';
 // material
+import { DatePicker, DateRange, TabContext, TabList, TabPanel } from '@mui/lab';
 import { Box, Card, Tab, TextField } from '@mui/material';
-import moment from 'moment';
+// components
 import ReportBtn from 'pages/report/components/ReportBtn';
 import ReportPage from 'pages/report/components/ReportPage';
-import React, { useState } from 'react';
-// components
 import EmployeeStatistics from '../components/EmployeeStatistics';
 import RevenueOverview from '../components/RevenueOverview';
 import TopStoreRevenue from '../components/TopStoreRevenue';
+import moment from 'moment';
 
 export default function OverviewDate() {
   const [activeTab, setActiveTab] = useState('1');
@@ -18,29 +18,25 @@ export default function OverviewDate() {
   };
 
   const today = new Date();
-  const yesterday = new Date(new Date().valueOf() - 1000 * 60 * 60 * 24);
-  const [dateRange, setDateRange] = useState<DateRange<Date>>([yesterday, today]);
+  // const yesterday = new Date(new Date().valueOf() - 1000 * 60 * 60 * 24);
+  const [dateRange, setDateRange] = useState<DateRange<Date>>([today, today]);
   const [done, setDone] = useState(true);
   const [loading, setLoading] = useState(true);
+
   return (
     <ReportPage
       title={`Báo cáo tổng quan`}
       actions={[
-        <DateRangePicker
+        <DatePicker
+          inputFormat="dd/MM/yyyy"
+          renderInput={(params) => <TextField {...params} />}
           minDate={moment(`${today.getFullYear()}/${today.getMonth() + 1}/01`).toDate()}
           disabled={loading}
           disableFuture
-          value={dateRange}
-          renderInput={(startProps, endProps) => (
-            <>
-              <TextField {...startProps} label="Từ" />
-              <Box sx={{ mx: 2 }}> - </Box>
-              <TextField {...endProps} label="Đến" />
-            </>
-          )}
+          value={dateRange[0]}
           onChange={(e) => {
-            if (e[0] && e[1]) {
-              setDateRange(e);
+            if (e) {
+              setDateRange([e, e]);
             }
           }}
           onOpen={() => setDone(false)}

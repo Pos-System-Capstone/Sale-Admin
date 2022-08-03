@@ -3,34 +3,38 @@ import { Icon } from '@iconify/react';
 import { Button, Card, Stack } from '@mui/material';
 import promotionApi, {
   DISCOUNT_TYPE_DATA,
+  GIFT_TYPE_DATA,
   PROMOTION_TYPE_DATA,
-  STATUS_TYPE_DATA,
-  TPromotionBase
+  STATUS_TYPE_DATA
 } from 'api/promotion/promotion';
 import Label from 'components/Label';
 import Page from 'components/Page';
 import ResoTable from 'components/ResoTable/ResoTable';
 import useLocales from 'hooks/useLocales';
-import { useSnackbar } from 'notistack';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
+import { RootState } from 'redux/store';
 import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
+import { TPromotionBase } from 'types/promotion/promotion';
 import { TTableColumn } from 'types/table';
-import { fDate } from 'utils/formatTime';
-// import { CollectionTypeEnum } from 'types/collection';
 
 interface Props {}
 
 const Promotion = (props: Props) => {
-  const { enqueueSnackbar } = useSnackbar();
   const { translate } = useLocales();
   const navigate = useNavigate();
   const ref = useRef<any>();
 
+  const brandId = useSelector((state: RootState) => state.brand);
+
   const DISCOUNT_TYPE_ENUM = DISCOUNT_TYPE_DATA();
+  const GIFT_TYPE_ENUM = GIFT_TYPE_DATA();
   const STATUS_TYPE_ENUM = STATUS_TYPE_DATA();
   const PROMOTION_TYPE_ENUM = PROMOTION_TYPE_DATA();
+
   const promotionColumn: TTableColumn<TPromotionBase>[] = [
+    { title: 'brandId', dataIndex: 'BrandId', hideInTable: true, hideInSearch: true },
     {
       title: `${translate('promotionSystem.promotion.table.no')}`,
       dataIndex: 'index',
@@ -69,18 +73,23 @@ const Promotion = (props: Props) => {
         </Label>
       )
     },
+    // TODO: If actionType = 0 <=> use postActionType
     {
       title: `${translate('promotionSystem.promotion.table.action')}`,
       hideInSearch: true,
       dataIndex: 'actionType',
-      valueEnum: DISCOUNT_TYPE_ENUM
-    },
-    {
-      title: `${translate('promotionSystem.promotion.table.startDate')}`,
-      dataIndex: 'startDate',
-      valueType: 'datetime',
-      hideInSearch: true,
-      render: (value) => fDate(value)
+      valueEnum: DISCOUNT_TYPE_ENUM,
+      renderFormItem: (columnSetting, formProps): any => {
+        // change dataIndex when actionType = 0
+        const dataIndex =
+          formProps.getFieldValue('actionType') === 0 ? 'postActionType' : 'actionType';
+        columnSetting.dataIndex = dataIndex;
+        columnSetting.valueEnum = dataIndex === 'actionType' ? DISCOUNT_TYPE_ENUM : GIFT_TYPE_ENUM;
+      }
+      // render: (value, row): any => {
+      //   // change dataIndex when actionType = 0
+      //   const dataIndex = row.actionType === 0 ? 'postActionType' : 'actionType';
+      // }
     },
     {
       title: `${translate('promotionSystem.promotion.table.status')}`,
@@ -108,6 +117,12 @@ const Promotion = (props: Props) => {
     }
   ];
 
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.formControl.setValue('BrandId', brandId!);
+    }
+  }, [brandId]);
+
   return (
     <Page
       // title="Manage Promotion"
@@ -133,7 +148,7 @@ const Promotion = (props: Props) => {
             ref={ref}
             getData={() =>
               promotionApi.getPromotion({
-                BrandId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+                BrandId: brandId,
                 status: 0
               })
             }

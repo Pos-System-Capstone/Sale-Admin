@@ -12,11 +12,9 @@ import React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { CreateProductForm, ProductTypeEnum, TProductBase } from 'types/product';
 import { TTableColumn } from 'types/table';
-// import VariantForm from '../VariantForm';
 import { Card, CardTitle } from './Card';
 import BasicProductInfoForm from './form/BasicProductInfoForm';
 import SubMiddleForm from './form/SubMiddleForm';
-// import ProductImagesForm from './form/ProductImagesForm';
 
 type Props = {
   updateMode?: boolean;

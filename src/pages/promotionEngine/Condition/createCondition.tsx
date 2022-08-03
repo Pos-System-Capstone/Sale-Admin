@@ -1,13 +1,11 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Card, Stack } from '@mui/material';
 import categoryApi from 'api/category';
-// import SeoForm from 'components/form/Seo/SeoForm';
 import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
 import Page from 'components/Page';
 import useDashboard from 'hooks/useDashboard';
 import { DashboardNavLayout } from 'layouts/dashboard/DashboardNavbar';
 import { useSnackbar } from 'notistack';
-// import { CardTitle } from 'pages/Products/components/Card';
 import Alert from '@mui/material/Alert';
 import ConditionForm from 'components/form/common/Category/ConditionForm';
 import { transformDraftToStr, transformProductForm } from 'pages/Products/utils';
@@ -33,7 +31,6 @@ const NewCondition = (props: Props) => {
   const createCategoryForm = useForm<TCategory>({
     resolver: yupResolver(schema),
     defaultValues: {
-      // is_container: !isExtra,
       is_extra: isExtra
     },
     shouldUnregister: false
@@ -61,9 +58,6 @@ const NewCondition = (props: Props) => {
     <FormProvider {...createCategoryForm}>
       <DashboardNavLayout onOpenSidebar={() => setNavOpen(true)}>
         <Stack direction="row" spacing={2}>
-          {/* <Button onClick={() => navigate(-1)} variant="outlined">
-            Hủy
-          </Button> */}
           <LoadingAsyncButton
             onClick={createCategoryForm.handleSubmit(onSubmit)}
             type="submit"
@@ -86,14 +80,6 @@ const NewCondition = (props: Props) => {
             </Box>
             <Box></Box>
           </Card>
-          {/* <Card>
-            <Box>
-              <CardTitle mb={2} variant="subtitle1">
-                SEO
-              </CardTitle>
-              <SeoForm />
-            </Box>
-          </Card> */}
         </Stack>
       </Page>
     </FormProvider>

@@ -1,7 +1,6 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-plusplus */
 /* eslint-disable react/prop-types */
-import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Button, CircularProgress, Stack } from '@mui/material';
 import productApi from 'api/product';
 import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
@@ -10,15 +9,11 @@ import useDashboard from 'hooks/useDashboard';
 import useLocales from 'hooks/useLocales';
 import { DashboardNavLayout } from 'layouts/dashboard/DashboardNavbar';
 import { useSnackbar } from 'notistack';
-import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useQuery } from 'react-query';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { PATH_DASHBOARD } from 'routes/paths';
 import { ProductTypeEnum, TProductMaster } from 'types/product';
 import MiddleForm from './components/MiddleForm';
-import { UpdateProductForm, validationSchema } from './type';
-import { normalizeProductData, transformDraftToStr, transformProductForm } from './utils';
 
 const CreateVoucher = () => {
   const { t } = useLocales();
@@ -30,8 +25,8 @@ const CreateVoucher = () => {
   const cloneProductId: any = searchParams.get('cloneProductId');
   const productType: any = Number(searchParams.get('productType') ?? ProductTypeEnum.Single);
 
-  const methods = useForm<UpdateProductForm & any>({
-    resolver: yupResolver(validationSchema),
+  const methods = useForm<any>({
+    resolver: undefined,
     defaultValues: {
       tags: [],
       description: '',
@@ -49,31 +44,9 @@ const CreateVoucher = () => {
     }
   );
 
-  useEffect(() => {
-    if (data) {
-      reset({ ...normalizeProductData(data) });
-    }
-  }, [data, reset]);
-
-  const onSubmit = (values: UpdateProductForm) => {
-    const data = transformDraftToStr(values);
-    data.product_type = data.hasVariant ? ProductTypeEnum.General : values.product_type;
-    return productApi
-      .create(transformProductForm(data))
-      .then((res) => {
-        enqueueSnackbar(`Tạo thành công ${values.product_name}`, {
-          variant: 'success'
-        });
-        navigate(PATH_DASHBOARD.products.editById(res.data as number));
-      })
-      .catch((err) => {
-        enqueueSnackbar(`Có lỗi xảy ra. Vui lòng thử lại`, {
-          variant: 'error'
-        });
-      });
+  const onSubmit = (values: any) => {
+    console.log(values);
   };
-
-  console.log(`watch()`, watch());
 
   if (isLoading) {
     return (

@@ -24,7 +24,7 @@ import { useSnackbar } from 'notistack';
 import React, { useEffect, useRef, useState } from 'react';
 import Chart from 'react-apexcharts';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { PATH_REPORT_APP } from 'routes/reportAppPaths';
 import { Menu } from 'types/menu';
 import { TTradingBase } from 'types/report/trading';
@@ -33,6 +33,7 @@ import { fNumber } from 'utils/formatNumber';
 import { formatDate } from 'utils/formatTime';
 import ReportPage from '../components/ReportPage';
 // import Page from './components/Page';
+
 export const menuColumns: TTableColumn<TTradingBase>[] = [
   {
     title: 'STT',
@@ -118,6 +119,16 @@ export const menuColumns: TTableColumn<TTradingBase>[] = [
         style: 'currency',
         currency: 'VND'
       })
+  },
+  {
+    title: 'Phiên bản (Version)',
+    hideInSearch: true
+    // dataIndex: 'saleRevenue',
+  },
+  {
+    title: 'Ngày cập nhật (Updated at)',
+    hideInSearch: true
+    // dataIndex: 'saleRevenue',
   }
 ];
 
@@ -125,7 +136,8 @@ const DayReport = () => {
   const navigate = useNavigate();
   const tableRef = useRef<any>();
   const { enqueueSnackbar } = useSnackbar();
-
+  const { storeId } = useParams();
+  const PATH_REPORT = PATH_REPORT_APP(storeId ?? '0');
   const createMenuForm = useForm({
     resolver: yupResolver(menuSchema),
     shouldUnregister: true,
@@ -239,28 +251,28 @@ const DayReport = () => {
       icon: clockIcon,
       color: '#FAD02C',
       hoverColor: '#B47324',
-      path: PATH_REPORT_APP.timeReport
+      path: PATH_REPORT.timeReport
     },
     {
       title: 'THỨ',
       icon: activityFill,
       color: '#189AB4',
       hoverColor: '#05445E',
-      path: PATH_REPORT_APP.dateReport
+      path: PATH_REPORT.dateReport
     },
     {
       title: 'NGÀY',
       icon: alertCircleFill,
       color: '#76B947',
       hoverColor: '#2F5233',
-      path: PATH_REPORT_APP.dayReport
+      path: PATH_REPORT.dayReport
     },
     {
       title: 'THÁNG',
       icon: alertTriangleFill,
       color: '#C197D2',
       hoverColor: '#613659',
-      path: PATH_REPORT_APP.monthReport
+      path: PATH_REPORT.monthReport
     }
   ];
 

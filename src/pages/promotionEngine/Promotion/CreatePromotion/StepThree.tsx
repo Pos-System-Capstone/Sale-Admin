@@ -2,7 +2,7 @@ import { Box, Button, Grid, Stack, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import useLocales from 'hooks/useLocales';
 import { fDateTime } from 'utils/formatTime';
-import { Card } from '../components/Card';
+import { Card } from 'pages/promotionEngine/Promotion/components/Card';
 
 function StepThree({ watch }: any) {
   const { translate } = useLocales();

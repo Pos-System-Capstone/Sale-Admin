@@ -106,7 +106,11 @@ requestReport.interceptors.response.use(
 
 const requestPromotion = axios.create({
   baseURL: promotion,
-  paramsSerializer: parseParams
+  paramsSerializer: parseParams,
+  headers: {
+    authorization:
+      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImJlYW5vaSIsInJvbGUiOiJCcmFuZCBNYW5hZ2VyIiwibmJmIjoxNjU4ODAzMjQ5LCJleHAiOjE2NTk0MDgwNDksImlhdCI6MTY1ODgwMzI0OX0.xaxrATfJH3zZJyunuFH5V90bpQbxxIW6c1mFW-c3QQE'
+  }
 });
 
 requestPromotion.interceptors.request.use((options) => {
@@ -142,6 +146,11 @@ requestLogin.interceptors.request.use((options) => {
 
   return options;
 });
+
+requestLogin.interceptors.response.use(
+  (response) => response,
+  (error) => Promise.reject((error.response && error.response.data) || 'Có lỗi xảy ra')
+);
 
 // ----------------------------------------------------------------------
 class AxiosClientFactory {

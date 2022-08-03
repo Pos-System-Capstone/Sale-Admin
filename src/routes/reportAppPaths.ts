@@ -3,9 +3,8 @@
 function path(root: string, sublink: string) {
   return `${root}${sublink}`;
 }
-
 const ROOTS_AUTH = '/auth';
-const ROOTS_DASHBOARD = '/report';
+export const ROOTS_DASHBOARD = `/report`;
 
 // ----------------------------------------------------------------------
 
@@ -19,22 +18,23 @@ export const PATH_AUTH = {
   verify: path(ROOTS_AUTH, '/verify')
 };
 
-export const PATH_REPORT_APP = {
-  root: ROOTS_DASHBOARD,
-  general: {
-    reportDashboard: path(ROOTS_DASHBOARD, '/dashboard'),
-    ecommerce: path(ROOTS_DASHBOARD, '/ecommerce'),
-    analytics: path(ROOTS_DASHBOARD, '/analytics')
-  },
-  overviewDate: path(ROOTS_DASHBOARD, '/overview-date'),
-  overviewMonth: path(ROOTS_DASHBOARD, '/overview-month'),
-  payment: path(ROOTS_DASHBOARD, '/payment'),
-  productSale: path(ROOTS_DASHBOARD, '/product-sale'),
-  productProgress: path(ROOTS_DASHBOARD, '/product-progress'),
-  promotion: path(ROOTS_DASHBOARD, '/promotion'),
-  dayReport: path(ROOTS_DASHBOARD, '/day-report'),
-  timeReport: path(ROOTS_DASHBOARD, '/day-report/time-report'),
-  dateReport: path(ROOTS_DASHBOARD, '/day-report/date-report'),
-  monthReport: path(ROOTS_DASHBOARD, '/day-report/month-report'),
-  stores: path(ROOTS_DASHBOARD, '/stores')
+export const PATH_REPORT_APP = (storeId: string) => {
+  // const storeId = localStorage.getItem('storeId') || 0;
+  return {
+    root: ROOTS_DASHBOARD,
+    general: {
+      reportDashboard: path(ROOTS_DASHBOARD, `/${storeId}/dashboard`)
+    },
+    overviewDate: path(ROOTS_DASHBOARD, `/${storeId}/overview-date`),
+    overviewMonth: path(ROOTS_DASHBOARD, `/${storeId}/overview-month`),
+    payment: path(ROOTS_DASHBOARD, `/${storeId}/payment`),
+    productSale: path(ROOTS_DASHBOARD, `/${storeId}/product-sale`),
+    productProgress: path(ROOTS_DASHBOARD, `/${storeId}/product-progress`),
+    promotion: path(ROOTS_DASHBOARD, `/${storeId}/promotion`),
+    dayReport: path(ROOTS_DASHBOARD, `/${storeId}/day-report`),
+    timeReport: path(ROOTS_DASHBOARD, `/${storeId}/day-report/time-report`),
+    dateReport: path(ROOTS_DASHBOARD, `/${storeId}/day-report/date-report`),
+    monthReport: path(ROOTS_DASHBOARD, `/${storeId}/day-report/month-report`),
+    stores: path(ROOTS_DASHBOARD, `/${storeId}/stores`)
+  };
 };

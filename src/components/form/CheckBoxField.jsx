@@ -16,7 +16,6 @@ const CheckBoxField = ({ name, label, rules = null, defaultValue = false, ...pro
               helperText={fieldState.error ? fieldState.error.message : props.helperText}
               {...field}
               error={Boolean(fieldState.isTouched && fieldState.error)}
-              checked={field.value}
               inputRef={field.ref}
               icon={props.icon}
               checkedIcon={props.checkedIcon}
@@ -27,7 +26,6 @@ const CheckBoxField = ({ name, label, rules = null, defaultValue = false, ...pro
       )}
       name={name}
       control={control}
-      defaultValue={defaultValue}
       rules={rules}
     />
   );
