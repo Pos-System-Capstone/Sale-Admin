@@ -28,6 +28,7 @@ export default function OverviewMonth() {
       title={`Báo cáo tổng quan`}
       actions={[
         <DateRangePicker
+          inputFormat="dd/MM/yyyy"
           minDate={moment(`${today.getFullYear()}/${today.getMonth() + 1}/01`).toDate()}
           disabled={loading}
           disableFuture

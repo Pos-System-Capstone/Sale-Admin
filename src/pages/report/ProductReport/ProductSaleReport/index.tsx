@@ -169,6 +169,7 @@ const ProductSaleReport = () => {
       content={dateRange[1]?.getDate() === today?.getDate() ? `Tính đến ${fTime(today)}` : ''}
       actions={[
         <DateRangePicker
+          inputFormat="dd/MM/yyyy"
           disableFuture
           value={dateRange}
           renderInput={(startProps, endProps) => (

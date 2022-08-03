@@ -28,6 +28,7 @@ export default function OverviewDate() {
       title={`Báo cáo tổng quan`}
       actions={[
         <DatePicker
+          inputFormat="dd/MM/yyyy"
           renderInput={(params) => <TextField {...params} />}
           minDate={moment(`${today.getFullYear()}/${today.getMonth() + 1}/01`).toDate()}
           disabled={loading}
