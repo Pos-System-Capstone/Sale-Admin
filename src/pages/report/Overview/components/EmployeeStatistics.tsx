@@ -56,6 +56,16 @@ function EmployeeStatistics() {
       hideInSearch: true,
       dataIndex: 'total',
       render: (value) => formatCurrency(value)
+    },
+    {
+      title: 'Phiên bản (Version)',
+      hideInSearch: true
+      // dataIndex: 'saleRevenue',
+    },
+    {
+      title: 'Ngày cập nhật (Updated at)',
+      hideInSearch: true
+      // dataIndex: 'saleRevenue',
     }
   ];
   const data = [

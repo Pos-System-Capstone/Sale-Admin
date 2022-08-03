@@ -23,40 +23,15 @@ export const storeColumns: TTableColumn<StoreBase>[] = [
     title: 'Lần chạy báo cáo',
     // dataIndex: 'creditCard',
     hideInSearch: true
+  },
+  {
+    title: 'Phiên bản (Version)',
+    hideInSearch: true
+    // dataIndex: 'saleRevenue',
+  },
+  {
+    title: 'Ngày cập nhật (Updated at)',
+    hideInSearch: true
+    // dataIndex: 'saleRevenue',
   }
-  // {
-  //   title: 'Ngần hàng',
-  //   dataIndex: 'bank',
-  //   hideInSearch: true
-  // },
-  // {
-  //   title: 'Momo',
-  //   dataIndex: 'momo',
-  //   hideInSearch: true
-  // },
-  // {
-  //   title: 'Grabpay',
-  //   dataIndex: 'grabpay',
-  //   hideInSearch: true
-  // },
-  // {
-  //   title: 'Grabfood',
-  //   dataIndex: 'grabfood',
-  //   hideInSearch: true
-  // },
-  // {
-  //   title: 'Vnpay',
-  //   dataIndex: 'vnpay',
-  //   hideInSearch: true
-  // },
-  // {
-  //   title: 'Baemin',
-  //   dataIndex: 'baemin',
-  //   hideInSearch: true
-  // },
-  // {
-  //   title: 'Shopeepay',
-  //   dataIndex: 'shopeepay',
-  //   hideInSearch: true
-  // }
 ];

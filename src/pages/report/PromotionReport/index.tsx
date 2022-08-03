@@ -98,6 +98,16 @@ const PromotionReport = () => {
           label={translate('pages.stores.table.isAvailable')}
         />
       )
+    },
+    {
+      title: 'Phiên bản (Version)',
+      hideInSearch: true
+      // dataIndex: 'saleRevenue',
+    },
+    {
+      title: 'Ngày cập nhật (Updated at)',
+      hideInSearch: true
+      // dataIndex: 'saleRevenue',
     }
   ];
 

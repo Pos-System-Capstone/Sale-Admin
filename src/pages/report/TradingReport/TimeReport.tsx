@@ -134,6 +134,16 @@ export const menuColumns: TTableColumn<TTradingBase>[] = [
         style: 'currency',
         currency: 'VND'
       })
+  },
+  {
+    title: 'Phiên bản (Version)',
+    hideInSearch: true
+    // dataIndex: 'saleRevenue',
+  },
+  {
+    title: 'Ngày cập nhật (Updated at)',
+    hideInSearch: true
+    // dataIndex: 'saleRevenue',
   }
 ];
 

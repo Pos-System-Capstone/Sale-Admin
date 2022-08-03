@@ -109,6 +109,16 @@ const StoreReport = () => {
       title: 'Chạy lại báo cáo',
       // dataIndex: '',
       hideInSearch: true
+    },
+    {
+      title: 'Phiên bản (Version)',
+      hideInSearch: true
+      // dataIndex: 'saleRevenue',
+    },
+    {
+      title: 'Ngày cập nhật (Updated at)',
+      hideInSearch: true
+      // dataIndex: 'saleRevenue',
     }
   ];
 
