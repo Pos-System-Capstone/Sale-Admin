@@ -14,15 +14,18 @@ import { PromotionBase } from 'types/report/promotion';
 import ReportBtn from '../components/ReportBtn';
 import ReportDatePicker from '../components/ReportDatePicker';
 import ReportPage from '../components/ReportPage';
+import { useParams } from 'react-router';
 const PromotionReport = () => {
   const { translate } = useLocales();
   const tableRef = useRef<any>();
+  const { storeId } = useParams();
 
   const columns: TTableColumn<PromotionBase>[] = [
     {
       title: 'Tên khách hàng',
       dataIndex: 'storeId',
       hideInTable: true,
+      hideInSearch: storeId === '0' ? false : true,
       valueType: 'select',
       renderFormItem: () => <AutocompleteStore name="storeId" label="Cửa hàng" />
     },
@@ -123,7 +126,7 @@ const PromotionReport = () => {
             ref={tableRef}
             getData={({ storeId, ...params }: any) => promotionApi.getPromotion(storeId, params)}
             defaultFilters={{
-              storeId: 0
+              storeId: storeId === '0' ? 13 : storeId
             }}
             columns={columns}
           />
