@@ -23,7 +23,7 @@ export const PATH_REPORT_APP = () => {
   return {
     root: ROOTS_DASHBOARD,
     general: {
-      reportDashboard: path(ROOTS_DASHBOARD, '/dashboard')
+      reportDashboard: path(ROOTS_DASHBOARD, `/${storeId}/dashboard`)
     },
     overviewDate: path(ROOTS_DASHBOARD, `/${storeId}/overview-date`),
     overviewMonth: path(ROOTS_DASHBOARD, `/${storeId}/overview-month`),

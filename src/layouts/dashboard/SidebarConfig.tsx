@@ -232,11 +232,11 @@ export const reportAppSidebarConfig = [
         path: PATH_REPORT.overviewDate,
         icon: ICONS.calendar
       },
-      // {
-      //   title: 'report.overviewMonth',
-      //   path: PATH_REPORT.overviewMonth,
-      //   icon: ICONS.calendar
-      // },
+      {
+        title: 'report.overviewMonth',
+        path: PATH_REPORT.overviewMonth,
+        icon: ICONS.calendar
+      },
       // {
       //   title: 'report.productProgress',
       //   path: PATH_REPORT.productProgress,
