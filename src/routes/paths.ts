@@ -145,6 +145,9 @@ export const PATH_DASHBOARD = {
   stores: {
     root: path(ROOTS_DASHBOARD, '/stores'),
     new: path(ROOTS_DASHBOARD, '/stores/new')
+  },
+  log: {
+    root: path(ROOTS_DASHBOARD, '/log')
   }
 };
 
