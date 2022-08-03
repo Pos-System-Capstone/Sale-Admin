@@ -191,10 +191,7 @@ export default function Router() {
         },
         {
           path: 'log',
-          children: [
-            { path: '', element: <LogPage /> },
-            { path: 'new', element: <ComingSoon /> }
-          ]
+          children: [{ path: '', element: <LogPage /> }]
         }
       ]
     },
@@ -430,8 +427,8 @@ const ComboListPage = Loadable(lazy(() => import('../pages/Products/Combos/Combo
 const CreateComboPage = Loadable(lazy(() => import('../pages/Products/Combos/CreateCombo')));
 const UpdateComboPage = Loadable(lazy(() => import('../pages/Products/Combos/UpdateCombo')));
 
-// log
-const LogPage = Loadable(lazy(() => import('../pages/Log Sale')));
+//log
+const LogPage = Loadable(lazy(() => import('../pages/Log')));
 
 // report
 const OverviewDate = Loadable(lazy(() => import('../pages/report/Overview/OverviewDate')));

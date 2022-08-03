@@ -60,7 +60,7 @@ const sidebarConfig = [
       },
       {
         title: 'store-menu-apply',
-        path: PATH_DASHBOARD.tradingReport.storeMenu,
+        path: PATH_DASHBOARD.menus.storeMenu,
         icon: ICONS.storeApply
       }
     ]
@@ -110,6 +110,11 @@ const sidebarConfig = [
         title: 'store',
         path: PATH_DASHBOARD.stores.root,
         icon: ICONS.store
+      },
+      {
+        title: 'log',
+        path: PATH_DASHBOARD.log.root,
+        icon: ICONS.tag
       }
     ]
   },
