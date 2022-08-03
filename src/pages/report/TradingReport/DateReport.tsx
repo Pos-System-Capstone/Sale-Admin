@@ -18,6 +18,7 @@ import ResoTable from 'components/ResoTable/ResoTable';
 import MenuWidgets from 'components/_dashboard/general-app/MenuWidgets';
 import React, { useEffect, useRef, useState } from 'react';
 import Chart from 'react-apexcharts';
+import { useParams } from 'react-router-dom';
 import { PATH_REPORT_APP } from 'routes/reportAppPaths';
 import { TTradingBase } from 'types/report/trading';
 import { TTableColumn } from 'types/table';
@@ -25,8 +26,6 @@ import { fNumber } from 'utils/formatNumber';
 import { formatDate, fTime } from 'utils/formatTime';
 import ReportPage from '../components/ReportPage';
 // import Page from './components/Page';
-
-const PATH_REPORT = PATH_REPORT_APP();
 
 export const menuColumns: TTableColumn<TTradingBase>[] = [
   {
@@ -134,6 +133,8 @@ export const menuColumns: TTableColumn<TTradingBase>[] = [
 ];
 
 const DateReport = () => {
+  const { storeId } = useParams();
+  const PATH_REPORT = PATH_REPORT_APP(storeId ?? '0');
   const tableRef = useRef<any>();
 
   const handleChangeTab = (event: React.SyntheticEvent, newValue: string) => {

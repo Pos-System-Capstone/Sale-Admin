@@ -111,7 +111,10 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }: Dash
   const sidebarConfig = useMemo(() => {
     const firstElementOfPath = pathname.split('/')[1];
     if (firstElementOfPath === ROOTS_DASHBOARD_SALE.split('/')[1]) return adminSidebarConfig;
-    if (firstElementOfPath === ROOTS_DASHBOARD_REPORT.split('/')[1]) return reportAppSidebarConfig;
+    if (firstElementOfPath === ROOTS_DASHBOARD_REPORT.split('/')[1]) {
+      const reportSideBarConfig = reportAppSidebarConfig();
+      return reportSideBarConfig;
+    }
     if (firstElementOfPath === ROOTS_DASHBOARD_PROMOTION.split('/')[1])
       return promotionAppSidebarConfig;
     // if (systems === 'sale') return adminSidebarConfig;
@@ -135,7 +138,8 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }: Dash
       return storeAppSidebarConfig;
     }
     if (user?.roles?.includes('report-admin')) {
-      return reportAppSidebarConfig;
+      const reportSideBarConfig = reportAppSidebarConfig();
+      return reportSideBarConfig;
     }
     if (user?.roles?.includes('promotion-admin')) {
       return promotionAppSidebarConfig;

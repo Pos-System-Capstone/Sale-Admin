@@ -18,8 +18,8 @@ export const PATH_AUTH = {
   verify: path(ROOTS_AUTH, '/verify')
 };
 
-export const PATH_REPORT_APP = () => {
-  const storeId = localStorage.getItem('storeId');
+export const PATH_REPORT_APP = (storeId: string) => {
+  // const storeId = localStorage.getItem('storeId') || 0;
   return {
     root: ROOTS_DASHBOARD,
     general: {

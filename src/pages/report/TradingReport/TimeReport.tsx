@@ -25,7 +25,7 @@ import { useSnackbar } from 'notistack';
 import React, { useRef, useState } from 'react';
 import Chart from 'react-apexcharts';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { PATH_REPORT_APP } from 'routes/reportAppPaths';
 import { Menu } from 'types/menu';
 import { TTradingBase } from 'types/report/trading';
@@ -35,8 +35,6 @@ import ReportBtn from '../components/ReportBtn';
 import ReportDatePicker from '../components/ReportDatePicker';
 import ReportPage from '../components/ReportPage';
 // import Page from './components/Page';
-
-const PATH_REPORT = PATH_REPORT_APP();
 
 export const menuColumns: TTableColumn<TTradingBase>[] = [
   {
@@ -151,7 +149,8 @@ const TimeReport = () => {
   const navigate = useNavigate();
   const tableRef = useRef<any>();
   const { enqueueSnackbar } = useSnackbar();
-
+  const { storeId } = useParams();
+  const PATH_REPORT = PATH_REPORT_APP(storeId ?? '0');
   const createMenuForm = useForm({
     resolver: yupResolver(menuSchema),
     shouldUnregister: true,

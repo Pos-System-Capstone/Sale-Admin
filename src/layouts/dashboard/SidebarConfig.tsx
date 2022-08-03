@@ -1,4 +1,5 @@
 // routes
+import { useParams } from 'react-router';
 import { PATH_PROMOTION_APP } from 'routes/promotionAppPaths';
 import { PATH_REPORT_APP } from 'routes/reportAppPaths';
 import { PATH_STORE_APP } from 'routes/storeAppPaths';
@@ -210,65 +211,68 @@ export const promotionAppSidebarConfig = [
   }
 ];
 
-const PATH_REPORT = PATH_REPORT_APP();
-export const reportAppSidebarConfig = [
-  // GENERAL
-  // ----------------------------------------------------------------------
-  {
-    subheader: 'general',
-    items: [
-      {
-        title: 'report.dashboard',
-        path: PATH_REPORT.general.reportDashboard,
-        icon: ICONS.dashboard
-      }
-    ]
-  },
-  {
-    subheader: 'report.management',
-    items: [
-      {
-        title: 'report.overviewDate',
-        path: PATH_REPORT.overviewDate,
-        icon: ICONS.calendar
-      },
-      {
-        title: 'report.overviewMonth',
-        path: PATH_REPORT.overviewMonth,
-        icon: ICONS.calendar
-      },
-      // {
-      //   title: 'report.productProgress',
-      //   path: PATH_REPORT.productProgress,
-      //   icon: ICONS.analytics
-      // },
-      {
-        title: 'report.productSale',
-        path: PATH_REPORT.productSale,
-        icon: ICONS.product
-      },
-      // {
-      //   title: 'report.payment',
-      //   path: PATH_REPORT.payment,
-      //   icon: ICONS.ecommerce
-      // },
-      {
-        title: 'report.trading',
-        path: PATH_REPORT.dayReport,
-        icon: ICONS.menu
-      },
-      {
-        title: 'report.promotion',
-        path: PATH_REPORT.promotion,
-        icon: ICONS.kanban
-      },
-      {
-        title: 'report.stores',
-        path: PATH_REPORT.stores,
-        icon: ICONS.store
-      }
-    ]
-  }
-];
-
+export const reportAppSidebarConfig = () => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const { storeId } = useParams();
+  const PATH_REPORT = PATH_REPORT_APP(storeId ?? '0');
+  return [
+    // GENERAL
+    // ----------------------------------------------------------------------
+    {
+      subheader: 'general',
+      items: [
+        {
+          title: 'report.dashboard',
+          path: PATH_REPORT.general.reportDashboard,
+          icon: ICONS.dashboard
+        }
+      ]
+    },
+    {
+      subheader: 'report.management',
+      items: [
+        {
+          title: 'report.overviewDate',
+          path: PATH_REPORT.overviewDate,
+          icon: ICONS.calendar
+        },
+        {
+          title: 'report.overviewMonth',
+          path: PATH_REPORT.overviewMonth,
+          icon: ICONS.calendar
+        },
+        // {
+        //   title: 'report.productProgress',
+        //   path: PATH_REPORT.productProgress,
+        //   icon: ICONS.analytics
+        // },
+        {
+          title: 'report.productSale',
+          path: PATH_REPORT.productSale,
+          icon: ICONS.product
+        },
+        // {
+        //   title: 'report.payment',
+        //   path: PATH_REPORT.payment,
+        //   icon: ICONS.ecommerce
+        // },
+        {
+          title: 'report.trading',
+          path: PATH_REPORT.dayReport,
+          icon: ICONS.menu
+        },
+        {
+          title: 'report.promotion',
+          path: PATH_REPORT.promotion,
+          icon: ICONS.kanban
+        },
+        {
+          title: 'report.stores',
+          path: PATH_REPORT.stores,
+          icon: ICONS.store
+        }
+      ]
+    }
+  ];
+};
 export default sidebarConfig;

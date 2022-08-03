@@ -195,7 +195,6 @@ const StoreNavigationDialog: React.FC<Props> = ({ open, onClose, onSelectStore }
                         a[2] = id;
                         const b = a.join('/');
 
-                        //
                         navigate(`${b}`);
                         onClose();
                         window.location.reload();
