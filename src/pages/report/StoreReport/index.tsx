@@ -1,6 +1,5 @@
 /* eslint-disable camelcase */
-import { DateRangePicker } from '@mui/lab';
-import { Box, Card, Stack, TextField } from '@mui/material';
+import { Card, Stack } from '@mui/material';
 // import storeApi from 'api/report/store';
 // components
 import ResoTable from 'components/ResoTable/ResoTable';
@@ -125,26 +124,7 @@ const StoreReport = () => {
   return (
     <ReportPage
       title="Thống kê báo cáo cửa hàng"
-      actions={[
-        <DateRangePicker
-          disableFuture
-          value={dateRange}
-          renderInput={(startProps, endProps) => (
-            <>
-              <TextField {...startProps} label="Từ" />
-              <Box sx={{ mx: 2 }}> - </Box>
-              <TextField {...endProps} label="Đến" />
-            </>
-          )}
-          onChange={(e) => {
-            if (e[0] && e[1]) {
-              setDateRange(e);
-            }
-          }}
-          key="date-range"
-        />,
-        <ReportBtn key="export-excel" onClick={() => console.log('Export excel')} />
-      ]}
+      actions={[<ReportBtn key="export-excel" onClick={() => console.log('Export excel')} />]}
     >
       <Card>
         <Stack spacing={2}>
