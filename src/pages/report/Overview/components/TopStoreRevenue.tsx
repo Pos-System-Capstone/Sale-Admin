@@ -1,6 +1,8 @@
 import { Stack, Typography } from '@mui/material';
+import overviewApi from 'api/report/overview';
 import ResoTable from 'components/ResoTable/ResoTable';
 import { useRef } from 'react';
+import { TTopStoreRevenueBase } from 'types/report/overview';
 import { TTableColumn } from 'types/table';
 import { fNumber } from 'utils/formatNumber';
 import { formatCurrency } from 'utils/utils';
@@ -110,18 +112,7 @@ function TopStoreRevenue() {
     }
   ];
 
-  type ProductSaleDetail = {
-    index?: any;
-    name?: any;
-    bill?: any;
-    billCard?: any;
-    totalProduct?: any;
-    saleRevenue?: any;
-    billRevenue?: any;
-    totalRevenue?: any;
-  };
-
-  const orderColumns: TTableColumn<ProductSaleDetail>[] = [
+  const orderColumns: TTableColumn<TTopStoreRevenueBase>[] = [
     {
       title: 'Ngày',
       // dataIndex: 'create_at',
@@ -136,44 +127,66 @@ function TopStoreRevenue() {
     },
     {
       title: 'Cửa hàng',
-      hideInSearch: true,
-      dataIndex: 'name'
-    },
-    {
-      title: 'Hóa Đơn Bán Hàng',
-      hideInSearch: true,
-      dataIndex: 'bill',
-      render: (value) => fNumber(value)
-    },
-    {
-      title: 'Hóa Đơn Nạp thẻ',
-      hideInSearch: true,
-      dataIndex: 'bill',
-      render: (value) => fNumber(value)
+      hideInSearch: true
+      // dataIndex: 'name'
     },
     {
       title: 'Tổng sản phẩm',
       hideInSearch: true,
-      dataIndex: 'totalProduct',
+      // dataIndex: 'bill',
       render: (value) => fNumber(value)
     },
     {
-      title: 'DT bán hàng',
+      title: 'Hóa đơn bán hàng',
       hideInSearch: true,
-      dataIndex: 'saleRevenue',
+      // dataIndex: 'bill',
+      render: (value) => fNumber(value)
+    },
+    {
+      title: 'Trung bình bill',
+      hideInSearch: true,
+      // dataIndex: '',
+      render: (value) => fNumber(value)
+    },
+    {
+      title: 'DT trước giảm giá',
+      hideInSearch: true,
+      // dataIndex: 'bill',
+      render: (value) => fNumber(value)
+    },
+    {
+      title: 'Giảm giá',
+      hideInSearch: true,
+      // dataIndex: 'totalProduct',
+      render: (value) => fNumber(value)
+    },
+    {
+      title: 'DT sau giảm giá',
+      hideInSearch: true,
+      // dataIndex: 'saleRevenue',
       render: (value) => formatCurrency(value)
     },
     {
-      title: 'DT nạp thẻ',
+      title: 'Hóa đơn nạp thẻ',
       hideInSearch: true,
-      dataIndex: 'billCard',
+      // dataIndex: 'billCard',
       render: (value) => formatCurrency(value)
     },
     {
-      title: 'Tổng danh thu',
+      title: 'Doanh thu nạp thẻ',
       hideInSearch: true,
-      dataIndex: 'saleRevenue',
+      // dataIndex: 'saleRevenue',
       render: (value) => formatCurrency(value)
+    },
+    {
+      title: 'Phiên bản (Version)',
+      hideInSearch: true
+      // dataIndex: 'saleRevenue',
+    },
+    {
+      title: 'Ngày cập nhật (Updated at)',
+      hideInSearch: true
+      // dataIndex: 'saleRevenue',
     }
   ];
   return (
@@ -187,7 +200,7 @@ function TopStoreRevenue() {
           showAction={false}
           columns={orderColumns}
           ref={ref}
-          dataSource={data}
+          getData={overviewApi.getTopStoreRevenue}
           scroll={{ y: '320px' }}
         />
       </Stack>
