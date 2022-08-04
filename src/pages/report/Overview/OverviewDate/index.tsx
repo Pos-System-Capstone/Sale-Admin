@@ -9,6 +9,7 @@ import ReportPage from 'pages/report/components/ReportPage';
 import EmployeeStatistics from '../components/EmployeeStatistics';
 import RevenueOverview from '../components/RevenueOverview';
 import TopStoreRevenue from '../components/TopStoreRevenue';
+import moment from 'moment';
 
 export default function OverviewDate() {
   const today = new Date();
@@ -29,7 +30,7 @@ export default function OverviewDate() {
         <DatePicker
           inputFormat="dd/MM/yyyy"
           renderInput={(params) => <TextField {...params} />}
-          // minDate={moment(`${today.getFullYear()}/${today.getMonth() + 1}/01`).toDate()}
+          minDate={moment(`${today.getFullYear()}/${today.getMonth() + 1}/01`).toDate()}
           // disabled={loading}
           disableFuture
           value={dateRange[0]}
