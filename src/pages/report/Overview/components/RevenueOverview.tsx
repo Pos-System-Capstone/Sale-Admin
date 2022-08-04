@@ -2,9 +2,9 @@ import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import CancelIcon from '@mui/icons-material/Cancel';
 import DeliveryDiningIcon from '@mui/icons-material/DeliveryDining';
 import HomeIcon from '@mui/icons-material/Home';
-import { Backdrop, Box, Card, CircularProgress, Fab, Grid, Stack, Typography } from '@mui/material';
+import { Backdrop, Box, Card, Grid, Stack, Typography } from '@mui/material';
 import revenueApi from 'api/report/revenue';
-import Logo from 'components/Logo';
+import LoadingScreen from 'components/LoadingScreen';
 import ReactApexChart from 'react-apexcharts';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router';
@@ -333,7 +333,7 @@ function RevenueOverview({ dateRange, done, setLoading, loading }: any) {
         </Box>
       </Stack>
       <Backdrop open={loading} invisible={true}>
-        <Box sx={{ m: 1, position: 'relative' }}>
+        {/* <Box sx={{ m: 1, position: 'relative' }}>
           <Fab sx={{ backgroundColor: 'transparent' }}>
             <Logo />
           </Fab>
@@ -349,7 +349,8 @@ function RevenueOverview({ dateRange, done, setLoading, loading }: any) {
               zIndex: 1
             }}
           />
-        </Box>
+        </Box> */}
+        <LoadingScreen sx={{ backgroundColor: 'transparent' }} />
       </Backdrop>
     </Stack>
   );

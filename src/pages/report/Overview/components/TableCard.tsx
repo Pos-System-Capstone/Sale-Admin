@@ -54,7 +54,7 @@ export const MiniTableCard: React.FC<CardProps> = ({ data, column, title, subtit
                 ? data[item.dataIndex] < 100
                   ? fShortenNumber(data[item.dataIndex])
                   : fNumber(data[item.dataIndex])
-                : ''}
+                : 'N/a'}
             </Typography>
           ))}
         </Box>
@@ -132,7 +132,7 @@ const TableCard: React.FC<CardProps> = ({
                           ? data[item.dataIndex] < 100
                             ? fShortenNumber(data[item.dataIndex])
                             : fNumber(data[item.dataIndex])
-                          : ''}
+                          : 'N/a'}
                       </Typography>
                     </Box>
                   )}
@@ -152,7 +152,7 @@ const TableCard: React.FC<CardProps> = ({
                       ? data[item.dataIndex] < 100
                         ? fShortenNumber(data[item.dataIndex])
                         : fNumber(data[item.dataIndex])
-                      : ''}
+                      : 'N/a'}
                   </Typography>
                 )}
               </>
