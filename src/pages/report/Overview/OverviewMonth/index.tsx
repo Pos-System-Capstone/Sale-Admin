@@ -9,6 +9,7 @@ import ReportPage from 'pages/report/components/ReportPage';
 import EmployeeStatistics from '../components/EmployeeStatistics';
 import RevenueOverview from '../components/RevenueOverview';
 import TopStoreRevenue from '../components/TopStoreRevenue';
+import moment from 'moment';
 
 export default function OverviewMonth() {
   const [activeTab, setActiveTab] = useState('1');
@@ -28,8 +29,9 @@ export default function OverviewMonth() {
       actions={[
         <DateRangePicker
           inputFormat="dd/MM/yyyy"
-          // minDate={moment(`${today.getFullYear()}/${today.getMonth() + 1}/01`).toDate()}
+          minDate={moment(`${today.getFullYear()}/${today.getMonth() + 1}/01`).toDate()}
           // disabled={loading}
+          disableCloseOnSelect
           disableFuture
           value={dateRange}
           renderInput={(startProps, endProps) => (
