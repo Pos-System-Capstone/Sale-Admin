@@ -12,7 +12,7 @@ import useLocales from 'hooks/useLocales';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLocation, useNavigate, useParams } from 'react-router';
-import { StoreBase } from 'types/report/store';
+import { TStoreReport } from 'types/report/store';
 import { TStore } from 'types/store';
 import { getAppToken } from 'utils/utils';
 import { MHidden } from '../../components/@material-extend';
@@ -122,7 +122,7 @@ export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps)
 
   const { storeId } = useParams();
   const { data: storeData } = useStore();
-  const [nameStoreReport, setNameStoreReport] = useState<StoreBase>();
+  const [nameStoreReport, setNameStoreReport] = useState<TStoreReport>();
 
   useEffect(() => {
     const storeName = storeData?.find((item: any) => item.id == storeId);

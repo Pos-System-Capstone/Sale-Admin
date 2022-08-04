@@ -1,10 +1,10 @@
-import { StoreBase } from 'types/report/store';
+import { TStoreReport } from 'types/report/store';
 import { axiosInstances } from 'utils/axios';
 
 const request = axiosInstances.report;
 
-const get = (params?: any) => request.get<StoreBase[]>(`stores`, { params });
+const get = (params?: any) => request.get<TStoreReport[]>(`stores`, { params });
 
-const storeApi = { get };
+const storeReportApi = { get };
 
-export default storeApi;
+export default storeReportApi;
