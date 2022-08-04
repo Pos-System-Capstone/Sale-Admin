@@ -13,8 +13,8 @@ import Scrollbar from '../../components/Scrollbar';
 import useAuth from '../../hooks/useAuth';
 import useCollapseDrawer from '../../hooks/useCollapseDrawer';
 // routes
-import { ROOTS_DASHBOARD as ROOTS_DASHBOARD_PROMOTION } from 'routes/promotionAppPaths';
-import { ROOTS_DASHBOARD as ROOTS_DASHBOARD_REPORT } from 'routes/reportAppPaths';
+import { ROOTS_DASHBOARD as ROOTS_DASHBOARD_PROMOTION } from '../../routes/promotionAppPaths';
+import { ROOTS_DASHBOARD as ROOTS_DASHBOARD_REPORT } from '../../routes/reportAppPaths';
 import { PATH_DASHBOARD, ROOTS_DASHBOARD as ROOTS_DASHBOARD_SALE } from '../../routes/paths';
 
 //

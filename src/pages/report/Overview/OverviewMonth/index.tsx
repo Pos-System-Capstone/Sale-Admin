@@ -73,7 +73,7 @@ export default function OverviewMonth() {
           </TabPanel>
 
           <TabPanel value="2">
-            <TopStoreRevenue />
+            <TopStoreRevenue dateRange={dateRange} />
           </TabPanel>
 
           {/* <TabPanel value="3">

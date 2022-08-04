@@ -9,19 +9,18 @@ import ReportPage from 'pages/report/components/ReportPage';
 import EmployeeStatistics from '../components/EmployeeStatistics';
 import RevenueOverview from '../components/RevenueOverview';
 import TopStoreRevenue from '../components/TopStoreRevenue';
-import moment from 'moment';
 
 export default function OverviewDate() {
-  const [activeTab, setActiveTab] = useState('1');
-  const handleChangeTab = (event: React.SyntheticEvent, newValue: string) => {
-    setActiveTab(newValue);
-  };
-
   const today = new Date();
   // const yesterday = new Date(new Date().valueOf() - 1000 * 60 * 60 * 24);
   const [dateRange, setDateRange] = useState<DateRange<Date>>([today, today]);
   const [done, setDone] = useState(true);
   const [loading, setLoading] = useState(true);
+
+  const [activeTab, setActiveTab] = useState('1');
+  const handleChangeTab = (event: React.SyntheticEvent, newValue: string) => {
+    setActiveTab(newValue);
+  };
 
   return (
     <ReportPage
@@ -30,8 +29,8 @@ export default function OverviewDate() {
         <DatePicker
           inputFormat="dd/MM/yyyy"
           renderInput={(params) => <TextField {...params} />}
-          minDate={moment(`${today.getFullYear()}/${today.getMonth() + 1}/01`).toDate()}
-          disabled={loading}
+          // minDate={moment(`${today.getFullYear()}/${today.getMonth() + 1}/01`).toDate()}
+          // disabled={loading}
           disableFuture
           value={dateRange[0]}
           onChange={(e) => {
@@ -67,7 +66,7 @@ export default function OverviewDate() {
           </TabPanel>
 
           <TabPanel value="2">
-            <TopStoreRevenue />
+            <TopStoreRevenue dateRange={dateRange} />
           </TabPanel>
 
           {/* <TabPanel value="3">

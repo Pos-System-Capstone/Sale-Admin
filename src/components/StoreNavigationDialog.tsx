@@ -69,13 +69,34 @@ const StoreNavigationDialog: React.FC<Props> = ({ open, onClose, onSelectStore }
     return groupStores;
   }, [filterName, stores]);
 
-  const { data: storeData } = useStore();
   const { data: brandData } = useBrands();
-  const store = useSelector((state: RootState) => state.store);
+  // const store = useSelector((state: RootState) => state.store);
   const { pathname } = useLocation();
   const firstElementOfPath = pathname.split('/')[1];
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const { data: storeData } = useStore();
+  const [searchNameStoreReport, setSearchNameStoreReport] = useState<string | null>(null);
+  const { run: runStore } = useDebounceFn(
+    (values) => {
+      setSearchNameStoreReport(values);
+    },
+    {
+      wait: 500
+    }
+  );
+
+  const filteredStoresReport = useMemo(() => {
+    const groupStores = storeData;
+
+    if (!searchNameStoreReport) return groupStores;
+
+    return groupStores?.filter(({ name }) =>
+      name?.toLowerCase().includes(searchNameStoreReport.toLowerCase())
+    );
+  }, [searchNameStoreReport, storeData]);
+
   return (
     <Dialog
       fullWidth
@@ -102,14 +123,26 @@ const StoreNavigationDialog: React.FC<Props> = ({ open, onClose, onSelectStore }
         </IconButton>
       </DialogTitle>
       <Box p={2}>
-        <TextField
-          onChange={(e) => {
-            run(e.target.value);
-          }}
-          placeholder="Tên cửa hàng..."
-          variant="outlined"
-          size="small"
-        />
+        {firstElementOfPath === 'dashboard' && (
+          <TextField
+            onChange={(e) => {
+              run(e.target.value);
+            }}
+            placeholder="Tên cửa hàng..."
+            variant="outlined"
+            size="small"
+          />
+        )}
+        {firstElementOfPath === 'report' && (
+          <TextField
+            onChange={(e) => {
+              runStore(e.target.value);
+            }}
+            placeholder="Tên cửa hàng..."
+            variant="outlined"
+            size="small"
+          />
+        )}
       </Box>
       {firstElementOfPath === 'dashboard' && (
         <DialogContent dividers>
@@ -170,7 +203,7 @@ const StoreNavigationDialog: React.FC<Props> = ({ open, onClose, onSelectStore }
       {firstElementOfPath === 'report' && (
         <DialogContent dividers>
           <Grid container spacing={2}>
-            {storeData?.map((item) => (
+            {filteredStoresReport?.map((item) => (
               <Grid item key={item.id} md={4} xs={6}>
                 <Card>
                   <Stack direction="row" justifyContent="space-between" alignItems="center">
