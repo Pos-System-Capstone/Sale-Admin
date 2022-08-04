@@ -1,16 +1,18 @@
 import menu2Fill from '@iconify/icons-eva/menu-2-fill';
 import navigation2Outline from '@iconify/icons-eva/navigation-2-outline';
 import { Icon } from '@iconify/react';
-import { AppBar, Box, Button, IconButton, Stack, Toolbar } from '@mui/material';
+import { AppBar, Box, Button, IconButton, Stack, Toolbar, Typography } from '@mui/material';
 // material
 import { alpha, styled } from '@mui/material/styles';
 import Label from 'components/Label';
 import StoreNavigationDialog from 'components/StoreNavigationDialog';
+import useStore from 'hooks/report/useStore';
 import useAuth from 'hooks/useAuth';
 import useLocales from 'hooks/useLocales';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate, useParams } from 'react-router';
+import { StoreBase } from 'types/report/store';
 import { TStore } from 'types/store';
 import { getAppToken } from 'utils/utils';
 import { MHidden } from '../../components/@material-extend';
@@ -86,6 +88,8 @@ export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps)
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
+  const { pathname } = useLocation();
+  const firstElementOfPath = pathname.split('/')[1];
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -116,6 +120,15 @@ export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps)
     }
   };
 
+  const { storeId } = useParams();
+  const { data: storeData } = useStore();
+  const [nameStoreReport, setNameStoreReport] = useState<StoreBase>();
+
+  useEffect(() => {
+    const storeName = storeData?.find((item: any) => item.id == storeId);
+    setNameStoreReport(storeName!);
+  }, [nameStoreReport, storeData, storeId]);
+
   return (
     <RootStyle
       sx={{
@@ -132,8 +145,13 @@ export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps)
           </IconButton>
         </MHidden>
 
-        <Box sx={{ flexGrow: 1 }} />
+        {firstElementOfPath === 'report' && (
+          <Typography color="green" variant="subtitle1" sx={{ marginLeft: '150px' }}>
+            {nameStoreReport?.name || 'Hệ Thống'}
+          </Typography>
+        )}
 
+        <Box sx={{ flexGrow: 1 }} />
         <Stack direction="row" alignItems="center" spacing={{ xs: 0.5, sm: 1.5 }}>
           <Label color={envLabelColor(process.env.REACT_APP_ENVIROMENT)}>
             {process.env.REACT_APP_ENVIROMENT}

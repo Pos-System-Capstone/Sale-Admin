@@ -34,22 +34,6 @@ const ProductSaleReport = () => {
       renderFormItem: () => <AutocompleteStore name="storeId" label="Cửa hàng" />
     },
     {
-      title: 'Chọn biểu đồ',
-      hideInTable: true,
-      dataIndex: 'checkDeal',
-      valueType: 'select',
-      valueEnum: [
-        {
-          label: 'Trước giảm giá',
-          value: 'beforeDeal'
-        },
-        {
-          label: 'Giảm giá',
-          value: 'afterDeal'
-        }
-      ]
-    },
-    {
       title: 'STT',
       hideInSearch: true,
       dataIndex: 'index'
@@ -204,7 +188,6 @@ const ProductSaleReport = () => {
               getData={productApi.getProductSale}
               showAction={false}
               pagination={true}
-              scroll={{ y: '320px' }}
               defaultFilters={{
                 storeId: storeId === '0' ? 13 : storeId,
                 checkDeal: 'beforeDeal',
