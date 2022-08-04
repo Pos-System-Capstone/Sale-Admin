@@ -11,7 +11,6 @@ import useLocales from 'hooks/useLocales';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
-import { ResoPromotion, ResoReport, ResoSale } from 'redux/slices/system';
 import { TStore } from 'types/store';
 import { getAppToken } from 'utils/utils';
 import { MHidden } from '../../components/@material-extend';
@@ -141,7 +140,7 @@ export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps)
           </Label>
           <Button
             onClick={() => {
-              const action = ResoSale();
+              // const action = ResoSale();
               // dispatch(action);
               // localStorage.setItem('system', 'sale');
               navigate('/dashboard');
@@ -151,7 +150,7 @@ export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps)
           </Button>
           <Button
             onClick={() => {
-              const action = ResoReport();
+              // const action = ResoReport();
               // dispatch(action);
               // localStorage.setItem('system', 'report');
               navigate('/report/0/dashboard');
@@ -161,7 +160,7 @@ export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps)
           </Button>
           <Button
             onClick={() => {
-              const action = ResoPromotion();
+              // const action = ResoPromotion();
               // dispatch(action);
               // localStorage.setItem('system', 'promotion');
               navigate('/promotion-system');

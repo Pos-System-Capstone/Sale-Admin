@@ -1,125 +1,18 @@
 import { Stack, Typography } from '@mui/material';
 import overviewApi from 'api/report/overview';
 import ResoTable from 'components/ResoTable/ResoTable';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
+import { useParams } from 'react-router';
 import { TTopStoreRevenueBase } from 'types/report/overview';
 import { TTableColumn } from 'types/table';
 import { fNumber } from 'utils/formatNumber';
+import { formatDate } from 'utils/formatTime';
 import { formatCurrency } from 'utils/utils';
-function TopStoreRevenue() {
+function TopStoreRevenue({ dateRange }: any) {
   const ref = useRef<any>();
-
-  const data = [
-    {
-      index: 1,
-      name: 'HCM.UN.FPTMALL.D1\r\n',
-      bill: 355,
-      billCard: 0,
-      totalProduct: 0,
-      saleRevenue: 132121,
-      billRevenue: 0,
-      totalRevenue: 132121
-    },
-    {
-      index: 2,
-      name: 'HCM.UN.FPTMALL.D1\r\n',
-      bill: 355,
-      billCard: 1,
-      totalProduct: 1,
-      saleRevenue: 132121,
-      billRevenue: 1,
-      totalRevenue: 132121
-    },
-    {
-      index: 1,
-      name: 'HCM.UN.FPTMALL.D1\r\n',
-      bill: 355,
-      billCard: 0,
-      totalProduct: 0,
-      saleRevenue: 132121,
-      billRevenue: 0,
-      totalRevenue: 132121
-    },
-    {
-      index: 2,
-      name: 'HCM.UN.FPTMALL.D1\r\n',
-      bill: 355,
-      billCard: 1,
-      totalProduct: 1,
-      saleRevenue: 132121,
-      billRevenue: 1,
-      totalRevenue: 132121
-    },
-    {
-      index: 1,
-      name: 'HCM.UN.FPTMALL.D1\r\n',
-      bill: 355,
-      billCard: 0,
-      totalProduct: 0,
-      saleRevenue: 132121,
-      billRevenue: 0,
-      totalRevenue: 132121
-    },
-    {
-      index: 2,
-      name: 'HCM.UN.FPTMALL.D1\r\n',
-      bill: 355,
-      billCard: 1,
-      totalProduct: 1,
-      saleRevenue: 132121,
-      billRevenue: 1,
-      totalRevenue: 132121
-    },
-    {
-      index: 1,
-      name: 'HCM.UN.FPTMALL.D1\r\n',
-      bill: 355,
-      billCard: 0,
-      totalProduct: 0,
-      saleRevenue: 132121,
-      billRevenue: 0,
-      totalRevenue: 132121
-    },
-    {
-      index: 2,
-      name: 'HCM.UN.FPTMALL.D1\r\n',
-      bill: 355,
-      billCard: 1,
-      totalProduct: 1,
-      saleRevenue: 132121,
-      billRevenue: 1,
-      totalRevenue: 132121
-    },
-    {
-      index: 1,
-      name: 'HCM.UN.FPTMALL.D1\r\n',
-      bill: 355,
-      billCard: 0,
-      totalProduct: 0,
-      saleRevenue: 132121,
-      billRevenue: 0,
-      totalRevenue: 132121
-    },
-    {
-      index: 2,
-      name: 'HCM.UN.FPTMALL.D1\r\n',
-      bill: 355,
-      billCard: 1,
-      totalProduct: 1,
-      saleRevenue: 132121,
-      billRevenue: 1,
-      totalRevenue: 132121
-    }
-  ];
+  const { storeId } = useParams();
 
   const orderColumns: TTableColumn<TTopStoreRevenueBase>[] = [
-    {
-      title: 'Ngày',
-      // dataIndex: 'create_at',
-      valueType: 'date',
-      hideInSearch: true,
-      hideInTable: true
-    },
     {
       title: 'STT',
       hideInSearch: true,
@@ -127,68 +20,76 @@ function TopStoreRevenue() {
     },
     {
       title: 'Cửa hàng',
-      hideInSearch: true
-      // dataIndex: 'name'
+      hideInSearch: true,
+      dataIndex: 'storeName'
     },
     {
       title: 'Tổng sản phẩm',
       hideInSearch: true,
-      // dataIndex: 'bill',
+      dataIndex: 'totalProduct',
       render: (value) => fNumber(value)
     },
     {
       title: 'Hóa đơn bán hàng',
       hideInSearch: true,
-      // dataIndex: 'bill',
+      dataIndex: 'totalOrderSale',
       render: (value) => fNumber(value)
     },
     {
       title: 'Trung bình bill',
       hideInSearch: true,
-      // dataIndex: '',
+      dataIndex: 'avgRevenueSale',
       render: (value) => fNumber(value)
     },
     {
       title: 'DT trước giảm giá',
       hideInSearch: true,
-      // dataIndex: 'bill',
+      dataIndex: 'totalRevenueBeforeDiscount',
       render: (value) => fNumber(value)
     },
     {
       title: 'Giảm giá',
       hideInSearch: true,
-      // dataIndex: 'totalProduct',
+      dataIndex: 'totalDiscount',
       render: (value) => fNumber(value)
     },
     {
       title: 'DT sau giảm giá',
       hideInSearch: true,
-      // dataIndex: 'saleRevenue',
+      dataIndex: 'totalRevenueSale',
       render: (value) => formatCurrency(value)
     },
     {
       title: 'Hóa đơn nạp thẻ',
       hideInSearch: true,
-      // dataIndex: 'billCard',
+      dataIndex: 'totalOrderCard',
       render: (value) => formatCurrency(value)
     },
     {
       title: 'Doanh thu nạp thẻ',
       hideInSearch: true,
-      // dataIndex: 'saleRevenue',
+      dataIndex: 'totalRevenueCard',
       render: (value) => formatCurrency(value)
     },
     {
       title: 'Phiên bản (Version)',
-      hideInSearch: true
-      // dataIndex: 'saleRevenue',
+      hideInSearch: true,
+      dataIndex: 'version'
     },
     {
       title: 'Ngày cập nhật (Updated at)',
-      hideInSearch: true
-      // dataIndex: 'saleRevenue',
+      hideInSearch: true,
+      dataIndex: 'updateAt'
     }
   ];
+
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.formControl.setValue('FromDate', formatDate(dateRange[0]!));
+      ref.current.formControl.setValue('ToDate', formatDate(dateRange[1]!));
+    }
+  }, [dateRange]);
+
   return (
     <Stack direction={'column'}>
       {/* V. Top Doanh Thu Sản Phẩm*/}
@@ -202,6 +103,11 @@ function TopStoreRevenue() {
           ref={ref}
           getData={overviewApi.getTopStoreRevenue}
           scroll={{ y: '320px' }}
+          defaultFilters={{
+            storeId,
+            FromDate: formatDate(dateRange[0]!),
+            ToDate: formatDate(dateRange[1]!)
+          }}
         />
       </Stack>
     </Stack>

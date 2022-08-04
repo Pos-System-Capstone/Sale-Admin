@@ -97,6 +97,9 @@ function RevenueOverview({ dateRange, done, setLoading, loading }: any) {
       {loading ? (
         <Box margin={'auto'}>
           <LoadingScreen loading={loading} />
+          {/* <Backdrop open={loading}>
+            <CircularProgress color="inherit" />
+          </Backdrop> */}
         </Box>
       ) : (
         <>
