@@ -31,6 +31,7 @@ export default function OverviewMonth() {
           inputFormat="dd/MM/yyyy"
           minDate={moment(`${today.getFullYear()}/${today.getMonth() + 1}/01`).toDate()}
           // disabled={loading}
+          disableCloseOnSelect
           disableFuture
           value={dateRange}
           renderInput={(startProps, endProps) => (
