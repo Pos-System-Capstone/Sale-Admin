@@ -1,3 +1,10 @@
+# ChangeLogs
+
+
+
+
+
+
 ## Typescript
 
 `Type` cho phép client có thể bỏ thêm các addtional prop

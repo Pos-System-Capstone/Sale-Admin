@@ -1,3 +1,7 @@
+#### `05/08/2022`
+
+- 🆕 Add `sortable` field for `ResoTable`
+
 #### `2022-07-11` `TrungLV:`
 
 - 🆕 call new api in `ProductProgressReport`

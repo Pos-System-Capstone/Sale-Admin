@@ -28,6 +28,7 @@ export type TTableColumn<T = void> = {
   width?: number | string;
   hideInSearch?: boolean;
   hideInTable?: boolean;
+  sortable?: boolean;
   formatProps?: any;
 } & (
   | {

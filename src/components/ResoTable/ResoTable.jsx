@@ -131,6 +131,7 @@ const ResoTable = (
   const {
     getData,
     defaultFilters = {},
+    // defaultSort = {},
     renderEdit = (dom) => dom,
     renderDelete = (dom) => dom
   } = props || {};
@@ -146,6 +147,8 @@ const ResoTable = (
   const _filters = useWatch({
     control
   });
+
+  const { sortDirection, sortProperty } = _filters;
 
   const {
     tableProps,
@@ -280,6 +283,27 @@ const ResoTable = (
     [_selectedIds, checkboxSelection?.type]
   );
 
+  const handleSort = React.useCallback(
+    (columnConfig) => {
+      let direction = sortDirection;
+
+      switch (sortDirection) {
+        case 'asc':
+          direction = 'desc';
+          break;
+        case 'desc':
+          direction = null;
+          break;
+        default:
+          direction = 'asc';
+      }
+
+      form.setValue('sortDirection', direction);
+      form.setValue('sortProperty', direction ? columnConfig.dataIndex : null);
+    },
+    [sortDirection, form]
+  );
+
   const tableHeader = React.useMemo(() => {
     const headers = [..._columns].filter(({ hideInTable }) => !hideInTable);
 
@@ -306,6 +330,7 @@ const ResoTable = (
 
     headers.forEach((header, index) => {
       const CellComp = TableCell;
+      const { sortable = true } = header;
       tableHeaders.push(
         <CellComp
           className={[classes.root, header.fixed === 'right' ? classes.stickyRight : ''].join(' ')}
@@ -313,7 +338,12 @@ const ResoTable = (
           align={header.alignRight ? 'right' : 'left'}
           sx={{ left: checkboxSelection ? '64px' : 0 }}
         >
-          <TableSortLabel hideSortIcon>
+          <TableSortLabel
+            active={sortProperty === header.dataIndex}
+            direction={sortDirection ? sortDirection : undefined}
+            hideSortIcon={!sortable}
+            onClick={sortable ? () => handleSort(header) : null}
+          >
             <Typography variant="body1" noWrap>
               {getCellValue(header.title, null, header)}
             </Typography>
@@ -344,7 +374,10 @@ const ResoTable = (
     classes.stickyRight,
     classes.actionColumn,
     onSelectAllClick,
-    rowKey
+    rowKey,
+    handleSort,
+    sortProperty,
+    sortDirection
   ]);
 
   const tableBodyContent = React.useMemo(() => {
