@@ -239,7 +239,7 @@ export const reportAppSidebarConfig = () => {
       ]
     },
     {
-      subheader: 'report.management',
+      subheader: 'report.report',
       items: [
         // {
         //   title: 'report.productProgress',
