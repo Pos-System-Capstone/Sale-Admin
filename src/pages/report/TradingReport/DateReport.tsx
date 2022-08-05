@@ -12,7 +12,6 @@ import Grid from '@mui/material/Grid';
 import { Box } from '@mui/system';
 // import { TTradingBase } from '@types/report/trading';
 import tradingApi from 'api/report/trading';
-import AutocompleteTrading from 'components/form/common/report/AutocompleteTrading';
 // import ModalForm from 'components/ModalForm/ModalForm';
 import ResoTable from 'components/ResoTable/ResoTable';
 import MenuWidgets from 'components/_dashboard/general-app/MenuWidgets';
@@ -81,8 +80,7 @@ export const menuColumns: TTableColumn<TTradingBase>[] = [
   {
     title: 'Cửa hàng',
     dataIndex: 'storeName',
-    valueType: 'select',
-    renderFormItem: () => <AutocompleteTrading name="storeName" label="Cửa hàng" />
+    hideInSearch: true
   },
   {
     title: 'Tổng số bill',

@@ -1,20 +1,16 @@
-import { useState, useEffect } from 'react';
-import { Outlet } from 'react-router-dom';
 import useDashboard, { withDashboard } from 'hooks/useDashboard';
-import { useDispatch } from 'redux/store';
+import { Outlet } from 'react-router-dom';
 
 // material
 import { styled, useTheme } from '@mui/material/styles';
-import LoadingPage from 'components/LoadingPage';
-import { fetchGlobalState } from 'redux/admin/thunk';
+import useCollapseDrawer from 'hooks/useCollapseDrawer';
 import DashboardNavbar from 'layouts/dashboard/DashboardNavbar';
 import DashboardSidebar from 'layouts/dashboard/DashboardSidebar';
-import useCollapseDrawer from 'hooks/useCollapseDrawer';
 // hooks
 
 // ----------------------------------------------------------------------
 
-const APP_BAR_MOBILE = 64;
+// const APP_BAR_MOBILE = 64;
 const APP_BAR_DESKTOP = 64;
 
 const RootStyle = styled('div')({
@@ -42,20 +38,6 @@ function DashboardReportLayout() {
   const theme = useTheme();
   const { collapseClick } = useCollapseDrawer();
   const { open, setNavOpen: setOpen } = useDashboard();
-
-  const [isLoadingState, setIsLoadingState] = useState(true);
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    // fetch global
-    setIsLoadingState(true);
-    dispatch(fetchGlobalState()).then(() => setIsLoadingState(false));
-  }, [dispatch]);
-
-  if (isLoadingState) {
-    return <LoadingPage />;
-  }
 
   return (
     <RootStyle>

@@ -50,9 +50,11 @@ export const MiniTableCard: React.FC<CardProps> = ({ data, column, title, subtit
 
           {column?.map((item: any) => (
             <Typography key={item.dataIndex} textAlign="right" variant="h5">
-              {data[item.dataIndex] < 100
-                ? fShortenNumber(data[item.dataIndex])
-                : fNumber(data[item.dataIndex])}
+              {data
+                ? data[item.dataIndex] < 100
+                  ? fShortenNumber(data[item.dataIndex])
+                  : fNumber(data[item.dataIndex])
+                : 'N/a'}
             </Typography>
           ))}
         </Box>
@@ -71,6 +73,7 @@ const TableCard: React.FC<CardProps> = ({
   subtitle = 'A default subtitle',
   smallCard = false
 }) => {
+  console.log(data);
   return (
     <Card
       sx={{
@@ -125,9 +128,11 @@ const TableCard: React.FC<CardProps> = ({
                   ) : (
                     <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                       <Typography sx={{ fontWeight }} variant={fz} component="div">
-                        {data[item.dataIndex] < 100
-                          ? fShortenNumber(data[item.dataIndex])
-                          : fNumber(data[item.dataIndex])}
+                        {data
+                          ? data[item.dataIndex] < 100
+                            ? fShortenNumber(data[item.dataIndex])
+                            : fNumber(data[item.dataIndex])
+                          : 'N/a'}
                       </Typography>
                     </Box>
                   )}
@@ -143,9 +148,11 @@ const TableCard: React.FC<CardProps> = ({
                   ''
                 ) : (
                   <Typography sx={{ fontWeight }} variant={fz} component="div">
-                    {data[item.dataIndex] < 100
-                      ? fShortenNumber(data[item.dataIndex])
-                      : fNumber(data[item.dataIndex])}
+                    {data
+                      ? data[item.dataIndex] < 100
+                        ? fShortenNumber(data[item.dataIndex])
+                        : fNumber(data[item.dataIndex])
+                      : 'N/a'}
                   </Typography>
                 )}
               </>

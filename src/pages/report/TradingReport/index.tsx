@@ -14,7 +14,6 @@ import { Box } from '@mui/system';
 // import { TTradingBase } from '@types/report/trading';
 import menuApi from 'api/menu';
 import tradingApi from 'api/report/trading';
-import AutocompleteTrading from 'components/form/common/report/AutocompleteTrading';
 import { menuSchema } from 'components/form/Menu/helper';
 import confirm from 'components/Modal/confirm';
 // import ModalForm from 'components/ModalForm/ModalForm';
@@ -34,105 +33,7 @@ import { formatDate } from 'utils/formatTime';
 import ReportPage from '../components/ReportPage';
 // import Page from './components/Page';
 
-export const menuColumns: TTableColumn<TTradingBase>[] = [
-  {
-    title: 'STT',
-    dataIndex: 'index',
-    hideInSearch: true
-  },
-  {
-    fixed: 'left',
-    title: 'Ngày',
-    valueType: 'select',
-    hideInTable: true,
-    valueEnum: [
-      {
-        label: 'Tháng này',
-        value: true
-      },
-      {
-        label: 'Tháng trước',
-        value: false
-      },
-      {
-        label: 'Tuỳ chọn',
-        value: false
-      }
-    ]
-  },
-  {
-    title: 'Mang đi',
-    dataIndex: 'totalOrderTakeAway',
-    hideInSearch: true,
-    render: (x) => fNumber(x)
-  },
-  {
-    title: 'Tại store',
-    dataIndex: 'totalOrderAtStore',
-    hideInSearch: true,
-    render: (x) => fNumber(x)
-  },
-  {
-    title: 'Giao hàng',
-    dataIndex: 'totalOrderDelivery',
-    hideInSearch: true,
-    render: (x) => fNumber(x)
-  },
-  {
-    title: 'Cửa hàng',
-    dataIndex: 'storeName',
-    valueType: 'select',
-    renderFormItem: () => <AutocompleteTrading name="storeName" label="Cửa hàng" />
-  },
-  {
-    title: 'Tổng số bill',
-    dataIndex: 'totalBills',
-    hideInSearch: true,
-    render: (x) => fNumber(x)
-  },
-  {
-    title: 'Tổng doanh thu',
-    dataIndex: 'totalSales',
-    hideInSearch: true,
-    render: (x) =>
-      x.toLocaleString('vi', {
-        style: 'currency',
-        currency: 'VND'
-      })
-  },
-  {
-    title: 'Tiền giảm giá',
-    dataIndex: 'totalDiscount',
-    hideInSearch: true,
-    render: (x) =>
-      x.toLocaleString('vi', {
-        style: 'currency',
-        currency: 'VND'
-      })
-  },
-  {
-    title: 'Tổng doanh thu sau giảm giá',
-    dataIndex: 'totalSalesAfterDiscount',
-    hideInSearch: true,
-    render: (x) =>
-      x.toLocaleString('vi', {
-        style: 'currency',
-        currency: 'VND'
-      })
-  },
-  {
-    title: 'Phiên bản (Version)',
-    hideInSearch: true
-    // dataIndex: 'saleRevenue',
-  },
-  {
-    title: 'Ngày cập nhật (Updated at)',
-    hideInSearch: true
-    // dataIndex: 'saleRevenue',
-  }
-];
-
-const DayReport = () => {
+export const DayReport = () => {
   const navigate = useNavigate();
   const tableRef = useRef<any>();
   const { enqueueSnackbar } = useSnackbar();
@@ -276,32 +177,129 @@ const DayReport = () => {
     }
   ];
 
-  const day = new Date();
-  const yesterday = day.setDate(day.getDate() - 1);
-  const [fromDate, setFromDate] = useState<Date>(new Date(yesterday));
-  const [toDate, setToDate] = useState<Date>(new Date());
+  const menuColumns: TTableColumn<TTradingBase>[] = [
+    {
+      title: 'STT',
+      dataIndex: 'index',
+      hideInSearch: true
+    },
+    {
+      fixed: 'left',
+      title: 'Ngày',
+      valueType: 'select',
+      hideInTable: true,
+      valueEnum: [
+        {
+          label: 'Tháng này',
+          value: true
+        },
+        {
+          label: 'Tháng trước',
+          value: false
+        },
+        {
+          label: 'Tuỳ chọn',
+          value: false
+        }
+      ]
+    },
+    {
+      title: 'Mang đi',
+      dataIndex: 'totalOrderTakeAway',
+      hideInSearch: true,
+      render: (x) => fNumber(x)
+    },
+    {
+      title: 'Tại store',
+      dataIndex: 'totalOrderAtStore',
+      hideInSearch: true,
+      render: (x) => fNumber(x)
+    },
+    {
+      title: 'Giao hàng',
+      dataIndex: 'totalOrderDelivery',
+      hideInSearch: true,
+      render: (x) => fNumber(x)
+    },
+    {
+      title: 'Cửa hàng',
+      dataIndex: 'storeName',
+      hideInSearch: true
+      // valueType: 'select',
+      // hideInSearch: storeId === '0' ? false : true,
+      // renderFormItem: () => <AutocompleteStore name="storeId" label="Cửa hàng" />
+    },
+    {
+      title: 'Tổng số bill',
+      dataIndex: 'totalBills',
+      hideInSearch: true,
+      render: (x) => fNumber(x)
+    },
+    {
+      title: 'Tổng doanh thu',
+      dataIndex: 'totalSales',
+      hideInSearch: true,
+      render: (x) =>
+        x.toLocaleString('vi', {
+          style: 'currency',
+          currency: 'VND'
+        })
+    },
+    {
+      title: 'Tiền giảm giá',
+      dataIndex: 'totalDiscount',
+      hideInSearch: true,
+      render: (x) =>
+        x.toLocaleString('vi', {
+          style: 'currency',
+          currency: 'VND'
+        })
+    },
+    {
+      title: 'Tổng doanh thu sau giảm giá',
+      dataIndex: 'totalSalesAfterDiscount',
+      hideInSearch: true,
+      render: (x) =>
+        x.toLocaleString('vi', {
+          style: 'currency',
+          currency: 'VND'
+        })
+    },
+    {
+      title: 'Phiên bản (Version)',
+      hideInSearch: true
+      // dataIndex: 'saleRevenue',
+    },
+    {
+      title: 'Ngày cập nhật (Updated at)',
+      hideInSearch: true
+      // dataIndex: 'saleRevenue',
+    }
+  ];
+
+  const today = new Date();
+  const yesterday = new Date(new Date().valueOf() - 1000 * 60 * 60 * 24);
+  const [dateRange, setDateRange] = useState<any>([yesterday, today]);
 
   useEffect(() => {
     if (tableRef.current) {
-      tableRef.current.formControl.setValue('FromDate', formatDate(fromDate!));
-      tableRef.current.formControl.setValue('ToDate', formatDate(toDate!));
+      tableRef.current.formControl.setValue('FromDate', formatDate(dateRange[0]!));
+      tableRef.current.formControl.setValue('ToDate', formatDate(dateRange[1]!));
     }
-  }, [fromDate, toDate]);
+  }, [dateRange]);
 
   return (
     <ReportPage
-      title={`Báo cáo doanh thu theo ngày: ${day.toLocaleDateString('vi-VI', {
+      title={`Báo cáo doanh thu theo ngày: ${today.toLocaleDateString('vi-VI', {
         year: 'numeric',
         month: '2-digit',
         day: '2-digit'
       })}`}
-      // content={
-      //   day.getDate() === current.getDate() ? `Tính đến: ${moment().format('hh:mm:ss')}` : ''
-      // }
       actions={[
         <DateRangePicker
+          inputFormat="dd/MM/yyyy"
           disableFuture
-          value={[fromDate, toDate]}
+          value={dateRange}
           renderInput={(startProps, endProps) => (
             <>
               <TextField {...startProps} label="Từ" />
@@ -310,8 +308,9 @@ const DayReport = () => {
             </>
           )}
           onChange={(e) => {
-            setFromDate(e[0]!);
-            setToDate(e[1]!);
+            if (e[0] && e[1]) {
+              setDateRange(e);
+            }
           }}
           key="date-range"
         />
@@ -342,10 +341,11 @@ const DayReport = () => {
                   rowKey="trading_id"
                   ref={tableRef}
                   getData={tradingApi.getTrading}
-                  // getData={({ storeName }: any) => tradingApi.getTrading(storeName)}
-                  // defaultFilters={{
-                  //   storeName: ''
-                  // }}
+                  defaultFilters={{
+                    storeId: storeId === '0' ? 13 : storeId,
+                    FromDate: formatDate(dateRange[0]!),
+                    ToDate: formatDate(dateRange[1]!)
+                  }}
                   columns={menuColumns}
                   scroll={{ y: '500px' }}
                 />

@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { DatePicker, DateRange, TabContext, TabList, TabPanel } from '@mui/lab';
 import { Box, Card, Tab, TextField } from '@mui/material';
 // components
+import moment from 'moment';
 import ReportBtn from 'pages/report/components/ReportBtn';
 import ReportPage from 'pages/report/components/ReportPage';
 import EmployeeStatistics from '../components/EmployeeStatistics';
@@ -29,8 +30,9 @@ export default function OverviewDate() {
         <DatePicker
           inputFormat="dd/MM/yyyy"
           renderInput={(params) => <TextField {...params} />}
-          // minDate={moment(`${today.getFullYear()}/${today.getMonth() + 1}/01`).toDate()}
+          minDate={moment(`${today.getFullYear()}/${today.getMonth() + 1}/01`).toDate()}
           // disabled={loading}
+          disableCloseOnSelect
           disableFuture
           value={dateRange[0]}
           onChange={(e) => {

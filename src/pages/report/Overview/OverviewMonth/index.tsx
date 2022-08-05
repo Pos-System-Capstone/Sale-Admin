@@ -1,5 +1,4 @@
 /* eslint-disable camelcase */
-import moment from 'moment';
 import React, { useState } from 'react';
 // material
 import { DateRange, DateRangePicker, TabContext, TabList, TabPanel } from '@mui/lab';
@@ -10,6 +9,7 @@ import ReportPage from 'pages/report/components/ReportPage';
 import EmployeeStatistics from '../components/EmployeeStatistics';
 import RevenueOverview from '../components/RevenueOverview';
 import TopStoreRevenue from '../components/TopStoreRevenue';
+import moment from 'moment';
 
 export default function OverviewMonth() {
   const [activeTab, setActiveTab] = useState('1');
@@ -30,7 +30,8 @@ export default function OverviewMonth() {
         <DateRangePicker
           inputFormat="dd/MM/yyyy"
           minDate={moment(`${today.getFullYear()}/${today.getMonth() + 1}/01`).toDate()}
-          disabled={loading}
+          // disabled={loading}
+          disableCloseOnSelect
           disableFuture
           value={dateRange}
           renderInput={(startProps, endProps) => (

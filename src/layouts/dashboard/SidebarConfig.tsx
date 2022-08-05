@@ -251,21 +251,21 @@ export const reportAppSidebarConfig = () => {
           path: PATH_REPORT.productSale,
           icon: ICONS.product
         },
-        // {
-        //   title: 'report.payment',
-        //   path: PATH_REPORT.payment,
-        //   icon: ICONS.ecommerce
-        // },
+        {
+          title: 'report.payment',
+          path: PATH_REPORT.payment,
+          icon: ICONS.ecommerce
+        },
         {
           title: 'report.trading',
           path: PATH_REPORT.dayReport,
           icon: ICONS.menu
         },
-        {
-          title: 'report.promotion',
-          path: PATH_REPORT.promotion,
-          icon: ICONS.kanban
-        },
+        // {
+        //   title: 'report.promotion',
+        //   path: PATH_REPORT.promotion,
+        //   icon: ICONS.kanban
+        // },
         {
           title: 'report.stores',
           path: PATH_REPORT.stores,

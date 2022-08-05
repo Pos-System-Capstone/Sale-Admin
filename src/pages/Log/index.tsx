@@ -1,26 +1,20 @@
 /* eslint-disable camelcase */
-import { FileDownload, Visibility } from '@mui/icons-material';
-import { DateRangePicker } from '@mui/lab';
+import { Visibility } from '@mui/icons-material';
 // material
-import { Button, Card, IconButton, Stack, TextField, Tooltip, Typography } from '@mui/material';
-import { Box } from '@mui/system';
+import { Card, IconButton, Stack, Tooltip, Typography } from '@mui/material';
 import logApi from 'api/log';
+import AutocompleteStore from 'components/form/common/report/AutocompleteStore';
 // import logApi from 'api/log';
 // import AutoCompleteStoreSelect from 'components/form/common/AutocompleteStoreSelect/AutocompleteStoreSelect';
 import Page from 'components/Page';
 import ResoTable from 'components/ResoTable/ResoTable';
-import useLocales from 'hooks/useLocales';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 // components
-import { useNavigate } from 'react-router-dom';
 import { TLog } from 'types/log';
 import { TTableColumn } from 'types/table';
 import LogDetailDialog from './components/LogDetailDialog';
 
 const LogSale = () => {
-  const navigate = useNavigate();
-  const { translate } = useLocales();
-
   const [detailLog, setDetailLog] = useState<string | null>(null);
 
   const orderColumns: TTableColumn<TLog>[] = [
@@ -36,9 +30,14 @@ const LogSale = () => {
       render: (value: any) => {
         return (
           <Typography
-            width={'180px'}
+            width={'380px'}
+            height={'80px'}
             variant={'body1'}
-            sx={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
+            sx={{
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              wordBreak: 'break-all'
+            }}
           >
             {value}
           </Typography>
@@ -49,7 +48,8 @@ const LogSale = () => {
       title: 'Cửa hàng',
       dataIndex: 'store_id',
       valueType: 'select',
-      hideInTable: true
+      hideInTable: true,
+      renderFormItem: () => <AutocompleteStore name="store-id" label="Cửa hàng" />
     },
     {
       title: 'StoreId',
@@ -77,46 +77,8 @@ const LogSale = () => {
     }
   ];
 
-  const tableRef = useRef<any>();
-  const day = new Date();
-  const yesterday = day.setDate(day.getDate() - 1);
-  const [fromDate, setFromDate] = useState<Date>(new Date(yesterday));
-  const [toDate, setToDate] = useState<Date>(new Date());
-
   return (
-    <Page
-      title={'Log'}
-      actions={() => [
-        <>
-          <DateRangePicker
-            disableFuture
-            value={[fromDate, toDate]}
-            renderInput={(startProps, endProps) => (
-              <>
-                <TextField {...startProps} label="Từ" />
-                <Box sx={{ mx: 2 }}> - </Box>
-                <TextField {...endProps} label="Đến" />
-              </>
-            )}
-            onChange={(e) => {
-              setFromDate(e[0]!);
-              setToDate(e[1]!);
-            }}
-            key="date-range"
-          />
-          <Button
-            key="export-file"
-            onClick={() => {
-              //   navigate('/menus/create');
-            }}
-            variant="contained"
-            startIcon={<FileDownload />}
-          >
-            Xuất file
-          </Button>
-        </>
-      ]}
-    >
+    <Page title={'Log'}>
       <LogDetailDialog
         content={detailLog}
         open={Boolean(detailLog)}

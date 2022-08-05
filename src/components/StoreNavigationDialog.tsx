@@ -122,6 +122,19 @@ const StoreNavigationDialog: React.FC<Props> = ({ open, onClose, onSelectStore }
           <CloseIcon />
         </IconButton>
       </DialogTitle>
+      <Button
+        variant="outlined"
+        sx={{
+          display: 'flex',
+          marginTop: '20px',
+          maxWidth: '100%'
+        }}
+        onClick={() => {
+          navigate('/report/0/dashboard');
+        }}
+      >
+        Xem toàn bộ hệ thống
+      </Button>
       <Box p={2}>
         {firstElementOfPath === 'dashboard' && (
           <TextField

@@ -1,4 +1,5 @@
-export type StoreBase = {
+export type TStoreReport = {
   id?: number;
   name?: string;
+  reportDate?: string;
 };
