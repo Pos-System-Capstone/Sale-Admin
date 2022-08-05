@@ -5,7 +5,7 @@ import { axiosInstances } from 'utils/axios';
 const request = axiosInstances.report;
 
 const get = (params?: any) =>
-  request.get<BaseReponse<TPaymentReportBase>>('/payments/report', { params });
+  request.get<BaseReponse<TPaymentReportBase>>('/payment-report', { params });
 
 const paymentApi = { get };
 
