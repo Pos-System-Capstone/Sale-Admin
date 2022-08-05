@@ -5,10 +5,10 @@ import alertCircleFill from '@iconify/icons-eva/alert-circle-fill';
 import alertTriangleFill from '@iconify/icons-eva/alert-triangle-fill';
 import clockIcon from '@iconify/icons-eva/clock-fill';
 // import { Icon } from '@iconify/react';
-import { TabContext, TabList, TabPanel } from '@mui/lab';
+import { DateRangePicker, TabContext, TabList, TabPanel } from '@mui/lab';
 // import AdapterDateFns from '@mui/lab/AdapterDateFns';
 // material
-import { Card, Stack, Tab } from '@mui/material';
+import { Card, Stack, Tab, TextField } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { Box } from '@mui/system';
 // import { TTradingBase } from '@types/report/trading';
@@ -21,7 +21,7 @@ import ResoTable from 'components/ResoTable/ResoTable';
 import MenuWidgets from 'components/_dashboard/general-app/MenuWidgets';
 import moment from 'moment';
 import { useSnackbar } from 'notistack';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Chart from 'react-apexcharts';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -29,9 +29,7 @@ import { PATH_REPORT_APP } from 'routes/reportAppPaths';
 import { Menu } from 'types/menu';
 import { TTradingBase } from 'types/report/trading';
 import { TTableColumn } from 'types/table';
-import { fNumber } from 'utils/formatNumber';
-import ReportBtn from '../components/ReportBtn';
-import ReportDatePicker from '../components/ReportDatePicker';
+import { formatDate } from 'utils/formatTime';
 import ReportPage from '../components/ReportPage';
 // import Page from './components/Page';
 
@@ -76,19 +74,19 @@ export const menuColumns: TTableColumn<TTradingBase>[] = [
     title: 'Mang đi',
     dataIndex: 'totalOrderTakeAway',
     hideInSearch: true,
-    render: (x) => fNumber(x)
+    valueType: 'digit'
   },
   {
     title: 'Tại store',
     dataIndex: 'totalOrderAtStore',
     hideInSearch: true,
-    render: (x) => fNumber(x)
+    valueType: 'digit'
   },
   {
     title: 'Giao hàng',
     dataIndex: 'totalOrderDelivery',
     hideInSearch: true,
-    render: (x) => fNumber(x)
+    valueType: 'digit'
   },
   {
     title: 'Cửa hàng',
@@ -99,37 +97,25 @@ export const menuColumns: TTableColumn<TTradingBase>[] = [
     title: 'Tổng số bill',
     dataIndex: 'totalBills',
     hideInSearch: true,
-    render: (x) => fNumber(x)
+    valueType: 'digit'
   },
   {
     title: 'Tổng doanh thu',
     dataIndex: 'totalSales',
     hideInSearch: true,
-    render: (x) =>
-      x.toLocaleString('vi', {
-        style: 'currency',
-        currency: 'VND'
-      })
+    valueType: 'money'
   },
   {
     title: 'Tiền giảm giá',
     dataIndex: 'totalDiscount',
     hideInSearch: true,
-    render: (x) =>
-      x.toLocaleString('vi', {
-        style: 'currency',
-        currency: 'VND'
-      })
+    valueType: 'money'
   },
   {
     title: 'Tổng doanh thu sau giảm giá',
     dataIndex: 'totalSalesAfterDiscount',
     hideInSearch: true,
-    render: (x) =>
-      x.toLocaleString('vi', {
-        style: 'currency',
-        currency: 'VND'
-      })
+    valueType: 'money'
   },
   {
     title: 'Phiên bản (Version)',
@@ -276,29 +262,41 @@ const TimeReport = () => {
     }
   ];
 
-  const current = new Date();
-  const [day, setDay] = useState<Date>(current);
+  const today = new Date();
+  const yesterday = new Date(new Date().valueOf() - 1000 * 60 * 60 * 24);
+  const [dateRange, setDateRange] = useState<any>([yesterday, yesterday]);
+
+  useEffect(() => {
+    if (tableRef.current) {
+      tableRef.current.formControl.setValue('FromDate', formatDate(dateRange[0]!));
+      tableRef.current.formControl.setValue('ToDate', formatDate(dateRange[1]!));
+    }
+  }, [dateRange]);
 
   return (
     <ReportPage
-      // title="Báo cáo doanh thu theo ngày"
-      title={`Báo cáo doanh thu theo giờ: ${day.toLocaleDateString('vi-VI', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit'
-      })}`}
-      content={
-        day.getDate() === current.getDate() ? `Tính đến: ${moment().format('hh:mm:ss')}` : ''
-      }
+      title="Báo cáo doanh thu theo ngày"
       actions={[
-        <ReportDatePicker
-          key="choose-day"
-          value={day}
-          onChange={(newValue) => {
-            setDay(newValue || new Date());
+        <DateRangePicker
+          inputFormat="dd/MM/yyyy"
+          minDate={moment(`${today.getFullYear()}/${today.getMonth()}/01`).toDate()}
+          disableFuture
+          disableCloseOnSelect
+          value={dateRange}
+          renderInput={(startProps, endProps) => (
+            <>
+              <TextField {...startProps} label="Từ" />
+              <Box sx={{ mx: 2 }}> - </Box>
+              <TextField {...endProps} label="Đến" />
+            </>
+          )}
+          onChange={(e) => {
+            if (e[0] && e[1]) {
+              setDateRange(e);
+            }
           }}
-        />,
-        <ReportBtn key="export-excel" onClick={() => console.log('Export excel')} />
+          key="date-range"
+        />
       ]}
     >
       <Box sx={{ width: '100%', paddingBottom: '20px' }}>
@@ -327,6 +325,7 @@ const TimeReport = () => {
                   ref={tableRef}
                   getData={tradingApi.getTrading}
                   columns={menuColumns}
+                  pagination
                 />
               </Box>
             </Stack>

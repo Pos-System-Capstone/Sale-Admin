@@ -137,7 +137,7 @@ const StoreReport = () => {
             columns={testColumns}
             // getData={data}
             ref={ref}
-            scroll={{ y: '400px' }}
+            scroll={{ y: '500px' }}
             defaultFilters={{
               FromDate: formatDate(dateRange[0]!),
               ToDate: formatDate(dateRange[1]!)

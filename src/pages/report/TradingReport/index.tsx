@@ -19,6 +19,7 @@ import confirm from 'components/Modal/confirm';
 // import ModalForm from 'components/ModalForm/ModalForm';
 import ResoTable from 'components/ResoTable/ResoTable';
 import MenuWidgets from 'components/_dashboard/general-app/MenuWidgets';
+import moment from 'moment';
 import { useSnackbar } from 'notistack';
 import React, { useEffect, useRef, useState } from 'react';
 import Chart from 'react-apexcharts';
@@ -28,7 +29,6 @@ import { PATH_REPORT_APP } from 'routes/reportAppPaths';
 import { Menu } from 'types/menu';
 import { TTradingBase } from 'types/report/trading';
 import { TTableColumn } from 'types/table';
-import { fNumber } from 'utils/formatNumber';
 import { formatDate } from 'utils/formatTime';
 import ReportPage from '../components/ReportPage';
 // import Page from './components/Page';
@@ -207,19 +207,19 @@ export const DayReport = () => {
       title: 'Mang đi',
       dataIndex: 'totalOrderTakeAway',
       hideInSearch: true,
-      render: (x) => fNumber(x)
+      valueType: 'digit'
     },
     {
       title: 'Tại store',
       dataIndex: 'totalOrderAtStore',
       hideInSearch: true,
-      render: (x) => fNumber(x)
+      valueType: 'digit'
     },
     {
       title: 'Giao hàng',
       dataIndex: 'totalOrderDelivery',
       hideInSearch: true,
-      render: (x) => fNumber(x)
+      valueType: 'digit'
     },
     {
       title: 'Cửa hàng',
@@ -233,37 +233,30 @@ export const DayReport = () => {
       title: 'Tổng số bill',
       dataIndex: 'totalBills',
       hideInSearch: true,
-      render: (x) => fNumber(x)
+      valueType: 'digit'
     },
     {
       title: 'Tổng doanh thu',
       dataIndex: 'totalSales',
       hideInSearch: true,
-      render: (x) =>
-        x.toLocaleString('vi', {
-          style: 'currency',
-          currency: 'VND'
-        })
+      // render: (x) =>
+      //   x.toLocaleString('vi', {
+      //     style: 'currency',
+      //     currency: 'VND'
+      //   })
+      valueType: 'money'
     },
     {
       title: 'Tiền giảm giá',
       dataIndex: 'totalDiscount',
       hideInSearch: true,
-      render: (x) =>
-        x.toLocaleString('vi', {
-          style: 'currency',
-          currency: 'VND'
-        })
+      valueType: 'money'
     },
     {
       title: 'Tổng doanh thu sau giảm giá',
       dataIndex: 'totalSalesAfterDiscount',
       hideInSearch: true,
-      render: (x) =>
-        x.toLocaleString('vi', {
-          style: 'currency',
-          currency: 'VND'
-        })
+      valueType: 'money'
     },
     {
       title: 'Phiên bản (Version)',
@@ -279,7 +272,7 @@ export const DayReport = () => {
 
   const today = new Date();
   const yesterday = new Date(new Date().valueOf() - 1000 * 60 * 60 * 24);
-  const [dateRange, setDateRange] = useState<any>([yesterday, today]);
+  const [dateRange, setDateRange] = useState<any>([yesterday, yesterday]);
 
   useEffect(() => {
     if (tableRef.current) {
@@ -298,7 +291,9 @@ export const DayReport = () => {
       actions={[
         <DateRangePicker
           inputFormat="dd/MM/yyyy"
+          minDate={moment(`${today.getFullYear()}/${today.getMonth()}/01`).toDate()}
           disableFuture
+          disableCloseOnSelect
           value={dateRange}
           renderInput={(startProps, endProps) => (
             <>
@@ -347,7 +342,7 @@ export const DayReport = () => {
                     ToDate: formatDate(dateRange[1]!)
                   }}
                   columns={menuColumns}
-                  scroll={{ y: '500px' }}
+                  pagination
                 />
               </Box>
             </Stack>

@@ -26,7 +26,7 @@ const LogSale = () => {
     {
       title: 'Content',
       dataIndex: 'content',
-      hideInSearch: true,
+      // hideInSearch: true,
       render: (value: any) => {
         return (
           <Typography
@@ -92,6 +92,8 @@ const LogSale = () => {
             rowKey="menu_id"
             getData={logApi.getLog}
             columns={orderColumns}
+            scroll={{ y: '600px' }}
+            pagination
           />
         </Stack>
       </Card>

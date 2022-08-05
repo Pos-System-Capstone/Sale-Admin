@@ -1,13 +1,13 @@
 import { Stack, Typography } from '@mui/material';
+import { Box } from '@mui/system';
 import overviewApi from 'api/report/overview';
 import ResoTable from 'components/ResoTable/ResoTable';
+import ReportBtn from 'pages/report/components/ReportBtn';
 import { useEffect, useRef } from 'react';
 import { useParams } from 'react-router';
 import { TTopStoreRevenueBase } from 'types/report/overview';
 import { TTableColumn } from 'types/table';
-import { fNumber } from 'utils/formatNumber';
 import { formatDate } from 'utils/formatTime';
-import { formatCurrency } from 'utils/utils';
 function TopStoreRevenue({ dateRange }: any) {
   const ref = useRef<any>();
   const { storeId } = useParams();
@@ -27,49 +27,49 @@ function TopStoreRevenue({ dateRange }: any) {
       title: 'Tổng sản phẩm',
       hideInSearch: true,
       dataIndex: 'totalProduct',
-      render: (value) => fNumber(value)
+      valueType: 'digit'
     },
     {
       title: 'Hóa đơn bán hàng',
       hideInSearch: true,
       dataIndex: 'totalOrderSale',
-      render: (value) => fNumber(value)
+      valueType: 'digit'
     },
     {
       title: 'Trung bình bill',
       hideInSearch: true,
       dataIndex: 'avgRevenueSale',
-      render: (value) => fNumber(value)
+      valueType: 'digit'
     },
     {
       title: 'DT trước giảm giá',
       hideInSearch: true,
       dataIndex: 'totalRevenueBeforeDiscount',
-      render: (value) => fNumber(value)
+      valueType: 'digit'
     },
     {
       title: 'Giảm giá',
       hideInSearch: true,
       dataIndex: 'totalDiscount',
-      render: (value) => fNumber(value)
+      valueType: 'digit'
     },
     {
       title: 'DT sau giảm giá',
       hideInSearch: true,
       dataIndex: 'totalRevenueSale',
-      render: (value) => formatCurrency(value)
+      valueType: 'money'
     },
     {
       title: 'Hóa đơn nạp thẻ',
       hideInSearch: true,
       dataIndex: 'totalOrderCard',
-      render: (value) => formatCurrency(value)
+      valueType: 'money'
     },
     {
       title: 'Doanh thu nạp thẻ',
       hideInSearch: true,
       dataIndex: 'totalRevenueCard',
-      render: (value) => formatCurrency(value)
+      valueType: 'money'
     },
     {
       title: 'Phiên bản (Version)',
@@ -94,15 +94,20 @@ function TopStoreRevenue({ dateRange }: any) {
     <Stack direction={'column'}>
       {/* V. Top Doanh Thu Sản Phẩm*/}
       <Stack spacing={2}>
-        <Typography pl={2} variant="h4">
-          V. Top Doanh Thu Cửa Hàng
-        </Typography>
+        <Stack justifyContent="space-between">
+          <Typography pl={2} variant="h4">
+            V. Top Doanh Thu Cửa Hàng
+          </Typography>
+          <Box marginLeft="1050px" marginTop="-10px">
+            <ReportBtn key="export-excel" onClick={() => console.log('Export excel')} />
+          </Box>
+        </Stack>
         <ResoTable
           showAction={false}
           columns={orderColumns}
           ref={ref}
           getData={overviewApi.getTopStoreRevenue}
-          scroll={{ y: '320px' }}
+          pagination
           defaultFilters={{
             storeId,
             FromDate: formatDate(dateRange[0]!),

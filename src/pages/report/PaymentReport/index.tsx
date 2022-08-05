@@ -4,6 +4,7 @@ import { Box, Card, Stack, TextField } from '@mui/material';
 import paymentApi from 'api/report/payment';
 // components
 import ResoTable from 'components/ResoTable/ResoTable';
+import moment from 'moment';
 // material
 import { useEffect, useRef, useState } from 'react';
 import { formatDate } from 'utils/formatTime';
@@ -30,7 +31,9 @@ const CollectionListPage = () => {
       actions={[
         <DateRangePicker
           inputFormat="dd/MM/yyyy"
+          minDate={moment(`${today.getFullYear()}/${today.getMonth()}/01`).toDate()}
           disableFuture
+          disableCloseOnSelect
           value={dateRange}
           renderInput={(startProps, endProps) => (
             <>
@@ -57,7 +60,7 @@ const CollectionListPage = () => {
             getData={paymentApi.get}
             // dataSource={data}
             ref={ref}
-            scroll={{ y: '400px' }}
+            pagination
             defaultFilters={{
               FromDate: formatDate(dateRange[0]!),
               ToDate: formatDate(dateRange[1]!)

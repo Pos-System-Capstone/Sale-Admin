@@ -73,7 +73,6 @@ const TableCard: React.FC<CardProps> = ({
   subtitle = 'A default subtitle',
   smallCard = false
 }) => {
-  console.log(data);
   return (
     <Card
       sx={{

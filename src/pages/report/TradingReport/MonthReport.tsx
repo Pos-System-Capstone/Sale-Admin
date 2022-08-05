@@ -19,6 +19,7 @@ import confirm from 'components/Modal/confirm';
 // import ModalForm from 'components/ModalForm/ModalForm';
 import ResoTable from 'components/ResoTable/ResoTable';
 import MenuWidgets from 'components/_dashboard/general-app/MenuWidgets';
+import moment from 'moment';
 import { useSnackbar } from 'notistack';
 import React, { useEffect, useRef, useState } from 'react';
 import Chart from 'react-apexcharts';
@@ -28,8 +29,7 @@ import { PATH_REPORT_APP } from 'routes/reportAppPaths';
 import { Menu } from 'types/menu';
 import { TTradingBase } from 'types/report/trading';
 import { TTableColumn } from 'types/table';
-import { fNumber } from 'utils/formatNumber';
-import { formatDate, fTime } from 'utils/formatTime';
+import { formatDate } from 'utils/formatTime';
 import ReportPage from '../components/ReportPage';
 // import Page from './components/Page';
 
@@ -74,19 +74,19 @@ export const menuColumns: TTableColumn<TTradingBase>[] = [
     title: 'Mang đi',
     dataIndex: 'totalOrderTakeAway',
     hideInSearch: true,
-    render: (x) => fNumber(x)
+    valueType: 'digit'
   },
   {
     title: 'Tại store',
     dataIndex: 'totalOrderAtStore',
     hideInSearch: true,
-    render: (x) => fNumber(x)
+    valueType: 'digit'
   },
   {
     title: 'Giao hàng',
     dataIndex: 'totalOrderDelivery',
     hideInSearch: true,
-    render: (x) => fNumber(x)
+    valueType: 'digit'
   },
   {
     title: 'Cửa hàng',
@@ -97,37 +97,25 @@ export const menuColumns: TTableColumn<TTradingBase>[] = [
     title: 'Tổng số bill',
     dataIndex: 'totalBills',
     hideInSearch: true,
-    render: (x) => fNumber(x)
+    valueType: 'digit'
   },
   {
     title: 'Tổng doanh thu',
     dataIndex: 'totalSales',
     hideInSearch: true,
-    render: (x) =>
-      x.toLocaleString('vi', {
-        style: 'currency',
-        currency: 'VND'
-      })
+    valueType: 'money'
   },
   {
     title: 'Tiền giảm giá',
     dataIndex: 'totalDiscount',
     hideInSearch: true,
-    render: (x) =>
-      x.toLocaleString('vi', {
-        style: 'currency',
-        currency: 'VND'
-      })
+    valueType: 'money'
   },
   {
     title: 'Tổng doanh thu sau giảm giá',
     dataIndex: 'totalSalesAfterDiscount',
     hideInSearch: true,
-    render: (x) =>
-      x.toLocaleString('vi', {
-        style: 'currency',
-        currency: 'VND'
-      })
+    valueType: 'money'
   },
   {
     title: 'Phiên bản (Version)',
@@ -292,30 +280,26 @@ const MonthReport = () => {
   ];
 
   const today = new Date();
-  const day = new Date();
-  const yesterday = day.setDate(day.getDate() - 1);
-  const [fromDate, setFromDate] = useState<Date>(new Date(yesterday));
-  const [toDate, setToDate] = useState<Date>(new Date());
+  const yesterday = new Date(new Date().valueOf() - 1000 * 60 * 60 * 24);
+  const [dateRange, setDateRange] = useState<any>([yesterday, yesterday]);
 
   useEffect(() => {
     if (tableRef.current) {
-      tableRef.current.formControl.setValue('FromDate', formatDate(fromDate!));
-      tableRef.current.formControl.setValue('ToDate', formatDate(toDate!));
+      tableRef.current.formControl.setValue('FromDate', formatDate(dateRange[0]!));
+      tableRef.current.formControl.setValue('ToDate', formatDate(dateRange[1]!));
     }
-  }, [fromDate, toDate]);
+  }, [dateRange]);
 
   return (
     <ReportPage
-      title={`Báo cáo doanh thu theo tháng: ${day.toLocaleDateString('vi-VI', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit'
-      })}`}
-      content={toDate?.getDate() === today?.getDate() ? `Tính đến ${fTime(today)}` : ''}
+      title={'Báo cáo doanh thu theo tháng'}
       actions={[
         <DateRangePicker
+          inputFormat="dd/MM/yyyy"
+          minDate={moment(`${today.getFullYear()}/${today.getMonth()}/01`).toDate()}
           disableFuture
-          value={[fromDate, toDate]}
+          disableCloseOnSelect
+          value={dateRange}
           renderInput={(startProps, endProps) => (
             <>
               <TextField {...startProps} label="Từ" />
@@ -324,8 +308,9 @@ const MonthReport = () => {
             </>
           )}
           onChange={(e) => {
-            setFromDate(e[0]!);
-            setToDate(e[1]!);
+            if (e[0] && e[1]) {
+              setDateRange(e);
+            }
           }}
           key="date-range"
         />
@@ -357,6 +342,7 @@ const MonthReport = () => {
                   ref={tableRef}
                   getData={tradingApi.getTrading}
                   columns={menuColumns}
+                  pagination
                 />
               </Box>
             </Stack>

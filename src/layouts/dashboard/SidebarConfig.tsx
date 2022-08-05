@@ -260,17 +260,17 @@ export const reportAppSidebarConfig = () => {
           title: 'report.trading',
           path: PATH_REPORT.dayReport,
           icon: ICONS.menu
-        },
+        }
         // {
         //   title: 'report.promotion',
         //   path: PATH_REPORT.promotion,
         //   icon: ICONS.kanban
         // },
-        {
-          title: 'report.stores',
-          path: PATH_REPORT.stores,
-          icon: ICONS.store
-        }
+        // {
+        //   title: 'report.stores',
+        //   path: PATH_REPORT.stores,
+        //   icon: ICONS.store
+        // }
       ]
     }
   ];

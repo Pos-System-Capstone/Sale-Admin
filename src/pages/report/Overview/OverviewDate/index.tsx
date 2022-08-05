@@ -30,7 +30,7 @@ export default function OverviewDate() {
         <DatePicker
           inputFormat="dd/MM/yyyy"
           renderInput={(params) => <TextField {...params} />}
-          minDate={moment(`${today.getFullYear()}/${today.getMonth() + 1}/01`).toDate()}
+          minDate={moment(`${today.getFullYear()}/${today.getMonth()}/01`).toDate()}
           // disabled={loading}
           disableCloseOnSelect
           disableFuture
@@ -54,7 +54,7 @@ export default function OverviewDate() {
               <Tab label="Tổng quan doanh thu" value="1" />
               <Tab label="Top doanh thu cửa hàng" value="2" />
               {/* <Tab label="Chi tiết doanh thu sản phẩm" value="3" /> */}
-              <Tab label="Thống kê nhân viên" value="4" />
+              {/* <Tab label="Thống kê nhân viên" value="4" /> */}
             </TabList>
           </Box>
 

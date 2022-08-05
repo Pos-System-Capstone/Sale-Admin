@@ -178,20 +178,24 @@ export default function Router() {
             { path: 'new', element: <ComingSoon /> }
           ]
         },
-        {
-          path: 'stores',
-          children: [
-            { path: '', element: <StoreListPage /> },
-            {
-              path: 'new',
-              element: <CreateStorePage />
-            },
-            { path: ':id', element: <UpdateStorePage /> }
-          ]
-        },
+        // {
+        //   path: 'stores',
+        //   children: [
+        //     { path: '', element: <StoreListPage /> },
+        //     {
+        //       path: 'new',
+        //       element: <CreateStorePage />
+        //     },
+        //     { path: ':id', element: <UpdateStorePage /> }
+        //   ]
+        // },
         {
           path: 'log',
           children: [{ path: '', element: <LogPage /> }]
+        },
+        {
+          path: 'stores',
+          children: [{ path: '', element: <StoreReport /> }]
         }
       ]
     },

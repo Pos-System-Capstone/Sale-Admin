@@ -167,8 +167,8 @@ const ResoTable = (
       });
     },
     {
-      defaultPageSize: 10,
-      defaultParams: [{ current: 1, pageSize: 10 }],
+      defaultPageSize: 50,
+      defaultParams: [{ current: 1, pageSize: 50 }],
       formatResult: (res) => ({
         total: dataSource ? dataSource.length : res.data.metadata?.total,
         list: dataSource ?? res.data?.data ?? [],
@@ -719,7 +719,7 @@ const ResoTable = (
         )}
         {pagination && (
           <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
+            rowsPerPageOptions={[25, 50, 100]}
             component="div"
             {...{ rowsPerPage: pageSize, count: total, page: current - 1 }}
             onPageChange={(_, page) => changeCurrent(page + 1)}
