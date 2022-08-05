@@ -7,12 +7,9 @@ import { alpha, styled } from '@mui/material/styles';
 import Label from 'components/Label';
 import StoreNavigationDialog from 'components/StoreNavigationDialog';
 import useStore from 'hooks/report/useStore';
-import useAuth from 'hooks/useAuth';
 import useLocales from 'hooks/useLocales';
-import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router';
-import { TStoreReport } from 'types/report/store';
 import { TStore } from 'types/store';
 import { getAppToken } from 'utils/utils';
 import { MHidden } from '../../components/@material-extend';
@@ -84,9 +81,7 @@ export const DashboardNavLayout = ({ onOpenSidebar, children, ...props }: any) =
 export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps) {
   const { isCollapse } = useCollapseDrawer();
   const { translate } = useLocales();
-  const { changeUser } = useAuth();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const { pathname } = useLocation();
   const firstElementOfPath = pathname.split('/')[1];
@@ -122,12 +117,7 @@ export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps)
 
   const { storeId } = useParams();
   const { data: storeData } = useStore();
-  const [nameStoreReport, setNameStoreReport] = useState<TStoreReport>();
-
-  useEffect(() => {
-    const storeName = storeData?.find((item: any) => item.id == storeId);
-    setNameStoreReport(storeName!);
-  }, [nameStoreReport, storeData, storeId]);
+  const nameStoreReport = storeData?.find((item: any) => item.id == storeId);
 
   return (
     <RootStyle
@@ -147,11 +137,11 @@ export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps)
 
         <Box sx={{ flexGrow: 1 }} />
         <Stack direction="row" alignItems="center" spacing={{ xs: 0.5, sm: 1.5 }}>
-          {firstElementOfPath === 'report' && (
+          {/* {firstElementOfPath === 'report' && (
             <Label color="success" sx={{ marginRight: '350px', height: '30px', fontSize: '15px' }}>
               {nameStoreReport?.name || 'HỆ THỐNG'}
             </Label>
-          )}
+          )} */}
           {process.env.REACT_APP_ENVIROMENT !== 'production' && (
             <Label color={envLabelColor(process.env.REACT_APP_ENVIROMENT)}>
               {process.env.REACT_APP_ENVIROMENT}
@@ -159,9 +149,6 @@ export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps)
           )}
           <Button
             onClick={() => {
-              // const action = ResoSale();
-              // dispatch(action);
-              // localStorage.setItem('system', 'sale');
               navigate('/dashboard');
             }}
           >
@@ -169,9 +156,6 @@ export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps)
           </Button>
           <Button
             onClick={() => {
-              // const action = ResoReport();
-              // dispatch(action);
-              // localStorage.setItem('system', 'report');
               navigate('/report/0/dashboard');
             }}
           >
@@ -179,9 +163,6 @@ export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps)
           </Button>
           <Button
             onClick={() => {
-              // const action = ResoPromotion();
-              // dispatch(action);
-              // localStorage.setItem('system', 'promotion');
               navigate('/promotion-system');
             }}
           >
@@ -194,7 +175,9 @@ export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps)
             variant="outlined"
             startIcon={<Icon icon={navigation2Outline} />}
           >
-            {translate('common.navigation')}
+            {firstElementOfPath === 'report'
+              ? nameStoreReport?.name || 'HỆ THỐNG'
+              : translate('common.navigation')}
           </Button>
           <AccountPopover />
         </Stack>

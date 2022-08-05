@@ -225,12 +225,7 @@ export const reportAppSidebarConfig = () => {
           title: 'report.dashboard',
           path: PATH_REPORT.general.reportDashboard,
           icon: ICONS.dashboard
-        }
-      ]
-    },
-    {
-      subheader: 'report.management',
-      items: [
+        },
         {
           title: 'report.overviewDate',
           path: PATH_REPORT.overviewDate,
@@ -240,7 +235,12 @@ export const reportAppSidebarConfig = () => {
           title: 'report.overviewMonth',
           path: PATH_REPORT.overviewMonth,
           icon: ICONS.calendar
-        },
+        }
+      ]
+    },
+    {
+      subheader: 'report.report',
+      items: [
         // {
         //   title: 'report.productProgress',
         //   path: PATH_REPORT.productProgress,

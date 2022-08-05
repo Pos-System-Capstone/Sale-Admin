@@ -2,7 +2,7 @@ import { Box, CardActionArea, Drawer, Link, Stack, Tooltip, Typography } from '@
 // material
 import { alpha, styled } from '@mui/material/styles';
 import { useEffect, useMemo } from 'react';
-import { Link as RouterLink, useLocation } from 'react-router-dom';
+import { Link as RouterLink, useLocation, useParams } from 'react-router-dom';
 import { MHidden } from '../../components/@material-extend';
 // components
 import Logo from '../../components/Logo';
@@ -106,6 +106,7 @@ type DashboardSidebarProps = {
 export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }: DashboardSidebarProps) {
   const { pathname } = useLocation();
   const { user } = useAuth();
+  const { storeId } = useParams();
   // const system = useSelector((state: RootState) => state.system);
   // const systems = localStorage.getItem('system');
   const sidebarConfig = useMemo(() => {
@@ -199,10 +200,10 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }: Dash
               <MyAvatar />
               <Box sx={{ ml: 2 }}>
                 <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                  {/* {user?.displayName} */} User
+                  {/* {user?.displayName} */} Passio
                 </Typography>
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                  {/* {user?.roles[0]} */} Admin
+                  {/* {user?.roles[0]} */} {storeId === '0' ? 'System' : 'Store'}
                 </Typography>
               </Box>
             </AccountStyle>

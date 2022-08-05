@@ -7,14 +7,13 @@ import { Box, Card, Tab, TextField } from '@mui/material';
 import moment from 'moment';
 import ReportBtn from 'pages/report/components/ReportBtn';
 import ReportPage from 'pages/report/components/ReportPage';
-import EmployeeStatistics from '../components/EmployeeStatistics';
 import RevenueOverview from '../components/RevenueOverview';
 import TopStoreRevenue from '../components/TopStoreRevenue';
 
 export default function OverviewDate() {
   const today = new Date();
-  // const yesterday = new Date(new Date().valueOf() - 1000 * 60 * 60 * 24);
-  const [dateRange, setDateRange] = useState<DateRange<Date>>([today, today]);
+  const yesterday = new Date(new Date().valueOf() - 1000 * 60 * 60 * 24);
+  const [dateRange, setDateRange] = useState<DateRange<Date>>([yesterday, yesterday]);
   const [done, setDone] = useState(true);
   const [loading, setLoading] = useState(true);
 
@@ -75,9 +74,9 @@ export default function OverviewDate() {
             <ProductSaleDetail />
           </TabPanel> */}
 
-          <TabPanel value="4">
+          {/* <TabPanel value="4">
             <EmployeeStatistics />
-          </TabPanel>
+          </TabPanel> */}
         </TabContext>
       </Card>
     </ReportPage>
