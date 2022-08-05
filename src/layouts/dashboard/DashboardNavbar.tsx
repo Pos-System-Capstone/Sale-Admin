@@ -1,7 +1,7 @@
 import menu2Fill from '@iconify/icons-eva/menu-2-fill';
 import navigation2Outline from '@iconify/icons-eva/navigation-2-outline';
 import { Icon } from '@iconify/react';
-import { AppBar, Box, Button, IconButton, Stack, Toolbar, Typography } from '@mui/material';
+import { AppBar, Box, Button, IconButton, Stack, Toolbar } from '@mui/material';
 // material
 import { alpha, styled } from '@mui/material/styles';
 import Label from 'components/Label';
@@ -145,17 +145,18 @@ export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps)
           </IconButton>
         </MHidden>
 
-        {firstElementOfPath === 'report' && (
-          <Typography color="green" variant="subtitle1" sx={{ marginLeft: '150px' }}>
-            {nameStoreReport?.name || 'Hệ Thống'}
-          </Typography>
-        )}
-
         <Box sx={{ flexGrow: 1 }} />
         <Stack direction="row" alignItems="center" spacing={{ xs: 0.5, sm: 1.5 }}>
-          <Label color={envLabelColor(process.env.REACT_APP_ENVIROMENT)}>
-            {process.env.REACT_APP_ENVIROMENT}
-          </Label>
+          {firstElementOfPath === 'report' && (
+            <Label color="success" sx={{ marginRight: '350px', height: '30px', fontSize: '15px' }}>
+              {nameStoreReport?.name || 'HỆ THỐNG'}
+            </Label>
+          )}
+          {process.env.REACT_APP_ENVIROMENT !== 'production' && (
+            <Label color={envLabelColor(process.env.REACT_APP_ENVIROMENT)}>
+              {process.env.REACT_APP_ENVIROMENT}
+            </Label>
+          )}
           <Button
             onClick={() => {
               // const action = ResoSale();

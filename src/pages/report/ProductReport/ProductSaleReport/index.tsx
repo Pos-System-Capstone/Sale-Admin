@@ -5,15 +5,14 @@ import { Box, Card, Tab, TextField } from '@mui/material';
 import productApi from 'api/report/products';
 import AutocompleteStore from 'components/form/common/report/AutocompleteStore';
 import ResoTable from 'components/ResoTable/ResoTable';
+import moment from 'moment';
 import ReportBtn from 'pages/report/components/ReportBtn';
 import ReportPage from 'pages/report/components/ReportPage';
 import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router';
 import { TProductSaleReportBase } from 'types/report/product';
 import { TTableColumn } from 'types/table';
-import { fNumber } from 'utils/formatNumber';
-import { formatDate, fTime } from 'utils/formatTime';
-import { formatCurrency } from 'utils/utils';
+import { formatDate } from 'utils/formatTime';
 const ProductSaleReport = () => {
   const { storeId } = useParams();
 
@@ -57,37 +56,37 @@ const ProductSaleReport = () => {
       title: 'Đơn vị tính',
       hideInSearch: true,
       dataIndex: 'unitPrice',
-      render: (value) => fNumber(value)
+      valueType: 'digit'
     },
     {
       title: 'Số lượng bán ra',
       hideInSearch: true,
       dataIndex: 'quantity',
-      render: (value) => fNumber(value)
+      valueType: 'digit'
     },
     {
       title: 'Đơn giá (Chưa VAT)',
       hideInSearch: true,
       dataIndex: 'unitPriceNoVat',
-      render: (value) => fNumber(value)
+      valueType: 'money'
     },
     {
       title: 'Đơn giá (Đã VAT)',
       hideInSearch: true,
       dataIndex: 'unitPrice',
-      render: (value) => fNumber(value)
+      valueType: 'money'
     },
     {
       title: 'Doanh thu (Chưa VAT)',
       hideInSearch: true,
       dataIndex: 'totalPriceBeforeVat',
-      render: (value) => formatCurrency(value)
+      valueType: 'money'
     },
     {
       title: 'Doanh thu (Đã VAT)',
       hideInSearch: true,
-      // dataIndex: 'totalPriceAfterVat',
-      render: (value) => formatCurrency(value)
+
+      valueType: 'money'
     },
     {
       title: 'Phiên bản (Version)',
@@ -103,7 +102,7 @@ const ProductSaleReport = () => {
 
   const today = new Date();
   const yesterday = new Date(new Date().valueOf() - 1000 * 60 * 60 * 24);
-  const [dateRange, setDateRange] = useState<any>([yesterday, today]);
+  const [dateRange, setDateRange] = useState<any>([yesterday, yesterday]);
 
   useEffect(() => {
     if (ref.current) {
@@ -150,11 +149,12 @@ const ProductSaleReport = () => {
   return (
     <ReportPage
       title="Báo cáo doanh thu sản phẩm"
-      content={dateRange[1]?.getDate() === today?.getDate() ? `Tính đến ${fTime(today)}` : ''}
       actions={[
         <DateRangePicker
           inputFormat="dd/MM/yyyy"
+          minDate={moment(`${today.getFullYear()}/${today.getMonth()}/01`).toDate()}
           disableFuture
+          disableCloseOnSelect
           value={dateRange}
           renderInput={(startProps, endProps) => (
             <>

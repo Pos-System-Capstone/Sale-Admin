@@ -26,6 +26,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router';
 import { setBrandId } from 'redux/slices/brand';
 import { RootState } from 'redux/store';
+import { PATH_REPORT_APP } from 'routes/reportAppPaths';
 import { TStore } from 'types/store';
 
 const Transition = forwardRef(
@@ -123,17 +124,21 @@ const StoreNavigationDialog: React.FC<Props> = ({ open, onClose, onSelectStore }
         </IconButton>
       </DialogTitle>
       <Button
-        variant="outlined"
+        variant="contained"
         sx={{
           display: 'flex',
           marginTop: '20px',
-          maxWidth: '100%'
+          maxWidth: '100%',
+          width: '1100px',
+          marginLeft: '23px'
         }}
         onClick={() => {
-          navigate('/report/0/dashboard');
+          navigate(PATH_REPORT_APP('0').general.reportDashboard);
+          onClose();
+          window.location.reload();
         }}
       >
-        Xem toàn bộ hệ thống
+        TOÀN BỘ HỆ THỐNG
       </Button>
       <Box p={2}>
         {firstElementOfPath === 'dashboard' && (

@@ -19,7 +19,10 @@ export default function OverviewMonth() {
 
   const today = new Date();
   const yesterday = new Date(new Date().valueOf() - 1000 * 60 * 60 * 24);
-  const [dateRange, setDateRange] = useState<DateRange<Date>>([yesterday, today]);
+  const [dateRange, setDateRange] = useState<DateRange<Date>>([
+    moment(`${today.getFullYear()}/${today.getMonth() + 1}/01`).toDate(),
+    yesterday
+  ]);
   const [done, setDone] = useState(true);
   const [loading, setLoading] = useState(true);
 
@@ -29,7 +32,7 @@ export default function OverviewMonth() {
       actions={[
         <DateRangePicker
           inputFormat="dd/MM/yyyy"
-          minDate={moment(`${today.getFullYear()}/${today.getMonth() + 1}/01`).toDate()}
+          minDate={moment(`${today.getFullYear()}/${today.getMonth()}/01`).toDate()}
           // disabled={loading}
           disableCloseOnSelect
           disableFuture
@@ -60,7 +63,7 @@ export default function OverviewMonth() {
               <Tab label="Tổng quan doanh thu" value="1" />
               <Tab label="Top doanh thu cửa hàng" value="2" />
               {/* <Tab label="Chi tiết doanh thu sản phẩm" value="3" /> */}
-              <Tab label="Thống kê nhân viên" value="4" />
+              {/* <Tab label="Thống kê nhân viên" value="4" /> */}
             </TabList>
           </Box>
 

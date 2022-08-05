@@ -31,7 +31,7 @@ function RevenueOverview({ dateRange, done, setLoading, loading }: any) {
           ToDate: formatDate(dateRange[1])
         })
         .then((res) => res.data),
-    { enabled: done }
+    { enabled: done, refetchOnWindowFocus: false }
   );
 
   const {
@@ -48,7 +48,7 @@ function RevenueOverview({ dateRange, done, setLoading, loading }: any) {
           ToDate: formatDate(dateRange[1])
         })
         .then((res) => res.data),
-    { enabled: done }
+    { enabled: done, refetchOnWindowFocus: false }
   );
 
   if (isFetched1 && isFetched2) {

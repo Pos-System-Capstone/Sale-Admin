@@ -4,15 +4,13 @@ import { Grid } from '@mui/material';
 // components
 import dashboardFill from '@iconify/icons-ant-design/dashboard-fill';
 import clockOuline from '@iconify/icons-eva/clock-outline';
-import peopleFill from '@iconify/icons-eva/people-fill';
-import repeatFill from '@iconify/icons-eva/repeat-fill';
 import shoppingBagFill from '@iconify/icons-eva/shopping-bag-fill';
 import trendingUp from '@iconify/icons-eva/trending-up-fill';
 import DashboarWidgets from 'components/_dashboard/general-app/DashboarWidgets';
+import { useParams } from 'react-router-dom';
 import { PATH_REPORT_APP } from 'routes/reportAppPaths';
 import palette from 'theme/palette';
 import Page from '../../components/Page';
-import { useParams } from 'react-router-dom';
 // ----------------------------------------------------------------------
 
 export default function ReportDashboard() {
@@ -46,21 +44,21 @@ export default function ReportDashboard() {
       color: palette.light.reportPalette.red3,
       hoverColor: palette.light.reportPalette.red4,
       path: PATH_REPORT.productProgress
-    },
-    {
-      title: 'SO SÁNH SẢN PHẨM',
-      icon: repeatFill,
-      color: palette.light.reportPalette.blue3,
-      hoverColor: palette.light.reportPalette.blue4,
-      path: PATH_REPORT.productProgress
-    },
-    {
-      title: 'SO SÁNH DOANH THU',
-      icon: peopleFill,
-      color: palette.light.reportPalette.purple3,
-      hoverColor: palette.light.reportPalette.purple4,
-      path: PATH_REPORT.productProgress
     }
+    // {
+    //   title: 'SO SÁNH SẢN PHẨM',
+    //   icon: repeatFill,
+    //   color: palette.light.reportPalette.blue3,
+    //   hoverColor: palette.light.reportPalette.blue4,
+    //   path: PATH_REPORT.productProgress
+    // },
+    // {
+    //   title: 'SO SÁNH DOANH THU',
+    //   icon: peopleFill,
+    //   color: palette.light.reportPalette.purple3,
+    //   hoverColor: palette.light.reportPalette.purple4,
+    //   path: PATH_REPORT.productProgress
+    // }
   ];
   return (
     <Page title="Dashboard">
