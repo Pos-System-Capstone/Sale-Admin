@@ -55,8 +55,7 @@ const ProductSaleReport = () => {
     {
       title: 'Đơn vị tính',
       hideInSearch: true,
-      dataIndex: 'unitPrice',
-      valueType: 'digit'
+      dataIndex: 'unit'
     },
     {
       title: 'Số lượng bán ra',
@@ -85,18 +84,17 @@ const ProductSaleReport = () => {
     {
       title: 'Doanh thu (Đã VAT)',
       hideInSearch: true,
-
       valueType: 'money'
     },
     {
       title: 'Phiên bản (Version)',
-      hideInSearch: true
-      // dataIndex: 'saleRevenue',
+      hideInSearch: true,
+      dataIndex: 'version'
     },
     {
       title: 'Ngày cập nhật (Updated at)',
-      hideInSearch: true
-      // dataIndex: 'saleRevenue',
+      hideInSearch: true,
+      dataIndex: 'updatedAt'
     }
   ];
 

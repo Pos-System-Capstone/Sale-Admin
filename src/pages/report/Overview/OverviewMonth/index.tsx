@@ -4,12 +4,11 @@ import React, { useState } from 'react';
 import { DateRange, DateRangePicker, TabContext, TabList, TabPanel } from '@mui/lab';
 import { Box, Card, Tab, TextField } from '@mui/material';
 // components
+import moment from 'moment';
 import ReportBtn from 'pages/report/components/ReportBtn';
 import ReportPage from 'pages/report/components/ReportPage';
-import EmployeeStatistics from '../components/EmployeeStatistics';
 import RevenueOverview from '../components/RevenueOverview';
 import TopStoreRevenue from '../components/TopStoreRevenue';
-import moment from 'moment';
 
 export default function OverviewMonth() {
   const [activeTab, setActiveTab] = useState('1');
@@ -84,9 +83,9 @@ export default function OverviewMonth() {
             <ProductSaleDetail />
           </TabPanel> */}
 
-          <TabPanel value="4">
+          {/* <TabPanel value="4">
             <EmployeeStatistics />
-          </TabPanel>
+          </TabPanel> */}
         </TabContext>
       </Card>
     </ReportPage>

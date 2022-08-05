@@ -16,7 +16,7 @@ const CollectionListPage = () => {
   const ref = useRef<any>();
   const today = new Date();
   const yesterday = new Date(new Date().valueOf() - 1000 * 60 * 60 * 24);
-  const [dateRange, setDateRange] = useState<any>([yesterday, today]);
+  const [dateRange, setDateRange] = useState<any>([yesterday, yesterday]);
 
   useEffect(() => {
     if (ref.current) {

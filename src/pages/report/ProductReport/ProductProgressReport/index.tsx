@@ -7,7 +7,7 @@ import ResoTable from 'components/ResoTable/ResoTable';
 import ReportBtn from 'pages/report/components/ReportBtn';
 import ReportPage from 'pages/report/components/ReportPage';
 import { useEffect, useRef, useState } from 'react';
-import { formatDate, fTime } from 'utils/formatTime';
+import { formatDate } from 'utils/formatTime';
 import productProgressColumns from './column';
 
 const ProductProgressReport = () => {
@@ -18,7 +18,7 @@ const ProductProgressReport = () => {
   const ref = useRef<any>();
   const today = new Date();
   const yesterday = new Date(new Date().valueOf() - 1000 * 60 * 60 * 24);
-  const [dateRange, setDateRange] = useState<any>([yesterday, today]);
+  const [dateRange, setDateRange] = useState<any>([yesterday, yesterday]);
 
   useEffect(() => {
     if (ref.current) {
@@ -68,7 +68,6 @@ const ProductProgressReport = () => {
   return (
     <ReportPage
       title="Báo cáo diễn tiến sản phẩm"
-      content={dateRange[1]?.getDate() === today?.getDate() ? `Tính đến ${fTime(today)}` : ''}
       actions={[
         <DateRangePicker
           disableFuture
