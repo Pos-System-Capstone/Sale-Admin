@@ -10,13 +10,17 @@ import { useEffect, useRef, useState } from 'react';
 import { formatDate } from 'utils/formatTime';
 import ReportBtn from '../components/ReportBtn';
 import ReportPage from '../components/ReportPage';
-import { paymentColumns } from './column';
+import { paymentColumns, storePaymentColumns } from './column';
+import { useParams } from 'react-router';
 
 const CollectionListPage = () => {
   const ref = useRef<any>();
   const today = new Date();
   const yesterday = new Date(new Date().valueOf() - 1000 * 60 * 60 * 24);
-  const [dateRange, setDateRange] = useState<any>([yesterday, yesterday]);
+
+  const [dateRange, setDateRange] = useState<any>([yesterday, today]);
+  const { storeId } = useParams();
+  const isSystemRole = storeId == '0';
 
   useEffect(() => {
     if (ref.current) {
@@ -56,7 +60,7 @@ const CollectionListPage = () => {
         <Stack spacing={2}>
           <ResoTable
             showAction={false}
-            columns={paymentColumns}
+            columns={isSystemRole ? paymentColumns : storePaymentColumns}
             getData={paymentApi.get}
             // dataSource={data}
             ref={ref}

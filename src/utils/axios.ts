@@ -11,7 +11,7 @@ export enum AxiosClientFactoryEnum {
 
 // ----------------------------------------------------------------------
 
-const parseParams = (params: any) => {
+export const parseParams = (params: any) => {
   const keys = Object.keys(params);
   let options = '';
 

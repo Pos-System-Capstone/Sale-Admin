@@ -29,7 +29,7 @@ const ProductSaleReport = () => {
       hideInTable: true,
       valueType: 'select',
       dataIndex: 'storeId',
-      hideInSearch: storeId === '0' ? false : true,
+      hideInSearch: storeId === '0',
       renderFormItem: () => <AutocompleteStore name="storeId" label="Cửa hàng" />
     },
     {
