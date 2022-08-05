@@ -5,9 +5,25 @@ export type TPaymentReportBase = {
   creditCardUse?: number;
   bank?: number;
   momo?: number;
-  grabpay?: number;
-  grabfood?: number;
-  vnpay?: number;
+  grabPay?: number;
+  grabFood?: number;
+  vnPay?: number;
   baemin?: number;
-  shopeepay?: number;
+  shopeePay?: number;
+  zaloPay?: number;
+};
+
+export type TPaymentReportStore = {
+  date?: Date;
+  cash?: number;
+  creditCard?: number;
+  creditCardUse?: number;
+  bank?: number;
+  momo?: number;
+  grabPay?: number;
+  grabFood?: number;
+  vnPay?: number;
+  baemin?: number;
+  shopeePay?: number;
+  zaloPay?: number;
 };
