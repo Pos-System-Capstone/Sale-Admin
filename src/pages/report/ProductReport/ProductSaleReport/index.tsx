@@ -29,7 +29,7 @@ const ProductSaleReport = () => {
       hideInTable: true,
       valueType: 'select',
       dataIndex: 'storeId',
-      hideInSearch: storeId === '0',
+      hideInSearch: storeId != '0',
       renderFormItem: () => <AutocompleteStore name="storeId" label="Cửa hàng" />
     },
     {
@@ -78,23 +78,26 @@ const ProductSaleReport = () => {
     {
       title: 'Doanh thu (Chưa VAT)',
       hideInSearch: true,
-      dataIndex: 'totalPriceBeforeVat',
+      dataIndex: 'totalBeforeDiscount',
       valueType: 'money'
     },
     {
       title: 'Doanh thu (Đã VAT)',
       hideInSearch: true,
-      valueType: 'money'
+      valueType: 'money',
+      dataIndex: 'totalAfterDiscount'
     },
     {
       title: 'Phiên bản (Version)',
       hideInSearch: true,
-      dataIndex: 'version'
+      dataIndex: 'version',
+      hideInTable: true
     },
     {
       title: 'Ngày cập nhật (Updated at)',
       hideInSearch: true,
-      dataIndex: 'updatedAt'
+      dataIndex: 'updatedAt',
+      hideInTable: true
     }
   ];
 
@@ -187,8 +190,7 @@ const ProductSaleReport = () => {
               showAction={false}
               pagination={true}
               defaultFilters={{
-                storeId: storeId === '0' ? 13 : storeId,
-                checkDeal: 'beforeDeal',
+                storeId: storeId == '0' ? null : storeId,
                 FromDate: formatDate(dateRange[0]!),
                 ToDate: formatDate(dateRange[1]!)
               }}
