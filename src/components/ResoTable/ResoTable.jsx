@@ -124,6 +124,7 @@ const ResoTable = (
     disabledSelections = [],
     showFilter = true,
     showSettings = true,
+    toolBarRender = () => [],
     ...props
   },
   ref = null
@@ -660,6 +661,7 @@ const ResoTable = (
             <Stack direction="row">
               <Box ml="auto">
                 <Stack spacing={1} direction="row">
+                  {toolBarRender()}
                   {form.formState.isDirty && (
                     <Button
                       startIcon={<ClearAllOutlined />}
