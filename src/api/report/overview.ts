@@ -5,7 +5,9 @@ import { axiosInstances } from 'utils/axios';
 const request = axiosInstances.report;
 
 const getTopStoreRevenue = (params?: any) =>
-  request.get<BaseReponse<TTopStoreRevenueBase>>('/overview', { params });
+  request.get<BaseReponse<TTopStoreRevenueBase>>('/overview-dashboard/top-store-revenue', {
+    params
+  });
 
 const overviewApi = { getTopStoreRevenue };
 

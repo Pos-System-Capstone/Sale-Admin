@@ -26,7 +26,7 @@ function RevenueOverview({ dateRange, done, setLoading, loading }: any) {
     () =>
       revenueApi
         .getRevenueOverview({
-          storeId: storeId,
+          storeId: storeId == '0' ? null : storeId,
           FromDate: formatDate(dateRange[0]),
           ToDate: formatDate(dateRange[1])
         })
@@ -43,7 +43,7 @@ function RevenueOverview({ dateRange, done, setLoading, loading }: any) {
     () =>
       revenueApi
         .getPaymentOverview({
-          storeId: storeId,
+          storeId: storeId == '0' ? null : storeId,
           FromDate: formatDate(dateRange[0]),
           ToDate: formatDate(dateRange[1])
         })

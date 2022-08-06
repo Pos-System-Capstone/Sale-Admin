@@ -1,5 +1,4 @@
 import { Stack, Typography } from '@mui/material';
-import { Box } from '@mui/system';
 import overviewApi from 'api/report/overview';
 import ResoTable from 'components/ResoTable/ResoTable';
 import ReportBtn from 'pages/report/components/ReportBtn';
@@ -94,16 +93,14 @@ function TopStoreRevenue({ dateRange }: any) {
     <Stack direction={'column'}>
       {/* V. Top Doanh Thu Sản Phẩm*/}
       <Stack spacing={2}>
-        <Stack justifyContent="space-between">
-          <Typography pl={2} variant="h4">
-            V. Top Doanh Thu Cửa Hàng
-          </Typography>
-          <Box marginLeft="1050px" marginTop="-10px">
-            <ReportBtn key="export-excel" onClick={() => console.log('Export excel')} />
-          </Box>
-        </Stack>
+        <Typography pl={2} variant="h4">
+          V. Top Doanh Thu Cửa Hàng
+        </Typography>
         <ResoTable
           showAction={false}
+          toolBarRender={() => [
+            <ReportBtn key="export-excel" onClick={() => console.log('Export excel')} />
+          ]}
           columns={orderColumns}
           ref={ref}
           getData={overviewApi.getTopStoreRevenue}
