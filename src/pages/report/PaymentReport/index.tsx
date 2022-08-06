@@ -12,6 +12,7 @@ import ReportBtn from '../components/ReportBtn';
 import ReportPage from '../components/ReportPage';
 import { paymentColumns, storePaymentColumns } from './column';
 import { useParams } from 'react-router';
+import { parseParams } from '../../../utils/axios';
 
 const CollectionListPage = () => {
   const ref = useRef<any>();
@@ -52,8 +53,7 @@ const CollectionListPage = () => {
             }
           }}
           key="date-range"
-        />,
-        <ReportBtn key="export-excel" onClick={() => console.log('Export excel')} />
+        />
       ]}
     >
       <Card>
@@ -62,6 +62,18 @@ const CollectionListPage = () => {
             showAction={false}
             columns={isSystemRole ? paymentColumns : storePaymentColumns}
             getData={paymentApi.get}
+            toolBarRender={() => [
+              <ReportBtn
+                key="export-excel"
+                onClick={() =>
+                  window.open(
+                    `${process.env.REACT_APP_REPORT_BASE_URL}/payment-report/export?${parseParams(
+                      ref.current.formControl.getValues()
+                    )}`
+                  )
+                }
+              />
+            ]}
             // dataSource={data}
             ref={ref}
             pagination
