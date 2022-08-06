@@ -4,10 +4,10 @@ import { axiosInstances } from 'utils/axios';
 const request = axiosInstances.report;
 
 const getRevenueOverview = (params?: any) =>
-  request.get<TRevenueOverviewBase>('/revenue-report/overview', { params });
+  request.get<TRevenueOverviewBase>('/overview-dashboard/revenue', { params });
 
 const getPaymentOverview = (params?: any) =>
-  request.get<TPaymentOverviewBase>('/revenue-report/overview-payment', { params });
+  request.get<TPaymentOverviewBase>('/overview-dashboard/payment', { params });
 
 const revenueApi = { getRevenueOverview, getPaymentOverview };
 
