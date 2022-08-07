@@ -6,6 +6,7 @@ import { useEffect, useRef } from 'react';
 import { useParams } from 'react-router';
 import { TTopStoreRevenueBase } from 'types/report/overview';
 import { TTableColumn } from 'types/table';
+import { parseParams } from 'utils/axios';
 import { formatDate } from 'utils/formatTime';
 function TopStoreRevenue({ dateRange }: any) {
   const ref = useRef<any>();
@@ -62,24 +63,25 @@ function TopStoreRevenue({ dateRange }: any) {
       title: 'Hóa đơn nạp thẻ',
       hideInSearch: true,
       dataIndex: 'totalOrderCard',
-      valueType: 'money'
+      valueType: 'digit'
     },
     {
       title: 'Doanh thu nạp thẻ',
       hideInSearch: true,
       dataIndex: 'totalRevenueCard',
       valueType: 'money'
-    },
-    {
-      title: 'Phiên bản (Version)',
-      hideInSearch: true,
-      dataIndex: 'version'
-    },
-    {
-      title: 'Ngày cập nhật (Updated at)',
-      hideInSearch: true,
-      dataIndex: 'updateAt'
     }
+    // ,
+    // {
+    //   title: 'Phiên bản (Version)',
+    //   hideInSearch: true,
+    //   dataIndex: 'version'
+    // },
+    // {
+    //   title: 'Ngày cập nhật (Updated at)',
+    //   hideInSearch: true,
+    //   dataIndex: 'updateAt'
+    // }
   ];
 
   useEffect(() => {
@@ -99,14 +101,25 @@ function TopStoreRevenue({ dateRange }: any) {
         <ResoTable
           showAction={false}
           toolBarRender={() => [
-            <ReportBtn key="export-excel" onClick={() => console.log('Export excel')} />
+            <ReportBtn
+              key="export-excel"
+              onClick={() =>
+                window.open(
+                  `${
+                    process.env.REACT_APP_REPORT_BASE_URL
+                  }/overview-dashboard/top-store-revenue/export?${parseParams(
+                    ref.current.formControl.getValues()
+                  )}`
+                )
+              }
+            />
           ]}
           columns={orderColumns}
           ref={ref}
           getData={overviewApi.getTopStoreRevenue}
           pagination
           defaultFilters={{
-            storeId,
+            storeId: storeId == '0' ? null : storeId,
             FromDate: formatDate(dateRange[0]!),
             ToDate: formatDate(dateRange[1]!)
           }}
