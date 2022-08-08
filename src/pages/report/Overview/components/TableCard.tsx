@@ -2,10 +2,6 @@ import { Box, Card, Typography } from '@mui/material';
 import { ReactElement } from 'react';
 import { fNumber, fShortenNumber } from 'utils/formatNumber';
 
-type Data = {
-  [key: string]: number;
-};
-
 type Size = 'small' | 'medium';
 
 type TableCardProps = {

@@ -326,16 +326,16 @@ const totalAmountPayment: any = [
   },
   {
     title: <TimelineIcon />,
-    dataIndex: 'totalPaymentE_Wallet'
+    dataIndex: 'totalTransactionPaymentE_Wallet'
   },
   {
     title: 'Ngân hàng (5)',
-    dataIndex: 'totalPaymentBank',
+    dataIndex: 'totalTransactionPaymentBank',
     highlight: true
   },
   {
     title: 'Thanh toán khác (6)',
-    dataIndex: 'totalPaymentOther'
+    dataIndex: 'totalTransactionPaymentOther'
   }
 ];
 

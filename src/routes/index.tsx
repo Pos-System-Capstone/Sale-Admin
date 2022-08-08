@@ -33,8 +33,6 @@ import CreateVoucher from 'pages/promotionEngine/Voucher/createVoucher';
 import DateReport from 'pages/report/TradingReport/DateReport';
 import MonthReport from 'pages/report/TradingReport/MonthReport';
 import TimeReport from 'pages/report/TradingReport/TimeReport';
-import { useSelector } from 'react-redux';
-import { RootState } from 'redux/store';
 
 // import ReportGeneralApp from 'pages/report/GeneralReport/GeneralApp';
 
@@ -67,13 +65,6 @@ const Loadable = (Component: any) => (props: any) => {
 };
 
 export default function Router() {
-  const store = useSelector((state: RootState) => state.store);
-  // const { storeId } = useParams();
-  // useEffect(() => {
-  //   localStorage.setItem('storeId', JSON.stringify(storeId));
-  // }, [storeId]);
-
-  // const childrenRouter = storeId === 0;
   return useRoutes([
     {
       path: 'auth',
@@ -410,7 +401,6 @@ const CreateCollectionPage = Loadable(lazy(() => import('../pages/collections/cr
 
 // Store
 const PromotionReport = Loadable(lazy(() => import('../pages/report/PromotionReport')));
-const StoreListPage = Loadable(lazy(() => import('../pages/Stores')));
 const CreateStorePage = Loadable(lazy(() => import('../pages/Stores/create')));
 const UpdateStorePage = Loadable(lazy(() => import('../pages/Stores/update')));
 

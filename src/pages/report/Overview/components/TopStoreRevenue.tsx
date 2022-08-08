@@ -39,19 +39,19 @@ function TopStoreRevenue({ dateRange }: any) {
       title: 'Trung bình bill',
       hideInSearch: true,
       dataIndex: 'avgRevenueSale',
-      valueType: 'digit'
+      valueType: 'money'
     },
     {
       title: 'DT trước giảm giá',
       hideInSearch: true,
       dataIndex: 'totalRevenueBeforeDiscount',
-      valueType: 'digit'
+      valueType: 'money'
     },
     {
       title: 'Giảm giá',
       hideInSearch: true,
       dataIndex: 'totalDiscount',
-      valueType: 'digit'
+      valueType: 'money'
     },
     {
       title: 'DT sau giảm giá',
@@ -71,17 +71,6 @@ function TopStoreRevenue({ dateRange }: any) {
       dataIndex: 'totalRevenueCard',
       valueType: 'money'
     }
-    // ,
-    // {
-    //   title: 'Phiên bản (Version)',
-    //   hideInSearch: true,
-    //   dataIndex: 'version'
-    // },
-    // {
-    //   title: 'Ngày cập nhật (Updated at)',
-    //   hideInSearch: true,
-    //   dataIndex: 'updateAt'
-    // }
   ];
 
   useEffect(() => {
@@ -119,6 +108,7 @@ function TopStoreRevenue({ dateRange }: any) {
           getData={overviewApi.getTopStoreRevenue}
           pagination
           defaultFilters={{
+            // eslint-disable-next-line
             storeId: storeId == '0' ? null : storeId,
             FromDate: formatDate(dateRange[0]!),
             ToDate: formatDate(dateRange[1]!)
