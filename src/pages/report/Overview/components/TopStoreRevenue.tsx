@@ -113,6 +113,7 @@ function TopStoreRevenue({ dateRange }: any) {
             FromDate: formatDate(dateRange[0]!),
             ToDate: formatDate(dateRange[1]!)
           }}
+          scroll={{ y: '500px' }}
         />
       </Stack>
     </Stack>

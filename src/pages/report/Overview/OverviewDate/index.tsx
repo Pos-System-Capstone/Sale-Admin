@@ -5,7 +5,6 @@ import { DatePicker, DateRange, TabContext, TabList, TabPanel } from '@mui/lab';
 import { Box, Card, Tab, TextField } from '@mui/material';
 // components
 import moment from 'moment';
-import ReportBtn from 'pages/report/components/ReportBtn';
 import ReportPage from 'pages/report/components/ReportPage';
 import RevenueOverview from '../components/RevenueOverview';
 import TopStoreRevenue from '../components/TopStoreRevenue';
@@ -42,8 +41,7 @@ export default function OverviewDate() {
           onOpen={() => setDone(false)}
           onClose={() => setDone(true)}
           key="date-range"
-        />,
-        <ReportBtn key="export-excel" onClick={() => console.log('Export excel')} />
+        />
       ]}
     >
       <Card sx={{ paddingBottom: 5 }}>

@@ -330,7 +330,7 @@ const totalAmountPayment: any = [
   },
   {
     title: 'Ngân hàng (5)',
-    dataIndex: 'totalTransactionPaymentBank',
+    dataIndex: 'TotalTransactionPaymentBank',
     highlight: true
   },
   {

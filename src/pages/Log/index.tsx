@@ -15,9 +15,9 @@ import { TTableColumn } from 'types/table';
 import LogDetailDialog from './components/LogDetailDialog';
 
 const LogSale = () => {
-  const [detailLog, setDetailLog] = useState<string | null>(null);
+  const [detailLog, setDetailLog] = useState<number | null>(null);
 
-  const orderColumns: TTableColumn<TLog>[] = [
+  const logColumns: TTableColumn<TLog>[] = [
     {
       title: 'STT',
       dataIndex: 'index',
@@ -69,7 +69,7 @@ const LogSale = () => {
       hideInSearch: true,
       render: (_: any, content: TLog) => (
         <Tooltip title="Chi tiết">
-          <IconButton onClick={() => setDetailLog(content.content)} size="large">
+          <IconButton onClick={() => setDetailLog(content.id)} size="large">
             <Visibility />
           </IconButton>
         </Tooltip>
@@ -80,7 +80,7 @@ const LogSale = () => {
   return (
     <Page title={'Log'}>
       <LogDetailDialog
-        content={detailLog}
+        id={detailLog}
         open={Boolean(detailLog)}
         onClose={() => setDetailLog(null)}
       />
@@ -91,7 +91,7 @@ const LogSale = () => {
             showAction={false}
             rowKey="menu_id"
             getData={logApi.getLog}
-            columns={orderColumns}
+            columns={logColumns}
             scroll={{ y: '600px' }}
             pagination
           />
