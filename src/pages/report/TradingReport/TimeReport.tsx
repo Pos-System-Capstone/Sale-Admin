@@ -1,5 +1,4 @@
 /* eslint-disable camelcase */
-import { yupResolver } from '@hookform/resolvers/yup';
 import activityFill from '@iconify/icons-eva/activity-fill';
 import alertCircleFill from '@iconify/icons-eva/alert-circle-fill';
 import alertTriangleFill from '@iconify/icons-eva/alert-triangle-fill';
@@ -12,24 +11,20 @@ import { Card, Stack, Tab, TextField } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { Box } from '@mui/system';
 // import { TTradingBase } from '@types/report/trading';
-import menuApi from 'api/menu';
 import tradingApi from 'api/report/trading';
-import { menuSchema } from 'components/form/Menu/helper';
-import confirm from 'components/Modal/confirm';
 // import ModalForm from 'components/ModalForm/ModalForm';
 import ResoTable from 'components/ResoTable/ResoTable';
 import MenuWidgets from 'components/_dashboard/general-app/MenuWidgets';
 import moment from 'moment';
-import { useSnackbar } from 'notistack';
 import React, { useEffect, useRef, useState } from 'react';
 import Chart from 'react-apexcharts';
-import { useForm } from 'react-hook-form';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { PATH_REPORT_APP } from 'routes/reportAppPaths';
-import { Menu } from 'types/menu';
 import { TTradingBase } from 'types/report/trading';
 import { TTableColumn } from 'types/table';
+import { parseParams } from 'utils/axios';
 import { formatDate } from 'utils/formatTime';
+import ReportBtn from '../components/ReportBtn';
 import ReportPage from '../components/ReportPage';
 // import Page from './components/Page';
 
@@ -116,61 +111,24 @@ export const menuColumns: TTableColumn<TTradingBase>[] = [
     dataIndex: 'totalSalesAfterDiscount',
     hideInSearch: true,
     valueType: 'money'
-  },
-  {
-    title: 'Phiên bản (Version)',
-    hideInSearch: true
-    // dataIndex: 'saleRevenue',
-  },
-  {
-    title: 'Ngày cập nhật (Updated at)',
-    hideInSearch: true
-    // dataIndex: 'saleRevenue',
   }
+  // {
+  //   title: 'Phiên bản (Version)',
+  //   hideInSearch: true
+  //   // dataIndex: 'saleRevenue',
+  // },
+  // {
+  //   title: 'Ngày cập nhật (Updated at)',
+  //   hideInSearch: true
+  //   // dataIndex: 'saleRevenue',
+  // }
 ];
 
 const TimeReport = () => {
-  const navigate = useNavigate();
   const tableRef = useRef<any>();
-  const { enqueueSnackbar } = useSnackbar();
+  const ref = useRef<any>();
   const { storeId } = useParams();
   const PATH_REPORT = PATH_REPORT_APP(storeId ?? '0');
-  const createMenuForm = useForm({
-    resolver: yupResolver(menuSchema),
-    shouldUnregister: true,
-    defaultValues: {
-      time_ranges: [{ from: null, to: null }],
-      allDay: false,
-      priority: 0
-    }
-  });
-
-  const onDeleteMenu = async (menuId: number) => {
-    try {
-      await menuApi.delete(menuId);
-      enqueueSnackbar('Xoá thành công', {
-        variant: 'success'
-      });
-      console.log(`tableRef.current`, tableRef.current);
-      tableRef.current?.reload();
-    } catch (error) {
-      console.log(`error`, error);
-      enqueueSnackbar((error as any).message, {
-        variant: 'error'
-      });
-    }
-  };
-
-  const onConfirmDelete = async (menu: Menu) => {
-    confirm({
-      title: 'Xác nhận xoá',
-      content: `Bạn đồng ý xóa menu "${menu.menu_name}"?`,
-      onOk: async () => {
-        await onDeleteMenu(menu.menu_id);
-      },
-      onCancle: () => {}
-    });
-  };
 
   const handleChangeTab = (event: React.SyntheticEvent, newValue: string) => {
     setActiveTab(newValue);
@@ -326,6 +284,21 @@ const TimeReport = () => {
                   getData={tradingApi.getTrading}
                   columns={menuColumns}
                   pagination
+                  toolBarRender={() => [
+                    <ReportBtn
+                      key="export-excel"
+                      onClick={() =>
+                        window.open(
+                          `${
+                            process.env.REACT_APP_REPORT_BASE_URL
+                          }/system-report/export?${parseParams(
+                            ref.current.formControl.getValues()
+                          )}`
+                        )
+                      }
+                    />
+                  ]}
+                  scroll={{ y: '500px' }}
                 />
               </Box>
             </Stack>

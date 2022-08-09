@@ -22,7 +22,9 @@ import { useParams } from 'react-router-dom';
 import { PATH_REPORT_APP } from 'routes/reportAppPaths';
 import { TTradingBase } from 'types/report/trading';
 import { TTableColumn } from 'types/table';
+import { parseParams } from 'utils/axios';
 import { formatDate } from 'utils/formatTime';
+import ReportBtn from '../components/ReportBtn';
 import ReportPage from '../components/ReportPage';
 // import Page from './components/Page';
 
@@ -105,20 +107,21 @@ export const menuColumns: TTableColumn<TTradingBase>[] = [
     dataIndex: 'totalSalesAfterDiscount',
     hideInSearch: true,
     valueType: 'money'
-  },
-  {
-    title: 'Phiên bản (Version)',
-    hideInSearch: true
-    // dataIndex: 'saleRevenue',
-  },
-  {
-    title: 'Ngày cập nhật (Updated at)',
-    hideInSearch: true
-    // dataIndex: 'saleRevenue',
   }
+  // {
+  //   title: 'Phiên bản (Version)',
+  //   hideInSearch: true
+  //   // dataIndex: 'saleRevenue',
+  // },
+  // {
+  //   title: 'Ngày cập nhật (Updated at)',
+  //   hideInSearch: true
+  //   // dataIndex: 'saleRevenue',
+  // }
 ];
 
 const DateReport = () => {
+  const ref = useRef<any>();
   const { storeId } = useParams();
   const PATH_REPORT = PATH_REPORT_APP(storeId ?? '0');
   const tableRef = useRef<any>();
@@ -248,6 +251,21 @@ const DateReport = () => {
                   getData={tradingApi.getTrading}
                   columns={menuColumns}
                   pagination
+                  toolBarRender={() => [
+                    <ReportBtn
+                      key="export-excel"
+                      onClick={() =>
+                        window.open(
+                          `${
+                            process.env.REACT_APP_REPORT_BASE_URL
+                          }/system-report/export?${parseParams(
+                            ref.current.formControl.getValues()
+                          )}`
+                        )
+                      }
+                    />
+                  ]}
+                  scroll={{ y: '500px' }}
                 />
               </Box>
             </Stack>

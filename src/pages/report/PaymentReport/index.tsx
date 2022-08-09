@@ -74,7 +74,7 @@ const CollectionListPage = () => {
                 }
               />
             ]}
-            // dataSource={data}
+            scroll={{ y: '500px' }}
             ref={ref}
             pagination
             defaultFilters={{

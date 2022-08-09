@@ -12,6 +12,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router';
 import { TProductSaleReportBase } from 'types/report/product';
 import { TTableColumn } from 'types/table';
+import { parseParams } from 'utils/axios';
 import { formatDate } from 'utils/formatTime';
 const ProductSaleReport = () => {
   const { storeId } = useParams();
@@ -170,8 +171,7 @@ const ProductSaleReport = () => {
             }
           }}
           key="date-range"
-        />,
-        <ReportBtn key="export-excel" onClick={() => console.log('Export excel')} />
+        />
       ]}
     >
       <Card>
@@ -194,6 +194,19 @@ const ProductSaleReport = () => {
                 FromDate: formatDate(dateRange[0]!),
                 ToDate: formatDate(dateRange[1]!)
               }}
+              toolBarRender={() => [
+                <ReportBtn
+                  key="export-excel"
+                  onClick={() =>
+                    window.open(
+                      `${process.env.REACT_APP_REPORT_BASE_URL}/product-sale/export?${parseParams(
+                        ref.current.formControl.getValues()
+                      )}`
+                    )
+                  }
+                />
+              ]}
+              scroll={{ y: '500px' }}
             />
           </TabPanel>
           <TabPanel value="2">

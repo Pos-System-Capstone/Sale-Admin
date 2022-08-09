@@ -12,7 +12,6 @@ import palette from 'theme/palette';
 import { formatDate } from 'utils/formatTime';
 import TableCard, { MiniTableCard } from '../components/TableCard';
 import config from './config';
-// import illustration from '../../assets/images/illustration_dashboard.png';
 
 function RevenueOverview({ dateRange, done, setLoading, loading }: any) {
   const { storeId } = useParams();
@@ -63,7 +62,7 @@ function RevenueOverview({ dateRange, done, setLoading, loading }: any) {
     series: [
       revenueData?.totalRevenueAtStore,
       revenueData?.totalRevenueTakeAway,
-      revenueData?.totalRevenueTakeAway
+      revenueData?.totalRevenueDelivery
     ],
     chartOptions: {
       legend: { show: true, fontSize: '16px' },
@@ -214,12 +213,9 @@ function RevenueOverview({ dateRange, done, setLoading, loading }: any) {
             <Grid container spacing={2}>
               <Grid item xs={6}>
                 <Card>
-                  <Box p={1}>
+                  <Box p={1} py={2}>
                     <Typography textAlign="center" variant="h4">
                       Doanh thu thực tế
-                    </Typography>
-                    <Typography p={1} textAlign="center" variant="body1">
-                      {/* Tông số: {fNumber(revenueOverview)} VNĐ */}
                     </Typography>
                   </Box>
                   <ReactApexChart
@@ -231,12 +227,9 @@ function RevenueOverview({ dateRange, done, setLoading, loading }: any) {
               </Grid>
               <Grid item xs={6}>
                 <Card>
-                  <Box p={1}>
+                  <Box p={1} py={2}>
                     <Typography textAlign="center" variant="h4">
                       Hóa đơn bán hàng
-                    </Typography>
-                    <Typography p={1} textAlign="center" variant="body1">
-                      {/* Tông số hóa đơn bán hàng: {fNumber(revenueOverview?.totalOrder)} */}
                     </Typography>
                   </Box>
                   <ReactApexChart
@@ -333,23 +326,6 @@ function RevenueOverview({ dateRange, done, setLoading, loading }: any) {
         </Box>
       </Stack>
       <Backdrop open={loading} invisible={true}>
-        {/* <Box sx={{ m: 1, position: 'relative' }}>
-          <Fab sx={{ backgroundColor: 'transparent' }}>
-            <Logo />
-          </Fab>
-
-          <CircularProgress
-            disableShrink
-            size={68}
-            sx={{
-              color: '#E28C12',
-              position: 'absolute',
-              top: -6,
-              left: -6,
-              zIndex: 1
-            }}
-          />
-        </Box> */}
         <LoadingScreen sx={{ backgroundColor: 'transparent' }} />
       </Backdrop>
     </Stack>

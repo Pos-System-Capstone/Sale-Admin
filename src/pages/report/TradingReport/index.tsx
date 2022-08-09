@@ -1,5 +1,4 @@
 /* eslint-disable camelcase */
-import { yupResolver } from '@hookform/resolvers/yup';
 import activityFill from '@iconify/icons-eva/activity-fill';
 import alertCircleFill from '@iconify/icons-eva/alert-circle-fill';
 import alertTriangleFill from '@iconify/icons-eva/alert-triangle-fill';
@@ -12,70 +11,29 @@ import { Card, Stack, Tab, TextField } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { Box } from '@mui/system';
 // import { TTradingBase } from '@types/report/trading';
-import menuApi from 'api/menu';
 import tradingApi from 'api/report/trading';
-import { menuSchema } from 'components/form/Menu/helper';
-import confirm from 'components/Modal/confirm';
+import AutocompleteStore from 'components/form/common/report/AutocompleteStore';
 // import ModalForm from 'components/ModalForm/ModalForm';
 import ResoTable from 'components/ResoTable/ResoTable';
 import MenuWidgets from 'components/_dashboard/general-app/MenuWidgets';
 import moment from 'moment';
-import { useSnackbar } from 'notistack';
 import React, { useEffect, useRef, useState } from 'react';
 import Chart from 'react-apexcharts';
-import { useForm } from 'react-hook-form';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { PATH_REPORT_APP } from 'routes/reportAppPaths';
-import { Menu } from 'types/menu';
 import { TTradingBase } from 'types/report/trading';
 import { TTableColumn } from 'types/table';
+import { parseParams } from 'utils/axios';
 import { formatDate } from 'utils/formatTime';
+import ReportBtn from '../components/ReportBtn';
 import ReportPage from '../components/ReportPage';
 // import Page from './components/Page';
 
 export const DayReport = () => {
-  const navigate = useNavigate();
-  const tableRef = useRef<any>();
-  const { enqueueSnackbar } = useSnackbar();
+  // const tableRef = useRef<any>();
   const { storeId } = useParams();
   const PATH_REPORT = PATH_REPORT_APP(storeId ?? '0');
-  const createMenuForm = useForm({
-    resolver: yupResolver(menuSchema),
-    shouldUnregister: true,
-    defaultValues: {
-      time_ranges: [{ from: null, to: null }],
-      allDay: false,
-      priority: 0
-    }
-  });
-
-  const onDeleteMenu = async (menuId: number) => {
-    try {
-      await menuApi.delete(menuId);
-      enqueueSnackbar('Xoá thành công', {
-        variant: 'success'
-      });
-      console.log(`tableRef.current`, tableRef.current);
-      tableRef.current?.reload();
-    } catch (error) {
-      console.log(`error`, error);
-      enqueueSnackbar((error as any).message, {
-        variant: 'error'
-      });
-    }
-  };
-
-  const onConfirmDelete = async (menu: Menu) => {
-    confirm({
-      title: 'Xác nhận xoá',
-      content: `Bạn đồng ý xóa menu "${menu.menu_name}"?`,
-      onOk: async () => {
-        await onDeleteMenu(menu.menu_id);
-      },
-      onCancle: () => {}
-    });
-  };
-
+  const ref = useRef<any>();
   const handleChangeTab = (event: React.SyntheticEvent, newValue: string) => {
     setActiveTab(newValue);
   };
@@ -184,24 +142,17 @@ export const DayReport = () => {
       hideInSearch: true
     },
     {
-      fixed: 'left',
-      title: 'Ngày',
-      valueType: 'select',
+      title: 'Cửa hàng',
+      dataIndex: 'storeId',
       hideInTable: true,
-      valueEnum: [
-        {
-          label: 'Tháng này',
-          value: true
-        },
-        {
-          label: 'Tháng trước',
-          value: false
-        },
-        {
-          label: 'Tuỳ chọn',
-          value: false
-        }
-      ]
+      valueType: 'select',
+      hideInSearch: storeId != '0',
+      renderFormItem: () => <AutocompleteStore name="storeId" label="Cửa hàng" />
+    },
+    {
+      title: 'Cửa hàng',
+      dataIndex: 'storeName',
+      hideInSearch: true
     },
     {
       title: 'Mang đi',
@@ -220,14 +171,6 @@ export const DayReport = () => {
       dataIndex: 'totalOrderDelivery',
       hideInSearch: true,
       valueType: 'digit'
-    },
-    {
-      title: 'Cửa hàng',
-      dataIndex: 'storeName',
-      hideInSearch: true
-      // valueType: 'select',
-      // hideInSearch: storeId === '0' ? false : true,
-      // renderFormItem: () => <AutocompleteStore name="storeId" label="Cửa hàng" />
     },
     {
       title: 'Tổng số bill',
@@ -257,17 +200,17 @@ export const DayReport = () => {
       dataIndex: 'totalSalesAfterDiscount',
       hideInSearch: true,
       valueType: 'money'
-    },
-    {
-      title: 'Phiên bản (Version)',
-      hideInSearch: true
-      // dataIndex: 'saleRevenue',
-    },
-    {
-      title: 'Ngày cập nhật (Updated at)',
-      hideInSearch: true
-      // dataIndex: 'saleRevenue',
     }
+    // {
+    //   title: 'Phiên bản (Version)',
+    //   hideInSearch: true
+    //   // dataIndex: 'saleRevenue',
+    // },
+    // {
+    //   title: 'Ngày cập nhật (Updated at)',
+    //   hideInSearch: true
+    //   // dataIndex: 'saleRevenue',
+    // }
   ];
 
   const today = new Date();
@@ -275,9 +218,9 @@ export const DayReport = () => {
   const [dateRange, setDateRange] = useState<any>([yesterday, yesterday]);
 
   useEffect(() => {
-    if (tableRef.current) {
-      tableRef.current.formControl.setValue('FromDate', formatDate(dateRange[0]!));
-      tableRef.current.formControl.setValue('ToDate', formatDate(dateRange[1]!));
+    if (ref.current) {
+      ref.current.formControl.setValue('FromDate', formatDate(dateRange[0]!));
+      ref.current.formControl.setValue('ToDate', formatDate(dateRange[1]!));
     }
   }, [dateRange]);
 
@@ -334,15 +277,29 @@ export const DayReport = () => {
                 <ResoTable
                   showAction={false}
                   rowKey="trading_id"
-                  ref={tableRef}
+                  ref={ref}
                   getData={tradingApi.getTrading}
                   defaultFilters={{
-                    storeId: storeId === '0' ? 13 : storeId,
                     FromDate: formatDate(dateRange[0]!),
                     ToDate: formatDate(dateRange[1]!)
                   }}
                   columns={menuColumns}
                   pagination
+                  toolBarRender={() => [
+                    <ReportBtn
+                      key="export-excel"
+                      onClick={() =>
+                        window.open(
+                          `${
+                            process.env.REACT_APP_REPORT_BASE_URL
+                          }/system-report/export?${parseParams(
+                            ref.current.formControl.getValues()
+                          )}`
+                        )
+                      }
+                    />
+                  ]}
+                  scroll={{ y: '500px' }}
                 />
               </Box>
             </Stack>
