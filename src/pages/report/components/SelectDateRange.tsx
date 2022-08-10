@@ -78,33 +78,43 @@ function SelectDateRange({ label, onChange }: SelectDateRangeProps) {
     }
   ];
   const [openDate, setOpenDate] = useState(false);
-  const [open, setOpen] = useState(false);
-  const handleClick = () => {
-    setOpen(true);
-  };
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  // const [open, setOpen] = useState(false);
+  // const handleClick = () => {
+  //   setOpen(true);
+  // };
+  // const handleClose = () => {
+  //   setOpen(false);
+  // };
   const handleClick1 = () => {
     setOpenDate(true);
   };
   const handleCloseDate = () => {
     setOpenDate(false);
   };
-  const handleClose = () => {
-    setOpen(false);
-  };
 
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   return (
-    <>
+    <div>
       <Button
         id="basic-button"
         aria-controls={open ? 'basic-menu' : undefined}
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
+        variant="outlined"
       >
         {label ?? 'Chọn khoảng thời gian'}
       </Button>
       <Menu
         id="basic-menu"
+        anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
         MenuListProps={{
@@ -115,25 +125,28 @@ function SelectDateRange({ label, onChange }: SelectDateRangeProps) {
           <MenuItem
             key={item.value}
             value={item.value}
-            onClick={(e: any) => {
+            onClick={() => {
               onChange(item.value);
               handleClose();
             }}
             sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 1 }}
           >
-            <Typography variant="h6">{item.label}</Typography>
-            <Typography variant="body1">{item.label2 ?? ''}</Typography>
+            <Typography variant="body1" fontWeight={500}>
+              {item.label}
+            </Typography>
+            <Typography variant="body2">{item.label2 ?? ''}</Typography>
           </MenuItem>
         ))}
         <MenuItem
           value="DATE_RANGE"
           onClick={() => {
-            // onChange('DATE_RANGE');
             handleClick1();
             handleClose();
           }}
         >
-          <Typography variant="h6">Chọn khoảng thời gian</Typography>
+          <Typography variant="body1" fontWeight={500}>
+            Chọn khoảng thời gian
+          </Typography>
         </MenuItem>
       </Menu>
       <Modal
@@ -148,11 +161,11 @@ function SelectDateRange({ label, onChange }: SelectDateRangeProps) {
             top: '25%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
-            width: 400,
+            width: 500,
             bgcolor: 'background.paper',
             borderRadius: 1,
             boxShadow: 24,
-            p: 4
+            p: 5
           }}
         >
           <DateRangePicker
@@ -178,7 +191,7 @@ function SelectDateRange({ label, onChange }: SelectDateRangeProps) {
           />
         </Box>
       </Modal>
-    </>
+    </div>
   );
 }
 

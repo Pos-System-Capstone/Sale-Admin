@@ -2,6 +2,7 @@ import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { Box, Card, Tab } from '@mui/material';
 import { useState } from 'react';
 import ReportPage from '../components/ReportPage';
+import Sales from './Sales';
 
 const Insights = () => {
   const [activeTab, setActiveTab] = useState('1');
@@ -23,7 +24,9 @@ const Insights = () => {
             </TabList>
           </Box>
 
-          <TabPanel value="1"></TabPanel>
+          <TabPanel value="1">
+            <Sales />
+          </TabPanel>
           <TabPanel value="2">Hello 2</TabPanel>
           <TabPanel value="3">Hello 3</TabPanel>
           <TabPanel value="4">Hello 4</TabPanel>

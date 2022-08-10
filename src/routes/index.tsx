@@ -33,6 +33,7 @@ import CreateVoucher from 'pages/promotionEngine/Voucher/createVoucher';
 import DateReport from 'pages/report/TradingReport/DateReport';
 import MonthReport from 'pages/report/TradingReport/MonthReport';
 import TimeReport from 'pages/report/TradingReport/TimeReport';
+import Insights from 'pages/report/Insights';
 
 // import ReportGeneralApp from 'pages/report/GeneralReport/GeneralApp';
 
@@ -212,7 +213,7 @@ export default function Router() {
             },
             {
               path: 'insights',
-              element: <ComingSoon />
+              element: <Insights />
             },
             { path: 'dashboard', element: <ReportDashboard /> },
             {
