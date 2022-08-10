@@ -227,6 +227,16 @@ export const reportAppSidebarConfig = () => {
           icon: ICONS.dashboard
         },
         {
+          title: 'report.home',
+          path: PATH_REPORT.home,
+          icon: ICONS.dashboard
+        },
+        {
+          title: 'report.insights',
+          path: PATH_REPORT.insights,
+          icon: ICONS.analytics
+        },
+        {
           title: 'report.overviewDate',
           path: PATH_REPORT.overviewDate,
           icon: ICONS.calendar

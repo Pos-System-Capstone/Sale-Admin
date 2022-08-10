@@ -206,6 +206,14 @@ export default function Router() {
           path: ':storeId',
           children: [
             // { path: '', element: <Navigate to="dashboard" replace /> },
+            {
+              path: 'home',
+              element: <HomePage />
+            },
+            {
+              path: 'insights',
+              element: <ComingSoon />
+            },
             { path: 'dashboard', element: <ReportDashboard /> },
             {
               path: 'overview-date',
@@ -435,6 +443,7 @@ const ProductProgressReport = Loadable(
 );
 const PaymentReport = Loadable(lazy(() => import('../pages/report/PaymentReport')));
 const StoreReport = Loadable(lazy(() => import('../pages/report/StoreReport')));
+const HomePage = Loadable(lazy(() => import('../pages/report/Home')));
 
 // Promotion system
 // const PromotionDash = Loadable(lazy(() => import('../pages/dashboard/PromotionSystemDashboard')));

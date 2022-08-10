@@ -199,7 +199,7 @@ const ProductSaleReport = () => {
                   key="export-excel"
                   onClick={() =>
                     window.open(
-                      `${process.env.REACT_APP_REPORT_BASE_URL}/product-sale/export?${parseParams(
+                      `${process.env.REACT_APP_REPORT_BASE_URL}/product-report/export?${parseParams(
                         ref.current.formControl.getValues()
                       )}`
                     )
