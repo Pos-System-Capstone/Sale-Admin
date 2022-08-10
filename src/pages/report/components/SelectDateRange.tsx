@@ -4,12 +4,12 @@ import { useState } from 'react';
 
 interface SelectDateRangeProps {
   label?: string;
-  setValue: (value: any) => void;
-  dateRange: any;
-  setDateRange: (value: any) => void;
+  onChange: (value: any) => void;
+  // dateRange: any;
+  // setDateRange: (value: any) => void;
 }
 
-function SelectDateRange({ label, setValue, dateRange, setDateRange }: any) {
+function SelectDateRange({ label, onChange }: SelectDateRangeProps) {
   const getFirstDateOfMonth = (date: Date) => {
     const year = date.getFullYear();
     const month = date.getMonth();
@@ -49,6 +49,7 @@ function SelectDateRange({ label, setValue, dateRange, setDateRange }: any) {
   const getLastDateOfLastMonth = getLastDateOfMonth(
     new Date(new Date().valueOf() - 1000 * 60 * 60 * 24 * 31)
   );
+  const [dateRange, setDateRange] = useState<any>([yesterday, yesterday]);
   const data = [
     {
       value: 'PREV_WEEK',
@@ -78,7 +79,7 @@ function SelectDateRange({ label, setValue, dateRange, setDateRange }: any) {
   ];
   const [openDate, setOpenDate] = useState(false);
   const [open, setOpen] = useState(false);
-  const handleClick = (event: any) => {
+  const handleClick = () => {
     setOpen(true);
   };
   const handleClick1 = () => {
@@ -115,7 +116,7 @@ function SelectDateRange({ label, setValue, dateRange, setDateRange }: any) {
             key={item.value}
             value={item.value}
             onClick={(e: any) => {
-              setValue(item.value);
+              onChange(item.value);
               handleClose();
             }}
             sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 1 }}
@@ -125,9 +126,9 @@ function SelectDateRange({ label, setValue, dateRange, setDateRange }: any) {
           </MenuItem>
         ))}
         <MenuItem
-          value="select date range"
+          value="DATE_RANGE"
           onClick={() => {
-            setValue(dateRange);
+            // onChange('DATE_RANGE');
             handleClick1();
             handleClose();
           }}
@@ -171,6 +172,7 @@ function SelectDateRange({ label, setValue, dateRange, setDateRange }: any) {
             onChange={(e) => {
               if (e[0] && e[1]) {
                 setDateRange(e);
+                onChange(e);
               }
             }}
           />
