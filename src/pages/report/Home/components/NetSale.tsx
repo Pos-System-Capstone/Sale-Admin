@@ -1,23 +1,21 @@
-import { merge } from 'lodash';
-import { Icon } from '@iconify/react';
-import ReactApexChart from 'react-apexcharts';
-import trendingUpFill from '@iconify/icons-eva/trending-up-fill';
 import trendingDownFill from '@iconify/icons-eva/trending-down-fill';
+import trendingUpFill from '@iconify/icons-eva/trending-up-fill';
+import { Icon } from '@iconify/react';
 // material
+import { Box, Card, Stack, Typography } from '@mui/material';
 import { alpha, styled } from '@mui/material/styles';
-import { Box, Card, Typography, Stack } from '@mui/material';
 // utils
-import { fNumber, fPercent } from 'utils/formatNumber';
-import { BaseOptionChart } from 'components/charts';
 import { useState } from 'react';
+import { fPercent } from 'utils/formatNumber';
+import { formatCurrency } from 'utils/utils';
 
 //
 
 // ----------------------------------------------------------------------
 
 const IconWrapperStyle = styled('div')(({ theme }) => ({
-  width: 24,
-  height: 24,
+  width: 20,
+  height: 20,
   display: 'flex',
   borderRadius: '50%',
   alignItems: 'center',
@@ -30,8 +28,6 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 const PERCENT = 2.6;
-const TOTAL_SOLD = 765;
-const CHART_DATA = [{ data: [12, 14, 2, 47, 42, 15, 47, 75, 65, 19, 14] }];
 
 // const data1 = data?.[trends] || [];
 export default function NetSale() {
@@ -91,28 +87,12 @@ export default function NetSale() {
       },
       {
         name: 'total_customers',
-        value: '827',
+        value: 827,
         trend: '0.120596'
       }
     ]
   });
   const data = testData?.trends;
-  console.log(data);
-  const chartOptions = merge(BaseOptionChart(), {
-    chart: { animations: { enabled: true }, sparkline: { enabled: true } },
-    stroke: { width: 2 },
-    tooltip: {
-      x: { show: false },
-      y: {
-        formatter: (seriesName: string) => fNumber(seriesName),
-
-        title: {
-          formatter: (seriesName: string) => `#${seriesName}`
-        }
-      },
-      marker: { show: false }
-    }
-  });
 
   return (
     <Card sx={{ display: 'flex', alignItems: 'center', p: 3 }}>
@@ -121,8 +101,7 @@ export default function NetSale() {
           Net Sales
         </Typography>
         <Typography variant="h3" gutterBottom>
-          {/* {fNumber(TOTAL_SOLD)} */}
-          {data?.find((x: any) => x.name === 'net_sales')?.value ?? 0}
+          {formatCurrency(data?.find((x: any) => x.name === 'net_sales')?.value)}
         </Typography>
 
         <Stack direction="row" alignItems="center" flexWrap="wrap">
@@ -146,14 +125,6 @@ export default function NetSale() {
           </Typography>
         </Stack>
       </Box>
-
-      <ReactApexChart
-        type="line"
-        series={CHART_DATA}
-        options={chartOptions}
-        width={120}
-        height={80}
-      />
     </Card>
   );
 }

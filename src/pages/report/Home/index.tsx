@@ -1,5 +1,13 @@
 // material
-import { FormControl, Grid, InputLabel, MenuItem, TextField, Typography } from '@mui/material';
+import {
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Stack,
+  TextField,
+  Typography
+} from '@mui/material';
 // hooks
 import useAuth from 'hooks/useAuth';
 import useSettings from 'hooks/useSettings';
@@ -10,8 +18,11 @@ import { Box } from '@mui/system';
 import Page from 'components/Page';
 import moment from 'moment';
 import { useState } from 'react';
+import KeyTrends from './components/KeyTrendsCard';
 import NetSale from './components/NetSale';
 import TotalSaleCard from './components/TotalSaleCard';
+import TransactionChart from './components/TransactionChart';
+import allHomeData from './components/config';
 
 // ----------------------------------------------------------------------
 
@@ -34,38 +45,38 @@ export default function HomeReport() {
   const [done, setDone] = useState(true);
   const [loading, setLoading] = useState(true);
 
+  const trends = {
+    total_transaction: '00:18:45',
+    gross_sales: '1.31396e+08',
+    net_sales: '1.31396e+08',
+    average_transaction_amount: '118695.5736',
+    total_customers: '827'
+  };
+
   return (
     <Page title="Home">
-      <Grid container spacing={3}>
-        <Grid item xs={12}>
-          <FormControl sx={{ width: '250px' }}>
-            <InputLabel id="Store">Store</InputLabel>
-            <Select labelId="Store" id="Store" value={store} label="Store" onChange={handleChange}>
-              <MenuItem value={10}>HCM.PA.SH.15FNTMK</MenuItem>
-              <MenuItem value={20}>HCM.PA.SH.53CND</MenuItem>
-              <MenuItem value={30}>HCM.GF.SH.102HVB</MenuItem>
-              <MenuItem value={30}>HCM.PA.SH.47TCV</MenuItem>
-              <MenuItem value={30}>HCM.PA.SH.97LVD</MenuItem>
-            </Select>
-          </FormControl>
-        </Grid>
+      <Stack direction={'column'} spacing={3}>
+        <FormControl sx={{ width: '250px' }}>
+          <InputLabel id="Store">Store</InputLabel>
+          <Select labelId="Store" id="Store" value={store} label="Store" onChange={handleChange}>
+            <MenuItem value={10}>HCM.PA.SH.15FNTMK</MenuItem>
+            <MenuItem value={20}>HCM.PA.SH.53CND</MenuItem>
+            <MenuItem value={30}>HCM.GF.SH.102HVB</MenuItem>
+            <MenuItem value={30}>HCM.PA.SH.47TCV</MenuItem>
+            <MenuItem value={30}>HCM.PA.SH.97LVD</MenuItem>
+          </Select>
+        </FormControl>
 
-        <Grid item xs={12}>
-          <TotalSaleCard displayName={user?.displayName} />
-        </Grid>
+        <TotalSaleCard />
 
-        <Grid
-          item
-          xs={12}
-          sx={{ display: 'flex', flexWrap: 'nowrap', justifyContent: 'space-between' }}
-        >
+        <Stack direction={'row'} sx={{ flexWrap: 'nowrap', justifyContent: 'space-between' }}>
           <Box>
             <Typography variant="h4">Business insights</Typography>
             <Typography variant="body2">
               Based on data on {today.getDate()}/{today.getMonth() + 1}
             </Typography>
           </Box>
-          <Box textAlign={'right'}>
+          <Box>
             <DateRangePicker
               inputFormat="dd/MM/yyyy"
               minDate={moment(`${today.getFullYear()}/${today.getMonth()}/01`).toDate()}
@@ -90,11 +101,25 @@ export default function HomeReport() {
               key="date-range"
             />
           </Box>
-        </Grid>
+        </Stack>
 
-        <Grid item xs={12} md={4}>
-          <NetSale />
-        </Grid>
+        <Box>
+          <Grid container item spacing={2}>
+            <Grid item container md={8} spacing={2}>
+              <Grid item xs={12} md={'auto'}>
+                <NetSale />
+              </Grid>
+              <Grid item xs={12} md={12}>
+                <TransactionChart />
+              </Grid>
+            </Grid>
+            <Grid item md={4}>
+              <Grid item xs={12} md={12} height={'100%'}>
+                <KeyTrends data={trends!} column={allHomeData.trends} bc="white" bch="grey.300" />
+              </Grid>
+            </Grid>
+          </Grid>
+        </Box>
 
         {/* <Grid item xs={12} md={4}>
           <AppTotalActiveUsers />
@@ -131,7 +156,7 @@ export default function HomeReport() {
         <Grid item xs={12} md={6} lg={4}>
           <AppTopAuthors />
         </Grid> */}
-      </Grid>
+      </Stack>
     </Page>
   );
 }

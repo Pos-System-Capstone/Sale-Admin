@@ -56,7 +56,7 @@ export default function TotalSaleCard({ displayName }: AppWelcomeProps) {
             sx={{ display: 'flex' }}
             flexWrap="wrap"
           >
-            <Grid item md={6}>
+            <Grid item md={6} sx={{ flexWrap: 'nowrap' }}>
               <Card sx={{ display: 'flex', alignItems: 'center' }}>
                 <Box sx={{ flexGrow: 1 }}>
                   <Typography variant="subtitle2" paragraph>
