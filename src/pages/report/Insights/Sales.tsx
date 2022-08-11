@@ -7,7 +7,7 @@ function Sales() {
   console.log(options);
   return (
     <Stack direction={'column'}>
-      <SelectDateRange onChange={setOptions} />
+      <SelectDateRange onChange={setOptions} value={options} />
     </Stack>
   );
 }

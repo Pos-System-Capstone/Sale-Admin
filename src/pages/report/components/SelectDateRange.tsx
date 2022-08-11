@@ -1,15 +1,27 @@
 import { DateRangePicker } from '@mui/lab';
 import { Box, Button, Menu, MenuItem, Modal, TextField, Typography } from '@mui/material';
 import { useState } from 'react';
+// icon
+import DateRangeIcon from '@mui/icons-material/DateRange';
 
+interface optionsType {
+  value: any;
+  label: any;
+  subLabel?: any;
+}
 interface SelectDateRangeProps {
-  label?: string;
+  value: any;
   onChange: (value: any) => void;
-  // dateRange: any;
-  // setDateRange: (value: any) => void;
+  options?: optionsType[];
+  showOptionDateRange?: boolean;
 }
 
-function SelectDateRange({ label, onChange }: SelectDateRangeProps) {
+function SelectDateRange({
+  value,
+  onChange,
+  options,
+  showOptionDateRange = true
+}: SelectDateRangeProps) {
   const getFirstDateOfMonth = (date: Date) => {
     const year = date.getFullYear();
     const month = date.getMonth();
@@ -23,7 +35,7 @@ function SelectDateRange({ label, onChange }: SelectDateRangeProps) {
   const getDateAndMonth = (date: Date) => {
     const day = date.getDate();
     const month = date.getMonth() + 1;
-    return `${day}/${month}`;
+    return `${day < 10 ? '0' + day : day}/${month < 10 ? '0' + month : month}`;
   };
   const getDateRangeDateAndMonth = (dateRange: any) => {
     const startDate = dateRange[0];
@@ -50,50 +62,42 @@ function SelectDateRange({ label, onChange }: SelectDateRangeProps) {
     new Date(new Date().valueOf() - 1000 * 60 * 60 * 24 * 31)
   );
   const [dateRange, setDateRange] = useState<any>([yesterday, yesterday]);
-  const data = [
+  const optionList = options ?? [
     {
       value: 'PREV_WEEK',
       label: 'Tuần trước',
-      label2: getDateRangeDateAndMonth([firstDateOfLastWeek, lastDateOfLastWeek])
+      subLabel: getDateRangeDateAndMonth([firstDateOfLastWeek, lastDateOfLastWeek])
     },
     {
       value: 'PREV_MONTH',
       label: 'Tháng trước',
-      label2: getDateRangeDateAndMonth([getFirstDateOfLastMonth, getLastDateOfLastMonth])
+      subLabel: getDateRangeDateAndMonth([getFirstDateOfLastMonth, getLastDateOfLastMonth])
     },
     {
       value: '7_DAYS',
       label: '7 ngày trước',
-      label2: getDateRangeDateAndMonth([SEVEN_DAY_PREVIOUS, yesterday])
+      subLabel: getDateRangeDateAndMonth([SEVEN_DAY_PREVIOUS, yesterday])
     },
     {
       value: '30_DAYS',
       label: '30 ngày trước',
-      label2: getDateRangeDateAndMonth([THIRTY_DAY_PREVIOUS, yesterday])
+      subLabel: getDateRangeDateAndMonth([THIRTY_DAY_PREVIOUS, yesterday])
     },
     {
       value: '90_DAYS',
       label: '90 ngày trước',
-      label2: getDateRangeDateAndMonth([NINETY_DAY_PREVIOUS, yesterday])
+      subLabel: getDateRangeDateAndMonth([NINETY_DAY_PREVIOUS, yesterday])
     }
   ];
   const [openDate, setOpenDate] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  // const [open, setOpen] = useState(false);
-  // const handleClick = () => {
-  //   setOpen(true);
-  // };
-  // const handleClose = () => {
-  //   setOpen(false);
-  // };
   const handleClick1 = () => {
     setOpenDate(true);
   };
   const handleCloseDate = () => {
     setOpenDate(false);
   };
-
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -110,7 +114,10 @@ function SelectDateRange({ label, onChange }: SelectDateRangeProps) {
         onClick={handleClick}
         variant="outlined"
       >
-        {label ?? 'Chọn khoảng thời gian'}
+        {value === undefined
+          ? 'Chọn khoảng thời gian'
+          : optionList?.find((x) => x.value === value)?.subLabel ||
+            getDateRangeDateAndMonth(dateRange)}
       </Button>
       <Menu
         id="basic-menu"
@@ -121,7 +128,7 @@ function SelectDateRange({ label, onChange }: SelectDateRangeProps) {
           'aria-labelledby': 'basic-button'
         }}
       >
-        {data.map((item: any) => (
+        {optionList.map((item: any) => (
           <MenuItem
             key={item.value}
             value={item.value}
@@ -134,20 +141,23 @@ function SelectDateRange({ label, onChange }: SelectDateRangeProps) {
             <Typography variant="body1" fontWeight={500}>
               {item.label}
             </Typography>
-            <Typography variant="body2">{item.label2 ?? ''}</Typography>
+            <Typography variant="body2">{item.subLabel ?? ''}</Typography>
           </MenuItem>
         ))}
-        <MenuItem
-          value="DATE_RANGE"
-          onClick={() => {
-            handleClick1();
-            handleClose();
-          }}
-        >
-          <Typography variant="body1" fontWeight={500}>
-            Chọn khoảng thời gian
-          </Typography>
-        </MenuItem>
+        {showOptionDateRange && (
+          <MenuItem
+            value="DATE_RANGE"
+            onClick={() => {
+              handleClick1();
+              handleClose();
+            }}
+          >
+            <Typography variant="body1" fontWeight={500} pr={1}>
+              Chọn khoảng thời gian
+            </Typography>
+            <DateRangeIcon />
+          </MenuItem>
+        )}
       </Menu>
       <Modal
         open={openDate}
