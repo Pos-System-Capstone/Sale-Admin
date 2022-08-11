@@ -18,11 +18,14 @@ import { Box } from '@mui/system';
 import Page from 'components/Page';
 import moment from 'moment';
 import { useState } from 'react';
+import allHomeData from './components/config';
 import KeyTrends from './components/KeyTrendsCard';
 import NetSale from './components/NetSale';
+import TopPerformingStore from './components/TopPerformingStore';
 import TotalSaleCard from './components/TotalSaleCard';
 import TransactionChart from './components/TransactionChart';
-import allHomeData from './components/config';
+import TopSellingItem from './components/TopSellingItem';
+import TopCustomerFeedback from './components/TopCustomerFeedback';
 
 // ----------------------------------------------------------------------
 
@@ -121,11 +124,21 @@ export default function HomeReport() {
           </Grid>
         </Box>
 
-        {/* <Grid item xs={12} md={4}>
-          <AppTotalActiveUsers />
-        </Grid>
+        <Box>
+          <Grid container item xs={12} spacing={2}>
+            <Grid item xs={12} md={4}>
+              <TopPerformingStore />
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <TopSellingItem />
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <TopCustomerFeedback />
+            </Grid>
+          </Grid>
+        </Box>
 
-        <Grid item xs={12} md={4}>
+        {/* <Grid item xs={12} md={4}>
           <AppTotalInstalled />
         </Grid>
 

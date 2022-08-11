@@ -169,7 +169,7 @@ const TableCard: React.FC<CardProps> = ({
                   <Typography sx={{ fontWeight }} variant={fz2} component="div" color="black">
                     {item.title}
                   </Typography>
-                  <Typography variant="subtitle2" color="reportPalette.green1" align="left">
+                  <Typography variant="subtitle2" color="reportPalette.green6" align="left">
                     {trends?.find((x: any) => x.name === item.title)?.trend} {subtitle}
                   </Typography>
                 </Box>
