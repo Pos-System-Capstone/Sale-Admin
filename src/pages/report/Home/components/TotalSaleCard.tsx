@@ -4,6 +4,8 @@ import { styled } from '@mui/material/styles';
 // material
 import { Box } from '@mui/material';
 import Page from 'components/Page';
+import { fToNow } from 'utils/formatTime';
+import { fNumber } from 'utils/formatNumber';
 import { formatCurrency } from 'utils/utils';
 
 // ----------------------------------------------------------------------
@@ -25,13 +27,8 @@ const RootStyle = styled(Card)(({ theme }) => ({
 interface AppWelcomeProps extends CardProps {
   displayName?: string;
 }
-const TOTAL_SOLD = {
-  netSales: 0,
-  totalOrders: 0,
-  lastUpdatedTime: null
-};
 
-export default function TotalSaleCard({ displayName }: AppWelcomeProps) {
+export default function TotalSaleCard({ data }: any) {
   return (
     <RootStyle>
       <Page sx={{ marginTop: '-20px' }}>
@@ -43,7 +40,7 @@ export default function TotalSaleCard({ displayName }: AppWelcomeProps) {
             >
               Your business at a glance
               <br />
-              Last updated: {TOTAL_SOLD.lastUpdatedTime}
+              Last updated: {data?.lastUpdatedTime && fToNow(data.lastUpdatedTime)}
             </Typography>
           </Grid>
 
@@ -63,7 +60,7 @@ export default function TotalSaleCard({ displayName }: AppWelcomeProps) {
                     Net sales today:
                   </Typography>
                   <Typography variant="h3" gutterBottom>
-                    {formatCurrency(TOTAL_SOLD.netSales)}
+                    {formatCurrency(data?.netSales)}
                   </Typography>
                 </Box>
               </Card>
@@ -75,7 +72,7 @@ export default function TotalSaleCard({ displayName }: AppWelcomeProps) {
                     Number of transactions today:
                   </Typography>
                   <Typography variant="h3" gutterBottom>
-                    {formatCurrency(TOTAL_SOLD.totalOrders)}
+                    {fNumber(data?.totalOrders)}
                   </Typography>
                 </Box>
               </Card>

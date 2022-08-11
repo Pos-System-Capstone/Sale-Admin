@@ -113,6 +113,7 @@ function SelectDateRange({
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
         variant="outlined"
+        sx={{ minWidth: '200px' }}
       >
         {value === undefined
           ? 'Chọn khoảng thời gian'

@@ -8,9 +8,9 @@ const PERCENT = 'Taste';
 
 export default function TopCustomerFeedback() {
   return (
-    <Card sx={{ display: 'flex', alignItems: 'center', p: 3 }}>
+    <Card sx={{ display: 'flex', alignItems: 'center', p: 3, height: '100%' }}>
       <Box sx={{ flexGrow: 1 }}>
-        <Typography variant="body2">Top-performing store</Typography>
+        <Typography variant="body2">Top customer feedback</Typography>
         <Stack direction="row" alignItems="center" spacing={1} sx={{ mt: 2, mb: 1 }}>
           <Typography component="span" variant="button">
             {PERCENT}

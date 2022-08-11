@@ -5,7 +5,6 @@ import { Icon } from '@iconify/react';
 import { Box, Card, Stack, Typography } from '@mui/material';
 import { alpha, styled } from '@mui/material/styles';
 // utils
-import { useState } from 'react';
 import { fPercent } from 'utils/formatNumber';
 import { formatCurrency } from 'utils/utils';
 
@@ -30,70 +29,8 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 const PERCENT = 2.6;
 
 // const data1 = data?.[trends] || [];
-export default function NetSale() {
-  const [testData, setTestData] = useState({
-    topPerformingStore: 'Passio Coffee - 542 Huỳnh Tấn Phát',
-    topSellingItem: 'Espresso sữa',
-    orders: [
-      {
-        date: '2022-08-01',
-        value: '198'
-      },
-      {
-        date: '2022-08-05',
-        value: '158'
-      },
-      {
-        date: '2022-08-06',
-        value: '140'
-      },
-      {
-        date: '2022-08-04',
-        value: '149'
-      },
-      {
-        date: '2022-08-07',
-        value: '96'
-      },
-      {
-        date: '2022-08-03',
-        value: '176'
-      },
-      {
-        date: '2022-08-02',
-        value: '190'
-      }
-    ],
-    trends: [
-      {
-        name: 'total_transaction',
-        value: '1107',
-        trend: '0.13655'
-      },
-      {
-        name: 'gross_sales',
-        value: '1.31396e+08',
-        trend: '0.147864'
-      },
-      {
-        name: 'net_sales',
-        value: '1.31396e+08',
-        trend: '0.147864'
-      },
-      {
-        name: 'average_transaction_amount',
-        value: '118695.5736',
-        trend: '0.009954'
-      },
-      {
-        name: 'total_customers',
-        value: 827,
-        trend: '0.120596'
-      }
-    ]
-  });
-  const data = testData?.trends;
-
+export default function NetSale({ data }: any) {
+  const netSaleData = data?.netSales;
   return (
     <Card sx={{ display: 'flex', alignItems: 'center', p: 3 }}>
       <Box sx={{ flexGrow: 1 }}>
@@ -101,7 +38,7 @@ export default function NetSale() {
           Net Sales
         </Typography>
         <Typography variant="h3" gutterBottom>
-          {formatCurrency(data?.find((x: any) => x.name === 'net_sales')?.value)}
+          {formatCurrency(netSaleData?.value)}
         </Typography>
 
         <Stack direction="row" alignItems="center" flexWrap="wrap">

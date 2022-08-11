@@ -4,16 +4,14 @@ import { Box, Card, Stack, Typography } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
-const PERCENT = 'Espresso sữa';
-
-export default function TopSellingItem() {
+export default function TopSellingItem({ data }: any) {
   return (
-    <Card sx={{ display: 'flex', alignItems: 'center', p: 3 }}>
+    <Card sx={{ display: 'flex', alignItems: 'center', p: 3, height: '100%' }}>
       <Box sx={{ flexGrow: 1 }}>
-        <Typography variant="body2">Top-performing store</Typography>
+        <Typography variant="body2">Top selling item</Typography>
         <Stack direction="row" alignItems="center" spacing={1} sx={{ mt: 2, mb: 1 }}>
           <Typography component="span" variant="button">
-            {PERCENT}
+            {data?.topSellingItem ?? ''}
           </Typography>
         </Stack>
       </Box>
