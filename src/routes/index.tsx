@@ -201,7 +201,7 @@ export default function Router() {
         </AuthGuard>
       ),
       children: [
-        { path: '', element: <Navigate to="home" replace /> },
+        { path: '', element: <Navigate to="0/home" replace /> },
         {
           path: ':storeId',
           children: [

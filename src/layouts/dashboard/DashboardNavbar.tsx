@@ -156,7 +156,7 @@ export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps)
           </Button>
           <Button
             onClick={() => {
-              navigate('/report/0/home');
+              navigate('/report');
             }}
           >
             Report
