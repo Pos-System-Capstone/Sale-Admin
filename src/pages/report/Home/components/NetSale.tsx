@@ -26,8 +26,6 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-const PERCENT = 2.6;
-
 // const data1 = data?.[trends] || [];
 export default function NetSale({ data }: any) {
   const netSaleData = data?.netSales;
@@ -35,7 +33,7 @@ export default function NetSale({ data }: any) {
     <Card sx={{ display: 'flex', alignItems: 'center', p: 3 }}>
       <Box sx={{ flexGrow: 1 }}>
         <Typography variant="subtitle2" paragraph>
-          Net Sales
+          Doanh thu
         </Typography>
         <Typography variant="h3" gutterBottom>
           {formatCurrency(netSaleData?.value)}
@@ -44,21 +42,24 @@ export default function NetSale({ data }: any) {
         <Stack direction="row" alignItems="center" flexWrap="wrap">
           <IconWrapperStyle
             sx={{
-              ...(PERCENT < 0 && {
+              ...(netSaleData < 0 && {
                 color: 'error.main',
                 bgcolor: (theme) => alpha(theme.palette.error.main, 0.16)
               })
             }}
           >
-            <Icon width={16} height={16} icon={PERCENT >= 0 ? trendingUpFill : trendingDownFill} />
+            <Icon
+              width={16}
+              height={16}
+              icon={netSaleData >= 0 ? trendingUpFill : trendingDownFill}
+            />
           </IconWrapperStyle>
 
           <Typography variant="subtitle2" component="span">
-            {PERCENT > 0 && '+'}
-            {fPercent(PERCENT)}
+            {fPercent(netSaleData?.trend)}
           </Typography>
           <Typography variant="body2" component="span" sx={{ color: 'text.secondary' }}>
-            &nbsp;than last week
+            &nbsp;hơn tuần trước
           </Typography>
         </Stack>
       </Box>

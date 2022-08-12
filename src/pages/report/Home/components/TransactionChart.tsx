@@ -18,7 +18,7 @@ export default function TransactionChart({ data }: any) {
   return (
     <Card>
       <CardHeader
-        title="Number of transactions"
+        title="Số lượng giao dịch"
         // subheader="+13.66% from previous"
         action={
           <TextField

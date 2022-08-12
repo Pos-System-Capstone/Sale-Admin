@@ -3,7 +3,7 @@ import { Box, Button, Menu, MenuItem, Modal, TextField, Typography } from '@mui/
 import { useState } from 'react';
 // icon
 import DateRangeIcon from '@mui/icons-material/DateRange';
-
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 interface optionsType {
   value: any;
   label: any;
@@ -113,12 +113,20 @@ function SelectDateRange({
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
         variant="outlined"
-        sx={{ minWidth: '200px' }}
+        sx={{
+          minWidth: '200px',
+          display: 'flex',
+          justifyContent: 'space-between'
+        }}
+        color={'inherit'}
       >
-        {value === undefined
-          ? 'Chọn khoảng thời gian'
-          : optionList?.find((x) => x.value === value)?.subLabel ||
-            getDateRangeDateAndMonth(dateRange)}
+        <Typography fontWeight={'500'}>
+          {value === undefined
+            ? 'Chọn khoảng thời gian'
+            : optionList?.find((x) => x.value === value)?.subLabel ||
+              getDateRangeDateAndMonth(dateRange)}
+        </Typography>
+        <KeyboardArrowDownIcon sx={{ ml: 1 }} />
       </Button>
       <Menu
         id="basic-menu"

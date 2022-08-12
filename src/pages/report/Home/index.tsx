@@ -11,8 +11,7 @@ import { useState } from 'react';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router';
 import SelectDateRange from '../components/SelectDateRange';
-import allHomeData from './components/config';
-import KeyTrends from './components/KeyTrendsCard';
+import KeyTrend from './components/KeyTrends';
 import NetSale from './components/NetSale';
 import TopCustomerFeedback from './components/TopCustomerFeedback';
 import TopPerformingStore from './components/TopPerformingStore';
@@ -54,8 +53,21 @@ export default function HomeReport() {
         .then((res) => res.data),
     { refetchOnWindowFocus: false, enabled: true }
   );
+
+  const KeyTrcolumn = [
+    { title: 'Tổng doanh thu', dataIndex: 'grossSales' },
+    { title: 'Tổng số khách hàng', dataIndex: 'totalCustomers' },
+    {
+      title: 'Thời gian chờ giao hàng',
+      dataIndex: 'totalTransaction',
+      valueType: 'time'
+    },
+    { title: 'Số tiền giao dịch trung bình', dataIndex: 'avgTransactionAmount' },
+    { title: 'Doanh thu thuần từ phiếu mua hàng', dataIndex: 'netSales' }
+  ];
+
   return (
-    <Page title="Home">
+    <Page title="Trang chủ">
       <Stack direction={'column'} spacing={3}>
         {storeId == '0' && (
           <FormControl sx={{ width: '250px' }}>
@@ -74,13 +86,13 @@ export default function HomeReport() {
 
         <Stack direction={'row'} sx={{ flexWrap: 'nowrap', justifyContent: 'space-between' }}>
           <Box>
-            <Typography variant="h4">Business insights</Typography>
+            <Typography variant="h4">Thông tin chi tiết về doanh nghiệp</Typography>
             <Typography variant="body2">
-              Based on data on {yesterday.getDate()}/{yesterday.getMonth() + 1}
+              Dựa trên dữ liệu ngày {yesterday.getDate()}/{yesterday.getMonth() + 1}
             </Typography>
           </Box>
           <Box>
-            <SelectDateRange value={options} onChange={setOptions} />
+            <SelectDateRange value={options} onChange={setOptions} showOptionDateRange={false} />
           </Box>
         </Stack>
 
@@ -96,7 +108,7 @@ export default function HomeReport() {
             </Grid>
             <Grid item md={4}>
               <Grid item xs={12} md={12} height={'100%'}>
-                <KeyTrends data={trends!} column={allHomeData.trends} bc="white" bch="grey.300" />
+                <KeyTrend column={KeyTrcolumn} data={businessInsightsData} />
               </Grid>
             </Grid>
           </Grid>

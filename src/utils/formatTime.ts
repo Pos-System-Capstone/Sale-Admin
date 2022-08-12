@@ -1,4 +1,5 @@
 import { format, formatDistanceToNow } from 'date-fns';
+import viLocale from 'date-fns/locale/vi';
 
 // ----------------------------------------------------------------------
 
@@ -28,7 +29,12 @@ export function fToNow(date: string | number | Date) {
     addSuffix: true
   });
 }
-
+export function fToNowVN(date: string | number | Date) {
+  return formatDistanceToNow(new Date(date), {
+    addSuffix: true,
+    locale: viLocale
+  });
+}
 export function fTime(date: string | number | Date) {
   return format(new Date(date), 'hh:mm:ss');
 }

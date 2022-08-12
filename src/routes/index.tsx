@@ -17,7 +17,6 @@ import DashboardLayout from '../layouts/dashboard';
 import LogoOnlyLayout from '../layouts/LogoOnlyLayout';
 // path
 import PromotionDash from 'pages/dashboard/PromotionSystemDashboard';
-import ReportDashboard from 'pages/dashboard/ReportDashboard';
 import ActionPage from 'pages/promotionEngine/Action';
 import NewActionPage from 'pages/promotionEngine/Action/create';
 import ConditionPage from 'pages/promotionEngine/Condition';
@@ -30,10 +29,10 @@ import Promotion from 'pages/promotionEngine/Promotion';
 import CreatePromotion from 'pages/promotionEngine/Promotion/CreatePromotion';
 import Voucher from 'pages/promotionEngine/Voucher';
 import CreateVoucher from 'pages/promotionEngine/Voucher/createVoucher';
+import Insights from 'pages/report/Insights';
 import DateReport from 'pages/report/TradingReport/DateReport';
 import MonthReport from 'pages/report/TradingReport/MonthReport';
 import TimeReport from 'pages/report/TradingReport/TimeReport';
-import Insights from 'pages/report/Insights';
 
 // import ReportGeneralApp from 'pages/report/GeneralReport/GeneralApp';
 
@@ -202,7 +201,7 @@ export default function Router() {
         </AuthGuard>
       ),
       children: [
-        { path: '', element: <Navigate to="dashboard" replace /> },
+        { path: '', element: <Navigate to="home" replace /> },
         {
           path: ':storeId',
           children: [
@@ -215,7 +214,7 @@ export default function Router() {
               path: 'insights',
               element: <Insights />
             },
-            { path: 'dashboard', element: <ReportDashboard /> },
+            // { path: 'dashboard', element: <ReportDashboard /> },
             {
               path: 'overview-date',
               element: <OverviewDate />
