@@ -25,6 +25,8 @@ export const PATH_REPORT_APP = (storeId: string) => {
     general: {
       reportDashboard: path(ROOTS_DASHBOARD, `/${storeId}/dashboard`)
     },
+    home: path(ROOTS_DASHBOARD, `/${storeId}/home`),
+    insights: path(ROOTS_DASHBOARD, `/${storeId}/insights`),
     overviewDate: path(ROOTS_DASHBOARD, `/${storeId}/overview-date`),
     overviewMonth: path(ROOTS_DASHBOARD, `/${storeId}/overview-month`),
     payment: path(ROOTS_DASHBOARD, `/${storeId}/payment`),

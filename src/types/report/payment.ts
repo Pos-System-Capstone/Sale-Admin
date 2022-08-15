@@ -1,4 +1,5 @@
 export type TPaymentReportBase = {
+  storeId?: any;
   storeName?: any;
   cash?: number;
   creditCard?: number;
@@ -14,6 +15,8 @@ export type TPaymentReportBase = {
 };
 
 export type TPaymentReportStore = {
+  storeId?: any;
+  storeName?: any;
   date?: Date;
   cash?: number;
   creditCard?: number;

@@ -78,6 +78,7 @@ const CollectionListPage = () => {
             ref={ref}
             pagination
             defaultFilters={{
+              storeId: storeId == '0' ? null : storeId,
               FromDate: formatDate(dateRange[0]!),
               ToDate: formatDate(dateRange[1]!)
             }}

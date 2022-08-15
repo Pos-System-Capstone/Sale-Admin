@@ -2,16 +2,17 @@
 import { Visibility } from '@mui/icons-material';
 import { DateRangePicker } from '@mui/lab';
 // material
-import { Box, Card, IconButton, Stack, TextField, Tooltip, Typography } from '@mui/material';
+import { Card, IconButton, Stack, TextField, Tooltip, Typography } from '@mui/material';
+import { Box } from '@mui/system';
 import logApi from 'api/log';
 import AutocompleteStore from 'components/form/common/report/AutocompleteStore';
 // import logApi from 'api/log';
 // import AutoCompleteStoreSelect from 'components/form/common/AutocompleteStoreSelect/AutocompleteStoreSelect';
-
 import ResoTable from 'components/ResoTable/ResoTable';
 import moment from 'moment';
 import ReportPage from 'pages/report/components/ReportPage';
 import { useEffect, useRef, useState } from 'react';
+import { useParams } from 'react-router';
 // components
 import { TLog } from 'types/log';
 import { TTableColumn } from 'types/table';
@@ -20,10 +21,21 @@ import LogDetailDialog from './components/LogDetailDialog';
 
 const LogSale = () => {
   const [detailLog, setDetailLog] = useState<number | null>(null);
-  const today = new Date();
   const ref = useRef<any>();
+  const today = new Date();
   const yesterday = new Date(new Date().valueOf() - 1000 * 60 * 60 * 24);
-  const [dateRange, setDateRange] = useState<any>([yesterday, yesterday]);
+
+  const [dateRange, setDateRange] = useState<any>([yesterday, today]);
+  const { storeId } = useParams();
+  const isSystemRole = storeId == '0';
+
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.formControl.setValue('FromDate', formatDate(dateRange[0]!));
+      ref.current.formControl.setValue('ToDate', formatDate(dateRange[1]!));
+    }
+  }, [dateRange]);
+
   const logColumns: TTableColumn<TLog>[] = [
     {
       title: 'STT',

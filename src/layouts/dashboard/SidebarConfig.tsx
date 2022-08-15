@@ -221,10 +221,20 @@ export const reportAppSidebarConfig = () => {
     {
       subheader: 'general',
       items: [
+        // {
+        //   title: 'report.dashboard',
+        //   path: PATH_REPORT.general.reportDashboard,
+        //   icon: ICONS.dashboard
+        // },
         {
-          title: 'report.dashboard',
-          path: PATH_REPORT.general.reportDashboard,
+          title: 'report.home',
+          path: PATH_REPORT.home,
           icon: ICONS.dashboard
+        },
+        {
+          title: 'report.insights',
+          path: PATH_REPORT.insights,
+          icon: ICONS.analytics
         },
         {
           title: 'report.overviewDate',

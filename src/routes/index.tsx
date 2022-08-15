@@ -17,7 +17,6 @@ import DashboardLayout from '../layouts/dashboard';
 import LogoOnlyLayout from '../layouts/LogoOnlyLayout';
 // path
 import PromotionDash from 'pages/dashboard/PromotionSystemDashboard';
-import ReportDashboard from 'pages/dashboard/ReportDashboard';
 import ActionPage from 'pages/promotionEngine/Action';
 import NewActionPage from 'pages/promotionEngine/Action/create';
 import ConditionPage from 'pages/promotionEngine/Condition';
@@ -30,6 +29,7 @@ import Promotion from 'pages/promotionEngine/Promotion';
 import CreatePromotion from 'pages/promotionEngine/Promotion/CreatePromotion';
 import Voucher from 'pages/promotionEngine/Voucher';
 import CreateVoucher from 'pages/promotionEngine/Voucher/createVoucher';
+import Insights from 'pages/report/Insights';
 import DateReport from 'pages/report/TradingReport/DateReport';
 import MonthReport from 'pages/report/TradingReport/MonthReport';
 import TimeReport from 'pages/report/TradingReport/TimeReport';
@@ -201,12 +201,20 @@ export default function Router() {
         </AuthGuard>
       ),
       children: [
-        { path: '', element: <Navigate to="dashboard" replace /> },
+        { path: '', element: <Navigate to="0/home" replace /> },
         {
           path: ':storeId',
           children: [
             // { path: '', element: <Navigate to="dashboard" replace /> },
-            { path: 'dashboard', element: <ReportDashboard /> },
+            {
+              path: 'home',
+              element: <HomePage />
+            },
+            {
+              path: 'insights',
+              element: <Insights />
+            },
+            // { path: 'dashboard', element: <ReportDashboard /> },
             {
               path: 'overview-date',
               element: <OverviewDate />
@@ -435,6 +443,7 @@ const ProductProgressReport = Loadable(
 );
 const PaymentReport = Loadable(lazy(() => import('../pages/report/PaymentReport')));
 const StoreReport = Loadable(lazy(() => import('../pages/report/StoreReport')));
+const HomePage = Loadable(lazy(() => import('../pages/report/Home')));
 
 // Promotion system
 // const PromotionDash = Loadable(lazy(() => import('../pages/dashboard/PromotionSystemDashboard')));
