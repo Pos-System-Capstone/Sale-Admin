@@ -38,3 +38,6 @@ export function fToNowVN(date: string | number | Date) {
 export function fTime(date: string | number | Date) {
   return format(new Date(date), 'hh:mm:ss');
 }
+export function fmdatetime(date: string | number | Date) {
+  return format(new Date(date), 'yyyy/mm/dd hh:mm:ss');
+}

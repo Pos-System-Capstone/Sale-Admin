@@ -13,10 +13,11 @@ import { useParams } from 'react-router';
 import SelectDateRange from '../components/SelectDateRange';
 import KeyTrend from './components/KeyTrends';
 import NetSale from './components/NetSale';
-import TopCustomerFeedback from './components/TopCustomerFeedback';
+// import TopCustomerFeedback from './components/TopCustomerFeedback';
 import TopPerformingStore from './components/TopPerformingStore';
 import TopSellingItem from './components/TopSellingItem';
-import TotalSaleCard from './components/TotalSaleCard';
+import { TotalSaleCard } from './components/TotalSaleCard';
+
 import TransactionChart from './components/TransactionChart';
 
 // ----------------------------------------------------------------------
@@ -56,12 +57,6 @@ export default function HomeReport() {
 
   const KeyTrcolumn = [
     { title: 'Tổng doanh thu', dataIndex: 'grossSales' },
-    { title: 'Tổng số khách hàng', dataIndex: 'totalCustomers' },
-    {
-      title: 'Thời gian chờ giao hàng',
-      dataIndex: 'totalTransaction',
-      valueType: 'time'
-    },
     { title: 'Số tiền giao dịch trung bình', dataIndex: 'avgTransactionAmount' },
     { title: 'Doanh thu thuần từ phiếu mua hàng', dataIndex: 'netSales' }
   ];
@@ -122,9 +117,9 @@ export default function HomeReport() {
             <Grid item xs={12} md={4}>
               <TopSellingItem data={businessInsightsData} />
             </Grid>
-            <Grid item xs={12} md={4}>
+            {/* <Grid item xs={12} md={4}>
               <TopCustomerFeedback />
-            </Grid>
+            </Grid> */}
           </Grid>
         </Box>
 

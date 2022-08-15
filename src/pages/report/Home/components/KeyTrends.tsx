@@ -41,7 +41,6 @@ function ProductItem({ column, data }: any) {
               ? fPercent(data[x.dataIndex]?.trend) + ' so với 7 ngày trước'
               : ''}
           </Typography>
-          <hr></hr>
         </Box>
       ))}
     </Stack>
@@ -50,7 +49,7 @@ function ProductItem({ column, data }: any) {
 
 export default function KeyTrend({ column, data }: any) {
   return (
-    <Card sx={{ height: '100%' }}>
+    <Card sx={{ height: 'auto' }}>
       <CardHeader title="Xu hướng chính" fontWeight="bold" sx={{ textDecoration: 'underline' }} />
       <Scrollbar>
         <Stack spacing={3} sx={{ p: 3 }}>

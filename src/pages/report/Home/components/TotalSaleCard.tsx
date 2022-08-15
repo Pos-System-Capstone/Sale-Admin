@@ -3,13 +3,21 @@ import { Card, Grid, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 // material
 import { Box } from '@mui/material';
-import Page from 'components/Page';
+// import Page from 'components/Page';
 import { fNumber } from 'utils/formatNumber';
 import { formatCurrency } from 'utils/utils';
-import { fToNowVN } from 'utils/formatTime';
+// import { fToNowVN } from 'utils/formatTime';
+import { TSummaryReportBase } from 'types/report/home';
+import moment from 'moment';
+import 'moment/locale/vi';
+// import { TSummaryReportBase } from 'types/report/home';
 // ----------------------------------------------------------------------
+moment.locale('vi');
+interface TotalSaleCardProps {
+  data: TSummaryReportBase | undefined;
+}
 
-export default function TotalSaleCard({ data }: any) {
+export const TotalSaleCard: React.FC<TotalSaleCardProps> = ({ data }) => {
   const RootStyle = styled(Card)(({ theme }) => ({
     boxShadow: 'none',
     textAlign: 'center',
@@ -21,35 +29,30 @@ export default function TotalSaleCard({ data }: any) {
       justifyContent: 'space-between'
     }
   }));
+  console.log('data?.lastUpdatedTime', data?.lastUpdatedTime);
+
   return (
     <RootStyle>
-      <Page sx={{ marginTop: '-20px' }}>
-        <Grid container sx={{ marginBottom: '10px' }}>
-          <Grid item md={6}>
-            <Typography
-              variant="h6"
-              sx={{ maxWidth: 480, mx: 'auto', height: 50, color: '#FFFFFF', marginTop: '20px' }}
-            >
-              Sơ lược về doanh nghiêp
-              <br />
-              Cập nhật mới nhất: {data?.lastUpdatedTime && fToNowVN(data?.lastUpdatedTime)}
+      <Box>
+        <Grid container spacing={2} sx={{ p: 2 }}>
+          <Grid item md={4}>
+            <Typography variant="h3" sx={{ color: '#FFFFFF' }}>
+              Tổng quan
+            </Typography>
+            <Typography variant="subtitle2" sx={{ color: '#FFFFFF' }}>
+              Lần cập nhật cuối:{' '}
+              {data?.lastUpdatedTime
+                ? moment(data?.lastUpdatedTime, 'YYYY-MM-DD[T]HH:mm:ss.SSSSSS[Z]', true).fromNow()
+                : '--'}
             </Typography>
           </Grid>
 
-          <Grid
-            container
-            item
-            md={6}
-            spacing={2}
-            height={'100%'}
-            sx={{ display: 'flex' }}
-            flexWrap="wrap"
-          >
+          <Grid container item md={8} spacing={3} sx={{ display: 'flex' }} flexWrap="wrap">
             <Grid item md={6} sx={{ flexWrap: 'nowrap' }}>
-              <Card sx={{ display: 'flex', alignItems: 'center' }}>
-                <Box sx={{ flexGrow: 1 }}>
+              <Card>
+                <Box>
                   <Typography variant="subtitle2" paragraph>
-                    Doanh thu thuần hôm nay:
+                    Doanh thu thuần hôm nay
                   </Typography>
                   <Typography variant="h3" gutterBottom>
                     {formatCurrency(data?.netSales)}
@@ -58,20 +61,20 @@ export default function TotalSaleCard({ data }: any) {
               </Card>
             </Grid>
             <Grid item md={6}>
-              <Card sx={{ display: 'flex', alignItems: 'center' }}>
-                <Box sx={{ flexGrow: 1 }}>
+              <Card>
+                <Box>
                   <Typography variant="subtitle2" paragraph>
-                    Số lượng giao dịch hôm nay:
+                    Số lượng giao dịch hôm nay
                   </Typography>
                   <Typography variant="h3" gutterBottom>
-                    {fNumber(data?.totalOrders)}
+                    {fNumber(data?.totalOrders!)}
                   </Typography>
                 </Box>
               </Card>
             </Grid>
           </Grid>
         </Grid>
-      </Page>
+      </Box>
     </RootStyle>
   );
-}
+};

@@ -1,6 +1,6 @@
 export type TSummaryReportBase = {
   netSales?: number;
-  totalOrders?: number;
+  totalOrders?: number | string;
   lastUpdatedTime?: any;
 };
 

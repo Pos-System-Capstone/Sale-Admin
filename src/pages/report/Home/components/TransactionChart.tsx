@@ -6,8 +6,8 @@ import { fDate } from 'utils/formatTime';
 // ----------------------------------------------------------------------
 
 export default function TransactionChart({ data }: any) {
-  const valueOrders = data?.orders.map((x: any) => x.value).slice(-7);
-  const dateOrders = data?.orders.map((x: any) => fDate(x.date)).slice(-7);
+  const valueOrders = data?.orders.map((x: any) => x.value);
+  const dateOrders = data?.orders.map((x: any) => fDate(x.date));
 
   const chartOptions = merge(BaseOptionChart(), {
     xaxis: {
