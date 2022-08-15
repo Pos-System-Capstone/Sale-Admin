@@ -95,6 +95,12 @@ const LogSale = () => {
       )
     }
   ];
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.formControl.setValue('FromDate', formatDate(dateRange[0]!));
+      ref.current.formControl.setValue('ToDate', formatDate(dateRange[1]!));
+    }
+  }, [dateRange]);
 
   return (
     <ReportPage
@@ -130,6 +136,7 @@ const LogSale = () => {
       <Card>
         <Stack spacing={2}>
           <ResoTable
+            ref={ref}
             sx={{ textOverflow: 'ellipsis' }}
             showAction={false}
             rowKey="menu_id"

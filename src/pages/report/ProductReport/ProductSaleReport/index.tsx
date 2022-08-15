@@ -209,14 +209,7 @@ const ProductSaleReport = () => {
               scroll={{ y: '500px' }}
             />
           </TabPanel>
-          <TabPanel value="2">
-            {/* <ReactApexChart
-              options={chartFill.options}
-              series={chartFill.series}
-              type="pie"
-              height={380}
-            /> */}
-          </TabPanel>
+          <TabPanel value="2"></TabPanel>
         </TabContext>
       </Card>
     </ReportPage>
