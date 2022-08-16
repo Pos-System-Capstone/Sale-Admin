@@ -12,7 +12,13 @@ export function fCurrencyVN(number: string | number) {
 }
 
 export function fPercent(number: number) {
-  return numeral(number / 100).format('0.0%');
+  let str = String(number);
+  let rs = parseFloat(str.replace('e-11', ''));
+  var s = Number(rs / 100).toLocaleString(undefined, {
+    style: 'percent',
+    minimumFractionDigits: 2
+  });
+  return s;
 }
 
 export function fNumber(number: string | number) {
