@@ -3,4 +3,6 @@ export type TLog = {
   content: string;
   store_id: number;
   created_date: string;
+  fromdate: Date;
+  toDate: Date;
 };
