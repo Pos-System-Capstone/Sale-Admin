@@ -71,7 +71,7 @@ const TableFilterForm = ({ controls }: Props) => {
       .map((control) => {
         const controlComponent = buildFormItem(control);
         return (
-          <Grid key={`${control.title}`} item xs={12} sm={4} md={3}>
+          <Grid key={`${control.title}`} item xs={12} sm={12} md={3}>
             {controlComponent}
           </Grid>
         );

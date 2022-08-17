@@ -9,6 +9,7 @@ import AutocompleteStore from 'components/form/common/report/AutocompleteStore';
 // import logApi from 'api/log';
 // import AutoCompleteStoreSelect from 'components/form/common/AutocompleteStoreSelect/AutocompleteStoreSelect';
 import ResoTable from 'components/ResoTable/ResoTable';
+import useLocales from 'hooks/useLocales';
 import moment from 'moment';
 import ReportPage from 'pages/report/components/ReportPage';
 import { useEffect, useRef, useState } from 'react';
@@ -26,7 +27,7 @@ const LogSale = () => {
   const yesterday = new Date(new Date().valueOf() - 1000 * 60 * 60 * 24);
   const [dateRange, setDateRange] = useState<any>([null, today]);
   console.log(dateRange);
-
+  const { translate } = useLocales();
   const { storeId } = useParams();
   const isSystemRole = storeId == '0';
 
@@ -94,24 +95,40 @@ const LogSale = () => {
           </IconButton>
         </Tooltip>
       )
-    }
-  ];
-
-  return (
-    <ReportPage
-      title="Log"
-      actions={[
+    },
+    {
+      title: 'Từ',
+      dataIndex: 'fromdate',
+      hideInTable: true,
+      valueType: 'dateRange',
+      renderFormItem: () => (
         <DateRangePicker
           inputFormat="dd/MM/yyyy"
           minDate={moment(`${today.getFullYear()}/${today.getMonth()}/01`).toDate()}
-          disableFuture
-          disableCloseOnSelect
           value={dateRange}
+          calendars={2}
           renderInput={(startProps, endProps) => (
             <>
-              <TextField {...startProps} label="Từ" />
-              <Box sx={{ mx: 2 }}> - </Box>
-              <TextField {...endProps} label="Đến" />
+              <Stack width="100%" spacing={2} direction="row">
+                <Box flex={1}>
+                  <TextField
+                    size="small"
+                    fullWidth
+                    {...startProps}
+                    label={translate('common.fromTime')}
+                    placeholder={translate('common.fromTime')}
+                  />
+                </Box>
+                <Box flex={1}>
+                  <TextField
+                    size="small"
+                    fullWidth
+                    {...endProps}
+                    label={translate('common.toTime')}
+                    placeholder={translate('common.toTime')}
+                  />
+                </Box>
+              </Stack>
             </>
           )}
           onChange={(e) => {
@@ -121,8 +138,12 @@ const LogSale = () => {
           }}
           key="date-range"
         />
-      ]}
-    >
+      )
+    }
+  ];
+
+  return (
+    <ReportPage title="Log">
       <LogDetailDialog
         id={detailLog}
         open={Boolean(detailLog)}
