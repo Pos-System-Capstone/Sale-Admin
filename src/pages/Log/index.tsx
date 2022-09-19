@@ -34,7 +34,8 @@ const LogSale = () => {
     {
       title: 'STT',
       dataIndex: 'index',
-      hideInSearch: true
+      hideInSearch: true,
+      sortable: false
     },
     {
       title: 'Content',
@@ -52,7 +53,8 @@ const LogSale = () => {
             {value}
           </Typography>
         );
-      }
+      },
+      sortable: false
     },
     {
       title: 'Content',
@@ -76,25 +78,29 @@ const LogSale = () => {
           label: 'Update MOmo orderstatus (Admin)',
           value: '[UpdateMomoStatus]'
         }
-      ]
+      ],
+      sortable: false
     },
     {
       title: 'Cửa hàng',
       dataIndex: 'store_id',
       valueType: 'select',
       hideInTable: true,
-      renderFormItem: () => <AutocompleteStore name="store-id" label="Cửa hàng" />
+      renderFormItem: () => <AutocompleteStore name="store-id" label="Cửa hàng" />,
+      sortable: false
     },
     {
       title: 'StoreId',
       dataIndex: 'store_id',
-      hideInSearch: true
+      hideInSearch: true,
+      sortable: false
     },
     {
       title: 'CreatedDate',
       dataIndex: 'created_date',
       hideInSearch: true,
-      render: (value) => fDateTime(value)
+      render: (value) => fDateTime(value),
+      sortable: false
     },
     {
       title: 'Detail',
@@ -115,7 +121,8 @@ const LogSale = () => {
             <Visibility />
           </IconButton>
         </Tooltip>
-      )
+      ),
+      sortable: false
     },
     {
       title: 'Từ',
@@ -159,14 +166,15 @@ const LogSale = () => {
           }}
           key="date-range"
         />
-      )
+      ),
+      sortable: false
     }
   ];
 
   return (
     <ReportPage title="Log">
       <LogDetailDialog
-        id={detailLog}
+        selectedValue={detailLog}
         open={Boolean(detailLog)}
         onClose={() => setDetailLog(null)}
       />

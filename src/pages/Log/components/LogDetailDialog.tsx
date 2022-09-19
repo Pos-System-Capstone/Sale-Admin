@@ -19,11 +19,11 @@ import { fDateTime } from 'utils/formatTime';
 type Props = {
   open: boolean;
   onClose: VoidFunction;
-  id?: any;
+  selectedValue?: { content?: string; created_date?: string; store_id?: string };
 };
 
-const LogDetailDialog: React.FC<Props> = ({ open, onClose, id }) => {
-  const details = [id];
+const LogDetailDialog: React.FC<Props> = ({ open, onClose, selectedValue }) => {
+  const details = [selectedValue];
   const detailLogColumns: ResoDescriptionColumnType<TLog>[] = [
     {
       title: 'StoredId',
@@ -45,8 +45,6 @@ const LogDetailDialog: React.FC<Props> = ({ open, onClose, id }) => {
           <Typography
             width={'600px'}
             sx={{
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
               wordBreak: 'break-all'
             }}
           >
@@ -59,7 +57,7 @@ const LogDetailDialog: React.FC<Props> = ({ open, onClose, id }) => {
 
   return (
     <Dialog maxWidth="lg" scroll="paper" open={open} onClose={onClose}>
-      {!id ? (
+      {!selectedValue ? (
         <EmptyContent title="Không tìm thấy content" />
       ) : (
         <>
