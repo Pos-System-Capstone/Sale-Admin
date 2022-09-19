@@ -1,13 +1,12 @@
 /* eslint-disable camelcase */
+// material
 import { Visibility } from '@mui/icons-material';
 import { DateRangePicker } from '@mui/lab';
-// material
 import { Card, IconButton, Stack, TextField, Tooltip, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import logApi from 'api/log';
+//
 import AutocompleteStore from 'components/form/common/report/AutocompleteStore';
-// import logApi from 'api/log';
-// import AutoCompleteStoreSelect from 'components/form/common/AutocompleteStoreSelect/AutocompleteStoreSelect';
 import ResoTable from 'components/ResoTable/ResoTable';
 import useLocales from 'hooks/useLocales';
 import moment from 'moment';
@@ -15,17 +14,14 @@ import ReportPage from 'pages/report/components/ReportPage';
 import { useEffect, useRef, useState } from 'react';
 import { TLog } from 'types/log';
 import { TTableColumn } from 'types/table';
-import { formatDate } from 'utils/formatTime';
+import { fDateTime, formatDate } from 'utils/formatTime';
 import LogDetailDialog from './components/LogDetailDialog';
 const LogSale = () => {
-  const [detailLog, setDetailLog] = useState<number | null>(null);
+  const [detailLog, setDetailLog] = useState<any>(null);
   const ref = useRef<any>();
   const today = new Date();
-  // const yesterday = new Date(new Date().valueOf() - 1000 * 60 * 60 * 24);
   const [dateRange, setDateRange] = useState<any>([null, today]);
   const { translate } = useLocales();
-  // const { storeId } = useParams();
-  // const isSystemRole = storeId == '0';
 
   useEffect(() => {
     if (ref.current) {
@@ -43,18 +39,14 @@ const LogSale = () => {
     {
       title: 'Content',
       dataIndex: 'content',
-      // hideInSearch: true,
       render: (value: any) => {
         return (
           <Typography
-            width={'380px'}
-            // height={'80px'}
+            height={'70px'}
             variant={'body1'}
             sx={{
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              wordBreak: 'break-all',
-              cursor: 'pointer'
+              overflowY: 'auto',
+              wordBreak: 'break-all'
             }}
           >
             {value}
@@ -97,13 +89,12 @@ const LogSale = () => {
       title: 'StoreId',
       dataIndex: 'store_id',
       hideInSearch: true
-      //   valueType: 'select'
-      //   renderFormItem: () => <AutoCompleteStoreSelect name="store-id" label="Cửa hàng" />
     },
     {
       title: 'CreatedDate',
       dataIndex: 'created_date',
-      hideInSearch: true
+      hideInSearch: true,
+      render: (value) => fDateTime(value)
     },
     {
       title: 'Detail',
@@ -111,7 +102,16 @@ const LogSale = () => {
       hideInSearch: true,
       render: (_: any, content: TLog) => (
         <Tooltip title="Chi tiết">
-          <IconButton onClick={() => setDetailLog(content.id)} size="large">
+          <IconButton
+            onClick={() =>
+              setDetailLog({
+                content: content.content,
+                created_date: content.created_date,
+                store_id: content.store_id
+              })
+            }
+            size="large"
+          >
             <Visibility />
           </IconButton>
         </Tooltip>
@@ -170,6 +170,7 @@ const LogSale = () => {
         open={Boolean(detailLog)}
         onClose={() => setDetailLog(null)}
       />
+
       <Card>
         <Stack spacing={2}>
           <ResoTable

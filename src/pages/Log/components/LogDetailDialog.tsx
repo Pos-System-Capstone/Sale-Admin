@@ -2,7 +2,6 @@ import closeFill from '@iconify/icons-eva/close-fill';
 import { Icon } from '@iconify/react';
 import {
   Button,
-  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
@@ -11,33 +10,20 @@ import {
   Stack,
   Typography
 } from '@mui/material';
-import logApi from 'api/log';
 import EmptyContent from 'components/EmptyContent';
 import ResoDescriptions, { ResoDescriptionColumnType } from 'components/ResoDescriptions';
 import React from 'react';
-import { useQuery } from 'react-query';
 import { TLog } from 'types/log';
+import { fDateTime } from 'utils/formatTime';
 
 type Props = {
   open: boolean;
   onClose: VoidFunction;
-  id?: number | null;
+  id?: any;
 };
 
 const LogDetailDialog: React.FC<Props> = ({ open, onClose, id }) => {
-  const { data: details, isLoading } = useQuery(
-    ['log', id],
-    () =>
-      logApi
-        .getLog({
-          id
-        })
-        .then((res) => res.data?.data),
-    {
-      enabled: Boolean(id)
-    }
-  );
-
+  const details = [id];
   const detailLogColumns: ResoDescriptionColumnType<TLog>[] = [
     {
       title: 'StoredId',
@@ -45,7 +31,8 @@ const LogDetailDialog: React.FC<Props> = ({ open, onClose, id }) => {
     },
     {
       title: 'CreatedDate',
-      dataIndex: 'created_date'
+      dataIndex: 'created_date',
+      render: (value) => fDateTime(value)
     }
   ];
 
@@ -72,9 +59,7 @@ const LogDetailDialog: React.FC<Props> = ({ open, onClose, id }) => {
 
   return (
     <Dialog maxWidth="lg" scroll="paper" open={open} onClose={onClose}>
-      {isLoading ? (
-        <CircularProgress />
-      ) : !id ? (
+      {!id ? (
         <EmptyContent title="Không tìm thấy content" />
       ) : (
         <>
