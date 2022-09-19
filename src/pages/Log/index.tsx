@@ -13,23 +13,19 @@ import useLocales from 'hooks/useLocales';
 import moment from 'moment';
 import ReportPage from 'pages/report/components/ReportPage';
 import { useEffect, useRef, useState } from 'react';
-import { useParams } from 'react-router';
-// components
 import { TLog } from 'types/log';
 import { TTableColumn } from 'types/table';
 import { formatDate } from 'utils/formatTime';
 import LogDetailDialog from './components/LogDetailDialog';
-
 const LogSale = () => {
   const [detailLog, setDetailLog] = useState<number | null>(null);
   const ref = useRef<any>();
   const today = new Date();
-  const yesterday = new Date(new Date().valueOf() - 1000 * 60 * 60 * 24);
+  // const yesterday = new Date(new Date().valueOf() - 1000 * 60 * 60 * 24);
   const [dateRange, setDateRange] = useState<any>([null, today]);
-  console.log(dateRange);
   const { translate } = useLocales();
-  const { storeId } = useParams();
-  const isSystemRole = storeId == '0';
+  // const { storeId } = useParams();
+  // const isSystemRole = storeId == '0';
 
   useEffect(() => {
     if (ref.current) {
@@ -52,18 +48,43 @@ const LogSale = () => {
         return (
           <Typography
             width={'380px'}
-            height={'80px'}
+            // height={'80px'}
             variant={'body1'}
             sx={{
               overflow: 'hidden',
               textOverflow: 'ellipsis',
-              wordBreak: 'break-all'
+              wordBreak: 'break-all',
+              cursor: 'pointer'
             }}
           >
             {value}
           </Typography>
         );
       }
+    },
+    {
+      title: 'Content',
+      dataIndex: 'content',
+      hideInTable: true,
+      valueType: 'select',
+      valueEnum: [
+        {
+          label: 'Tạo đơn từ Momo',
+          value: 'POST https api-product.reso.vn/api/v1/partners/orders'
+        },
+        {
+          label: 'Update Payment Status từ Momo',
+          value: 'PUT https api-product.reso.vn/api/v1/partners/MOMO/payments'
+        },
+        {
+          label: 'Update Momo order status (POS)',
+          value: 'https://business.momo.vn/api/order-and-delivery/hooks/orders/v1/status'
+        },
+        {
+          label: 'Update MOmo orderstatus (Admin)',
+          value: '[UpdateMomoStatus]'
+        }
+      ]
     },
     {
       title: 'Cửa hàng',
@@ -158,7 +179,7 @@ const LogSale = () => {
             rowKey="menu_id"
             getData={logApi.getLog}
             columns={logColumns}
-            scroll={{ y: '600px' }}
+            scroll={{ y: '500px' }}
             pagination
           />
         </Stack>
