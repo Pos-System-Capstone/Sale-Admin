@@ -39,10 +39,16 @@ function DashboardReportLayout() {
   const { collapseClick } = useCollapseDrawer();
   const { open, setNavOpen: setOpen } = useDashboard();
 
+  const isIframe = window.location.search.includes('?iframe');
+
   return (
     <RootStyle>
-      <DashboardNavbar onOpenSidebar={() => setOpen(true)} />
-      <DashboardSidebar isOpenSidebar={open} onCloseSidebar={() => setOpen(false)} />
+      {!isIframe && (
+        <>
+          <DashboardNavbar onOpenSidebar={() => setOpen(true)} />
+          <DashboardSidebar isOpenSidebar={open} onCloseSidebar={() => setOpen(false)} />
+        </>
+      )}
       <MainStyle
         sx={{
           transition: theme.transitions.create('margin', {
