@@ -216,7 +216,7 @@ const StoreNavigationDialog: React.FC<Props> = ({ open, onClose, onSelectStore }
               mr: 5
             }}
             onClick={() => {
-              navigate(PATH_REPORT_APP('0').general.reportDashboard);
+              navigate(PATH_REPORT_APP('0').home);
               window.location.reload();
             }}
             startIcon={<FormatListBulletedIcon />}
