@@ -30,7 +30,7 @@ jobs:
             else 
              ENV=${{inputs.envFile}}
             fi
-            npm install --only=production && \
+            npm install && \
             npm i -g env-cmd && \
             env-cmd -f ${ENV} npm run build
     - uses: jakejarvis/s3-sync-action@master
