@@ -4,13 +4,13 @@ on:
   push:
     branches:
     - develop
+  workflow_dispatch: 
     inputs: 
      envFile:
       description: Env file to deploy
       type: text
       required: false
       default: '.env.production'
-  workflow_dispatch: 
 
 jobs:
   DeployToAWS: 
@@ -24,9 +24,15 @@ jobs:
             sudo apt -y install nodejs
     - name: Build
       run: | 
+            if [ -z "${{inputs.envFile}}" ] 
+            then 
+             ENV=.env.production
+            else 
+             ENV=${{inputs.envFile}}
+            fi
             npm install --only=production && \
             npm i -g env-cmd && \
-            env-cmd -f ${{ inputs.envFile }} npm run build
+            env-cmd -f ${ENV} npm run build
     - uses: jakejarvis/s3-sync-action@master
       with:
         args: --acl public-read --follow-symlinks --delete
